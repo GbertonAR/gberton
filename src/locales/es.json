@@ -1,0 +1,110 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "experience": "Experiencia",
+    "flowstate": "FlowState AI",
+    "contact": "Contacto",
+    "downloadCV": "Descargar CV"
+  },
+  "hero": {
+    "title": "GUSTAVO BUONGIORNO BERTON",
+    "role": "Digital Transformation & AI Expert",
+    "subtitle": "25+ años liderando la Transformación Digital y la Arquitectura de Soluciones AI/Cloud escalables",
+    "ctaPrimary": "Explorar Portafolio de Soluciones AI/Cloud",
+    "ctaSecondary": "Descargar CV - Octubre 2025"
+  },
+  "experience": {
+    "title": "Mi Experiencia Profesional",
+    "subtitle": "Más de dos décadas transformando empresas a través de la tecnología",
+    "achievements": {
+      "emails": {
+        "label": "Emails Automatizados",
+        "description": "Respuesta automatizada en 5 días"
+      },
+      "years": {
+        "label": "Años de Experiencia",
+        "description": "Liderando transformación digital"
+      },
+      "projects": {
+        "label": "Proyectos Completados",
+        "description": "Soluciones AI/Cloud escalables"
+      }
+    },
+    "skillsTitle": "Habilidades Técnicas Clave",
+    "timelineTitle": "Trayectoria Profesional",
+    "roles": {
+      "flowstate": {
+        "role": "Arquitecto de Soluciones AI/Cloud",
+        "description": "Liderando el desarrollo de ecosistema de agentes inteligentes para automatización empresarial."
+      },
+      "hutton": {
+        "role": "Jefe de Sistemas",
+        "description": "Gestión integral de infraestructura tecnológica y migración a soluciones cloud."
+      },
+      "ibm": {
+        "role": "Analista de Sistemas",
+        "description": "Desarrollo de soluciones empresariales y arquitectura de sistemas complejos."
+      }
+    }
+  },
+  "flowstate": {
+    "title": "FlowState AI: Ecosistema de Agentes Inteligentes",
+    "subtitle": "Transformando desafíos empresariales en soluciones automatizadas con Inteligencia Artificial",
+    "problemTitle": "El Problema B2B",
+    "problemDesc": "Las empresas carecen de experiencia interna en IA y necesitan soluciones rápidas, escalables y probadas. FlowState AI ofrece un ecosistema de agentes inteligentes especializados, listos para deployment en Azure, con arquitectura robusta y soporte continuo.",
+    "projects": {
+      "lnc": {
+        "tagline": "Bot Legal Especializado",
+        "problem": "Las empresas necesitan respuestas legales rápidas y contextualizadas sin depender de consultas manuales."
+      },
+      "adgenie": {
+        "tagline": "Automatización de Respuesta Publicitaria B2B",
+        "problem": "Gestión manual de 46,000+ emails publicitarios consume tiempo valioso del equipo."
+      },
+      "vortext": {
+        "tagline": "Interpretación Simultánea en Tiempo Real",
+        "problem": "Las conferencias multilingües requieren intérpretes costosos y logística compleja."
+      },
+      "opifood": {
+        "tagline": "Análisis de Opiniones Gastronómicas",
+        "problem": "Los restaurantes necesitan entender el sentimiento de sus clientes a partir de reseñas."
+      },
+      "auditxt": {
+        "tagline": "Auditoría Automatizada de Documentos",
+        "problem": "La auditoría manual de documentos es lenta, propensa a errores y costosa."
+      }
+    },
+    "valueTitle": "Inteligencia Conectada",
+    "valueDesc": "Cada agente de FlowState AI está diseñado para integrarse perfectamente en tu ecosistema empresarial, desplegado en Azure con arquitectura escalable y soporte continuo.",
+    "ctaConsulting": "Solicitar Consultoría"
+  },
+  "contact": {
+    "title": "Conecta con un Arquitecto de Soluciones AI/Cloud",
+    "subtitle": "Define tu Próximo Paso",
+    "form": {
+      "name": "Nombre Completo",
+      "email": "Email",
+      "reason": "Motivo de Contacto",
+      "reasonPlaceholder": "Selecciona una opción",
+      "reasons": {
+        "job": "Oportunidad Laboral / Postulación",
+        "b2b": "Consultoría B2B / Servicios FlowState AI",
+        "networking": "Networking / Prensa"
+      },
+      "topic": "Tema de Interés",
+      "phone": "Número de Celular",
+      "submit": "Enviar Mensaje",
+      "success": "¡Gracias por tu mensaje! Te contactaré pronto.",
+      "error": "Hubo un error al enviar el mensaje. Intenta nuevamente."
+    },
+    "directContact": "También puedes contactarme directamente:"
+  },
+  "footer": {
+    "role": "Digital Transformation & AI Expert",
+    "description": "Arquitecto de Soluciones AI/Cloud con 25+ años de experiencia",
+    "quickLinks": "Enlaces Rápidos",
+    "connect": "Conecta Conmigo",
+    "rights": "Todos los derechos reservados.",
+    "madeWith": "Hecho con"
+  }
+}

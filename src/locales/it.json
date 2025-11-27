@@ -1,0 +1,110 @@
+{
+    "navigation": {
+        "home": "Home",
+        "experience": "Esperienza",
+        "flowstate": "FlowState AI",
+        "contact": "Contatto",
+        "downloadCV": "Scarica CV"
+    },
+    "hero": {
+        "title": "GUSTAVO BUONGIORNO BERTON",
+        "role": "Esperto in Trasformazione Digitale e IA",
+        "subtitle": "Oltre 25 anni alla guida della Trasformazione Digitale e dell'Architettura di Soluzioni IA/Cloud scalabili",
+        "ctaPrimary": "Esplora il Portfolio di Soluzioni IA/Cloud",
+        "ctaSecondary": "Scarica CV - Ottobre 2025"
+    },
+    "experience": {
+        "title": "La Mia Esperienza Professionale",
+        "subtitle": "Oltre due decenni trasformando le aziende attraverso la tecnologia",
+        "achievements": {
+            "emails": {
+                "label": "Email Automatizzate",
+                "description": "Risposta automatizzata in 5 giorni"
+            },
+            "years": {
+                "label": "Anni di Esperienza",
+                "description": "Guidando la trasformazione digitale"
+            },
+            "projects": {
+                "label": "Progetti Completati",
+                "description": "Soluzioni IA/Cloud scalabili"
+            }
+        },
+        "skillsTitle": "Competenze Tecniche Chiave",
+        "timelineTitle": "Percorso Professionale",
+        "roles": {
+            "flowstate": {
+                "role": "Architetto di Soluzioni IA/Cloud",
+                "description": "Guidando lo sviluppo di un ecosistema di agenti intelligenti per l'automazione aziendale."
+            },
+            "hutton": {
+                "role": "Capo dei Sistemi",
+                "description": "Gestione completa dell'infrastruttura tecnologica e migrazione verso soluzioni cloud."
+            },
+            "ibm": {
+                "role": "Analista di Sistemi",
+                "description": "Sviluppo di soluzioni aziendali e architettura di sistemi complessi."
+            }
+        }
+    },
+    "flowstate": {
+        "title": "FlowState AI: Ecosistema di Agenti Intelligenti",
+        "subtitle": "Trasformare le sfide aziendali in soluzioni automatizzate con l'Intelligenza Artificiale",
+        "problemTitle": "Il Problema B2B",
+        "problemDesc": "Le aziende mancano di competenze interne in IA e hanno bisogno di soluzioni rapide, scalabili e collaudate. FlowState AI offre un ecosistema di agenti intelligenti specializzati, pronti per il deployment su Azure, con architettura robusta e supporto continuo.",
+        "projects": {
+            "lnc": {
+                "tagline": "Bot Legale Specializzato",
+                "problem": "Le aziende hanno bisogno di risposte legali rapide e contestualizzate senza dipendere da consultazioni manuali."
+            },
+            "adgenie": {
+                "tagline": "Automazione della Risposta Pubblicitaria B2B",
+                "problem": "La gestione manuale di oltre 46.000 email pubblicitarie consuma tempo prezioso del team."
+            },
+            "vortext": {
+                "tagline": "Interpretazione Simultanea in Tempo Reale",
+                "problem": "Le conferenze multilingue richiedono interpreti costosi e logistica complessa."
+            },
+            "opifood": {
+                "tagline": "Analisi delle Opinioni Gastronomiche",
+                "problem": "I ristoranti devono capire il sentimento dei loro clienti dalle recensioni."
+            },
+            "auditxt": {
+                "tagline": "Audit Automatizzato dei Documenti",
+                "problem": "L'audit manuale dei documenti è lento, soggetto a errori e costoso."
+            }
+        },
+        "valueTitle": "Intelligenza Connessa",
+        "valueDesc": "Ogni agente di FlowState AI è progettato per integrarsi perfettamente nel tuo ecosistema aziendale, distribuito su Azure con architettura scalabile e supporto continuo.",
+        "ctaConsulting": "Richiedi Consulenza"
+    },
+    "contact": {
+        "title": "Connettiti con un Architetto di Soluzioni IA/Cloud",
+        "subtitle": "Definisci il Tuo Prossimo Passo",
+        "form": {
+            "name": "Nome Completo",
+            "email": "Email",
+            "reason": "Motivo del Contatto",
+            "reasonPlaceholder": "Seleziona un'opzione",
+            "reasons": {
+                "job": "Opportunità di Lavoro / Candidatura",
+                "b2b": "Consulenza B2B / Servizi FlowState AI",
+                "networking": "Networking / Stampa"
+            },
+            "topic": "Argomento di Interesse",
+            "phone": "Numero di Cellulare",
+            "submit": "Invia Messaggio",
+            "success": "Grazie per il tuo messaggio! Ti contatterò presto.",
+            "error": "Si è verificato un errore durante l'invio del messaggio. Riprova."
+        },
+        "directContact": "Puoi anche contattarmi direttamente:"
+    },
+    "footer": {
+        "role": "Esperto in Trasformazione Digitale e IA",
+        "description": "Architetto di Soluzioni IA/Cloud con oltre 25 anni di esperienza",
+        "quickLinks": "Link Rapidi",
+        "connect": "Connettiti con Me",
+        "rights": "Tutti i diritti riservati.",
+        "madeWith": "Fatto con"
+    }
+}
