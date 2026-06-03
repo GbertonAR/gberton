@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSAMOC 2026: Estrategia de Transformación Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --brand-navy: #0f172a;
+            --brand-purple: #7c3aed;
+            --brand-teal: #14b8a6;
+            --bg-light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--brand-navy);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--brand-purple);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        /* Timeline vertical line */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            width: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-line::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+    </style>
+    <!-- Chosen Palette: Navy Blue (Trust), Purple (Innovation), Teal (Efficiency), Light Gray (Background) -->
+    <!-- Application Structure Plan:
+         1. Hero: Vision & Impact Statement.
+         2. Diagnosis Section: Visualizing the pain points (Cards + Chart).
+         3. Solution Hub: Interactive feature breakdown of the App.
+         4. Operational Dashboard: A simulated view of the future admin tool showing KPIs.
+         5. Roadmap: Vertical timeline of the 6-month plan.
+         6. ROI & CTA: Summary of savings and final call to action.
+         Designed to lead the user from the "Problem" to the "Solution" and finally the "Value".
+    -->
+    <!-- Visualization & Content Choices:
+         - Charts (Chart.js): Used to quantify inefficiency (Slide 2) and projected ROI (Slide 7) to make abstract numbers concrete.
+         - Icons (FontAwesome): Used for rapid cognitive processing of pain points.
+         - Interactive Tabs: Used in the Solution section to allow users to explore features without scrolling.
+         - No SVG/Mermaid used.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="antialiased text-slate-800">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-900 to-purple-600 flex items-center justify-center text-white font-bold">O</div>
+                    <span class="font-heading font-bold text-xl tracking-tight text-slate-900">OSAMOC <span class="text-purple-600">2.0</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="scrollToSection('vision')" class="nav-link text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors">Visión</button>
+                    <button onclick="scrollToSection('diagnosis')" class="nav-link text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors">Diagnóstico</button>
+                    <button onclick="scrollToSection('solution')" class="nav-link text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors">Solución</button>
+                    <button onclick="scrollToSection('dashboard')" class="nav-link text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors">Control</button>
+                    <button onclick="scrollToSection('roi')" class="nav-link text-sm font-medium text-slate-600 hover:text-blue-900 transition-colors">Impacto</button>
+                </div>
+                <button onclick="scrollToSection('roi')" class="bg-blue-900 hover:bg-blue-800 text-white px-5 py-2 rounded-full text-sm font-medium transition-transform transform hover:scale-105 shadow-lg">
+                    Iniciar Fase 1
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section 1: Hero / Vision -->
+    <header id="vision" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-purple-100 blur-3xl opacity-50"></div>
+            <div class="absolute top-1/2 -left-24 w-72 h-72 rounded-full bg-blue-100 blur-3xl opacity-50"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-purple-50 border border-purple-100 text-purple-700 text-xs font-bold tracking-wide uppercase fade-in">
+                Estrategia por FlowState AI
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 fade-in delay-100 text-slate-900">
+                OSAMOC <span class="gradient-text">2026</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed fade-in delay-200">
+                De la burocracia del papel a la <span class="font-semibold text-blue-900">Inteligencia Conectada</span>. 
+                Elevando la eficiencia operativa y la experiencia del afiliado.
+            </p>
+            <div class="flex justify-center gap-4 fade-in delay-300">
+                <button onclick="scrollToSection('diagnosis')" class="px-8 py-3 bg-white text-slate-900 border border-slate-200 rounded-lg font-semibold hover:bg-slate-50 transition-colors shadow-sm">
+                    Ver Diagnóstico
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section 2: Diagnosis (The Problem) -->
+    <section id="diagnosis" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">El Costo Oculto de lo Analógico</h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                    La inercia de los procesos actuales genera fricción, riesgo y pérdida operativa medible.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Pain Points Cards -->
+                <div class="space-y-6">
+                    <!-- Friction -->
+                    <div class="group p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-xl transition-all duration-300 cursor-default">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-xl">
+                                <i class="fas fa-print"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-bold text-slate-900">Fricción Crítica (5 Pasos)</h3>
+                                <p class="text-slate-600 mt-2 text-sm">El afiliado debe imprimir, firmar, escanear y esperar. Un proceso lento que agota al usuario.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk -->
+                    <div class="group p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-xl transition-all duration-300 cursor-default">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-xl">
+                                <i class="fas fa-user-lock"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-bold text-slate-900">Brecha de Seguridad</h3>
+                                <p class="text-slate-600 mt-2 text-sm">Datos médicos sensibles viajan por canales no cifrados (Email/WhatsApp), generando riesgo legal.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Waste -->
+                    <div class="group p-6 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-xl transition-all duration-300 cursor-default">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 text-xl">
+                                <i class="fas fa-hourglass-half"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-bold text-slate-900">Pérdida Operativa</h3>
+                                <p class="text-slate-600 mt-2 text-sm"><span class="font-bold text-red-600">60%</span> del tiempo administrativo se pierde en data-entry manual de documentos ilegibles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visualization -->
+                <div class="bg-white p-8 rounded-3xl shadow-lg border border-slate-100">
+                    <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-6">Tiempo Promedio por Trámite (Minutos)</h3>
+                    <div class="chart-container">
+                        <canvas id="diagnosisChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <p class="text-sm text-slate-500 italic">El proceso actual consume 5x más recursos humanos que el modelo propuesto.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: The Solution (FlowState Experience) -->
+    <section id="solution" class="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <!-- Abstract Background Elements -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-900/50 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-900/30 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                
+                <!-- Left: Content & Interactive Tabs -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6 font-heading">La Solución <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">FlowState</span></h2>
+                    <p class="text-lg text-slate-300 mb-10 leading-relaxed">
+                        Una experiencia móvil nativa que elimina el papel. Capturamos datos, no imágenes, validando en tiempo real contra el padrón.
+                    </p>
+
+                    <!-- Interactive Features Selector -->
+                    <div class="space-y-4">
+                        <button onclick="updateSolutionView('pwa')" id="btn-pwa" class="feature-btn w-full text-left p-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 transition-all active-feature">
+                            <div class="flex items-center">
+                                <i class="fas fa-mobile-alt text-purple-400 text-xl w-8"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">PWA Universal</h4>
+                                    <p class="text-sm text-slate-400">Acceso instantáneo sin descargas. Cero fricción.</p>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button onclick="updateSolutionView('ocr')" id="btn-ocr" class="feature-btn w-full text-left p-4 rounded-xl bg-transparent hover:bg-white/10 border border-white/10 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-eye text-blue-400 text-xl w-8"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">OCR Inteligente</h4>
+                                    <p class="text-sm text-slate-400">Captura automática de datos desde la foto de la receta.</p>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button onclick="updateSolutionView('security')" id="btn-security" class="feature-btn w-full text-left p-4 rounded-xl bg-transparent hover:bg-white/10 border border-white/10 transition-all">
+                            <div class="flex items-center">
+                                <i class="fas fa-shield-alt text-teal-400 text-xl w-8"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg">Seguridad Grado Médico</h4>
+                                    <p class="text-sm text-slate-400">Cifrado E2E compliant con estándares HIPAA.</p>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Mobile Mockup Visualization -->
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative w-[300px] h-[600px] bg-slate-900 rounded-[3rem] border-8 border-slate-800 shadow-2xl overflow-hidden ring-1 ring-white/20">
+                        <!-- Dynamic Content Inside Phone -->
+                        <div id="phone-screen" class="absolute inset-0 bg-white text-slate-900 p-6 flex flex-col transition-opacity duration-500">
+                            <!-- Header -->
+                            <div class="flex justify-between items-center mb-8 pt-6">
+                                <span class="font-bold text-blue-900">OSAMOC</span>
+                                <i class="fas fa-bars text-slate-400"></i>
+                            </div>
+
+                            <!-- Screen Content: PWA Default -->
+                            <div id="screen-content" class="flex-1 flex flex-col justify-center items-center text-center">
+                                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-6 text-blue-600 text-3xl animate-bounce">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-2">Nueva Receta</h3>
+                                <p class="text-sm text-slate-500 mb-6">Toma una foto clara de tu receta para procesarla instantáneamente.</p>
+                                <div class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold shadow-lg shadow-blue-200">
+                                    Capturar
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Notch -->
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Operational Dashboard (Control) -->
+    <section id="dashboard" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-bold tracking-wider text-sm uppercase">Inteligencia Ejecutiva</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">Dashboard de Control</h2>
+                <p class="text-slate-600 mt-4 max-w-2xl mx-auto">
+                    Transformamos al personal administrativo en validadores estratégicos con trazabilidad total y priorización por IA.
+                </p>
+            </div>
+
+            <!-- Dashboard Mockup Container -->
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+                <!-- Fake Dashboard Header -->
+                <div class="bg-slate-100 border-b border-slate-200 p-4 flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="text-sm font-bold text-slate-700">Panel Admin</div>
+                        <div class="h-4 w-px bg-slate-300"></div>
+                        <div class="text-sm text-slate-500">Tiempo Real</div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Content Grid -->
+                <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- KPI Cards -->
+                    <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-6 mb-4">
+                        <div class="p-4 rounded-xl bg-blue-50 border border-blue-100">
+                            <div class="text-sm text-blue-600 font-semibold mb-1">Solicitudes Hoy</div>
+                            <div class="text-3xl font-bold text-slate-900">1,248</div>
+                            <div class="text-xs text-green-600 mt-1 flex items-center"><i class="fas fa-arrow-up mr-1"></i> 12% vs ayer</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-purple-50 border border-purple-100">
+                            <div class="text-sm text-purple-600 font-semibold mb-1">Tiempo Respuesta</div>
+                            <div class="text-3xl font-bold text-slate-900">45 min</div>
+                            <div class="text-xs text-green-600 mt-1 flex items-center"><i class="fas fa-arrow-down mr-1"></i> -70% vs promedio</div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-teal-50 border border-teal-100">
+                            <div class="text-sm text-teal-600 font-semibold mb-1">Prioridad Alta</div>
+                            <div class="text-3xl font-bold text-slate-900">32</div>
+                            <div class="text-xs text-teal-700 mt-1">Oncología / Diabetes</div>
+                        </div>
+                    </div>
+
+                    <!-- Chart: Case Prioritization -->
+                    <div class="md:col-span-1 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800 mb-4 text-sm">Priorización Automática (IA)</h4>
+                        <div class="chart-container" style="height: 200px;">
+                            <canvas id="triageChart"></canvas>
+                        </div>
+                        <p class="text-xs text-center text-slate-400 mt-4">La IA filtra el 60% de casos de rutina.</p>
+                    </div>
+
+                    <!-- Chart: Efficiency Trend -->
+                    <div class="md:col-span-2 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800 mb-4 text-sm">Velocidad de Aprobación (Proyección)</h4>
+                        <div class="chart-container" style="height: 200px;">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Roadmap -->
+    <section id="roadmap" class="py-24 bg-white relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Roadmap de Ejecución</h2>
+                <p class="text-slate-600 mt-4">Transición controlada en 6 meses para garantizar la continuidad operativa.</p>
+            </div>
+
+            <div class="relative timeline-line">
+                <!-- Month 1 -->
+                <div class="relative pl-12 md:pl-0 mb-12 group">
+                    <div class="md:flex items-center justify-between w-full">
+                        <div class="hidden md:block w-5/12 text-right pr-8">
+                            <h3 class="text-xl font-bold text-slate-900">Mes 1</h3>
+                            <span class="text-sm font-semibold text-purple-600 uppercase tracking-wide">Fase Fundacional</span>
+                        </div>
+                        
+                        <div class="absolute left-0 md:left-1/2 w-10 h-10 -ml-5 bg-purple-600 rounded-full flex items-center justify-center border-4 border-white shadow-lg z-10">
+                            <span class="text-white text-xs font-bold">01</span>
+                        </div>
+
+                        <div class="md:w-5/12 pl-4 md:pl-8 bg-white p-6 rounded-xl border border-slate-100 shadow-md group-hover:shadow-lg transition-shadow">
+                            <div class="md:hidden mb-2">
+                                <span class="text-xs font-bold text-purple-600 uppercase">Mes 1</span>
+                            </div>
+                            <h4 class="font-bold text-slate-800 mb-2">Rebranding & Landing Page</h4>
+                            <p class="text-sm text-slate-600">Lanzamiento de identidad visual y plataforma base de autogestión para afiliados.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 2-3 -->
+                <div class="relative pl-12 md:pl-0 mb-12 group">
+                    <div class="md:flex items-center flex-row-reverse justify-between w-full">
+                        <div class="hidden md:block w-5/12 text-left pl-8">
+                            <h3 class="text-xl font-bold text-slate-900">Mes 2-3</h3>
+                            <span class="text-sm font-semibold text-blue-600 uppercase tracking-wide">Alto Impacto</span>
+                        </div>
+                        
+                        <div class="absolute left-0 md:left-1/2 w-10 h-10 -ml-5 bg-blue-600 rounded-full flex items-center justify-center border-4 border-white shadow-lg z-10">
+                            <span class="text-white text-xs font-bold">03</span>
+                        </div>
+
+                        <div class="md:w-5/12 pr-4 md:pr-8 text-left md:text-right">
+                             <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-md group-hover:shadow-lg transition-shadow">
+                                <div class="md:hidden mb-2">
+                                    <span class="text-xs font-bold text-blue-600 uppercase">Mes 2-3</span>
+                                </div>
+                                <h4 class="font-bold text-slate-800 mb-2">Módulo de Crónicos</h4>
+                                <p class="text-sm text-slate-600">Digitalización de diabetes e hipertensión. Aquí obtenemos el mayor retorno de eficiencia.</p>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 4-6 -->
+                <div class="relative pl-12 md:pl-0 group">
+                    <div class="md:flex items-center justify-between w-full">
+                        <div class="hidden md:block w-5/12 text-right pr-8">
+                            <h3 class="text-xl font-bold text-slate-900">Mes 4-6</h3>
+                            <span class="text-sm font-semibold text-teal-600 uppercase tracking-wide">Escalabilidad</span>
+                        </div>
+                        
+                        <div class="absolute left-0 md:left-1/2 w-10 h-10 -ml-5 bg-teal-500 rounded-full flex items-center justify-center border-4 border-white shadow-lg z-10">
+                            <span class="text-white text-xs font-bold">06</span>
+                        </div>
+
+                        <div class="md:w-5/12 pl-4 md:pl-8 bg-white p-6 rounded-xl border border-slate-100 shadow-md group-hover:shadow-lg transition-shadow">
+                             <div class="md:hidden mb-2">
+                                <span class="text-xs font-bold text-teal-600 uppercase">Mes 4-6</span>
+                             </div>
+                            <h4 class="font-bold text-slate-800 mb-2">Digitalización Total</h4>
+                            <p class="text-sm text-slate-600">Integración de la Cartilla Médica y Red de Prestadores al ecosistema digital.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: ROI & CTA -->
+    <section id="roi" class="py-24 bg-gradient-bg text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <!-- Text Content -->
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">¿Estamos listos para liderar la salud digital?</h2>
+                    <p class="text-xl text-slate-300 mb-8">
+                        La inversión se paga sola en eficiencia. Recuperamos la capacidad de cuidar mejor a nuestra gente.
+                    </p>
+                    
+                    <div class="bg-white/10 rounded-2xl p-6 backdrop-blur-sm border border-white/10 mb-8">
+                        <div class="text-sm text-slate-300 uppercase tracking-wider mb-2">Impacto Proyectado</div>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-5xl font-bold text-green-400">+1,200</span>
+                            <span class="text-xl text-white">horas/mes</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mt-2">Horas administrativas recuperadas en el primer semestre.</p>
+                    </div>
+
+                    <button class="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-xl transition-transform transform hover:scale-105 shadow-xl shadow-green-900/50">
+                        Aprobar Fase 1: Rebranding & Crónicos <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <p class="mt-4 text-xs text-slate-500 uppercase tracking-wider">Planificación Estratégica por FlowState AI</p>
+                </div>
+
+                <!-- ROI Chart Visual -->
+                <div class="bg-white rounded-3xl p-8 shadow-2xl text-slate-900">
+                    <h3 class="font-bold text-lg mb-6">Proyección de Ahorro Operativo</h3>
+                    <div class="chart-container">
+                        <canvas id="roiChart"></canvas>
+                    </div>
+                    <div class="mt-6 p-4 bg-green-50 rounded-xl border border-green-100 flex items-start gap-3">
+                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-bold text-green-800 text-sm">OSAMOC: Más Humana, Más Inteligente</h4>
+                            <p class="text-xs text-green-700">Reducción drástica de costos logísticos e insumos físicos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-12 text-center border-t border-slate-800">
+        <p class="text-slate-500 text-sm">© 2026 OSAMOC | Powered by FlowState AI Strategy</p>
+    </footer>
+
+    <!-- Scripting for Interactivity and Charts -->
+    <script>
+        // Smooth Scrolling
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // --- Chart 1: Diagnosis (Time Comparison) ---
+        const ctxDiag = document.getElementById('diagnosisChart').getContext('2d');
+        new Chart(ctxDiag, {
+            type: 'bar',
+            data: {
+                labels: ['Proceso Actual (Analógico)', 'OSAMOC 2.0 (FlowState)'],
+                datasets: [{
+                    label: 'Minutos por Trámite',
+                    data: [45, 5], // 45 mins (print/scan/mail) vs 5 mins (app)
+                    backgroundColor: ['#ef4444', '#14b8a6'],
+                    borderRadius: 8,
+                    barThickness: 50
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => `${context.raw} minutos`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: true, color: '#f1f5f9' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // --- Solution Section Interactive Phone Logic ---
+        const solutionContent = {
+            pwa: {
+                icon: 'fa-camera',
+                color: 'blue',
+                title: 'Nueva Receta',
+                desc: 'Toma una foto clara de tu receta. Nuestra PWA la procesa sin necesidad de instalar nada.',
+                btn: 'Capturar'
+            },
+            ocr: {
+                icon: 'fa-file-medical-alt',
+                color: 'purple',
+                title: 'Lectura Automática',
+                desc: 'Detectado: Amoxicilina 500mg. Diagnóstico: Faringitis. Coincidencia Padrón: 100%.',
+                btn: 'Confirmar Datos'
+            },
+            security: {
+                icon: 'fa-lock',
+                color: 'teal',
+                title: 'Envío Seguro',
+                desc: 'Encriptando paquete de datos... Transmisión segura vía túnel SSL/TLS. Datos protegidos.',
+                btn: 'Enviado con Éxito'
+            }
+        };
+
+        function updateSolutionView(mode) {
+            // Update buttons state
+            document.querySelectorAll('.feature-btn').forEach(btn => {
+                btn.classList.remove('bg-white/20', 'active-feature');
+                btn.classList.add('bg-transparent');
+            });
+            const activeBtn = document.getElementById(`btn-${mode}`);
+            activeBtn.classList.remove('bg-transparent');
+            activeBtn.classList.add('bg-white/20', 'active-feature');
+
+            // Update Phone Screen Content
+            const screen = document.getElementById('screen-content');
+            const data = solutionContent[mode];
+            
+            // Fade out
+            screen.style.opacity = '0';
+            
+            setTimeout(() => {
+                screen.innerHTML = `
+                    <div class="w-20 h-20 bg-${data.color}-100 rounded-full flex items-center justify-center mb-6 text-${data.color}-600 text-3xl">
+                        <i class="fas ${data.icon}"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-800">${data.title}</h3>
+                    <p class="text-sm text-slate-500 mb-6 px-4">${data.desc}</p>
+                    <div class="w-full bg-${data.color}-600 text-white py-3 rounded-xl font-semibold shadow-lg shadow-${data.color}-200 cursor-pointer hover:bg-${data.color}-700 transition-colors">
+                        ${data.btn}
+                    </div>
+                `;
+                // Fade in
+                screen.style.opacity = '1';
+            }, 300);
+        }
+
+        // --- Chart 2: Triage (Doughnut) ---
+        const ctxTriage = document.getElementById('triageChart').getContext('2d');
+        new Chart(ctxTriage, {
+            type: 'doughnut',
+            data: {
+                labels: ['Rutina (Automático)', 'Prioridad Alta', 'Revisión Manual'],
+                datasets: [{
+                    data: [60, 15, 25],
+                    backgroundColor: ['#3b82f6', '#ef4444', '#eab308'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } }
+                },
+                cutout: '70%'
+            }
+        });
+
+        // --- Chart 3: Trend (Line) ---
+        const ctxTrend = document.getElementById('trendChart').getContext('2d');
+        new Chart(ctxTrend, {
+            type: 'line',
+            data: {
+                labels: ['Mes 1', 'Mes 2', 'Mes 3', 'Mes 4', 'Mes 5', 'Mes 6'],
+                datasets: [{
+                    label: 'Tiempo de Respuesta (Horas)',
+                    data: [48, 40, 24, 12, 8, 4],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // --- Chart 4: ROI (Bar) ---
+        const ctxRoi = document.getElementById('roiChart').getContext('2d');
+        new Chart(ctxRoi, {
+            type: 'bar',
+            data: {
+                labels: ['Costo Actual', 'Inversión FlowState', 'Ahorro Acumulado (6 Meses)'],
+                datasets: [{
+                    label: 'Valor Financiero',
+                    data: [100, 40, 150], // Abstract relative values
+                    backgroundColor: ['#94a3b8', '#3b82f6', '#22c55e'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: true }
+                },
+                scales: {
+                    y: { display: false },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+        
+        // Initial animation trigger
+        document.addEventListener('DOMContentLoaded', () => {
+             // Just ensuring everything is loaded
+        });
+
+    </script>
+</body>
+</html>

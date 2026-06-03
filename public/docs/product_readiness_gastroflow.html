@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Product Readiness — GastroFlow Evaluación Estratégica</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; padding: 28px; max-width: 1060px; margin: auto; }
+  h1 { font-size: 1.35rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px; }
+  .subtitle { font-size: 0.78rem; color: #94a3b8; margin-bottom: 24px; }
+
+  /* VERDICT */
+  .verdict-box {
+    background: linear-gradient(135deg, #1e3a1e, #0f172a);
+    border: 2px solid #22c55e;
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .verdict-score { font-size: 3.5rem; font-weight: 900; color: #4ade80; line-height: 1; }
+  .verdict-label { font-size: 1.1rem; font-weight: 700; color: #4ade80; }
+  .verdict-sub { font-size: 0.8rem; color: #94a3b8; margin-top: 6px; line-height: 1.6; }
+
+  /* COMPARISON BANNER */
+  .comp-banner {
+    background: #0f1f2e;
+    border: 1px solid #1d4ed8;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 0.81rem;
+    color: #93c5fd;
+    line-height: 1.6;
+  }
+  .comp-banner strong { color: #60a5fa; }
+
+  /* SCORING RADAR */
+  .radar-wrap { background: #1e293b; border-radius: 10px; padding: 18px; margin-bottom: 24px; }
+  .radar-title { font-size: 0.73rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 14px; }
+  .radar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .radar-label { font-size: 0.78rem; color: #cbd5e1; width: 220px; flex-shrink: 0; }
+  .radar-bar-wrap { flex: 1; background: #0f172a; border-radius: 4px; height: 8px; position: relative; }
+  .radar-bar { height: 8px; border-radius: 4px; }
+  .radar-score { font-size: 0.78rem; font-weight: 700; width: 60px; text-align: right; flex-shrink: 0; }
+  .bg-g { background: linear-gradient(90deg, #16a34a, #4ade80); }
+  .bg-y { background: linear-gradient(90deg, #d97706, #fbbf24); }
+  .bg-r { background: linear-gradient(90deg, #dc2626, #f87171); }
+  .c-g { color: #4ade80; } .c-y { color: #fbbf24; } .c-r { color: #f87171; } .c-o { color: #fb923c; }
+
+  /* GRID */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { background: #1e293b; border-radius: 10px; padding: 16px; border-left: 4px solid #334155; }
+  .card.green { border-left-color: #22c55e; }
+  .card.yellow { border-left-color: #f59e0b; }
+  .card.red { border-left-color: #ef4444; }
+  .card.blue { border-left-color: #3b82f6; }
+
+  .card-title { font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .metric-name { font-size: 0.81rem; color: #cbd5e1; }
+  .metric-val { font-size: 0.81rem; font-weight: 700; }
+  .bar-bg { background: #0f172a; border-radius: 4px; height: 5px; margin-bottom: 10px; }
+  .bar { height: 5px; border-radius: 4px; }
+
+  /* SECTION */
+  .section { background: #1e293b; border-radius: 10px; padding: 18px; margin-bottom: 20px; }
+  .section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+  .t-green { color: #4ade80; } .t-amber { color: #f59e0b; } .t-blue { color: #38bdf8; } .t-red { color: #f87171; }
+
+  /* GAPS */
+  .gap-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 11px; }
+  .tag { font-size: 0.67rem; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; margin-top: 2px; }
+  .tag-c { background: #7f1d1d; color: #fca5a5; }
+  .tag-h { background: #78350f; color: #fcd34d; }
+  .tag-m { background: #1e3a5f; color: #93c5fd; }
+  .tag-ok { background: #14532d; color: #86efac; }
+  .gap-text { font-size: 0.81rem; color: #cbd5e1; line-height: 1.5; }
+
+  /* PILLS */
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+  .pill { flex: 1; min-width: 110px; border-radius: 8px; padding: 12px 10px; text-align: center; }
+  .pill-ok { background: #14532d; border: 1px solid #22c55e; }
+  .pill-warn { background: #451a03; border: 1px solid #f59e0b; }
+  .pill-no { background: #450a0a; border: 1px solid #ef4444; }
+  .pill-icon { font-size: 1.3rem; margin-bottom: 4px; }
+  .pill-lbl { font-size: 0.68rem; font-weight: 700; color: #e2e8f0; }
+  .pill-st { font-size: 0.63rem; color: #94a3b8; margin-top: 2px; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 0.77rem; }
+  th { background: #0f172a; color: #94a3b8; font-weight: 700; text-align: left; padding: 8px 10px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  td { padding: 8px 10px; border-bottom: 1px solid #0f172a; color: #cbd5e1; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #162032; }
+  .sp { display: inline-block; font-size: 0.64rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+  .sp-no { background: #7f1d1d; color: #fca5a5; }
+  .sp-part { background: #78350f; color: #fcd34d; }
+  .sp-yes { background: #14532d; color: #86efac; }
+
+  /* AF GRID */
+  .af-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .af-card { background: #0f172a; border-radius: 8px; padding: 12px; }
+  .af-card-title { font-size: 0.71rem; font-weight: 700; color: #7dd3fc; margin-bottom: 5px; }
+  .af-card-text { font-size: 0.75rem; color: #94a3b8; line-height: 1.5; }
+
+  /* TRIPLE COMPARISON */
+  .triple { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+  .triple-card { border-radius: 10px; padding: 14px; text-align: center; }
+  .tc-red { background: #1c0a0a; border: 1px solid #7f1d1d; }
+  .tc-yellow { background: #1c1000; border: 1px solid #78350f; }
+  .tc-green { background: #0a1c0a; border: 1px solid #14532d; }
+  .tc-title { font-size: 0.7rem; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.04em; }
+  .tc-score { font-size: 2rem; font-weight: 900; margin-bottom: 4px; }
+  .tc-label { font-size: 0.7rem; color: #94a3b8; }
+  .tc-doc { font-size: 0.68rem; color: #64748b; margin-top: 4px; }
+
+  .highlight-box { background: #0c1a2e; border: 1px solid #1d4ed8; border-radius: 8px; padding: 14px; margin-top: 14px; font-size: 0.8rem; color: #93c5fd; line-height: 1.6; }
+  .warn-box { background: #1c1000; border: 1px solid #78350f; border-radius: 8px; padding: 14px; margin-top: 14px; font-size: 0.8rem; color: #fcd34d; line-height: 1.6; }
+  .warn-box strong { color: #fbbf24; }
+</style>
+</head>
+<body>
+
+<h1>📋 Product Readiness Scorecard — GastroFlow · Evaluación Estratégica v1.0</h1>
+<p class="subtitle">Framework: PRD Completeness · INVEST Criteria · AF Readiness · Business Viability | Evaluado: Abril 2026</p>
+
+<!-- TRIPLE COMPARISON -->
+<div class="triple">
+  <div class="triple-card tc-red">
+    <div class="tc-title" style="color:#f87171;">🚫 FLOW-PORT AI</div>
+    <div class="tc-score" style="color:#ef4444;">28</div>
+    <div class="tc-label">Chat Log / Roleplay de IA</div>
+    <div class="tc-doc">No ejecutable por ningún rol</div>
+  </div>
+  <div class="triple-card tc-yellow">
+    <div class="tc-title" style="color:#fbbf24;">⚠️ RECETAS MÉDICAS</div>
+    <div class="tc-score" style="color:#f59e0b;">61</div>
+    <div class="tc-label">Concept Note / Pre-PRD</div>
+    <div class="tc-doc">Requiere transformación</div>
+  </div>
+  <div class="triple-card tc-green">
+    <div class="tc-title" style="color:#4ade80;">✅ GASTROFLOW</div>
+    <div class="tc-score" style="color:#22c55e;">79</div>
+    <div class="tc-label">Strategic Business Document</div>
+    <div class="tc-doc">Condicionalmente listo para AF</div>
+  </div>
+</div>
+
+<!-- VERDICT -->
+<div class="verdict-box">
+  <div class="verdict-score">79</div>
+  <div>
+    <div class="verdict-label">✅ STRATEGIC BUSINESS DOCUMENT — El más maduro de la serie</div>
+    <div class="verdict-sub">
+      Clasificación: Evaluación Estratégica de Producto con componentes de Business Case, Pricing Model y Roadmap.<br>
+      Estado: Condicionalmente listo para Analista Funcional — módulo por módulo, no la plataforma completa.<br>
+      Acción recomendada: el propio documento lo dice correctamente en §8.3: <em>el primer próximo paso es redactar el PRD para GF Inventory.</em>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARISON CONTEXT -->
+<div class="comp-banner">
+  <strong>📊 Contexto de la serie evaluada:</strong> Este es el tercer documento analizado en esta sesión. GastroFlow representa un salto cualitativo respecto a los anteriores: tiene estructura formal, análisis económico real, modelo de pricing articulado, roadmap por fases y riesgos identificados con mitigaciones. La diferencia no es de completitud sino de <strong>categoría de artefacto</strong> — y eso cambia completamente lo que el AF puede y no puede hacer con él.
+</div>
+
+<!-- RADAR SCORING -->
+<div class="radar-wrap">
+  <div class="radar-title">📐 Scoring por Dimensión PRD (0–100 por eje)</div>
+
+  <div class="radar-row">
+    <div class="radar-label">🎯 Visión & Definición del Problema</div>
+    <div class="radar-bar-wrap"><div class="radar-bar bg-g" style="width:88%"></div></div>
+    <div class="radar-score c-g">88 / 100</div>
+  </div>
+  <div class="radar-row">
+    <div class="radar-label">💰 Análisis de Negocio, Costos & ROI</div>
+    <div class="radar-bar-wrap"><div class="radar-bar bg-g" style="width:90%"></div></div>
+    <div class="radar-score c-g">90 / 100</div>
+  </div>
+  <div class="radar-row">
+    <div class="radar-label">🏷️ Modelo de Pricing & Bundles</div>
+    <div class="radar-bar-wrap"><div class="radar-bar bg-g" style="width:85%"></div></div>
+    <div class="radar-score c-g">85 / 100</div>
+  </div>
+  <div class="radar-row">
+    <div class="radar-label">🗺️ Roadmap & Priorización</div>
+    <div class="radar-bar-wrap"><div class="radar-bar bg-g" style="width:80%"></div></div>
+    <div class="radar-score c-g">80 / 100</div>
+  </div>
+  <div class="radar-row">
+    <div class="radar-label">⚙️ Arquitectura Técnica & Stack</div>
+    <div class="radar-bar-wrap"><div class="radar-bar bg-y" style="width:52%"></div></div>
+    <div class="radar-score c-y">52 / 100</div>
+  </div>
+  <div class="radar-row">
+    <div class="radar-label">📝 Requerimientos Funcionales (User Stories)</div>
+    <div class="radar-bar-wrap"><div class="radar-bar bg-r" style="width:8%"></div></div>
+    <div class="radar-score c-r">8 / 100</div>
+  </div>
+  <div class="radar-row">
+    <div class="radar-label">🔒 Compliance, Legal & Regulatorio</div>
+    <div class="radar-bar-wrap"><div class="radar-bar bg-y" style="width:48%"></div></div>
+    <div class="radar-score c-y">48 / 100</div>
+  </div>
+  <div class="radar-row">
+    <div class="radar-label">👥 Personas, Segmentos & ICP</div>
+    <div class="radar-bar-wrap"><div class="radar-bar bg-y" style="width:60%"></div></div>
+    <div class="radar-score c-y">60 / 100</div>
+  </div>
+  <div class="radar-row">
+    <div class="radar-label">🧪 Criterios de Aceptación & DoD</div>
+    <div class="radar-bar-wrap"><div class="radar-bar bg-r" style="width:5%"></div></div>
+    <div class="radar-score c-r">5 / 100</div>
+  </div>
+</div>
+
+<!-- SCORE CARDS -->
+<div class="grid">
+
+  <div class="card green">
+    <div class="card-title">💰 Business Case & Financiero</div>
+    <div class="metric-row"><span class="metric-name">CapEx por módulo estimado</span><span class="metric-val c-g">✓ USD detallado</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:90%"></div></div>
+    <div class="metric-row"><span class="metric-name">OpEx Azure/mes por cliente</span><span class="metric-val c-g">✓ Rango definido</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:88%"></div></div>
+    <div class="metric-row"><span class="metric-name">Proyección ARR 3 escenarios</span><span class="metric-val c-g">✓ Conserv./Base/Optim.</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:92%"></div></div>
+    <div class="metric-row"><span class="metric-name">Break-even proyectado</span><span class="metric-val c-g">✓ Mes 14 (base)</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:85%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val c-g">90 / 100</span></div>
+  </div>
+
+  <div class="card green">
+    <div class="card-title">🏷️ Pricing & Bundles</div>
+    <div class="metric-row"><span class="metric-name">Setup Fee por módulo</span><span class="metric-val c-g">✓ Rango USD definido</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:88%"></div></div>
+    <div class="metric-row"><span class="metric-name">Licencia mensual por sucursal</span><span class="metric-val c-g">✓ Rango USD definido</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:88%"></div></div>
+    <div class="metric-row"><span class="metric-name">3 bundles con descuentos</span><span class="metric-val c-g">✓ % calculados</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:90%"></div></div>
+    <div class="metric-row"><span class="metric-name">Reglas de venta definidas</span><span class="metric-val c-g">✓ Dependencias claras</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:85%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val c-g">85 / 100</span></div>
+  </div>
+
+  <div class="card green">
+    <div class="card-title">🗺️ Roadmap & Priorización</div>
+    <div class="metric-row"><span class="metric-name">Fases con fechas (5 fases)</span><span class="metric-val c-g">✓ Abr 2026 → Jul 2027+</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:82%"></div></div>
+    <div class="metric-row"><span class="metric-name">Entregables por fase</span><span class="metric-val c-g">✓ Nombrados</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:78%"></div></div>
+    <div class="metric-row"><span class="metric-name">Objetivo de negocio por fase</span><span class="metric-val c-g">✓ ARR objetivo</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:80%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val c-g">80 / 100</span></div>
+  </div>
+
+  <div class="card yellow">
+    <div class="card-title">⚙️ Arquitectura Técnica</div>
+    <div class="metric-row"><span class="metric-name">Stack Azure mencionado</span><span class="metric-val c-y">✓ Referenciado</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:60%"></div></div>
+    <div class="metric-row"><span class="metric-name">Diagramas C4 / Flujos</span><span class="metric-val c-r">✗ Ausentes</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Arquitectura multisucursal</span><span class="metric-val c-y">Nombrada (sin detalle)</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:35%"></div></div>
+    <div class="metric-row"><span class="metric-name">NFRs con valores</span><span class="metric-val c-r">✗ Ausentes</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val c-y">52 / 100</span></div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">📝 Requerimientos Funcionales</div>
+    <div class="metric-row"><span class="metric-name">User Stories (cualquier módulo)</span><span class="metric-val c-r">✗ Cero</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Criterios de Aceptación</span><span class="metric-val c-r">✗ Cero</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Descripción funcional módulos</span><span class="metric-val c-y">Implícita en nombres</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:20%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val c-r">8 / 100</span></div>
+  </div>
+
+  <div class="card yellow">
+    <div class="card-title">🔒 Compliance & Legal</div>
+    <div class="metric-row"><span class="metric-name">Riesgos identificados</span><span class="metric-val c-g">✓ 4 riesgos con mitigación</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:75%"></div></div>
+    <div class="metric-row"><span class="metric-name">Marco fiscal LATAM (AFIP/SAT)</span><span class="metric-val c-y">Mencionado (D-4)</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:30%"></div></div>
+    <div class="metric-row"><span class="metric-name">Protección de datos (GIN)</span><span class="metric-val c-y">Consentimiento citado</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:35%"></div></div>
+    <div class="metric-row"><span class="metric-name">Registro de marcas</span><span class="metric-val c-g">✓ Accionado en §8.3</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:70%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val c-y">48 / 100</span></div>
+  </div>
+
+</div>
+
+<!-- GAPS -->
+<div class="section">
+  <div class="section-title t-amber">🚨 Gaps Identificados — Lo que falta antes del AF</div>
+
+  <div class="gap-item">
+    <span class="tag tag-c">CRÍTICO</span>
+    <span class="gap-text"><strong>Cero User Stories en todos los 6 módulos.</strong> El documento describe <em>qué hace</em> cada módulo en términos de valor de negocio, pero ningún comportamiento funcional está escrito en formato que el AF pueda convertir en tareas. "GF Inventory detecta mermas" no es una User Story; es un headline de marketing.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-c">CRÍTICO</span>
+    <span class="gap-text"><strong>Sin Criterios de Aceptación ni Definition of Done.</strong> El documento asigna "madurez" a los módulos (ej: "Listo para MVP") pero no define qué significa eso funcionalmente. El AF no puede escribir casos de prueba sin criterios verificables.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-h">ALTO</span>
+    <span class="gap-text"><strong>GIN (D-2) tiene un riesgo legal severo no desarrollado.</strong> Vender datos operativos de restaurantes a Unilever/Arcor/fondos requiere análisis profundo de consentimiento informado, Ley 25.326 (AR), LGPD (BR) y contratos de procesamiento de datos. "Con consentimiento explícito" en una línea no es un marco legal suficiente.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-h">ALTO</span>
+    <span class="gap-text"><strong>Arquitectura técnica es una caja negra para el AF.</strong> "Núcleo de datos unificado en Azure" y "cloud-agnostic con Terraform" son decisiones correctas pero no hay diagrama de contexto, modelo de datos de alto nivel, ni especificación de APIs entre módulos. El AF no puede levantar requerimientos de integración sin esto.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-h">ALTO</span>
+    <span class="gap-text"><strong>NFRs completamente ausentes.</strong> Para un producto B2B Enterprise con datos financieros de restaurantes: ¿cuál es el SLA de uptime comprometido en contrato? ¿Tiempo de respuesta máximo del dashboard multilocal? ¿Política de backup y RPO/RTO? Sin estos valores, el equipo técnico no puede dimensionar la infraestructura Azure.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-m">MEDIO</span>
+    <span class="gap-text"><strong>ICP (Ideal Customer Profile) declarado pero no profundizado.</strong> Se segmenta en "grupos con 2-10 sucursales" y "franquicias con 10+", pero no hay perfil de buyer persona, proceso de decisión de compra típico del sector gastronómico argentino, ni mapa de competidores directos (Toast, MarketMan, Invu POS en LATAM).</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-m">MEDIO</span>
+    <span class="gap-text"><strong>FlowScore (D-1) requiere análisis regulatorio de actividad financiera.</strong> Generar un score crediticio y derivar clientes a fintechs puede requerir habilitación como intermediario financiero en Argentina/Brasil. Esto no está contemplado y podría bloquear el lanzamiento de la feature más diferenciadora del producto.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-ok">ATENCIÓN</span>
+    <span class="gap-text"><strong>Escenario de crecimiento optimista requiere revisión.</strong> ARR de USD 2.4M en Año 3 con 100+ clientes Enterprise implica un ciclo de ventas de 60-120 días (reconocido en §8.2) y un equipo comercial que no está presupuestado. El CAC objetivo de USD 4.000 parece conservador para Enterprise B2B en LATAM.</span>
+  </div>
+</div>
+
+<!-- CHECKLIST AF -->
+<div class="section-title t-blue" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;">✅ ¿Está listo para el Analista Funcional?</div>
+<div class="pills">
+  <div class="pill pill-ok"><div class="pill-icon">✅</div><div class="pill-lbl">Visión Producto</div><div class="pill-st">Clara</div></div>
+  <div class="pill pill-ok"><div class="pill-icon">✅</div><div class="pill-lbl">Business Case</div><div class="pill-st">Sólido</div></div>
+  <div class="pill pill-ok"><div class="pill-icon">✅</div><div class="pill-lbl">Pricing & Bundles</div><div class="pill-st">Definido</div></div>
+  <div class="pill pill-ok"><div class="pill-icon">✅</div><div class="pill-lbl">Roadmap Fases</div><div class="pill-st">Estructurado</div></div>
+  <div class="pill pill-ok"><div class="pill-icon">✅</div><div class="pill-lbl">Riesgos + Mitig.</div><div class="pill-st">Identificados</div></div>
+  <div class="pill pill-warn"><div class="pill-icon">⚠️</div><div class="pill-lbl">Arquitectura</div><div class="pill-st">Parcial</div></div>
+  <div class="pill pill-warn"><div class="pill-icon">⚠️</div><div class="pill-lbl">Personas / ICP</div><div class="pill-st">Básico</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">User Stories</div><div class="pill-st">Cero</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Criterios Acept.</div><div class="pill-st">Cero</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">NFRs</div><div class="pill-st">Ausentes</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Diagramas C4</div><div class="pill-st">Ausentes</div></div>
+</div>
+
+<!-- PLAN DE ACCIÓN PARA EL AF -->
+<div class="section">
+  <div class="section-title t-blue">🧭 Plan de Trabajo para el Analista Funcional — Módulo a Módulo</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Orden</th>
+        <th>Módulo</th>
+        <th>Entregable AF requerido</th>
+        <th>Insumo disponible en doc</th>
+        <th>Esfuerzo est.</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1°</strong></td>
+        <td>GF Inventory</td>
+        <td>PRD completo: épicas, User Stories, criterios Gherkin, flujo de escandallos, diagrama C4 L2</td>
+        <td>Score 36/40, CapEx, OpEx, Setup Fee, rol en bundles</td>
+        <td>1.5 semanas</td>
+        <td><span class="sp sp-part">LISTO PARA INICIAR</span></td>
+      </tr>
+      <tr>
+        <td><strong>2°</strong></td>
+        <td>GF Compras</td>
+        <td>PRD: dependencia de Inventory, reglas de generación automática de OC, integración EDI proveedores</td>
+        <td>Regla de venta: no vender sin Inventory. CapEx/OpEx definidos.</td>
+        <td>1 semana</td>
+        <td><span class="sp sp-part">BLOQUEADO POR INVENTORY</span></td>
+      </tr>
+      <tr>
+        <td><strong>3°</strong></td>
+        <td>GF Finance</td>
+        <td>PRD: KPIs de dashboard, cálculo de margen de contribución, integración con Compras e Inventory</td>
+        <td>Dependencias declaradas. Pricing definido.</td>
+        <td>1 semana</td>
+        <td><span class="sp sp-part">BLOQUEADO POR COMPRAS</span></td>
+      </tr>
+      <tr>
+        <td><strong>4°</strong></td>
+        <td>GF Staff</td>
+        <td>PRD: gestión de turnos, integración con POS para demand-forecast, alertas de productividad</td>
+        <td>Puede venderse standalone. CapEx/OpEx definidos.</td>
+        <td>1.5 semanas</td>
+        <td><span class="sp sp-no">V1 POST-LANZAMIENTO</span></td>
+      </tr>
+      <tr>
+        <td><strong>5°</strong></td>
+        <td>GF Sales & POS</td>
+        <td>PRD: flujo de comandas, integración Rappi/PedidosYa, dashboard en tiempo real</td>
+        <td>Mayor CapEx (USD 30-45k). Setup Fee más alto.</td>
+        <td>2 semanas</td>
+        <td><span class="sp sp-no">V1 POST-LANZAMIENTO</span></td>
+      </tr>
+      <tr>
+        <td><strong>6°</strong></td>
+        <td>GF CX</td>
+        <td>PRD: CRM gastronómico, análisis de sentimiento Google Maps/TripAdvisor, programa fidelidad</td>
+        <td>Score 28/40. Depende de POS.</td>
+        <td>2 semanas</td>
+        <td><span class="sp sp-no">V2 EXPANSIÓN</span></td>
+      </tr>
+      <tr>
+        <td><strong>7°</strong></td>
+        <td>Núcleo Auth/RBAC/API</td>
+        <td>Arquitectura técnica: modelo de tenancy multisucursal, RBAC granular, especificación OpenAPI</td>
+        <td>Presupuesto USD 30-40k definido. Cloud-agnostic con Terraform mencionado.</td>
+        <td>2 semanas</td>
+        <td><span class="sp sp-part">DEBE IR PRIMERO (FASE 0)</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="warn-box">
+    <strong>⚠️ Secuencia crítica:</strong> El Núcleo Auth/RBAC/API (Fase 0) debe especificarse técnicamente <em>antes</em> de que el AF comience los PRDs de módulos. Las decisiones de tenancy (¿un tenant por cadena o por sucursal?) afectan el modelo de datos de todos los módulos. Si el AF escribe User Stories de Inventory sin saber la respuesta a esa pregunta, deberá reescribirlas.
+  </div>
+</div>
+
+<!-- LO QUE HACE BIEN -->
+<div class="section">
+  <div class="section-title t-green">🏆 Fortalezas Diferenciales — Lo que eleva este documento sobre los anteriores</div>
+  <div class="af-grid">
+    <div class="af-card">
+      <div class="af-card-title">✓ Scoring cuantitativo de módulos (4 dimensiones)</div>
+      <div class="af-card-text">La matriz ROI Cliente / Complejidad IA / Diferenciación / Urgencia de Mercado es un artefacto de priorización real. El AF puede usar el orden de scoring para defender la secuencia de sprints ante el cliente.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">✓ Reglas de venta son proto-reglas de negocio</div>
+      <div class="af-card-text">"GF Compras NO se vende sin GF Inventory" es directamente convertible en una restricción funcional del sistema: la plataforma debe bloquear la activación de Compras si Inventory no tiene escandallos cargados.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">✓ Riesgos con mitigaciones = proto acceptance criteria</div>
+      <div class="af-card-text">"Si el cliente no carga escandallos correctamente, Inventory falla → Setup Fee incluye 2 semanas de auditoría in-situ" es directamente un criterio de aceptación del proceso de onboarding.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">✓ §8.3 es un backlog de producto correcto</div>
+      <div class="af-card-text">Los 5 próximos pasos son accionables y están correctamente priorizados. El propio documento sabe que necesita un PRD y que el piloto debe ser un grupo de restaurantes en Argentina. Eso es lucidez estratégica.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">✓ Proyección financiera con 3 escenarios</div>
+      <div class="af-card-text">Conservador / Base / Optimista con ARR por año es el nivel mínimo aceptable para un business case presentable a inversores o al equipo técnico para dimensionar la infraestructura.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">✓ Propuesta disruptiva separada del core</div>
+      <div class="af-card-text">FlowScore, GIN, ChefGPT, Marketplace y Academy están correctamente separados en una sección D (disruptiva), no mezclados con los módulos core. Esa separación es disciplina de producto.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+
+<style>
+:root { --gap: 12px; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+
+.tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 6px 14px; font-size: 13px; border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md); background: transparent; cursor: pointer;
+  color: var(--color-text-secondary); transition: all .15s;
+}
+.tab-btn.active { background: var(--color-background-secondary); color: var(--color-text-primary); font-weight: 500; }
+.tab-btn:hover:not(.active) { background: var(--color-background-secondary); }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.section-title { font-size: 11px; font-weight: 500; letter-spacing: .06em; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: 10px; }
+
+.verdict-bar { display: flex; gap: 8px; align-items: center; padding: 14px 16px; border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); margin-bottom: 16px; }
+.verdict-icon { font-size: 24px; flex-shrink: 0; }
+.verdict-text { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.verdict-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
+.metric-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; }
+.metric-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.metric-value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.metric-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+
+.issue-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; margin-bottom: 10px; }
+.issue-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+.badge-red { background: var(--color-background-danger); color: var(--color-text-danger); }
+.badge-yellow { background: var(--color-background-warning); color: var(--color-text-warning); }
+.badge-green { background: var(--color-background-success); color: var(--color-text-success); }
+.issue-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.issue-desc { font-size: 13px; color: var(--color-text-secondary); line-height: 1.55; }
+.issue-fix { font-size: 12px; color: var(--color-text-info); margin-top: 8px; padding: 8px 10px; background: var(--color-background-info); border-radius: var(--border-radius-md); }
+
+.score-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.score-label { font-size: 13px; color: var(--color-text-primary); width: 180px; flex-shrink: 0; }
+.score-bar-bg { flex: 1; height: 6px; background: var(--color-border-tertiary); border-radius: 3px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 3px; transition: width .6s ease; }
+.score-num { font-size: 13px; font-weight: 500; min-width: 30px; text-align: right; }
+.fill-green { background: #3B6D11; }
+.fill-yellow { background: #BA7517; }
+.fill-red { background: #A32D2D; }
+
+.roadmap-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.roadmap-item:last-child { border-bottom: none; }
+.roadmap-phase { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 20px; height: fit-content; white-space: nowrap; flex-shrink: 0; }
+.phase-now { background: var(--color-background-danger); color: var(--color-text-danger); }
+.phase-soon { background: var(--color-background-warning); color: var(--color-text-warning); }
+.phase-future { background: var(--color-background-info); color: var(--color-text-info); }
+.roadmap-content { flex: 1; }
+.roadmap-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+.roadmap-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+
+.new-feat { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; margin-bottom: 10px; display: flex; gap: 12px; }
+.feat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.feat-icon-purple { background: #EEEDFE; }
+.feat-icon-teal { background: #E1F5EE; }
+.feat-icon-amber { background: #FAEEDA; }
+.feat-icon-blue { background: #E6F1FB; }
+.feat-icon-coral { background: #FAECE7; }
+.feat-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.feat-desc { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+.feat-tag { font-size: 11px; padding: 2px 7px; border-radius: 20px; background: var(--color-background-secondary); color: var(--color-text-secondary); display: inline-block; margin-top: 6px; }
+</style>
+
+<div style="padding: 4px 0 0;">
+  <div class="verdict-bar">
+    <span class="verdict-icon">🟢</span>
+    <div>
+      <div class="verdict-text">FinApp (Apex Ledger) — FUERTE · Cercano a Producción Real</div>
+      <div class="verdict-sub">3 bloqueantes críticos · 5 mejoras importantes · 6 funciones nuevas propuestas</div>
+    </div>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Arquitectura</div>
+      <div class="metric-value" style="color:#3B6D11">8.5</div>
+      <div class="metric-sub">BFF sólido</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Seguridad</div>
+      <div class="metric-value" style="color:#BA7517">6.0</div>
+      <div class="metric-sub">Falta 2FA / audit</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">IA / Insights</div>
+      <div class="metric-value" style="color:#BA7517">7.0</div>
+      <div class="metric-sub">Falta auditabilidad</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">UX Mobile</div>
+      <div class="metric-value" style="color:#A32D2D">4.5</div>
+      <div class="metric-sub">Ticker no responsivo</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="show('issues')">Problemas</button>
+    <button class="tab-btn" onclick="show('scores')">Evaluación</button>
+    <button class="tab-btn" onclick="show('roadmap')">Roadmap</button>
+    <button class="tab-btn" onclick="show('newfeats')">Funciones Nuevas</button>
+  </div>
+
+  <div id="panel-issues" class="panel active">
+    <div class="section-title">Bloqueantes — resolver antes de escalar</div>
+
+    <div class="issue-card">
+      <div class="issue-header">
+        <span class="badge badge-red">CRÍTICO</span>
+        <span class="issue-title">Tipo de cambio hardcodeado ($1200)</span>
+      </div>
+      <div class="issue-desc">Error de integridad financiera. Cualquier variación cambiaria produce métricas incorrectas, decisiones erróneas y pérdida inmediata de confianza del usuario. En Argentina esto es especialmente grave dado la volatilidad del tipo de cambio.</div>
+      <div class="issue-fix">✦ Centralizar FX en microservicio dedicado · Versionar por fecha · Persistir conversiones históricas · Integrar fuente externa (ej. BCRA / Ambito API)</div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-header">
+        <span class="badge badge-red">CRÍTICO</span>
+        <span class="issue-title">Side-effect en carga del dashboard</span>
+      </div>
+      <div class="issue-desc">triggerMonthlyGeneration() se dispara en el render inicial vía POST /finance/generate-month/ → GET /summary-full/. Esto introduce duplicación de datos, condiciones de carrera y degrada la performance de carga. Antipatrón peligroso en producción.</div>
+      <div class="issue-fix">✦ Mover a cron job schedulado (ideal) · O endpoint idempotente con lock de ejecución y control por período ya generado</div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-header">
+        <span class="badge badge-red">CRÍTICO</span>
+        <span class="issue-title">Falta de auditabilidad en motor de IA</span>
+      </div>
+      <div class="issue-desc">Los agentes FINA / ARKO / LUMEN generan insights y acciones concretas sin registrar qué datos usaron ni por qué llegaron a esa conclusión. El botón "Ejecutar $X" es peligroso sin confirmación doble, simulación previa y logging detallado.</div>
+      <div class="issue-fix">✦ Implementar Audit Trail por cada decisión IA · Log de inputs + modelo + timestamp · Confirmación 2-step para ejecuciones · Modo simulación previo</div>
+    </div>
+
+    <div class="section-title" style="margin-top:16px">Importantes — no bloquean, restan calidad</div>
+
+    <div class="issue-card">
+      <div class="issue-header">
+        <span class="badge badge-yellow">IMPORTANTE</span>
+        <span class="issue-title">MarketTicker no responsivo</span>
+      </div>
+      <div class="issue-desc">hidden lg:flex oculta el ticker en mobile. En Argentina la mayoría accede desde dispositivo móvil — este componente es invisible para el usuario promedio.</div>
+      <div class="issue-fix">✦ Versión compacta: scroll horizontal tipo chip-row · O widget resumido colapsable · Priorizar mobile-first en toda la UI</div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-header">
+        <span class="badge badge-yellow">IMPORTANTE</span>
+        <span class="issue-title">TopMovers fuera del BFF + Settings duplicado</span>
+      </div>
+      <div class="issue-desc">TopMovers realiza fetch independiente rompiendo el patrón BFF. Settings se consulta dos veces generando doble roundtrip. Inconsistencia arquitectural que acumula deuda técnica.</div>
+      <div class="issue-fix">✦ Incorporar TopMovers al BFF · Centralizar Settings en singleton con cache · Auditar todos los fetches que salen del patrón</div>
+    </div>
+
+    <div class="issue-card">
+      <div class="issue-header">
+        <span class="badge badge-yellow">IMPORTANTE</span>
+        <span class="issue-title">Speech API sin fallback + Anomalías truncadas</span>
+      </div>
+      <div class="issue-desc">Speech API falla silenciosamente sin indicador de compatibilidad. Anomalías con .slice(0,3) cortan info sin opción de ver más — UX incompleta que oculta datos relevantes.</div>
+      <div class="issue-fix">✦ Speech: fallback UI + indicador de compatibilidad del browser · Anomalías: "Ver más" con drill-down o modal detallado</div>
+    </div>
+  </div>
+
+  <div id="panel-scores" class="panel">
+    <div class="section-title">Evaluación por dimensión</div>
+
+    <div class="score-row">
+      <span class="score-label">Arquitectura BFF</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-green" style="width:85%"></div></div>
+      <span class="score-num" style="color:#3B6D11">8.5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Diseño de Dashboard</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-green" style="width:85%"></div></div>
+      <span class="score-num" style="color:#3B6D11">8.5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Flujo post-acción</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-green" style="width:82%"></div></div>
+      <span class="score-num" style="color:#3B6D11">8.2</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Capa de IA (Insights)</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-yellow" style="width:70%"></div></div>
+      <span class="score-num" style="color:#BA7517">7.0</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Seguridad / Fintech</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-yellow" style="width:60%"></div></div>
+      <span class="score-num" style="color:#BA7517">6.0</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Datos y consistencia FX</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-yellow" style="width:55%"></div></div>
+      <span class="score-num" style="color:#BA7517">5.5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Performance / BFF pureza</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-yellow" style="width:65%"></div></div>
+      <span class="score-num" style="color:#BA7517">6.5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">UX Mobile</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-red" style="width:45%"></div></div>
+      <span class="score-num" style="color:#A32D2D">4.5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Backend / Calidad código</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-yellow" style="width:65%"></div></div>
+      <span class="score-num" style="color:#BA7517">6.5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Auditabilidad IA</span>
+      <div class="score-bar-bg"><div class="score-bar-fill fill-red" style="width:30%"></div></div>
+      <span class="score-num" style="color:#A32D2D">3.0</span>
+    </div>
+
+    <div style="margin-top:16px; padding:14px; background:var(--color-background-secondary); border-radius:var(--border-radius-lg);">
+      <div style="font-size:13px; color:var(--color-text-secondary); line-height:1.6;">
+        <strong style="color:var(--color-text-primary)">Diagnóstico estratégico:</strong> FinApp ya tiene ADN de fintech inteligente. El desafío no es técnico en su core — es de confianza operativa. Resolver los 3 bloqueantes eleva el score promedio de 6.7 → 8.2 y habilita el camino a monetización real.
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-roadmap" class="panel">
+    <div class="section-title">Plan de acción priorizado</div>
+
+    <div class="roadmap-item">
+      <span class="roadmap-phase phase-now">Ahora</span>
+      <div class="roadmap-content">
+        <div class="roadmap-title">Servicio FX centralizado con histórico</div>
+        <div class="roadmap-desc">Microservicio dedicado que consume fuentes oficiales (BCRA, Ambito, dolarito.ar). Versionado por fecha, persistencia de conversiones, endpoint único para todo el sistema. Elimina el mayor riesgo de integridad financiera.</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="roadmap-phase phase-now">Ahora</span>
+      <div class="roadmap-content">
+        <div class="roadmap-title">Fix generate-month → cron schedulado</div>
+        <div class="roadmap-desc">Mover triggerMonthlyGeneration() a un job programado con idempotencia garantizada. Agregar control de "período ya generado" para evitar duplicaciones. Mejora performance de carga inicial significativamente.</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="roadmap-phase phase-now">Ahora</span>
+      <div class="roadmap-content">
+        <div class="roadmap-title">Fix: current_price duplicado en schema</div>
+        <div class="roadmap-desc">Deuda técnica concreta que genera bugs silenciosos e inconsistencias ORM. Fix inmediato obligatorio antes de cualquier escala.</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="roadmap-phase phase-soon">Próximo sprint</span>
+      <div class="roadmap-content">
+        <div class="roadmap-title">Motor de auditoría IA (Audit Trail)</div>
+        <div class="roadmap-desc">Log inmutable por cada decisión de FINA/ARKO/LUMEN: inputs usados, modelo, versión, timestamp, confianza. Confirmación 2-step para ejecuciones financieras. Modo simulación previo. Clave para escalar y para compliance regulatorio.</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="roadmap-phase phase-soon">Próximo sprint</span>
+      <div class="roadmap-content">
+        <div class="roadmap-title">Mobile-first UX completa</div>
+        <div class="roadmap-desc">MarketTicker responsive (scroll horizontal). Anomalías con drill-down. Speech API con fallback UI e indicador de compatibilidad. Revisar toda la UI con viewport mobile como primera pantalla.</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="roadmap-phase phase-soon">Próximo sprint</span>
+      <div class="roadmap-content">
+        <div class="roadmap-title">BFF unificación total + cache layer</div>
+        <div class="roadmap-desc">TopMovers y Settings dentro del BFF. Cache con React Query en frontend + TTL por endpoint en backend. Elimina todos los fetches que rompen el patrón arquitectural.</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="roadmap-phase phase-future">Escala</span>
+      <div class="roadmap-content">
+        <div class="roadmap-title">Seguridad fintech: 2FA + logs auditables</div>
+        <div class="roadmap-desc">Para PUT /transactions/{id} y ejecución de inversiones: confirmación doble, logs auditables con firma, 2FA opcional. Habilitador para mercado fintech real y eventuales requerimientos regulatorios (BCRA, CNV).</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="roadmap-phase phase-future">Escala</span>
+      <div class="roadmap-content">
+        <div class="roadmap-title">Motor de decisiones auditable para monetización</div>
+        <div class="roadmap-desc">Dashboard de trazabilidad de insights IA para el usuario. Exportación de reportes auditables. Base para modelo SaaS B2B o white-label para advisors financieros.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-newfeats" class="panel">
+    <div class="section-title">Funciones nuevas propuestas</div>
+
+    <div class="new-feat">
+      <div class="feat-icon feat-icon-purple">🧠</div>
+      <div>
+        <div class="feat-title">Modo Simulación Financiera ("What-if")</div>
+        <div class="feat-desc">Panel interactivo donde el usuario puede simular escenarios antes de ejecutar: "¿Qué pasa si invierto $X en Y?" con proyección de impacto en balance, FCF y patrimonio. Los agentes IA corren en modo sandbox sin efectos reales.</div>
+        <span class="feat-tag">Alto impacto · Media complejidad</span>
+      </div>
+    </div>
+
+    <div class="new-feat">
+      <div class="feat-icon feat-icon-teal">📊</div>
+      <div>
+        <div class="feat-title">FX Dashboard con histórico y alertas</div>
+        <div class="feat-desc">Visualización del tipo de cambio con histórico por período, comparativa entre fuentes (oficial, blue, MEP, CCL), y alertas configurables cuando el spread supere un umbral definido por el usuario.</div>
+        <span class="feat-tag">Crítico para Argentina · Alta prioridad</span>
+      </div>
+    </div>
+
+    <div class="new-feat">
+      <div class="feat-icon feat-icon-amber">🔔</div>
+      <div>
+        <div class="feat-title">Motor de Alertas Proactivas</div>
+        <div class="feat-desc">Sistema de notificaciones inteligentes: alerta cuando un gasto supera el presupuesto, cuando una inversión cae X%, cuando se detecta una anomalía no vista, o cuando el flujo de caja proyectado entra en zona negativa.</div>
+        <span class="feat-tag">Diferenciador · Media complejidad</span>
+      </div>
+    </div>
+
+    <div class="new-feat">
+      <div class="feat-icon feat-icon-blue">📋</div>
+      <div>
+        <div class="feat-title">Reporte Financiero Exportable</div>
+        <div class="feat-desc">Generación de informe PDF/Excel mensual con: P&L simplificado, evolución patrimonial, performance de inversiones, insights IA del período y recomendaciones. Clave para usuarios que rinden cuentas o asesores que usan la plataforma.</div>
+        <span class="feat-tag">Monetizable · B2B ready</span>
+      </div>
+    </div>
+
+    <div class="new-feat">
+      <div class="feat-icon feat-icon-coral">🤝</div>
+      <div>
+        <div class="feat-title">Modo Colaborativo / Advisor View</div>
+        <div class="feat-desc">Rol de "asesor" que puede ver dashboards de clientes en modo lectura, agregar notas y recomendaciones sobre los insights IA, y compartir reportes. Habilita modelo B2B para advisors financieros sin acceso a ejecución.</div>
+        <span class="feat-tag">Modelo de negocio · Alta complejidad</span>
+      </div>
+    </div>
+
+    <div class="new-feat">
+      <div class="feat-icon feat-icon-purple">🔐</div>
+      <div>
+        <div class="feat-title">Audit Trail Visible para el Usuario</div>
+        <div class="feat-desc">Sección "¿Por qué me sugirió esto?" donde el usuario puede ver el razonamiento completo del agente IA: datos usados, período analizado, nivel de confianza y fuentes. Genera confianza y diferencia de soluciones "caja negra".</div>
+        <span class="feat-tag">Trust builder · Diferenciador clave</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>

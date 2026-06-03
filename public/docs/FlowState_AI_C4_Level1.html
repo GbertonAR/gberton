@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowState AI — Diagrama C4 Level 1 (Context)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0d1117;--navy2:#161b22;--navy3:#1c2333;
+  --border:#2a3548;--border2:#1e2a3a;
+  --teal:#1ecb8a;--teal-dim:rgba(30,203,138,.15);
+  --gold:#f0a500;--red:#f05252;--blue:#58a6ff;
+  --purple:#bc8cff;--amber:#f0803a;
+  --text:#e6edf3;--text2:#8b949e;--text3:#484f58;
+}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--text);min-height:100vh}
+.page{max-width:1200px;margin:0 auto;padding:20px}
+
+/* HEADER */
+.hd{padding:16px 0 12px;border-bottom:1px solid var(--border2);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.hd-icon{width:36px;height:36px;border-radius:8px;background:var(--navy3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px}
+.hd-title{font-size:18px;font-weight:800;color:var(--text)}
+.hd-title span{color:var(--teal)}
+.hd-sub{font-size:11px;color:var(--text2);margin-top:2px;font-family:'JetBrains Mono',monospace}
+
+/* LEGEND */
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;padding:10px 14px;background:var(--navy2);border:1px solid var(--border2);border-radius:8px}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2)}
+.leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+
+/* TABS */
+.tabs{display:flex;gap:2px;margin-bottom:14px;border-bottom:1px solid var(--border2)}
+.tab-btn{padding:7px 16px;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:-1px;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:600}
+
+/* VIEW */
+.view{display:none}.view.active{display:block}
+
+/* SVG CONTAINER */
+.svg-wrap{background:var(--navy2);border:1px solid var(--border);border-radius:10px;overflow:hidden;position:relative}
+.svg-wrap svg{display:block;width:100%;height:auto}
+
+/* TOOLTIP */
+.tooltip{position:fixed;background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text);pointer-events:none;opacity:0;transition:opacity .15s;z-index:100;max-width:280px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.tooltip.show{opacity:1}
+.tt-title{font-weight:700;color:var(--teal);margin-bottom:4px;font-size:13px}
+.tt-tech{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-top:6px}
+
+/* NFR TABLE */
+.nfr-table{width:100%;border-collapse:collapse;margin-top:14px}
+.nfr-table th{background:var(--navy3);text-align:left;padding:8px 12px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);font-family:'JetBrains Mono',monospace;border-bottom:1px solid var(--border)}
+.nfr-table td{padding:8px 12px;font-size:12px;border-bottom:1px solid var(--border2)}
+.nfr-table tr:hover td{background:rgba(255,255,255,.02)}
+.nfr-table tr:last-child td{border:none}
+.nfr-val{color:var(--teal);font-family:'JetBrains Mono',monospace;font-weight:600}
+.nfr-key{color:var(--text2)}
+.nfr-norm{color:var(--text3);font-size:11px}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hd">
+  <div class="hd-icon">🏗️</div>
+  <div>
+    <div class="hd-title"><span>FlowState AI</span> — Diagrama C4 Level 1 (Context)</div>
+    <div class="hd-sub">Sistema Nacional de Recetas Digitales Seguras · Módulos 1–4 MVP · Abril 2026</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:#1ecb8a"></div>Sistema FlowState AI (boundary)</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#58a6ff"></div>Usuarios / Personas</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#f0a500"></div>Sistemas externos</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#bc8cff"></div>Sistemas de salud / gobierno</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#f0803a"></div>Infraestructura / Cloud</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#484f58;border:1px solid #2a3548"></div>→ Flujo de datos</div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('c4',this)">🏗️ C4 Context</button>
+  <button class="tab-btn" onclick="showTab('flow',this)">🔄 Flujo de Receta</button>
+  <button class="tab-btn" onclick="showTab('nfr',this)">📋 NFRs del Sistema</button>
+</div>
+
+<!-- C4 CONTEXT -->
+<div id="v-c4" class="view active">
+<div class="svg-wrap">
+<svg viewBox="0 0 1100 780" xmlns="http://www.w3.org/2000/svg" style="font-family:'Inter',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#484f58"/>
+    </marker>
+    <marker id="arr-teal" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#1ecb8a"/>
+    </marker>
+    <marker id="arr-gold" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f0a500"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#58a6ff"/>
+    </marker>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- BG -->
+  <rect width="1100" height="780" fill="#0d1117"/>
+
+  <!-- ── SYSTEM BOUNDARY ── -->
+  <rect x="330" y="140" width="440" height="440" rx="12"
+    fill="none" stroke="#1ecb8a" stroke-width="1.5" stroke-dasharray="6,4" opacity=".5"/>
+  <text x="550" y="132" text-anchor="middle" fill="#1ecb8a" font-size="11" font-weight="600"
+    font-family="'JetBrains Mono',monospace" letter-spacing=".08em">FLOWSTATE AI — SYSTEM BOUNDARY</text>
+
+  <!-- ════ CORE MODULES (inside boundary) ════ -->
+
+  <!-- Módulo 01 — PKI -->
+  <g class="node" data-id="m01" style="cursor:pointer"
+    onclick="showTip(event,'Módulo 01 — Identidad y Firma PKI','Valida la matrícula del médico contra REFEPS en tiempo real. Emite certificados X.509 a través de una AC externa licenciada. Verifica revocación via OCSP/CRL en cada firma.','FastAPI · Azure Key Vault · OCSP/CRL · X.509')">
+    <rect x="360" y="165" width="160" height="70" rx="8" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+    <text x="440" y="195" text-anchor="middle" fill="#1ecb8a" font-size="12" font-weight="700">Módulo 01</text>
+    <text x="440" y="212" text-anchor="middle" fill="#8b949e" font-size="10">Identidad y Firma PKI</text>
+    <text x="440" y="227" text-anchor="middle" fill="#484f58" font-size="9" font-family="'JetBrains Mono',monospace">[FastAPI · Azure KV]</text>
+  </g>
+
+  <!-- Módulo 02 — CUIR -->
+  <g class="node" data-id="m02" style="cursor:pointer"
+    onclick="showTip(event,'Módulo 02 — Receta Digital CUIR','Genera el UUID v4 + hash SHA-256 de cada receta. Persiste el recurso MedicationRequest en FHIR R4. Garantiza la inmutabilidad post-firma.','Azure Cosmos DB · HL7 FHIR R4 · SHA-256')">
+    <rect x="570" y="165" width="160" height="70" rx="8" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+    <text x="650" y="195" text-anchor="middle" fill="#1ecb8a" font-size="12" font-weight="700">Módulo 02</text>
+    <text x="650" y="212" text-anchor="middle" fill="#8b949e" font-size="10">Receta Digital CUIR</text>
+    <text x="650" y="227" text-anchor="middle" fill="#484f58" font-size="9" font-family="'JetBrains Mono',monospace">[Cosmos DB · FHIR R4]</text>
+  </g>
+
+  <!-- Módulo 03 — QR -->
+  <g class="node" data-id="m03" style="cursor:pointer"
+    onclick="showTip(event,'Módulo 03 — QR Inteligente','Genera tokens JWT de un solo uso apuntando al endpoint de validación. Sin datos sensibles embebidos en el QR. Expiración: 30 días.','JWT · FastAPI · Redis (token store)')">
+    <rect x="360" y="295" width="160" height="70" rx="8" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+    <text x="440" y="325" text-anchor="middle" fill="#1ecb8a" font-size="12" font-weight="700">Módulo 03</text>
+    <text x="440" y="342" text-anchor="middle" fill="#8b949e" font-size="10">QR Inteligente</text>
+    <text x="440" y="357" text-anchor="middle" fill="#484f58" font-size="9" font-family="'JetBrains Mono',monospace">[JWT · Redis]</text>
+  </g>
+
+  <!-- Módulo 04 — API Validación -->
+  <g class="node" data-id="m04" style="cursor:pointer"
+    onclick="showTip(event,'Módulo 04 — API de Validación','Endpoint central de la plataforma. Valida estado, vigencia, cobertura, y nombre genérico en tiempo real. SLA P95 ≤ 3s. Registra cada evento como AuditEvent FHIR.','FastAPI · Python · Azure API Management · P95 ≤ 3s')">
+    <rect x="570" y="295" width="160" height="70" rx="8" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5" filter="url(#glow)"/>
+    <text x="650" y="318" text-anchor="middle" fill="#1ecb8a" font-size="12" font-weight="700">Módulo 04</text>
+    <text x="650" y="335" text-anchor="middle" fill="#8b949e" font-size="10">API de Validación</text>
+    <text x="650" y="352" text-anchor="middle" fill="#484f58" font-size="9" font-family="'JetBrains Mono',monospace">[FastAPI · APIM]</text>
+    <text x="650" y="365" text-anchor="middle" fill="#f0a500" font-size="9" font-weight="600">P95 ≤ 3s</text>
+  </g>
+
+  <!-- Ledger / AuditLog -->
+  <g class="node" data-id="ledger" style="cursor:pointer"
+    onclick="showTip(event,'Ledger de Auditoría (Módulo 05 — Fase 2)','Log inmutable de todos los eventos: emisión, validaciones, dispensa. Implementado como Azure Table Storage con hash encadenado. En MVP: AuditEvent FHIR en Cosmos DB.','Azure Table Storage · FHIR AuditEvent · SHA-256 chaining')">
+    <rect x="460" y="425" width="180" height="65" rx="8" fill="#1a1a2e" stroke="#bc8cff" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="550" y="450" text-anchor="middle" fill="#bc8cff" font-size="11" font-weight="700">Ledger / AuditLog</text>
+    <text x="550" y="466" text-anchor="middle" fill="#8b949e" font-size="10">AuditEvent FHIR</text>
+    <text x="550" y="481" text-anchor="middle" fill="#484f58" font-size="9" font-family="'JetBrains Mono',monospace">[Cosmos DB · MVP]</text>
+  </g>
+
+  <!-- ── INTERNAL ARROWS ── -->
+  <!-- M01 → M02 -->
+  <line x1="520" y1="200" x2="570" y2="200" stroke="#1ecb8a" stroke-width="1.2" marker-end="url(#arr-teal)" opacity=".7"/>
+  <!-- M02 → M03 -->
+  <line x1="650" y1="235" x2="580" y2="295" stroke="#1ecb8a" stroke-width="1.2" marker-end="url(#arr-teal)" opacity=".7"/>
+  <!-- M01 → M03 -->
+  <line x1="440" y1="235" x2="440" y2="295" stroke="#1ecb8a" stroke-width="1.2" marker-end="url(#arr-teal)" opacity=".7"/>
+  <!-- M03 → M04 -->
+  <line x1="520" y1="330" x2="570" y2="330" stroke="#1ecb8a" stroke-width="1.2" marker-end="url(#arr-teal)" opacity=".7"/>
+  <!-- M02 → M04 -->
+  <line x1="650" y1="235" x2="650" y2="295" stroke="#1ecb8a" stroke-width="1.2" marker-end="url(#arr-teal)" opacity=".7"/>
+  <!-- M04 → Ledger -->
+  <line x1="620" y1="365" x2="590" y2="425" stroke="#bc8cff" stroke-width="1.2" marker-end="url(#arr)" opacity=".6" stroke-dasharray="4,2"/>
+  <!-- M02 → Ledger -->
+  <line x1="590" y1="365" x2="570" y2="425" stroke="#bc8cff" stroke-width="1" marker-end="url(#arr)" opacity=".4" stroke-dasharray="4,2"/>
+
+  <!-- ════ USUARIOS / PERSONAS ════ -->
+
+  <!-- Médico -->
+  <g class="node" style="cursor:pointer"
+    onclick="showTip(event,'Médico Prescriptor','Usuario primario del sistema. Emite recetas digitales firmadas con su certificado X.509. Accede via web app o mobile. La plataforma elimina su &quot;fatiga digital&quot; validando todo automáticamente.','Web App (React/Tailwind) · Mobile · Autenticación PKI')">
+    <circle cx="100" cy="200" r="28" fill="#1a3a5c" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="100" y="205" text-anchor="middle" fill="#58a6ff" font-size="16">👨‍⚕️</text>
+    <text x="100" y="245" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">Médico</text>
+    <text x="100" y="260" text-anchor="middle" fill="#8b949e" font-size="10">Prescriptor</text>
+  </g>
+
+  <!-- Farmacéutico -->
+  <g class="node" style="cursor:pointer"
+    onclick="showTip(event,'Farmacéutico','Valida recetas en el punto de venta escaneando el QR. Confirma la dispensa con un clic. El Smart Settlement (Fase 2) procesa el pago en T+24hs.','App POS / Scanner QR · REST API · JSON')">
+    <circle cx="100" cy="400" r="28" fill="#1a3a5c" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="100" y="405" text-anchor="middle" fill="#58a6ff" font-size="16">💊</text>
+    <text x="100" y="445" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">Farmacéutico</text>
+    <text x="100" y="460" text-anchor="middle" fill="#8b949e" font-size="10">Punto de venta</text>
+  </g>
+
+  <!-- Paciente -->
+  <g class="node" style="cursor:pointer"
+    onclick="showTip(event,'Paciente','Receptor de la receta digital. Recibe el QR por App, WhatsApp o email. En Fase 2 (Módulo 09): recibe alertas de vencimiento de medicamentos en casa.','App FlowState · WhatsApp API · Email')">
+    <circle cx="100" cy="590" r="28" fill="#1a3a5c" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="100" y="595" text-anchor="middle" fill="#58a6ff" font-size="16">🧑</text>
+    <text x="100" y="635" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">Paciente</text>
+    <text x="100" y="650" text-anchor="middle" fill="#8b949e" font-size="10">Receptor receta</text>
+  </g>
+
+  <!-- Auditor OS -->
+  <g class="node" style="cursor:pointer"
+    onclick="showTip(event,'Auditor de Obra Social','Accede al dashboard de trazabilidad en tiempo real. Revisa alertas de fraude, métricas de ahorro y exporta reportes probatorios. Es el tomador de decisiones del contrato.','Dashboard Web · React/Tailwind · WebSocket')">
+    <circle cx="1000" cy="200" r="28" fill="#1a3a5c" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="1000" y="205" text-anchor="middle" fill="#58a6ff" font-size="16">🔍</text>
+    <text x="1000" y="245" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">Auditor OS</text>
+    <text x="1000" y="260" text-anchor="middle" fill="#8b949e" font-size="10">Obra Social</text>
+  </g>
+
+  <!-- ════ SISTEMAS EXTERNOS ════ -->
+
+  <!-- REFEPS -->
+  <g class="node" style="cursor:pointer"
+    onclick="showTip(event,'REFEPS — Registro Federal de Profesionales de la Salud','Fuente oficial de validación de matrículas médicas. FlowState consulta REFEPS en cada registro de médico y en cada validación de receta. Cache máximo: 24hs.','REST API · HTTPS · Cache: 24hs max · Fallback: cola manual')">
+    <rect x="840" y="340" width="170" height="70" rx="8" fill="#2d2200" stroke="#f0a500" stroke-width="1.5"/>
+    <text x="925" y="365" text-anchor="middle" fill="#f0a500" font-size="12" font-weight="700">REFEPS</text>
+    <text x="925" y="381" text-anchor="middle" fill="#8b949e" font-size="10">Reg. Federal Prof. Salud</text>
+    <text x="925" y="397" text-anchor="middle" fill="#484f58" font-size="9" font-family="'JetBrains Mono',monospace">[API Ministerio Salud]</text>
+  </g>
+
+  <!-- AC / PKI -->
+  <g class="node" style="cursor:pointer"
+    onclick="showTip(event,'Autoridad Certificante (AC) Licenciada','Emite certificados X.509 para los médicos registrados. Provee CRL y OCSP para verificar revocación. Debe ser AC licenciada por el Estado argentino (AFIP AC, OCA o BNA). Crítico para validez legal bajo Ley 25.506.','X.509 · OCSP · CRL · Ley 25.506 · AFIP AC / OCA / BNA')">
+    <rect x="840" y="160" width="170" height="70" rx="8" fill="#2d2200" stroke="#f0a500" stroke-width="1.5"/>
+    <text x="925" y="185" text-anchor="middle" fill="#f0a500" font-size="12" font-weight="700">AC Licenciada</text>
+    <text x="925" y="201" text-anchor="middle" fill="#8b949e" font-size="10">Autoridad Certificante</text>
+    <text x="925" y="217" text-anchor="middle" fill="#484f58" font-size="9" font-family="'JetBrains Mono',monospace">[AFIP AC / OCA / BNA]</text>
+  </g>
+
+  <!-- Obra Social / Prepaga -->
+  <g class="node" style="cursor:pointer"
+    onclick="showTip(event,'Obras Sociales y Prepagas','Sistemas de los financiadores de salud. FlowState valida la cobertura del paciente en tiempo real durante la validación de la receta. En Fase 2: Smart Settlement para liquidación automática.','HL7 FHIR R4 · REST API · webhooks')">
+    <rect x="840" y="490" width="170" height="70" rx="8" fill="#1a1a40" stroke="#bc8cff" stroke-width="1.5"/>
+    <text x="925" y="515" text-anchor="middle" fill="#bc8cff" font-size="12" font-weight="700">Obras Sociales</text>
+    <text x="925" y="531" text-anchor="middle" fill="#8b949e" font-size="10">+ Prepagas</text>
+    <text x="925" y="547" text-anchor="middle" fill="#484f58" font-size="9" font-family="'JetBrains Mono',monospace">[FHIR R4 · webhooks]</text>
+  </g>
+
+  <!-- WhatsApp / Notificaciones -->
+  <g class="node" style="cursor:pointer"
+    onclick="showTip(event,'Canales de Notificación al Paciente','El QR se entrega al paciente por App FlowState, WhatsApp Business API o email. En Fase 2 (Módulo 09): alertas de vencimiento de medicamentos. Decisión de canal: configurable por obra social.','WhatsApp Business API · SMTP · Push Notifications')">
+    <rect x="840" y="620" width="170" height="65" rx="8" fill="#2d1a00" stroke="#f0803a" stroke-width="1.5"/>
+    <text x="925" y="645" text-anchor="middle" fill="#f0803a" font-size="12" font-weight="700">Notificaciones</text>
+    <text x="925" y="661" text-anchor="middle" fill="#8b949e" font-size="10">App · WhatsApp · Email</text>
+    <text x="925" y="677" text-anchor="middle" fill="#484f58" font-size="9" font-family="'JetBrains Mono',monospace">[WA Business API]</text>
+  </g>
+
+  <!-- ════ FLECHAS EXTERNAS ════ -->
+
+  <!-- Médico → M01 -->
+  <line x1="128" y1="200" x2="355" y2="200" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arr-blue)" opacity=".7"/>
+  <text x="220" y="193" text-anchor="middle" fill="#484f58" font-size="9">Registro + matrícula</text>
+
+  <!-- Médico → M02 -->
+  <line x1="128" y1="215" x2="355" y2="230" stroke="#58a6ff" stroke-width="1" marker-end="url(#arr-blue)" opacity=".5"/>
+  <text x="210" y="240" text-anchor="middle" fill="#484f58" font-size="9">Emite receta</text>
+
+  <!-- Farmacéutico → M04 -->
+  <line x1="128" y1="395" x2="355" y2="340" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arr-blue)" opacity=".7"/>
+  <text x="200" y="358" text-anchor="middle" fill="#484f58" font-size="9">Escanea QR</text>
+
+  <!-- M03 → Paciente -->
+  <line x1="355" y1="355" x2="128" y2="570" stroke="#1ecb8a" stroke-width="1.2" marker-end="url(#arr-teal)" opacity=".6"/>
+  <text x="190" y="470" text-anchor="middle" fill="#484f58" font-size="9">Entrega QR</text>
+
+  <!-- Auditor → M04 -->
+  <line x1="972" y1="220" x2="738" y2="305" stroke="#58a6ff" stroke-width="1.2" marker-end="url(#arr-blue)" opacity=".6"/>
+  <text x="880" y="255" text-anchor="middle" fill="#484f58" font-size="9">Dashboard / alertas</text>
+
+  <!-- M01 → AC -->
+  <line x1="735" y1="190" x2="840" y2="195" stroke="#f0a500" stroke-width="1.2" marker-end="url(#arr-gold)" opacity=".7"/>
+  <text x="790" y="183" text-anchor="middle" fill="#484f58" font-size="9">Solicita certificado</text>
+
+  <!-- M01 → REFEPS -->
+  <line x1="735" y1="210" x2="838" y2="360" stroke="#f0a500" stroke-width="1.2" marker-end="url(#arr-gold)" opacity=".7"/>
+  <text x="818" y="290" text-anchor="middle" fill="#484f58" font-size="9" transform="rotate(-52,818,290)">Valida matrícula</text>
+
+  <!-- M04 → OS -->
+  <line x1="735" y1="345" x2="838" y2="510" stroke="#bc8cff" stroke-width="1.2" marker-end="url(#arr)" opacity=".6"/>
+  <text x="815" y="420" text-anchor="middle" fill="#484f58" font-size="9" transform="rotate(-52,815,420)">Verifica cobertura</text>
+
+  <!-- M03 → Notif -->
+  <line x1="440" y1="365" x2="838" y2="635" stroke="#f0803a" stroke-width="1" marker-end="url(#arr)" opacity=".5" stroke-dasharray="4,3"/>
+  <text x="650" y="545" text-anchor="middle" fill="#484f58" font-size="9">Envío QR paciente</text>
+
+  <!-- TITLE -->
+  <text x="550" y="740" text-anchor="middle" fill="#484f58" font-size="10" font-family="'JetBrains Mono',monospace">
+    C4 Level 1 — System Context · FlowState AI MVP · Módulos 1–4 · Haga clic en cada componente para ver detalles
+  </text>
+</svg>
+</div>
+</div>
+
+<!-- FLUJO DE RECETA -->
+<div id="v-flow" class="view">
+<div class="svg-wrap">
+<svg viewBox="0 0 1100 600" xmlns="http://www.w3.org/2000/svg" style="font-family:'Inter',sans-serif">
+  <defs>
+    <marker id="fa" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#1ecb8a"/>
+    </marker>
+    <marker id="fr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f05252"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="600" fill="#0d1117"/>
+
+  <!-- TITLE -->
+  <text x="550" y="35" text-anchor="middle" fill="#1ecb8a" font-size="14" font-weight="700">Flujo Completo de Receta Digital — Happy Path + Errores</text>
+
+  <!-- SWIM LANES -->
+  <text x="14" y="120" fill="#8b949e" font-size="10" font-family="'JetBrains Mono',monospace" transform="rotate(-90,14,120)">Médico</text>
+  <text x="14" y="250" fill="#8b949e" font-size="10" font-family="'JetBrains Mono',monospace" transform="rotate(-90,14,250)">FlowState</text>
+  <text x="14" y="390" fill="#8b949e" font-size="10" font-family="'JetBrains Mono',monospace" transform="rotate(-90,14,390)">Farmacia</text>
+  <text x="14" y="510" fill="#8b949e" font-size="10" font-family="'JetBrains Mono',monospace" transform="rotate(-90,14,510)">Paciente</text>
+
+  <!-- Lane lines -->
+  <line x1="28" y1="165" x2="1080" y2="165" stroke="#1e2a3a" stroke-width="1"/>
+  <line x1="28" y1="305" x2="1080" y2="305" stroke="#1e2a3a" stroke-width="1"/>
+  <line x1="28" y1="445" x2="1080" y2="445" stroke="#1e2a3a" stroke-width="1"/>
+
+  <!-- STEP 1 — Médico prescribe -->
+  <rect x="40" y="80" width="120" height="50" rx="6" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+  <text x="100" y="102" text-anchor="middle" fill="#1ecb8a" font-size="11" font-weight="600">1. Prescribir</text>
+  <text x="100" y="118" text-anchor="middle" fill="#8b949e" font-size="9">CIE-10 + DCI + DNI</text>
+
+  <!-- STEP 2 — FlowState valida y emite -->
+  <rect x="200" y="210" width="140" height="55" rx="6" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+  <text x="270" y="232" text-anchor="middle" fill="#1ecb8a" font-size="11" font-weight="600">2. Validar identidad</text>
+  <text x="270" y="248" text-anchor="middle" fill="#8b949e" font-size="9">PKI + REFEPS</text>
+  <text x="270" y="260" text-anchor="middle" fill="#484f58" font-size="8">P95 ≤ 3s</text>
+
+  <!-- STEP 3 — Generar CUIR -->
+  <rect x="380" y="210" width="130" height="55" rx="6" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+  <text x="445" y="232" text-anchor="middle" fill="#1ecb8a" font-size="11" font-weight="600">3. Generar CUIR</text>
+  <text x="445" y="248" text-anchor="middle" fill="#8b949e" font-size="9">UUID + SHA-256</text>
+  <text x="445" y="260" text-anchor="middle" fill="#484f58" font-size="8">FHIR MedRequest</text>
+
+  <!-- STEP 4 — QR -->
+  <rect x="550" y="210" width="120" height="55" rx="6" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+  <text x="610" y="232" text-anchor="middle" fill="#1ecb8a" font-size="11" font-weight="600">4. QR Inteligente</text>
+  <text x="610" y="248" text-anchor="middle" fill="#8b949e" font-size="9">Token JWT 30d</text>
+  <text x="610" y="260" text-anchor="middle" fill="#484f58" font-size="8">Sin datos sensibles</text>
+
+  <!-- STEP 5 — Paciente recibe -->
+  <rect x="550" y="460" width="120" height="50" rx="6" fill="#1a3a5c" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="610" y="482" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="600">5. Recibe QR</text>
+  <text x="610" y="497" text-anchor="middle" fill="#8b949e" font-size="9">App / WhatsApp</text>
+
+  <!-- STEP 6 — Farmacia escanea -->
+  <rect x="720" y="340" width="130" height="55" rx="6" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+  <text x="785" y="362" text-anchor="middle" fill="#1ecb8a" font-size="11" font-weight="600">6. Escanear QR</text>
+  <text x="785" y="378" text-anchor="middle" fill="#8b949e" font-size="9">Validar en API</text>
+  <text x="785" y="390" text-anchor="middle" fill="#484f58" font-size="8">P95 ≤ 3s</text>
+
+  <!-- STEP 7 — API responde VÁLIDA -->
+  <rect x="870" y="210" width="120" height="55" rx="6" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+  <text x="930" y="232" text-anchor="middle" fill="#1ecb8a" font-size="11" font-weight="600">7. VÁLIDA ✓</text>
+  <text x="930" y="248" text-anchor="middle" fill="#8b949e" font-size="9">Estado + cobertura</text>
+  <text x="930" y="260" text-anchor="middle" fill="#484f58" font-size="8">AuditEvent FHIR</text>
+
+  <!-- STEP 8 — Dispensa y CONSUMED -->
+  <rect x="870" y="340" width="120" height="55" rx="6" fill="#0f3d2a" stroke="#1ecb8a" stroke-width="1.5"/>
+  <text x="930" y="362" text-anchor="middle" fill="#1ecb8a" font-size="11" font-weight="600">8. CONSUMED</text>
+  <text x="930" y="378" text-anchor="middle" fill="#8b949e" font-size="9">Estado inmutable</text>
+  <text x="930" y="390" text-anchor="middle" fill="#484f58" font-size="8">Ledger + OS notif.</text>
+
+  <!-- ERROR — CONSUMED intento de reutilización -->
+  <rect x="720" y="460" width="130" height="50" rx="6" fill="#3d0f0f" stroke="#f05252" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="785" y="480" text-anchor="middle" fill="#f05252" font-size="11" font-weight="600">Error: CONSUMED</text>
+  <text x="785" y="495" text-anchor="middle" fill="#8b949e" font-size="9">409 Conflict</text>
+
+  <!-- ARROWS -->
+  <!-- 1 → 2 -->
+  <line x1="160" y1="105" x2="200" y2="237" stroke="#1ecb8a" stroke-width="1.3" marker-end="url(#fa)" opacity=".7"/>
+  <!-- 2 → 3 -->
+  <line x1="340" y1="237" x2="380" y2="237" stroke="#1ecb8a" stroke-width="1.3" marker-end="url(#fa)" opacity=".7"/>
+  <!-- 3 → 4 -->
+  <line x1="510" y1="237" x2="550" y2="237" stroke="#1ecb8a" stroke-width="1.3" marker-end="url(#fa)" opacity=".7"/>
+  <!-- 4 → paciente -->
+  <line x1="610" y1="265" x2="610" y2="460" stroke="#1ecb8a" stroke-width="1.3" marker-end="url(#fa)" opacity=".6"/>
+  <!-- paciente → farmacia (lleva el QR) -->
+  <line x1="670" y1="485" x2="720" y2="375" stroke="#58a6ff" stroke-width="1.3" marker-end="url(#fa)" opacity=".6"/>
+  <text x="700" y="440" fill="#484f58" font-size="9">Presenta QR</text>
+  <!-- farmacia → API válida -->
+  <line x1="850" y1="362" x2="870" y2="250" stroke="#1ecb8a" stroke-width="1.3" marker-end="url(#fa)" opacity=".7"/>
+  <!-- API válida → dispensa -->
+  <line x1="930" y1="265" x2="930" y2="340" stroke="#1ecb8a" stroke-width="1.3" marker-end="url(#fa)" opacity=".7"/>
+  <!-- error -->
+  <line x1="785" y1="395" x2="785" y2="460" stroke="#f05252" stroke-width="1.3" marker-end="url(#fr)" opacity=".7" stroke-dasharray="4,2"/>
+  <text x="810" y="432" fill="#f05252" font-size="9">2do intento</text>
+
+  <text x="550" y="575" text-anchor="middle" fill="#484f58" font-size="10" font-family="'JetBrains Mono',monospace">
+    Flujo Happy Path (verde) · Error 2do intento (rojo) · Todos los eventos registrados en AuditEvent FHIR
+  </text>
+</svg>
+</div>
+</div>
+
+<!-- NFRs -->
+<div id="v-nfr" class="view">
+<table class="nfr-table">
+  <thead>
+    <tr>
+      <th>Requisito NFR</th>
+      <th>Valor SLA</th>
+      <th>Cómo medir</th>
+      <th>Norma</th>
+      <th>Módulo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="nfr-key">Latencia de validación</td><td class="nfr-val">P95 ≤ 3s / P99 ≤ 5s</td><td>Azure Monitor percentiles</td><td class="nfr-norm">Contrato OS / SLA</td><td>Módulo 04</td></tr>
+    <tr><td class="nfr-key">Disponibilidad del servicio</td><td class="nfr-val">99.5% mensual</td><td>Azure Monitor + PagerDuty</td><td class="nfr-norm">Contrato obras sociales</td><td>Módulos 01–04</td></tr>
+    <tr><td class="nfr-key">Cifrado en reposo</td><td class="nfr-val">AES-256</td><td>Auditoría Azure Key Vault trimestral</td><td class="nfr-norm">Ley 25.326 Art. 9</td><td>Infraestructura</td></tr>
+    <tr><td class="nfr-key">Cifrado en tránsito</td><td class="nfr-val">TLS 1.3 mínimo</td><td>SSL Labs score A+ requerido</td><td class="nfr-norm">Ley 25.326 Art. 9</td><td>Infraestructura</td></tr>
+    <tr><td class="nfr-key">Retención imágenes de recetas</td><td class="nfr-val">Máx. 90 días</td><td>Job diario con log de destrucción</td><td class="nfr-norm">Ley 25.326 Art. 26</td><td>Módulo 02 + 05</td></tr>
+    <tr><td class="nfr-key">Retención historial auditoría</td><td class="nfr-val">5 años mínimo</td><td>Azure Archive Storage + key rotation</td><td class="nfr-norm">Contratos OS + legal</td><td>Módulo 05</td></tr>
+    <tr><td class="nfr-key">Unicidad del CUIR</td><td class="nfr-val">0 colisiones garantizado</td><td>Test unicidad en CI/CD</td><td class="nfr-norm">Ley 27.553 — CUIR</td><td>Módulo 02</td></tr>
+    <tr><td class="nfr-key">Capacidad simultánea MVP</td><td class="nfr-val">≥ 100 req/seg por cliente</td><td>Load testing k6 pre-golive</td><td class="nfr-norm">Estimación mercado</td><td>Módulo 04</td></tr>
+    <tr><td class="nfr-key">RPO / RTO</td><td class="nfr-val">RPO ≤ 1h / RTO ≤ 4h</td><td>Drill de recuperación trimestral</td><td class="nfr-norm">Continuidad servicio OS</td><td>Infraestructura</td></tr>
+    <tr><td class="nfr-key">Tokens QR — uso único</td><td class="nfr-val">409 garantizado en 2do intento</td><td>Test funcional automatizado CI/CD</td><td class="nfr-norm">Ley 27.553 — dispensa única</td><td>Módulos 03 + 04</td></tr>
+  </tbody>
+</table>
+</div>
+
+</div><!-- /page -->
+
+<div class="tooltip" id="tt">
+  <div class="tt-title" id="tt-title"></div>
+  <div id="tt-body"></div>
+  <div class="tt-tech" id="tt-tech"></div>
+</div>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('v-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function showTip(e,title,body,tech){
+  const tt=document.getElementById('tt');
+  document.getElementById('tt-title').textContent=title;
+  document.getElementById('tt-body').textContent=body;
+  document.getElementById('tt-tech').textContent='Stack: '+tech;
+  tt.classList.add('show');
+  tt.style.left=(e.clientX+16)+'px';
+  tt.style.top=(e.clientY-10)+'px';
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.node'))document.getElementById('tt').classList.remove('show');
+});
+document.addEventListener('mousemove',e=>{
+  const tt=document.getElementById('tt');
+  if(tt.classList.contains('show')){
+    tt.style.left=(e.clientX+16)+'px';
+    tt.style.top=(e.clientY-10)+'px';
+  }
+});
+</script>
+</body>
+</html>

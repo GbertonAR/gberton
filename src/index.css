@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Lato:wght@300;400;700;900&display=swap');
 
 @import "tailwindcss";
 
@@ -9,7 +9,14 @@
   --color-gb-cyan: #06b6d4;
   --color-gb-cyan-light: #22d3ee;
 
-  /* FlowState AI Brand Colors */
+  /* FlowState AI v3.0 Brand Colors (Rule 7) */
+  --color-flow-tech: #1A6EF5;
+  --color-flow-cyan: #00D4FF;
+  --color-state-energy: #E03E3E;
+  --color-state-scarlet: #8B0000;
+  --color-innovation-purple: #8B2FC9;
+  --color-innovation-magenta: #FF00FF;
+
   --color-flowstate-purple: #a855f7;
   --color-flowstate-purple-dark: #7e22ce;
   --color-flowstate-pink: #ec4899;
@@ -21,9 +28,9 @@
   --color-flowstate-blue: #3b82f6;
   --color-flowstate-orange: #f97316;
 
-  /* Fonts */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-heading: 'Outfit', 'Inter', system-ui, sans-serif;
+  /* Fonts (Rule 7) */
+  --font-sans: 'Lato', system-ui, sans-serif;
+  --font-heading: 'Poppins', system-ui, sans-serif;
 }
 
 /* Global Styles */
@@ -35,29 +42,37 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Custom Gradient Backgrounds */
+/* Custom Gradient Backgrounds (Rule 7 Compliance) */
 .bg-gradient-gb {
-  background: linear-gradient(135deg, #1e3a8a 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, var(--color-gb-navy) 0%, var(--color-gb-cyan) 100%);
 }
 
 .bg-gradient-flowstate {
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #06b6d4 100%);
+  background: linear-gradient(135deg, var(--color-flow-tech) 0%, var(--color-flow-cyan) 100%);
+}
+
+.bg-gradient-state {
+  background: linear-gradient(135deg, var(--color-state-energy) 0%, var(--color-state-scarlet) 100%);
+}
+
+.bg-gradient-innovation {
+  background: linear-gradient(135deg, var(--color-innovation-purple) 0%, var(--color-innovation-magenta) 100%);
 }
 
 .bg-gradient-hero {
-  background: linear-gradient(135deg, #1e3a8a 0%, #a855f7 50%, #06b6d4 100%);
+  background: radial-gradient(circle at center, var(--color-flow-tech) 0%, #050810 100%);
 }
 
 /* Gradient Text */
 .gradient-text-gb {
-  background: linear-gradient(to right, #1e3a8a, #06b6d4);
+  background: linear-gradient(to right, var(--color-gb-navy), var(--color-gb-cyan));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .gradient-text-flowstate {
-  background: linear-gradient(to right, #a855f7, #ec4899, #06b6d4);
+  background: linear-gradient(to right, var(--color-flow-tech), var(--color-flow-cyan));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -162,6 +177,16 @@ body {
 }
 
 /* Section Styles */
+.section-padding {
+  padding: 5rem 1rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 8rem 2rem;
+  }
+}
+
 .section {
   padding: 5rem 1rem;
 }
@@ -260,4 +285,16 @@ body {
 
 .animate-slide-up {
   animation: slideUp 0.6s ease-out;
+}
+
+/* Marquee — Social Proof Bar */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Deep Universe Global Gradient */
+.bg-deep-universe {
+  background: radial-gradient(ellipse at top right, rgba(30,58,138,0.4) 0%, rgba(10,11,30,1) 40%, rgba(3,4,12,1) 100%);
+  background-color: #0A0B1E;
 }

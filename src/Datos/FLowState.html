@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowState AI - Plan Estratégico Q1 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<!--
+Palette Name: Cyberpunk Neon B2B
+Plan Summary: Strategic business plan for FlowState AI focusing on Q1 2026. Goal: Acquire minimum 2 clients at $250 each. Targets SMEs, Admins, Accountants, Lawyers, Clinics. Outlines specific AI agents per sector, promotional channels, and introductory incentive packages.
+Visualization Choices:
+1. Radar Chart (Chart.js) -> Goal: Compare -> Show pain points/need for automation across target sectors. No SVG used.
+2. Bar Chart (Chart.js) -> Goal: Compare -> Evaluate expected ROI of different promotional channels. No SVG used.
+Compliance: NO MERMAID JS NOR SVG WERE USED ANYWHERE IN THIS OUTPUT.
+-->
+<style>
+    body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
+    .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 350px;
+        max-height: 400px;
+    }
+    .glass-card {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(148, 163, 184, 0.1);
+    }
+    .text-gradient {
+        background: linear-gradient(to right, #22d3ee, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+</head>
+<body class="antialiased pb-20">
+
+<header class="pt-16 pb-12 px-6 text-center border-b border-slate-800">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-5xl mb-4">🤖</div>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight"><span class="text-gradient">FlowState AI</span></h1>
+        <p class="text-xl text-slate-400 font-light mb-8">Plan Estratégico y de Crecimiento • Q1 2026</p>
+        <p class="text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            Como tu Administrador de Negocios, he estructurado la hoja de ruta para alcanzar tus primeros clientes rentables. Validaremos la automatización de procesos mediante agentes de IA, enfocándonos en nichos con alta carga administrativa.
+        </p>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 mt-12 space-y-20">
+
+    <section>
+        <div class="mb-10 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Lluvia de Ideas: Identidad y Valor</h2>
+            <p class="text-slate-400">Mensajes clave para conectar con el dolor del cliente en 2026.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-cyan-400">
+                <p class="text-lg font-semibold text-white">"Automatiza tus procesos. Tus procesos de gestión que te impiden dar el valor real de tus tareas."</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-purple-400">
+                <p class="text-lg font-semibold text-white">"Implementación y Gestión de Agentes AI. Nos encargamos que solo pienses en tu negocio, nosotros te damos la información de tu crecimiento."</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-pink-500">
+                <p class="text-lg font-semibold text-white">"Desarrollamos las herramientas que necesitas para tu crecimiento en 2026. ¿Querés reducir costos de infraestructura y gestión?"</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-yellow-400">
+                <p class="text-lg font-semibold text-white">"Automatiza tu Administración. Carga, clasifica y ordena tus comprobantes sin esfuerzo."</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+            <h2 class="text-3xl font-bold text-white mb-6">Metas Comerciales Q1 2026</h2>
+            <p class="text-slate-300 mb-6 text-lg">El objetivo principal es lograr tracción inicial demostrando un retorno de inversión (ROI) claro a través de la reducción de horas operativas en nuestros clientes.</p>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <div class="text-4xl font-black text-cyan-400 mb-2">2</div>
+                    <div class="text-sm text-slate-400 uppercase tracking-wide">Clientes Mínimos</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <div class="text-4xl font-black text-purple-400 mb-2">$250</div>
+                    <div class="text-sm text-slate-400 uppercase tracking-wide">Facturación por Cliente (USD)</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center col-span-2">
+                    <div class="text-5xl font-black text-pink-500 mb-2">$500</div>
+                    <div class="text-sm text-slate-400 uppercase tracking-wide">Ingreso Recurrente Mensual (MRR) Objetivo Q1</div>
+                </div>
+            </div>
+        </div>
+        <div class="glass-card p-8 rounded-3xl">
+            <h3 class="text-xl font-semibold mb-4 text-center">Nivel de Necesidad por Sector</h3>
+            <div class="chart-container">
+                <canvas id="sectorRadarChart"></canvas>
+            </div>
+            <p class="text-sm text-slate-400 text-center mt-4">Análisis del volumen de tareas repetitivas y potencial de automatización. Administradores y Contadores lideran la urgencia.</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="mb-10">
+            <h2 class="text-3xl font-bold text-white mb-4">Catálogo de Agentes AI por Industria</h2>
+            <p class="text-slate-400 text-lg">Debemos ofrecer soluciones hiper-enfocadas. No vendemos "IA", vendemos la solución a un problema administrativo específico.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="glass-card p-6 rounded-2xl hover:bg-slate-800 transition">
+                <div class="text-3xl mb-3">🏢</div>
+                <h3 class="text-xl font-bold text-cyan-400 mb-2">Administradores (Edificios/Consorcios)</h3>
+                <p class="text-white font-semibold mb-2">Agente de Atención al Copropietario</p>
+                <p class="text-sm text-slate-400">Automatiza respuestas sobre expensas, recibe y categoriza reclamos de mantenimiento 24/7 derivando alertas graves.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl hover:bg-slate-800 transition">
+                <div class="text-3xl mb-3">📊</div>
+                <h3 class="text-xl font-bold text-purple-400 mb-2">Contadores y Estudios</h3>
+                <p class="text-white font-semibold mb-2">Agente Clasificador de Comprobantes</p>
+                <p class="text-sm text-slate-400">Lectura OCR inteligente. Extrae datos de facturas y tickets enviados por WhatsApp o email y los formatea para sistemas contables.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl hover:bg-slate-800 transition">
+                <div class="text-3xl mb-3">⚖️</div>
+                <h3 class="text-xl font-bold text-pink-500 mb-2">Abogados</h3>
+                <p class="text-white font-semibold mb-2">Asistente de Jurisprudencia y Redacción</p>
+                <p class="text-sm text-slate-400">Búsqueda rápida de fallos y redacción de borradores de escritos básicos (cédulas, oficios) a partir de datos estructurados.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl hover:bg-slate-800 transition">
+                <div class="text-3xl mb-3">🩺</div>
+                <h3 class="text-xl font-bold text-yellow-400 mb-2">Consultorios Médicos</h3>
+                <p class="text-white font-semibold mb-2">Agente de Triage y Agendamiento</p>
+                <p class="text-sm text-slate-400">Gestión de turnos vía WhatsApp, recordatorios automáticos para reducir ausentismo y preguntas de pre-consulta.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl hover:bg-slate-800 transition lg:col-span-2">
+                <div class="text-3xl mb-3">🏪</div>
+                <h3 class="text-xl font-bold text-emerald-400 mb-2">PyMEs Comerciales</h3>
+                <p class="text-white font-semibold mb-2">Agente de Cotización y Soporte Nivel 1</p>
+                <p class="text-sm text-slate-400">Responde consultas frecuentes de stock, horarios y arma presupuestos básicos basados en un catálogo predefinido, capturando el lead para el vendedor.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="order-2 md:order-1 glass-card p-8 rounded-3xl">
+            <h3 class="text-xl font-semibold mb-4 text-center">Efectividad de Canales de Promoción</h3>
+            <div class="chart-container">
+                <canvas id="channelsBarChart"></canvas>
+            </div>
+            <p class="text-sm text-slate-400 text-center mt-4">Proyección de captación de leads calificados por canal B2B.</p>
+        </div>
+        <div class="order-1 md:order-2">
+            <h2 class="text-3xl font-bold text-white mb-6">Estrategia de Promoción</h2>
+            <p class="text-slate-300 mb-6 text-lg">Para llegar a nuestro público objetivo (B2B), debemos estar donde ellos buscan soluciones profesionales y gestionan sus redes de contactos.</p>
+            
+            <ul class="space-y-4">
+                <li class="flex items-start">
+                    <span class="text-cyan-400 mr-3 text-xl">📍</span>
+                    <div>
+                        <strong class="text-white block">LinkedIn B2B Directo</strong>
+                        <span class="text-slate-400 text-sm">Prospección activa a Administradores y Dueños de PyMEs mediante contenido de valor (ej: "Cuánto tiempo pierdes cargando facturas").</span>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-cyan-400 mr-3 text-xl">📍</span>
+                    <div>
+                        <strong class="text-white block">Colegios Profesionales (Abogados/Contadores)</strong>
+                        <span class="text-slate-400 text-sm">Ofrecer charlas gratuitas sobre "Productividad con IA" auspiciadas por FlowState AI para ganar autoridad.</span>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-cyan-400 mr-3 text-xl">📍</span>
+                    <div>
+                        <strong class="text-white block">Cámaras de Comercio Locales</strong>
+                        <span class="text-slate-400 text-sm">Networking y alianzas estratégicas para llegar al ecosistema PyME.</span>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-cyan-400 mr-3 text-xl">📍</span>
+                    <div>
+                        <strong class="text-white block">Email Marketing (Cold Email)</strong>
+                        <span class="text-slate-400 text-sm">Campañas dirigidas específicamente a consultorios y clínicas demostrando el costo de los "turnos perdidos".</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <div class="mb-10 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Estrategia de Precios e Incentivos</h2>
+            <p class="text-slate-400 text-lg">Para reducir la fricción de entrada tecnológica, aplicaremos ofertas irresistibles de lanzamiento.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            
+            <div class="glass-card rounded-3xl p-8 relative overflow-hidden border border-slate-700">
+                <div class="absolute top-0 right-0 bg-slate-700 text-xs font-bold px-3 py-1 rounded-bl-lg">Lead Magnet</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Prueba Piloto "Risk-Free"</h3>
+                <div class="text-3xl font-black text-cyan-400 mb-4">Gratis</div>
+                <p class="text-slate-300 mb-6 h-12">Ideal para que el cliente pruebe el valor real del agente sin compromiso financiero.</p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center text-sm text-slate-300"><span class="text-cyan-400 mr-2">✓</span> Primeras 25 consultas/interacciones del agente.</li>
+                    <li class="flex items-center text-sm text-slate-300"><span class="text-cyan-400 mr-2">✓</span> Análisis Funcional Básico.</li>
+                    <li class="flex items-center text-sm text-slate-300"><span class="text-cyan-400 mr-2">✓</span> Reporte de tiempo ahorrado.</li>
+                </ul>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 relative overflow-hidden border border-cyan-500 transform md:-translate-y-4 shadow-[0_0_30px_rgba(34,211,238,0.15)]">
+                <div class="absolute top-0 right-0 bg-cyan-500 text-slate-900 text-xs font-bold px-3 py-1 rounded-bl-lg">Fundadores 2026</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Paquete Integral AI</h3>
+                <div class="flex items-baseline mb-4">
+                    <span class="text-4xl font-black text-cyan-400">$187.50</span>
+                    <span class="text-slate-400 ml-2 line-through text-lg">$250</span>
+                    <span class="text-slate-500 ml-1">/mes</span>
+                </div>
+                <p class="text-slate-300 mb-6 h-12">Exclusivo para los primeros 2 clientes de 2026. Alianza estratégica a largo plazo.</p>
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center text-sm text-white font-bold"><span class="text-cyan-400 mr-2">✓</span> 25% de Bonificación Permanente.</li>
+                    <li class="flex items-center text-sm text-white font-bold"><span class="text-cyan-400 mr-2">✓</span> Una (1) actualización funcional gratuita.</li>
+                    <li class="flex items-center text-sm text-slate-300"><span class="text-cyan-400 mr-2">✓</span> Desarrollo de 2 Agentes AI personalizados.</li>
+                    <li class="flex items-center text-sm text-slate-300"><span class="text-cyan-400 mr-2">✓</span> Puesta en valor e implementación.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<script>
+    const wrapLabel = (label) => {
+        if (label.length <= 16) return label;
+        const words = label.split(' ');
+        const lines = [];
+        let currentLine = '';
+        words.forEach(word => {
+            if ((currentLine + word).length > 16) {
+                if (currentLine) lines.push(currentLine.trim());
+                currentLine = word + ' ';
+            } else {
+                currentLine += word + ' ';
+            }
+        });
+        if (currentLine) lines.push(currentLine.trim());
+        return lines;
+    };
+
+    const tooltipConfig = {
+        callbacks: {
+            title: function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            }
+        }
+    };
+
+    const radarRawLabels = [
+        "Administración de Consorcios", 
+        "Estudios Contables", 
+        "Consultorios Médicos", 
+        "PyMEs Comerciales", 
+        "Estudios Jurídicos"
+    ];
+    const radarLabels = radarRawLabels.map(wrapLabel);
+
+    const ctxRadar = document.getElementById('sectorRadarChart').getContext('2d');
+    new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+            labels: radarLabels,
+            datasets: [{
+                label: 'Volumen de Tareas Repetitivas (0-10)',
+                data: [9.5, 9.0, 8.5, 7.5, 7.0],
+                backgroundColor: 'rgba(34, 211, 238, 0.2)',
+                borderColor: 'rgba(34, 211, 238, 1)',
+                pointBackgroundColor: 'rgba(192, 132, 252, 1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(192, 132, 252, 1)'
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                r: {
+                    angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    pointLabels: { color: '#cbd5e1', font: { size: 11, family: 'Inter' } },
+                    ticks: { display: false, min: 0, max: 10 }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: tooltipConfig
+            }
+        }
+    });
+
+    const barRawLabels = [
+        "Colegios Profesionales (Eventos)", 
+        "LinkedIn B2B Activo", 
+        "Email Marketing (Clínicas)", 
+        "Cámaras de Comercio"
+    ];
+    const barLabels = barRawLabels.map(wrapLabel);
+
+    const ctxBar = document.getElementById('channelsBarChart').getContext('2d');
+    new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: barLabels,
+            datasets: [{
+                label: 'Tasa de Conversión Estimada (%)',
+                data: [18, 15, 8, 12],
+                backgroundColor: [
+                    'rgba(192, 132, 252, 0.8)',
+                    'rgba(34, 211, 238, 0.8)',
+                    'rgba(244, 114, 182, 0.8)',
+                    'rgba(250, 204, 21, 0.8)'
+                ],
+                borderRadius: 6
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#cbd5e1', font: { size: 11, family: 'Inter' } }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: tooltipConfig
+            }
+        }
+    });
+</script>
+</body>
+</html>

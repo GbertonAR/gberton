@@ -1,0 +1,328 @@
+<!--
+PALETTE: LLA Tech Vibrant (Deep Purple: #4c1d95, Golden Yellow: #facc15, Cyan: #22d3ee, Dark Slate: #0f172a, Soft Gray: #f8fafc)
+NO MERMAID JS NOR SVG were used anywhere in the output.
+PLAN SUMMARY: The infographic presents a 5-pillar tech strategy aligned with the "La Libertad Avanza" (LLA) ideology. It flows logically from individual freedom (Talent Export) to State restructuring (Open Gov & Hackathons), cultural dominance (Tech Ambassadors), and finally macroeconomic influx (Digital Nomads). Each section provides ideological context, requirements, suggested entities, and a supporting visualization.
+VISUALIZATION CHOICES:
+- Talent Export -> Goal: Compare -> Bar Chart (Chart.js) -> Effectively contrasts the retained income of a freelancer under the previous interventionist model versus the proposed free-market (LLA) model.
+- Open Government -> Goal: Organize/Process -> HTML/CSS Flowchart -> Illustrates the Estonia-style decentralized architecture without using prohibited SVG/Mermaid tools.
+- Hackathons -> Goal: Compare/Composition -> Donut Chart (Chart.js) -> Shows the target allocation of tech solutions towards different pillars of state reduction (Motosierra).
+- Digital Nomads -> Goal: Change/Trends -> Area Chart (Chart.js) -> Visualizes the projected exponential growth in economic spillover from attracting foreign tech talent.
+- Tech Ambassadors -> Goal: Inform -> Unicode Pictograph/Styled HTML -> Displays the network effect and influence amplification.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Tecnológico: La Revolución Liberal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 350px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; max-height: 400px; } }
+        .gradient-text { background: linear-gradient(to right, #facc15, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(76, 29, 149, 0.5); }
+    </style>
+</head>
+<body class="antialiased selection:bg-yellow-400 selection:text-slate-900">
+
+    <header class="pt-16 pb-12 text-center px-4 border-b border-purple-900 shadow-lg shadow-purple-900/20">
+        <div class="inline-block px-4 py-1 mb-4 rounded-full bg-purple-900/50 border border-purple-500 text-yellow-400 text-sm font-bold uppercase tracking-wider">
+            Agenda Digital LLA
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
+            Argentina Tech Hub: <br/> <span class="gradient-text">La Revolución Liberal</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-lg text-slate-300">
+            Un plan integral de 5 ejes para transformar Argentina en la potencia tecnológica de la región, basado en la desregulación, la propiedad privada y la reducción drástica del peso del Estado (modelo motosierra).
+        </p>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 space-y-16">
+
+        <section class="glass-card rounded-2xl p-6 md:p-10 shadow-xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4 text-yellow-400">1. Exportación de Talento: El Fruto de tu Trabajo</h2>
+                    <p class="text-slate-300 mb-6">
+                        El cepo cambiario y las retenciones fueron un robo legalizado al esfuerzo de nuestros desarrolladores. La ideología de LLA propone la <strong>unificación cambiaria inmediata y retenciones cero</strong>. El freelancer debe disponer del 100% de la divisa que genera. Esto fomenta el blanqueo orgánico y la inyección de capital en la economía real.
+                    </p>
+                    <div class="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                        <h3 class="font-semibold text-cyan-400 mb-2">Requisitos & Entidades:</h3>
+                        <ul class="list-disc pl-5 text-sm text-slate-400 space-y-1">
+                            <li><strong>Req:</strong> Libre disponibilidad de divisas en cuentas locales o exchanges crypto.</li>
+                            <li><strong>Req:</strong> Eliminación del régimen simplificado de AFIP limitante; esquema flat tax.</li>
+                            <li><strong>Entidades Sugeridas:</strong> ONG Bitcoin Argentina, Cripto Ya, referenciadores del libre mercado tech (ej. fundadores de startups locales), Cámaras de Fintech pro-mercado.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chartTalent"></canvas>
+                </div>
+            </div>
+            <div class="mt-6 text-center text-sm text-slate-400">
+                <span class="text-xl">💡</span> <strong>Impacto:</strong> Pasar del robo estatal a la soberanía financiera del individuo.
+            </div>
+        </section>
+
+        <section class="glass-card rounded-2xl p-6 md:p-10 shadow-xl">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-cyan-400 text-center">2. Open Government: El Modelo Estonia</h2>
+            <p class="text-slate-300 mb-8 text-center max-w-3xl mx-auto">
+                El Estado no debe ser una caja negra. Inspirados en Estonia, buscamos descentralizar la información pública. Abrir repositorios de código permite a los ciudadanos auditar y mejorar los sistemas del Estado, reduciendo contratos oscuros con proveedoras amigas del poder.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="flex flex-col items-center justify-center w-full h-full min-h-[300px]">
+                    <div class="flex flex-col items-center space-y-4 w-full max-w-sm">
+                        <div class="w-full bg-slate-800 border-2 border-yellow-400 rounded-lg p-4 text-center shadow-lg relative z-10">
+                            <span class="text-2xl mb-2 block">👨‍💻</span>
+                            <span class="font-bold text-yellow-400">Desarrollador Ciudadano</span>
+                        </div>
+                        <div class="w-1 bg-cyan-400 h-8"></div>
+                        <div class="w-full bg-slate-800 border-2 border-cyan-400 rounded-lg p-4 text-center shadow-lg relative z-10 flex justify-between px-8">
+                            <div class="text-center"><span class="text-xl">🗂️</span><br/><span class="text-xs">GitHub Gov</span></div>
+                            <div class="text-center"><span class="text-xl">🔑</span><br/><span class="text-xs">X-Road API</span></div>
+                        </div>
+                        <div class="w-1 bg-purple-500 h-8"></div>
+                        <div class="w-full bg-purple-900 border-2 border-purple-500 rounded-lg p-4 text-center shadow-lg relative z-10">
+                            <span class="text-2xl mb-2 block">🏛️</span>
+                            <span class="font-bold text-white">Estado Transparente y Reducido</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="bg-slate-800/50 p-6 rounded-lg border border-slate-700 h-full flex flex-col justify-center">
+                        <h3 class="font-semibold text-yellow-400 mb-4 text-lg">Requisitos & Entidades:</h3>
+                        <ul class="list-disc pl-5 text-md text-slate-300 space-y-3">
+                            <li><strong>Req:</strong> Framework legal para contribuciones Open Source en infraestructura crítica.</li>
+                            <li><strong>Req:</strong> Identidad digital soberana (Wallet ciudadana).</li>
+                            <li><strong>Entidades Sugeridas:</strong> Comunidades como <em>Devs por la Libertad</em>, Fundaciones de código abierto, Rootstock (RSK) para identidad descentralizada.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card rounded-2xl p-6 md:p-10 shadow-xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div class="order-2 lg:order-1 chart-container">
+                    <canvas id="chartHackathon"></canvas>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4 text-purple-400">3. Hackathons: La Motosierra Tecnológica</h2>
+                    <p class="text-slate-300 mb-6">
+                        El sector privado resuelve problemas mejor que la burocracia. Organizaremos hackathons institucionales donde el desafío sea crear herramientas (IA, Blockchain) para destruir la ineficiencia, automatizar despidos de ñoquis mediante auditorías de productividad, y transparentar licitaciones.
+                    </p>
+                    <div class="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                        <h3 class="font-semibold text-yellow-400 mb-2">Requisitos & Entidades:</h3>
+                        <ul class="list-disc pl-5 text-sm text-slate-400 space-y-1">
+                            <li><strong>Req:</strong> Premios en crypto o dólares exentos de impuestos locales para los ganadores.</li>
+                            <li><strong>Req:</strong> Compromiso gubernamental de implementar el código ganador en menos de 90 días.</li>
+                            <li><strong>Entidades Sugeridas:</strong> Kleros (justicia descentralizada), Ethereum Argentina, Laboratorios de IA universitarios de tinte liberal, Globant/MercadoLibre como sponsors.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card rounded-2xl p-6 md:p-10 shadow-xl">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-yellow-400">4. Embajadores Tech: La Batalla Cultural en X</h2>
+                <p class="text-slate-300 max-w-3xl mx-auto">
+                    La libertad avanzó gracias a la batalla cultural en redes. Debemos identificar, validar y potenciar a referentes tecnológicos que abracen el libre mercado, dándoles una plataforma oficial para contrarrestar el relato regulador.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800 rounded-xl p-6 border border-purple-900 text-center hover:border-cyan-400 transition-colors">
+                    <div class="text-4xl mb-3">🗣️</div>
+                    <h3 class="font-bold text-white mb-2">Voz Orgánica</h3>
+                    <p class="text-sm text-slate-400">Cuentas influyentes desmintiendo falacias del estado presente en el desarrollo de software.</p>
+                </div>
+                <div class="bg-slate-800 rounded-xl p-6 border border-purple-900 text-center hover:border-yellow-400 transition-colors">
+                    <div class="text-4xl mb-3">🔁</div>
+                    <h3 class="font-bold text-white mb-2">Amplificación</h3>
+                    <p class="text-sm text-slate-400">Retweets y validación desde cuentas oficiales del gobierno (Presidencia, Ministerios).</p>
+                </div>
+                <div class="bg-slate-800 rounded-xl p-6 border border-purple-900 text-center hover:border-cyan-400 transition-colors">
+                    <div class="text-4xl mb-3">🤝</div>
+                    <h3 class="font-bold text-white mb-2">Mesa Chica Tech</h3>
+                    <p class="text-sm text-slate-400">Reuniones en Casa Rosada. Influencers como asesores ad-honorem de modernización.</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-slate-900 p-4 rounded-lg border border-slate-700">
+                <h3 class="font-semibold text-cyan-400 mb-2">Requisitos & Entidades:</h3>
+                <p class="text-sm text-slate-400">
+                    <strong>Req:</strong> Mapeo de sentimiento en X, creación de un "Blue Check" gubernamental honorífico.<br>
+                    <strong>Nombres Sugeridos (Arquetipos):</strong> Referentes cripto históricos, tuiteros de la derecha tecnológica (ej. @BetoMendeleiev_, influencers del liberalismo tech, fundadores de unicornios que apoyan publicamente la desregulación como M. Galperin).
+                </p>
+            </div>
+        </section>
+
+        <section class="glass-card rounded-2xl p-6 md:p-10 shadow-xl mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4 text-cyan-400">5. Capitalismo de Nómades: Importando Riqueza</h2>
+                    <p class="text-slate-300 mb-6">
+                        Bajo la visión libertaria, las fronteras deben estar abiertas al capital y al talento. Una visa de Nómades Digitales agresiva (Cero impuestos por traer dólares, cero regulaciones de alquiler temporal) convertirá a Argentina en el Hub #1, generando consumo local y derrame de conocimiento.
+                    </p>
+                    <div class="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                        <h3 class="font-semibold text-yellow-400 mb-2">Requisitos & Entidades:</h3>
+                        <ul class="list-disc pl-5 text-sm text-slate-400 space-y-1">
+                            <li><strong>Req:</strong> Visa automática online en 24hs.</li>
+                            <li><strong>Req:</strong> Exención impositiva total sobre ingresos generados en el exterior.</li>
+                            <li><strong>Req:</strong> Desregulación de contratos de alquiler (libertad de pactar en USD o Crypto).</li>
+                            <li><strong>Entidades Sugeridas:</strong> Airbnb, WeWork, Cámaras Inmobiliarias Desreguladas, Comunidades de Expatriados.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chartNomads"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 border-t border-purple-900 text-slate-500 text-sm">
+        <p>VLLC - Plan de Acción Tecnológico &bull; Datos y proyecciones ilustrativas basadas en la ideología LLA</p>
+    </footer>
+
+    <script>
+        const wrapLabel = (label) => {
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > 16) {
+                    if (currentLine) lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const globalTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        const ctxTalent = document.getElementById('chartTalent').getContext('2d');
+        const labelsTalentRaw = ['Modelo Intervencionista (Cepo + Retenciones)', 'Modelo LLA (Mercado Libre)'];
+        const labelsTalent = labelsTalentRaw.map(wrapLabel);
+        
+        new Chart(ctxTalent, {
+            type: 'bar',
+            data: {
+                labels: labelsTalent,
+                datasets: [
+                    {
+                        label: 'Valor Retenido por el Freelancer (USD Equivalente)',
+                        data: [450, 1000],
+                        backgroundColor: ['#4c1d95', '#facc15'],
+                        borderRadius: 6
+                    },
+                    {
+                        label: 'Confiscación Estatal',
+                        data: [550, 0],
+                        backgroundColor: ['#ef4444', '#0f172a'],
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#f8fafc' } },
+                    tooltip: globalTooltipConfig
+                },
+                scales: {
+                    x: { stacked: true, grid: { display: false } },
+                    y: { stacked: true, grid: { color: 'rgba(148, 163, 184, 0.1)' } }
+                }
+            }
+        });
+
+        const ctxHackathon = document.getElementById('chartHackathon').getContext('2d');
+        const labelsHackRaw = ['Auditoría Blockchain de Licitaciones', 'IA para reducción de burocracia', 'Apertura de Datos Financieros', 'Automatización de Bajas'];
+        const labelsHack = labelsHackRaw.map(wrapLabel);
+
+        new Chart(ctxHackathon, {
+            type: 'doughnut',
+            data: {
+                labels: labelsHack,
+                datasets: [{
+                    data: [40, 35, 15, 10],
+                    backgroundColor: ['#22d3ee', '#facc15', '#4c1d95', '#e2e8f0'],
+                    borderColor: '#0f172a',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#f8fafc' } },
+                    tooltip: globalTooltipConfig
+                },
+                cutout: '70%'
+            }
+        });
+
+        const ctxNomads = document.getElementById('chartNomads').getContext('2d');
+        const labelsNomadsRaw = ['Año 1 (Desregulación)', 'Año 2 (Llegada Masiva)', 'Año 3 (Estabilización)', 'Año 4 (Hub Consolidado)'];
+        const labelsNomads = labelsNomadsRaw.map(wrapLabel);
+
+        new Chart(ctxNomads, {
+            type: 'line',
+            data: {
+                labels: labelsNomads,
+                datasets: [{
+                    label: 'Derrame Económico Estimado (Millones USD)',
+                    data: [50, 250, 600, 1200],
+                    borderColor: '#22d3ee',
+                    backgroundColor: 'rgba(34, 211, 238, 0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#facc15',
+                    pointBorderColor: '#0f172a',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#f8fafc' } },
+                    tooltip: globalTooltipConfig
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

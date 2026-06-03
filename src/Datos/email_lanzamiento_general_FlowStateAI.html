@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>FlowState AI — Presentación</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; display: block; }
+    body { margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #f4f2f0; }
+    .email-wrapper { background-color: #f4f2f0; padding: 32px 0; }
+    .email-body { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; }
+    .header { background: linear-gradient(135deg, #1a0533 0%, #2d0a5e 50%, #1a1a4e 100%); padding: 40px 40px 36px; text-align: center; }
+    .logo-area { margin-bottom: 24px; }
+    .logo-img { width: 80px; height: auto; margin: 0 auto 12px; display: block; }
+    .brand-name { font-family: 'Montserrat', Arial, sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
+    .brand-flow { color: #38b6ff; }
+    .brand-state { color: #e83030; }
+    .brand-ai { color: #38b6ff; }
+    .tagline { font-family: 'Montserrat', Arial, sans-serif; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+    .hero-text { font-family: 'Montserrat', Arial, sans-serif; font-size: 28px; font-weight: 800; color: #ffffff; line-height: 1.25; margin: 0; letter-spacing: -0.5px; }
+    .hero-sub { font-family: 'Montserrat', Arial, sans-serif; font-size: 15px; font-weight: 400; color: rgba(255,255,255,0.7); margin-top: 12px; line-height: 1.6; }
+    .content { padding: 36px 40px 0; }
+    .intro { font-family: 'Montserrat', Arial, sans-serif; font-size: 15px; color: #333333; line-height: 1.8; margin: 0 0 28px; }
+    .intro strong { color: #1a0533; font-weight: 700; }
+    .section-label { font-family: 'Montserrat', Arial, sans-serif; font-size: 10px; font-weight: 700; color: #9b59b6; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 14px; }
+    .problem-box { background: #faf9ff; border-left: 3px solid #9b59b6; border-radius: 0 8px 8px 0; padding: 18px 20px; margin-bottom: 28px; }
+    .problem-item { font-family: 'Montserrat', Arial, sans-serif; font-size: 14px; color: #444; line-height: 1.7; margin: 0 0 10px; padding-left: 0; }
+    .problem-item:last-child { margin-bottom: 0; }
+    .problem-icon { display: inline-block; width: 20px; font-weight: 700; color: #9b59b6; }
+    .products-grid { margin-bottom: 28px; }
+    .product-card { background: #f9f8ff; border: 1px solid #e8e4f8; border-radius: 10px; padding: 16px 18px; margin-bottom: 10px; }
+    .product-name { font-family: 'Montserrat', Arial, sans-serif; font-size: 14px; font-weight: 700; color: #2d0a5e; margin: 0 0 4px; }
+    .product-desc { font-family: 'Montserrat', Arial, sans-serif; font-size: 13px; color: #666; line-height: 1.6; margin: 0; }
+    .product-tag { display: inline-block; font-family: 'Montserrat', Arial, sans-serif; font-size: 10px; font-weight: 600; color: #9b59b6; background: #eee8ff; border-radius: 4px; padding: 2px 7px; margin-bottom: 6px; }
+    .metrics-row { background: linear-gradient(135deg, #1a0533 0%, #2d0a5e 100%); border-radius: 12px; padding: 24px 28px; margin-bottom: 28px; }
+    .metric-item { display: inline-block; text-align: center; width: 30%; vertical-align: top; }
+    .metric-number { font-family: 'Montserrat', Arial, sans-serif; font-size: 26px; font-weight: 800; color: #38b6ff; line-height: 1; display: block; }
+    .metric-label { font-family: 'Montserrat', Arial, sans-serif; font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.65); line-height: 1.4; display: block; margin-top: 4px; }
+    .cta-block { text-align: center; padding: 0 0 36px; }
+    .cta-text { font-family: 'Montserrat', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #1a0533; margin: 0 0 20px; line-height: 1.5; }
+    .cta-button { display: inline-block; background: linear-gradient(135deg, #9b59b6, #38b6ff); color: #ffffff !important; text-decoration: none; font-family: 'Montserrat', Arial, sans-serif; font-size: 15px; font-weight: 700; padding: 16px 36px; border-radius: 50px; letter-spacing: 0.3px; }
+    .cta-secondary { font-family: 'Montserrat', Arial, sans-serif; font-size: 13px; color: #999; margin-top: 14px; }
+    .cta-secondary a { color: #9b59b6; text-decoration: none; font-weight: 600; }
+    .divider { height: 1px; background: #f0edf8; margin: 0 40px 28px; }
+    .pricing-row { margin-bottom: 28px; }
+    .pricing-label { font-family: 'Montserrat', Arial, sans-serif; font-size: 10px; font-weight: 700; color: #9b59b6; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 14px; }
+    .pricing-table { width: 100%; border-collapse: separate; border-spacing: 8px; }
+    .pricing-cell { background: #faf9ff; border: 1px solid #e8e4f8; border-radius: 8px; padding: 14px 12px; text-align: center; width: 33%; vertical-align: top; }
+    .pricing-cell.featured { background: #2d0a5e; border-color: #9b59b6; }
+    .price-plan { font-family: 'Montserrat', Arial, sans-serif; font-size: 11px; font-weight: 700; color: #9b59b6; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
+    .price-plan.featured { color: #38b6ff; }
+    .price-amount { font-family: 'Montserrat', Arial, sans-serif; font-size: 20px; font-weight: 800; color: #1a0533; display: block; }
+    .price-amount.featured { color: #ffffff; }
+    .price-period { font-family: 'Montserrat', Arial, sans-serif; font-size: 11px; color: #999; }
+    .price-period.featured { color: rgba(255,255,255,0.6); }
+    .price-feature { font-family: 'Montserrat', Arial, sans-serif; font-size: 12px; color: #666; margin-top: 8px; line-height: 1.5; }
+    .price-feature.featured { color: rgba(255,255,255,0.8); }
+    .footer { background: #1a0533; padding: 28px 40px; text-align: center; }
+    .footer-brand { font-family: 'Montserrat', Arial, sans-serif; font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+    .footer-tagline { font-family: 'Montserrat', Arial, sans-serif; font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 16px; }
+    .footer-contact { font-family: 'Montserrat', Arial, sans-serif; font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.8; }
+    .footer-contact a { color: #38b6ff; text-decoration: none; }
+    .footer-unsub { font-family: 'Montserrat', Arial, sans-serif; font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 16px; }
+    .footer-unsub a { color: rgba(255,255,255,0.4); }
+    @media only screen and (max-width: 620px) {
+      .email-body { border-radius: 0 !important; }
+      .header, .content, .footer { padding-left: 24px !important; padding-right: 24px !important; }
+      .hero-text { font-size: 22px !important; }
+      .metric-item { width: 100% !important; display: block !important; margin-bottom: 16px; }
+      .pricing-cell { display: block !important; width: 100% !important; margin-bottom: 8px; }
+      .divider { margin-left: 24px !important; margin-right: 24px !important; }
+      .cta-button { padding: 14px 28px !important; font-size: 14px !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="email-wrapper">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr><td align="center" valign="top">
+      <div class="email-body">
+
+        <!-- HEADER -->
+        <div class="header">
+          <div class="logo-area">
+            <img src="https://i.ibb.co/placeholder/logo.png" alt="FlowState AI" class="logo-img" width="72" style="width:72px; display:block; margin:0 auto 10px;" />
+            <div class="brand-name">
+              <span class="brand-flow">Flow</span><span class="brand-state">State</span> <span class="brand-ai">AI</span>
+            </div>
+            <div class="tagline">Software Factory</div>
+          </div>
+          <p class="hero-text">Tu empresa en estado de flujo.<br/>Con inteligencia artificial.</p>
+          <p class="hero-sub">Automatizamos tus procesos repetitivos para que tu equipo se enfoque en lo que realmente importa.</p>
+        </div>
+
+        <!-- INTRO -->
+        <div class="content">
+          <p class="intro">
+            Hola,<br/><br/>
+            Te escribo desde <strong>FlowState AI</strong>, una Software Factory argentina especializada en implementar agentes de inteligencia artificial que generan resultados operativos medibles desde el primer trimestre.<br/><br/>
+            No vendemos tecnología genérica. Vendemos <strong>la eliminación de la fricción administrativa</strong> que hoy consume tiempo valioso de tu equipo.
+          </p>
+
+          <!-- PROBLEMA -->
+          <p class="section-label">El problema que resolvemos</p>
+          <div class="problem-box">
+            <p class="problem-item"><span class="problem-icon">①</span> Tu equipo dedica horas a tareas repetitivas que una IA puede ejecutar en segundos.</p>
+            <p class="problem-item"><span class="problem-icon">②</span> Las soluciones genéricas no se adaptan a tus procesos ni a tu normativa local.</p>
+            <p class="problem-item"><span class="problem-icon">③</span> Las grandes consultoras tardan meses y cuestan decenas de miles de dólares.</p>
+          </div>
+
+          <!-- MÉTRICAS -->
+          <p class="section-label">Resultados comprobados en producción</p>
+          <div class="metrics-row">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td align="center" valign="top" width="33%">
+                  <span class="metric-number">46.000</span>
+                  <span class="metric-label">interacciones<br/>automatizadas en 5 días</span>
+                </td>
+                <td align="center" valign="top" width="33%">
+                  <span class="metric-number">3.800 hs</span>
+                  <span class="metric-label">operativas<br/>recuperadas</span>
+                </td>
+                <td align="center" valign="top" width="33%">
+                  <span class="metric-number">0</span>
+                  <span class="metric-label">meses de backlog<br/>eliminados</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- PRODUCTOS -->
+          <p class="section-label">Nuestros agentes disponibles hoy</p>
+          <div class="products-grid">
+            <div class="product-card">
+              <span class="product-tag">Auditoría · IDP</span>
+              <p class="product-name">Auditxt</p>
+              <p class="product-desc">Automatización de lectura y auditoría de comprobantes, facturas y expedientes. Elimina errores humanos y reduce tiempos de revisión en hasta un 90%.</p>
+            </div>
+            <div class="product-card">
+              <span class="product-tag">Atención · RAG</span>
+              <p class="product-name">DataAssist</p>
+              <p class="product-desc">Asistente conversacional personalizable para consultas internas y atención al cliente. Construido sobre Azure OpenAI con conocimiento de tu negocio.</p>
+            </div>
+            <div class="product-card">
+              <span class="product-tag">Comunicaciones · WhatsApp</span>
+              <p class="product-name">ConsorcioFlow & EmailService</p>
+              <p class="product-desc">Gestión automatizada de cobranzas, recordatorios y comunicaciones por WhatsApp y email. Disponible 24/7 sin costo operativo adicional.</p>
+            </div>
+            <div class="product-card">
+              <span class="product-tag">Compliance · Blockchain</span>
+              <p class="product-name">Compliance Digital Pack</p>
+              <p class="product-desc">Registro automático en blockchain para libros digitales exigidos por IGJ (Res. 15/2024). Cero errores, cero multas, cero papel.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- PRECIOS -->
+        <div class="content" style="padding-top:0;">
+          <p class="pricing-label">Planes de acceso</p>
+          <div class="pricing-row">
+            <table class="pricing-table" cellpadding="0" cellspacing="0" border="0" width="100%">
+              <tr>
+                <td class="pricing-cell" valign="top">
+                  <span class="price-plan">Starter</span>
+                  <span class="price-amount">USD 150<span class="price-period">/mes</span></span>
+                  <p class="price-feature">1 agente · Setup incluido · Hasta 1.000 interacciones</p>
+                </td>
+                <td class="pricing-cell featured" valign="top">
+                  <span class="price-plan featured">⭐ Recomendado</span>
+                  <span class="price-amount featured">USD 250<span class="price-period featured">/mes</span></span>
+                  <p class="price-feature featured">2–3 agentes · Consultoría · Soporte prioritario · Dashboard</p>
+                </td>
+                <td class="pricing-cell" valign="top">
+                  <span class="price-plan">Enterprise</span>
+                  <span class="price-amount">USD 500+<span class="price-period">/mes</span></span>
+                  <p class="price-feature">Agentes ilimitados · Integraciones legacy · SLA garantizado</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- CTA -->
+          <div class="cta-block">
+            <p class="cta-text">¿Querés ver un agente funcionando en vivo,<br/>adaptado a tu industria, en 5 minutos?</p>
+            <a href="https://calendly.com/flowstateai" class="cta-button">Agendar demo gratuita →</a>
+            <p class="cta-secondary">
+              O respondé este email directamente —<br/>
+              <a href="mailto:contacto@flowstateai.com">contacto@flowstateai.com</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+          <div class="footer-brand">FlowState AI Software Factory</div>
+          <div class="footer-tagline">Convertir la complejidad de los datos en una ventaja competitiva tangible.</div>
+          <div class="footer-contact">
+            Gustavo Gabriel Buongiorno Berton &nbsp;|&nbsp; Buenos Aires, Argentina<br/>
+            <a href="mailto:contacto@flowstateai.com">contacto@flowstateai.com</a>
+            &nbsp;·&nbsp;
+            <a href="https://flowstateai.com">flowstateai.com</a>
+          </div>
+          <p class="footer-unsub">
+            Recibiste este email porque te registraste o tuvimos contacto previo.<br/>
+            <a href="#">Cancelar suscripción</a>
+          </p>
+        </div>
+
+      </div>
+    </td></tr>
+  </table>
+</div>
+</body>
+</html>

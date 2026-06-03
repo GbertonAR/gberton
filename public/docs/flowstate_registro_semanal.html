@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowState AI — Registro Semanal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0e0f;
+  --paper: #f7f5f0;
+  --surface: #ffffff;
+  --border: rgba(14,14,15,0.1);
+  --border-strong: rgba(14,14,15,0.2);
+  --muted: #7a7874;
+  --accent-blue: #1a5fb4;
+  --accent-blue-bg: #e8f0fc;
+  --accent-green: #2a7a4b;
+  --accent-green-bg: #e6f4ed;
+  --accent-amber: #8a5a00;
+  --accent-amber-bg: #fdf3dc;
+  --accent-purple: #5a3ea0;
+  --accent-purple-bg: #eeebfc;
+  --accent-red: #c0392b;
+  --mono: 'DM Mono', monospace;
+  --sans: 'Syne', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.shell {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1.5px solid var(--ink);
+}
+.brand { display: flex; flex-direction: column; gap: 2px; }
+.brand-name { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+.brand-sub { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.week-nav { display: flex; align-items: center; gap: 10px; }
+.week-nav button { background: none; border: 1px solid var(--border-strong); border-radius: 4px; padding: 5px 10px; font-family: var(--mono); font-size: 11px; cursor: pointer; color: var(--ink); transition: background 0.15s; }
+.week-nav button:hover { background: var(--border); }
+#week-label { font-family: var(--mono); font-size: 13px; font-weight: 500; min-width: 160px; text-align: center; }
+
+/* SAVE BAR */
+.save-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--ink); color: var(--paper);
+  border-radius: 8px; padding: 10px 16px; margin-bottom: 28px;
+  font-family: var(--mono); font-size: 11px;
+}
+.save-bar span { opacity: 0.6; }
+.save-bar .actions { display: flex; gap: 8px; }
+.save-bar button {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  color: var(--paper); border-radius: 4px; padding: 4px 12px;
+  font-family: var(--mono); font-size: 11px; cursor: pointer; transition: background 0.15s;
+}
+.save-bar button:hover { background: rgba(255,255,255,0.2); }
+.save-bar button.primary { background: #fff; color: var(--ink); }
+.save-bar button.primary:hover { background: #e8e8e8; }
+#save-status { opacity: 0.7; font-size: 10px; }
+
+/* SECTION */
+.section { margin-bottom: 24px; }
+.section-label {
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* KPI GRID */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.kpi-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+}
+.kpi-card-label { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+.kpi-card input[type="number"], .kpi-card input[type="text"] {
+  width: 100%; border: none; outline: none; background: transparent;
+  font-family: var(--sans); font-size: 28px; font-weight: 700; color: var(--ink);
+  padding: 0; line-height: 1.1;
+}
+.kpi-card input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+.kpi-card-note { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.kpi-d1 { border-top: 3px solid #1a5fb4; }
+.kpi-d2 { border-top: 3px solid #2a7a4b; }
+.kpi-d3 { border-top: 3px solid #5a3ea0; }
+.kpi-d4 { border-top: 3px solid #8a5a00; }
+
+/* PROYECTOS */
+.project-list { display: flex; flex-direction: column; gap: 8px; }
+.project-row {
+  display: grid; grid-template-columns: 160px 1fr 110px 90px 36px;
+  gap: 8px; align-items: center;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px;
+}
+.project-row input[type="text"], .project-row select {
+  border: none; outline: none; background: transparent;
+  font-family: var(--sans); font-size: 13px; color: var(--ink); width: 100%;
+}
+.project-row select { font-size: 12px; cursor: pointer; }
+.status-badge {
+  display: inline-block; font-size: 10px; font-family: var(--mono);
+  padding: 3px 8px; border-radius: 3px; font-weight: 500; white-space: nowrap;
+}
+.s-activo { background: var(--accent-blue-bg); color: var(--accent-blue); }
+.s-completado { background: var(--accent-green-bg); color: var(--accent-green); }
+.s-pausado { background: var(--accent-amber-bg); color: var(--accent-amber); }
+.s-nuevo { background: var(--accent-purple-bg); color: var(--accent-purple); }
+.del-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); font-size: 16px; line-height: 1;
+  border-radius: 4px; padding: 2px 6px; transition: all 0.15s;
+}
+.del-btn:hover { background: #fdecea; color: var(--accent-red); }
+.add-btn {
+  background: none; border: 1px dashed var(--border-strong);
+  border-radius: 8px; padding: 10px; width: 100%;
+  font-family: var(--mono); font-size: 11px; color: var(--muted);
+  cursor: pointer; text-align: center; transition: all 0.15s; margin-top: 4px;
+}
+.add-btn:hover { background: var(--surface); color: var(--ink); border-style: solid; }
+
+/* HITOS */
+.hito-list { display: flex; flex-direction: column; gap: 8px; }
+.hito-row {
+  display: grid; grid-template-columns: 1fr 120px 36px;
+  gap: 8px; align-items: center;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px;
+}
+.hito-row input[type="text"], .hito-row select {
+  border: none; outline: none; background: transparent;
+  font-family: var(--sans); font-size: 13px; color: var(--ink); width: 100%;
+}
+
+/* IMPACTO */
+.impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.impact-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+}
+.impact-card label { font-family: var(--mono); font-size: 10px; color: var(--muted); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+.impact-card textarea {
+  width: 100%; border: none; outline: none; background: transparent;
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  resize: none; min-height: 72px; line-height: 1.6;
+}
+.impact-card input[type="number"] {
+  border: none; outline: none; background: transparent;
+  font-family: var(--sans); font-size: 32px; font-weight: 700; color: var(--ink);
+  width: 100%; padding: 0;
+}
+.impact-card input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+.impact-unit { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* PIPELINE */
+.pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.pipe-col {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 12px;
+}
+.pipe-col-label { font-family: var(--mono); font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.pipe-col textarea {
+  width: 100%; border: none; outline: none; background: transparent;
+  font-family: var(--sans); font-size: 12px; color: var(--ink);
+  resize: none; min-height: 80px; line-height: 1.6;
+}
+.pipe-count { font-family: var(--mono); font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+
+/* SEMAFORO */
+.semaforo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.sem-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 14px;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.sem-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.sem-card textarea {
+  width: 100%; border: none; outline: none; background: transparent;
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  resize: none; min-height: 56px; line-height: 1.6;
+}
+
+/* EXPORT PANEL */
+.export-panel {
+  margin-top: 32px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px 20px;
+}
+.export-panel h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.export-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.export-btn {
+  border: 1px solid var(--border-strong); border-radius: 6px;
+  padding: 10px 12px; background: none; cursor: pointer;
+  font-family: var(--mono); font-size: 11px; text-align: left;
+  transition: all 0.15s; color: var(--ink);
+}
+.export-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.export-btn small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+.export-btn:hover small { color: rgba(247,245,240,0.6); }
+
+/* HISTORY PANEL */
+.history-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.history-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; cursor: pointer; transition: border-color 0.15s;
+}
+.history-item:hover { border-color: var(--border-strong); }
+.history-item span { font-family: var(--mono); font-size: 11px; }
+.history-item .hi-meta { color: var(--muted); font-size: 10px; }
+
+@media (max-width: 600px) {
+  .project-row { grid-template-columns: 1fr 1fr; }
+  .project-row .del-btn { display: none; }
+  .pipeline { grid-template-columns: 1fr 1fr; }
+  .semaforo-grid { grid-template-columns: 1fr; }
+  .impact-grid { grid-template-columns: 1fr; }
+  .export-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="header">
+    <div class="brand">
+      <div class="brand-name">FlowState AI</div>
+      <div class="brand-sub">Registro semanal de producción</div>
+    </div>
+    <div class="week-nav">
+      <button onclick="navWeek(-1)">&#8592;</button>
+      <span id="week-label">Semana 18 — 2026</span>
+      <button onclick="navWeek(1)">&#8594;</button>
+    </div>
+  </div>
+
+  <div class="save-bar">
+    <span>Todos los cambios se guardan localmente en tu navegador</span>
+    <div class="actions">
+      <span id="save-status"></span>
+      <button onclick="loadHistory()">Historial</button>
+      <button class="primary" onclick="saveWeek()">Guardar semana</button>
+    </div>
+  </div>
+
+  <!-- D1 PRODUCCIÓN -->
+  <div class="section">
+    <div class="section-label">D1 — Producción</div>
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-d1">
+        <div class="kpi-card-label">Proyectos activos</div>
+        <input type="number" id="kpi-proyectos" value="0" min="0">
+        <div class="kpi-card-note">en ejecución esta semana</div>
+      </div>
+      <div class="kpi-card kpi-d1">
+        <div class="kpi-card-label">Artefactos generados</div>
+        <input type="number" id="kpi-artefactos" value="0" min="0">
+        <div class="kpi-card-note">docs, código, análisis, presentaciones</div>
+      </div>
+      <div class="kpi-card kpi-d1">
+        <div class="kpi-card-label">Sesiones de trabajo</div>
+        <input type="number" id="kpi-sesiones" value="0" min="0">
+        <div class="kpi-card-note">conversaciones activas con IA</div>
+      </div>
+      <div class="kpi-card kpi-d1">
+        <div class="kpi-card-label">Tasa de completitud %</div>
+        <input type="number" id="kpi-completitud" value="0" min="0" max="100">
+        <div class="kpi-card-note">proyectos con artefacto final</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROYECTOS DETALLE -->
+  <div class="section">
+    <div class="section-label">Proyectos esta semana</div>
+    <div class="project-list" id="project-list"></div>
+    <button class="add-btn" onclick="addProject()">+ Agregar proyecto</button>
+  </div>
+
+  <!-- D2 IMPACTO -->
+  <div class="section">
+    <div class="section-label">D2 — Impacto de negocio</div>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <label>Horas operativas ahorradas (estimado)</label>
+        <input type="number" id="imp-horas" value="0" min="0">
+        <div class="impact-unit">horas acumuladas esta semana</div>
+      </div>
+      <div class="impact-card">
+        <label>Score promedio de productos evaluados</label>
+        <input type="number" id="imp-score" value="0" min="0" max="100">
+        <div class="impact-unit">sobre 100 · 0 si no hubo evaluaciones</div>
+      </div>
+      <div class="impact-card">
+        <label>Problemas críticos detectados</label>
+        <textarea id="imp-problemas" placeholder="Ej: typo crítico en flyer, riesgo legal FLOW-PORT, C-01 hardcode en repo..."></textarea>
+      </div>
+      <div class="impact-card">
+        <label>ROI / valor estimado generado</label>
+        <textarea id="imp-roi" placeholder="Ej: email de lanzamiento evitó contratar agencia (~$800), ahorro 12hs de auditoría manual..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- D3 PIPELINE -->
+  <div class="section">
+    <div class="section-label">D3 — Pipeline FlowState AI</div>
+    <div class="pipeline">
+      <div class="pipe-col">
+        <div class="pipe-col-label">Contactado</div>
+        <div class="pipe-count" id="cnt-contactado">0</div>
+        <textarea id="pipe-contactado" placeholder="Nombres o empresas..." oninput="countLines('contactado')"></textarea>
+      </div>
+      <div class="pipe-col">
+        <div class="pipe-col-label">Reunión agendada</div>
+        <div class="pipe-count" id="cnt-reunion">0</div>
+        <textarea id="pipe-reunion" placeholder="Nombres o empresas..." oninput="countLines('reunion')"></textarea>
+      </div>
+      <div class="pipe-col">
+        <div class="pipe-col-label">Propuesta enviada</div>
+        <div class="pipe-count" id="cnt-propuesta">0</div>
+        <textarea id="pipe-propuesta" placeholder="Nombres o empresas..." oninput="countLines('propuesta')"></textarea>
+      </div>
+      <div class="pipe-col">
+        <div class="pipe-col-label">Cliente cerrado</div>
+        <div class="pipe-count" id="cnt-cerrado">0</div>
+        <textarea id="pipe-cerrado" placeholder="Nombres o empresas..." oninput="countLines('cerrado')"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- D4 CAPACIDAD -->
+  <div class="section">
+    <div class="section-label">D4 — Capacidad técnica</div>
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-d4">
+        <div class="kpi-card-label">Tecnologías aplicadas</div>
+        <input type="number" id="kpi-tech" value="0" min="0">
+        <div class="kpi-card-note">stack efectivamente usado</div>
+      </div>
+      <div class="kpi-card kpi-d4">
+        <div class="kpi-card-label">Verticales cubiertas</div>
+        <input type="number" id="kpi-verticales" value="0" min="0">
+        <div class="kpi-card-note">industrias atendidas acumulado</div>
+      </div>
+      <div class="kpi-card kpi-d4">
+        <div class="kpi-card-label">Colaboradores operativos</div>
+        <input type="number" id="kpi-colaboradores" value="21" min="0">
+        <div class="kpi-card-note">SKILLs activos en Staff_V3</div>
+      </div>
+      <div class="kpi-card kpi-d4">
+        <div class="kpi-card-label">Patrones EIP aplicados</div>
+        <input type="number" id="kpi-eip" value="0" min="0">
+        <div class="kpi-card-note">acumulado del mes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HITOS -->
+  <div class="section">
+    <div class="section-label">Hitos de la semana</div>
+    <div class="hito-list" id="hito-list"></div>
+    <button class="add-btn" onclick="addHito()">+ Agregar hito</button>
+  </div>
+
+  <!-- SEMÁFORO -->
+  <div class="section">
+    <div class="section-label">Semáforo semanal</div>
+    <div class="semaforo-grid">
+      <div class="sem-card">
+        <div class="sem-dot" style="background:#2a7a4b;"></div>
+        <div>
+          <div style="font-size:11px;font-family:var(--mono);color:var(--muted);margin-bottom:4px;">QUÉ FUNCIONÓ</div>
+          <textarea id="sem-bien" placeholder="Lo que salió bien esta semana..."></textarea>
+        </div>
+      </div>
+      <div class="sem-card">
+        <div class="sem-dot" style="background:#8a5a00;"></div>
+        <div>
+          <div style="font-size:11px;font-family:var(--mono);color:var(--muted);margin-bottom:4px;">QUÉ MEJORAR</div>
+          <textarea id="sem-mejorar" placeholder="Fricciones, desvíos, ineficiencias..."></textarea>
+        </div>
+      </div>
+      <div class="sem-card">
+        <div class="sem-dot" style="background:#1a5fb4;"></div>
+        <div>
+          <div style="font-size:11px;font-family:var(--mono);color:var(--muted);margin-bottom:4px;">PRÓXIMA SEMANA</div>
+          <textarea id="sem-proxima" placeholder="Prioridad #1 para la semana siguiente..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="export-panel">
+    <h3>Exportar / compartir</h3>
+    <div class="export-grid">
+      <button class="export-btn" onclick="exportJSON()">
+        Exportar JSON
+        <small>backup de todos los datos</small>
+      </button>
+      <button class="export-btn" onclick="exportMarkdown()">
+        Exportar Markdown
+        <small>para pegar en Claude o Notion</small>
+      </button>
+      <button class="export-btn" onclick="printWeek()">
+        Imprimir / PDF
+        <small>versión imprimible</small>
+      </button>
+    </div>
+  </div>
+
+  <!-- HISTORIAL (oculto por defecto) -->
+  <div id="history-panel" style="display:none; margin-top:24px;">
+    <div class="section-label">Historial de semanas guardadas</div>
+    <div class="history-list" id="history-list"></div>
+  </div>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'flowstate_registro';
+let currentWeekOffset = 0;
+
+function getWeekId(offset) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset * 7 - d.getDay() + 1);
+  const year = d.getFullYear();
+  const start = new Date(year, 0, 1);
+  const week = Math.ceil(((d - start) / 86400000 + start.getDay() + 1) / 7);
+  return `${year}-W${String(week).padStart(2,'0')}`;
+}
+
+function getWeekLabel(offset) {
+  const d = new Date();
+  d.setDate(d.getDate() + offset * 7 - d.getDay() + 1);
+  const year = d.getFullYear();
+  const start = new Date(year, 0, 1);
+  const week = Math.ceil(((d - start) / 86400000 + start.getDay() + 1) / 7);
+  const endDate = new Date(d); endDate.setDate(d.getDate() + 6);
+  const fmt = dt => dt.toLocaleDateString('es-AR', {day:'2-digit', month:'short'});
+  return `Semana ${week} — ${fmt(d)} al ${fmt(endDate)} · ${year}`;
+}
+
+function navWeek(dir) {
+  saveWeek(true);
+  currentWeekOffset += dir;
+  document.getElementById('week-label').textContent = getWeekLabel(currentWeekOffset);
+  loadWeek();
+}
+
+function getAllData() {
+  return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+}
+
+function getFields() {
+  const projects = [];
+  document.querySelectorAll('.project-item').forEach(row => {
+    projects.push({
+      name: row.querySelector('.p-name').value,
+      desc: row.querySelector('.p-desc').value,
+      status: row.querySelector('.p-status').value,
+      artefactos: row.querySelector('.p-art').value
+    });
+  });
+  const hitos = [];
+  document.querySelectorAll('.hito-item').forEach(row => {
+    hitos.push({
+      desc: row.querySelector('.h-desc').value,
+      tipo: row.querySelector('.h-tipo').value
+    });
+  });
+  return {
+    kpi: {
+      proyectos: document.getElementById('kpi-proyectos').value,
+      artefactos: document.getElementById('kpi-artefactos').value,
+      sesiones: document.getElementById('kpi-sesiones').value,
+      completitud: document.getElementById('kpi-completitud').value,
+      tech: document.getElementById('kpi-tech').value,
+      verticales: document.getElementById('kpi-verticales').value,
+      colaboradores: document.getElementById('kpi-colaboradores').value,
+      eip: document.getElementById('kpi-eip').value,
+    },
+    impacto: {
+      horas: document.getElementById('imp-horas').value,
+      score: document.getElementById('imp-score').value,
+      problemas: document.getElementById('imp-problemas').value,
+      roi: document.getElementById('imp-roi').value,
+    },
+    pipeline: {
+      contactado: document.getElementById('pipe-contactado').value,
+      reunion: document.getElementById('pipe-reunion').value,
+      propuesta: document.getElementById('pipe-propuesta').value,
+      cerrado: document.getElementById('pipe-cerrado').value,
+    },
+    semaforo: {
+      bien: document.getElementById('sem-bien').value,
+      mejorar: document.getElementById('sem-mejorar').value,
+      proxima: document.getElementById('sem-proxima').value,
+    },
+    projects, hitos,
+    savedAt: new Date().toISOString()
+  };
+}
+
+function saveWeek(silent) {
+  const all = getAllData();
+  const id = getWeekId(currentWeekOffset);
+  all[id] = getFields();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+  if (!silent) {
+    const s = document.getElementById('save-status');
+    s.textContent = 'Guardado ' + new Date().toLocaleTimeString('es-AR', {hour:'2-digit',minute:'2-digit'});
+    setTimeout(() => s.textContent = '', 3000);
+  }
+}
+
+function loadWeek() {
+  const all = getAllData();
+  const id = getWeekId(currentWeekOffset);
+  const d = all[id];
+  document.getElementById('project-list').innerHTML = '';
+  document.getElementById('hito-list').innerHTML = '';
+  if (!d) { addProject(); addHito(); return; }
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.value = val || ''; };
+  set('kpi-proyectos', d.kpi?.proyectos);
+  set('kpi-artefactos', d.kpi?.artefactos);
+  set('kpi-sesiones', d.kpi?.sesiones);
+  set('kpi-completitud', d.kpi?.completitud);
+  set('kpi-tech', d.kpi?.tech);
+  set('kpi-verticales', d.kpi?.verticales);
+  set('kpi-colaboradores', d.kpi?.colaboradores || 21);
+  set('kpi-eip', d.kpi?.eip);
+  set('imp-horas', d.impacto?.horas);
+  set('imp-score', d.impacto?.score);
+  set('imp-problemas', d.impacto?.problemas);
+  set('imp-roi', d.impacto?.roi);
+  set('pipe-contactado', d.pipeline?.contactado);
+  set('pipe-reunion', d.pipeline?.reunion);
+  set('pipe-propuesta', d.pipeline?.propuesta);
+  set('pipe-cerrado', d.pipeline?.cerrado);
+  set('sem-bien', d.semaforo?.bien);
+  set('sem-mejorar', d.semaforo?.mejorar);
+  set('sem-proxima', d.semaforo?.proxima);
+  ['contactado','reunion','propuesta','cerrado'].forEach(k => countLines(k));
+  (d.projects || []).forEach(p => addProject(p));
+  (d.hitos || []).forEach(h => addHito(h));
+  if (!d.projects?.length) addProject();
+  if (!d.hitos?.length) addHito();
+}
+
+function addProject(data) {
+  const list = document.getElementById('project-list');
+  const div = document.createElement('div');
+  div.className = 'project-row project-item';
+  const statuses = ['activo','completado','pausado','nuevo'];
+  const cur = data?.status || 'activo';
+  div.innerHTML = `
+    <input class="p-name" type="text" placeholder="Nombre del proyecto" value="${data?.name||''}">
+    <input class="p-desc" type="text" placeholder="Descripción breve / hito principal" value="${data?.desc||''}">
+    <select class="p-status">
+      ${statuses.map(s=>`<option value="${s}" ${cur===s?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}
+    </select>
+    <input class="p-art" type="text" placeholder="Artefactos" value="${data?.artefactos||''}">
+    <button class="del-btn" onclick="this.closest('.project-item').remove(); syncKPI()">×</button>
+  `;
+  list.appendChild(div);
+  div.querySelector('.p-status').addEventListener('change', () => syncKPI());
+  syncKPI();
+}
+
+function addHito(data) {
+  const list = document.getElementById('hito-list');
+  const div = document.createElement('div');
+  div.className = 'hito-row hito-item';
+  const tipos = ['producción','impacto','pipeline','capacidad','aprendizaje'];
+  const cur = data?.tipo || 'producción';
+  div.innerHTML = `
+    <input class="h-desc" type="text" placeholder="Descripción del hito logrado esta semana" value="${data?.desc||''}">
+    <select class="h-tipo">
+      ${tipos.map(t=>`<option value="${t}" ${cur===t?'selected':''}>${t.charAt(0).toUpperCase()+t.slice(1)}</option>`).join('')}
+    </select>
+    <button class="del-btn" onclick="this.closest('.hito-item').remove()">×</button>
+  `;
+  list.appendChild(div);
+}
+
+function syncKPI() {
+  const rows = document.querySelectorAll('.project-item');
+  const activos = [...rows].filter(r => r.querySelector('.p-status').value === 'activo').length;
+  document.getElementById('kpi-proyectos').value = activos;
+}
+
+function countLines(key) {
+  const ta = document.getElementById('pipe-' + key);
+  const cnt = document.getElementById('cnt-' + key);
+  const lines = ta.value.split('\n').filter(l => l.trim().length > 0).length;
+  cnt.textContent = lines;
+}
+
+function loadHistory() {
+  const panel = document.getElementById('history-panel');
+  const list = document.getElementById('history-list');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+  if (panel.style.display === 'none') return;
+  const all = getAllData();
+  list.innerHTML = '';
+  const keys = Object.keys(all).sort().reverse();
+  if (!keys.length) { list.innerHTML = '<p style="font-size:12px;color:var(--muted);padding:8px 0;">No hay semanas guardadas aún.</p>'; return; }
+  keys.forEach(k => {
+    const d = all[k];
+    const div = document.createElement('div');
+    div.className = 'history-item';
+    div.innerHTML = `<span>${k}</span><span class="hi-meta">${d.kpi?.artefactos||0} artefactos · ${d.kpi?.sesiones||0} sesiones · guardado ${new Date(d.savedAt).toLocaleDateString('es-AR')}</span>`;
+    div.onclick = () => {
+      const wk = k.split('-W')[1]; currentWeekOffset = 0;
+      saveWeek(true); loadWeek();
+    };
+    list.appendChild(div);
+  });
+}
+
+function exportJSON() {
+  saveWeek(true);
+  const all = getAllData();
+  const blob = new Blob([JSON.stringify(all, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `flowstate_registro_${getWeekId(currentWeekOffset)}.json`;
+  a.click();
+}
+
+function exportMarkdown() {
+  const d = getFields();
+  const wk = getWeekLabel(currentWeekOffset);
+  let md = `# FlowState AI — ${wk}\n\n`;
+  md += `## D1 Producción\n- Proyectos activos: ${d.kpi.proyectos}\n- Artefactos: ${d.kpi.artefactos}\n- Sesiones: ${d.kpi.sesiones}\n- Completitud: ${d.kpi.completitud}%\n\n`;
+  md += `## D2 Impacto\n- Horas ahorradas: ${d.impacto.horas}\n- Score promedio: ${d.impacto.score}\n- Problemas detectados: ${d.impacto.problemas}\n- Valor generado: ${d.impacto.roi}\n\n`;
+  md += `## D3 Pipeline\n- Contactados: ${d.pipeline.contactado||'—'}\n- Reuniones: ${d.pipeline.reunion||'—'}\n- Propuestas: ${d.pipeline.propuesta||'—'}\n- Cerrados: ${d.pipeline.cerrado||'—'}\n\n`;
+  md += `## D4 Capacidad\n- Tech: ${d.kpi.tech} · Verticales: ${d.kpi.verticales} · Colaboradores: ${d.kpi.colaboradores} · EIP: ${d.kpi.eip}\n\n`;
+  md += `## Hitos\n${d.hitos.map(h=>`- [${h.tipo}] ${h.desc}`).join('\n')}\n\n`;
+  md += `## Semáforo\n**Bien:** ${d.semaforo.bien}\n**Mejorar:** ${d.semaforo.mejorar}\n**Próxima semana:** ${d.semaforo.proxima}\n`;
+  const blob = new Blob([md], {type:'text/markdown'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `flowstate_${getWeekId(currentWeekOffset)}.md`;
+  a.click();
+}
+
+function printWeek() { window.print(); }
+
+document.getElementById('week-label').textContent = getWeekLabel(0);
+loadWeek();
+setInterval(() => saveWeek(true), 30000);
+</script>
+</body>
+</html>

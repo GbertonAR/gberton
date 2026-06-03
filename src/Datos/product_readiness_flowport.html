@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Product Readiness — FLOW-PORT AI Agéntico</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; padding: 28px; max-width: 1040px; margin: auto; }
+  h1 { font-size: 1.35rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px; }
+  .subtitle { font-size: 0.78rem; color: #94a3b8; margin-bottom: 24px; }
+
+  /* VERDICT */
+  .verdict-box {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 2px solid #ef4444;
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .verdict-score { font-size: 3.5rem; font-weight: 900; color: #ef4444; line-height: 1; }
+  .verdict-label { font-size: 1.1rem; font-weight: 700; color: #f87171; }
+  .verdict-sub { font-size: 0.8rem; color: #94a3b8; margin-top: 6px; line-height: 1.6; }
+
+  /* DIAGNOSIS BANNER */
+  .diagnosis {
+    background: #1c0a0a;
+    border: 1px solid #7f1d1d;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 0.82rem;
+    color: #fca5a5;
+    line-height: 1.6;
+  }
+  .diagnosis strong { color: #f87171; }
+
+  /* GRID */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { background: #1e293b; border-radius: 10px; padding: 16px; border-left: 4px solid #334155; }
+  .card.green { border-left-color: #22c55e; }
+  .card.yellow { border-left-color: #f59e0b; }
+  .card.red { border-left-color: #ef4444; }
+  .card.orange { border-left-color: #f97316; }
+
+  .card-title { font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .metric-name { font-size: 0.81rem; color: #cbd5e1; }
+  .metric-val { font-size: 0.81rem; font-weight: 700; }
+  .g { color: #4ade80; } .y { color: #fbbf24; } .r { color: #f87171; } .o { color: #fb923c; }
+  .bar-bg { background: #0f172a; border-radius: 4px; height: 5px; margin-bottom: 10px; }
+  .bar { height: 5px; border-radius: 4px; }
+  .bg-g { background: #22c55e; } .bg-y { background: #f59e0b; } .bg-r { background: #ef4444; } .bg-o { background: #f97316; }
+
+  /* SECTIONS */
+  .section { background: #1e293b; border-radius: 10px; padding: 18px; margin-bottom: 20px; }
+  .section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+  .t-red { color: #f87171; } .t-amber { color: #f59e0b; } .t-blue { color: #38bdf8; } .t-green { color: #4ade80; }
+
+  /* GAPS */
+  .gap-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  .tag { font-size: 0.67rem; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; margin-top: 2px; }
+  .tag-c { background: #7f1d1d; color: #fca5a5; }
+  .tag-h { background: #78350f; color: #fcd34d; }
+  .tag-m { background: #1e3a5f; color: #93c5fd; }
+  .tag-s { background: #14532d; color: #86efac; }
+  .gap-text { font-size: 0.81rem; color: #cbd5e1; line-height: 1.5; }
+
+  /* PILLS */
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+  .pill { flex: 1; min-width: 110px; border-radius: 8px; padding: 12px 10px; text-align: center; }
+  .pill-ok { background: #14532d; border: 1px solid #22c55e; }
+  .pill-warn { background: #451a03; border: 1px solid #f59e0b; }
+  .pill-no { background: #450a0a; border: 1px solid #ef4444; }
+  .pill-icon { font-size: 1.3rem; margin-bottom: 4px; }
+  .pill-lbl { font-size: 0.68rem; font-weight: 700; color: #e2e8f0; }
+  .pill-st { font-size: 0.63rem; color: #94a3b8; margin-top: 2px; }
+
+  /* WHAT IT IS */
+  .nature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .nature-card { border-radius: 8px; padding: 12px; }
+  .is-card { background: #14532d; border: 1px solid #22c55e; }
+  .isnot-card { background: #450a0a; border: 1px solid #ef4444; }
+  .nature-title { font-size: 0.7rem; font-weight: 700; margin-bottom: 6px; }
+  .nature-ok { color: #4ade80; }
+  .nature-no { color: #f87171; }
+  .nature-item { font-size: 0.77rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 3px; }
+
+  /* ROADMAP TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  th { background: #0f172a; color: #94a3b8; font-weight: 700; text-align: left; padding: 8px 10px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  td { padding: 8px 10px; border-bottom: 1px solid #1e293b; color: #cbd5e1; }
+  tr:last-child td { border-bottom: none; }
+  .status-pill { display: inline-block; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+  .sp-no { background: #7f1d1d; color: #fca5a5; }
+  .sp-part { background: #78350f; color: #fcd34d; }
+  .sp-yes { background: #14532d; color: #86efac; }
+
+  /* AF GRID */
+  .af-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .af-card { background: #0f172a; border-radius: 8px; padding: 12px; }
+  .af-card-title { font-size: 0.71rem; font-weight: 700; color: #7dd3fc; margin-bottom: 5px; }
+  .af-card-text { font-size: 0.76rem; color: #94a3b8; line-height: 1.5; }
+
+  .highlight-box { background: #0c1a2e; border: 1px solid #1d4ed8; border-radius: 8px; padding: 14px; margin-top: 14px; font-size: 0.8rem; color: #93c5fd; line-height: 1.6; }
+  .highlight-box strong { color: #60a5fa; }
+</style>
+</head>
+<body>
+
+<h1>📋 Product Readiness Scorecard — FLOW-PORT AI™ Agéntico</h1>
+<p class="subtitle">Framework: PRD Completeness · INVEST Criteria · AF Readiness · Technical Viability | Evaluado: Abril 2026</p>
+
+<!-- VERDICT -->
+<div class="verdict-box">
+  <div class="verdict-score">28</div>
+  <div>
+    <div class="verdict-label">🚫 CHAT LOG / BRAINSTORM SESSION — No es un documento de producto</div>
+    <div class="verdict-sub">
+      Clasificación real: Transcripción de sesión conversacional con IA (roleplay de agentes).<br>
+      No existe ningún artefacto de producto formal. No está listo para un Analista Funcional.<br>
+      Requiere una transformación completa antes de iniciar cualquier proceso de desarrollo.
+    </div>
+  </div>
+</div>
+
+<!-- DIAGNOSIS -->
+<div class="diagnosis">
+  <strong>⚠️ Diagnóstico crítico de naturaleza del documento:</strong> Este archivo es la exportación de una conversación con una IA (probablemente ChatGPT o similar) en modo "roleplay" donde el modelo asumió el rol de "ORIÓN" —un agente PM ficticio— y generó narrativa aspiracional sobre el producto. El documento contiene ideas de alto valor técnico, pero está estructurado como un diálogo entre agentes ficticios, no como especificación funcional. El riesgo principal es confundir <strong>narrativa de IA sobre el producto</strong> con <strong>documentación del producto</strong>.
+</div>
+
+<!-- SCORE CARDS -->
+<div class="grid">
+
+  <div class="card yellow">
+    <div class="card-title">🎯 Visión & Definición del Problema</div>
+    <div class="metric-row"><span class="metric-name">Problema portuario articulado</span><span class="metric-val y">Parcial</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:65%"></div></div>
+    <div class="metric-row"><span class="metric-name">Segmento objetivo definido</span><span class="metric-val y">Vago ("puertos")</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:40%"></div></div>
+    <div class="metric-row"><span class="metric-name">Pain cuantificado con datos reales</span><span class="metric-val r">✗ Sin métricas propias</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:15%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val y">45 / 100</span></div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">📝 Requerimientos Funcionales (User Stories)</div>
+    <div class="metric-row"><span class="metric-name">User Stories escritas</span><span class="metric-val r">✗ Cero</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Criterios de Aceptación</span><span class="metric-val r">✗ Cero</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Casos de uso formales</span><span class="metric-val r">✗ Cero</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val r">0 / 100</span></div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-title">⚙️ Arquitectura & Stack Técnico</div>
+    <div class="metric-row"><span class="metric-name">Stack mencionado</span><span class="metric-val y">✓ Nombrado (sin validar)</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:55%"></div></div>
+    <div class="metric-row"><span class="metric-name">Diagramas de arquitectura</span><span class="metric-val r">✗ Solo descripciones textuales</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">NFRs (SLA, latencia, volumen)</span><span class="metric-val r">✗ Ausentes</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Integración legacy validada</span><span class="metric-val r">✗ Solo supuesta</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:10%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val o">30 / 100</span></div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">💰 Análisis de Negocio & ROI</div>
+    <div class="metric-row"><span class="metric-name">Estimación de costos</span><span class="metric-val r">✗ No existe</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Break-even / Payback</span><span class="metric-val r">✗ No existe</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Modelo de monetización</span><span class="metric-val r">✗ No mencionado</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val r">5 / 100</span></div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">🔒 Compliance, Legal & Regulatorio</div>
+    <div class="metric-row"><span class="metric-name">ISPS Code / IMO mencionado</span><span class="metric-val y">✓ Citado (sin análisis)</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:40%"></div></div>
+    <div class="metric-row"><span class="metric-name">Implicancias legales de IA autónoma</span><span class="metric-val r">✗ No abordado</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Responsabilidad por cierre de barreras</span><span class="metric-val r">✗ Ignorado</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val r">15 / 100</span></div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">🗺️ MVP, Alcance & Roadmap</div>
+    <div class="metric-row"><span class="metric-name">Scope MVP delimitado</span><span class="metric-val r">✗ Todo es MVP</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Roadmap de releases</span><span class="metric-val r">✗ Solo "Semana 1 de contenido"</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:5%"></div></div>
+    <div class="metric-row"><span class="metric-name">Definition of Done</span><span class="metric-val r">✗ Ausente</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val r">5 / 100</span></div>
+  </div>
+
+</div>
+
+<!-- NATURALEZA DEL DOCUMENTO -->
+<div class="section">
+  <div class="section-title t-amber">🔍 Diagnóstico de Naturaleza: ¿Qué ES y qué NO ES este documento?</div>
+  <div class="nature-grid">
+    <div class="nature-card is-card">
+      <div class="nature-title nature-ok">✅ LO QUE SÍ ES</div>
+      <div class="nature-item">✓ Sesión de ideación con IA (brainstorming agéntico)</div>
+      <div class="nature-item">✓ Narrative design del producto (visión de alto nivel)</div>
+      <div class="nature-item">✓ Catálogo de conceptos técnicos relevantes</div>
+      <div class="nature-item">✓ Estrategia de contenido de marketing (grilla editorial)</div>
+      <div class="nature-item">✓ Inspiración para un futuro Product Brief</div>
+    </div>
+    <div class="nature-card isnot-card">
+      <div class="nature-title nature-no">❌ LO QUE NO ES</div>
+      <div class="nature-item">✗ PRD (Product Requirements Document)</div>
+      <div class="nature-item">✗ Especificación funcional para un AF</div>
+      <div class="nature-item">✗ Arquitectura técnica validada o diagramada</div>
+      <div class="nature-item">✗ Análisis de negocio con datos reales del cliente</div>
+      <div class="nature-item">✗ Documento ejecutable por ningún rol de desarrollo</div>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <strong>Riesgo principal identificado:</strong> El documento usa lenguaje declarativo ("El producto está completamente detallado", "Arquitectura: Definida", "COMPLETO") que genera una falsa sensación de avance. En la realidad, ningún artefacto concreto de producto fue producido. Un Analista Funcional que reciba este documento no sabrá por dónde empezar porque no hay un solo requerimiento formal escrito.
+  </div>
+</div>
+
+<!-- GAPS CRÍTICOS -->
+<div class="section">
+  <div class="section-title t-red">🚨 Gaps Identificados — Bloqueadores Totales para el AF</div>
+
+  <div class="gap-item">
+    <span class="tag tag-c">CRÍTICO</span>
+    <span class="gap-text"><strong>El documento es una conversación, no una especificación.</strong> Está narrado en primera persona por "ORIÓN" (rol ficticio de IA). Ninguna herramienta de gestión de productos (Jira, Azure DevOps, Confluence) puede consumir este formato. Necesita ser deconstruido y reconstruido como PRD.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-c">CRÍTICO</span>
+    <span class="gap-text"><strong>Cero User Stories y cero Criterios de Aceptación.</strong> Hay descripciones de comportamientos de agentes (ej: "VIGÍA cierra físicamente la barrera si BIC es inválido"), pero ninguno está formalizado como historia de usuario con criterios verificables. Son intenciones de diseño, no requerimientos.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-c">CRÍTICO</span>
+    <span class="gap-text"><strong>La IA toma decisiones físicas autónomas sin análisis de riesgo legal.</strong> El documento propone que agentes de IA cierren barreras físicas, bloqueen tokens de salida y reprogramen equipos Reefer de forma autónoma. Esto requiere análisis legal de responsabilidad civil, seguros, habilitación portuaria y auditoría humana que no están mencionados en absoluto.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-c">CRÍTICO</span>
+    <span class="gap-text"><strong>Ausencia total de análisis económico.</strong> A diferencia del documento anterior de Recetas Médicas, aquí no hay estimación de costos de desarrollo, infraestructura, licencias de hardware (cámaras Basler GigE, RFID EPC Gen2) ni modelo de monetización. No se puede calcular ningún ROI.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-h">ALTO</span>
+    <span class="gap-text"><strong>Stack técnico no validado contra el sistema legacy real.</strong> Se menciona "sistemas legacy en Node.js" pero no hay un relevamiento técnico real: versiones, APIs disponibles, contratos de datos, capacidad de los endpoints de barreras. La integración es supuesta, no documentada.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-h">ALTO</span>
+    <span class="gap-text"><strong>El "cliente" no está identificado.</strong> No hay un puerto específico, un interlocutor validado, ni un acuerdo de descubrimiento firmado. El producto está diseñado para un cliente genérico imaginario. Sin un cliente real, el producto es especulativo.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-h">ALTO</span>
+    <span class="gap-text"><strong>Mezcla de roadmap de software con plan editorial de marketing.</strong> El "calendario" del documento es de publicaciones de LinkedIn, no de sprints de desarrollo. Esto indica que el documento fue generado como estrategia de contenido disfrazada de especificación técnica.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-m">MEDIO</span>
+    <span class="gap-text"><strong>Afirmaciones técnicas sin respaldo.</strong> "98% de precisión en OCR de códigos BIC" se menciona como hecho establecido sin ninguna referencia a benchmarks, condiciones de iluminación, tipos de contenedores o tasas de falsos positivos. Un AF no puede construir criterios de aceptación sobre afirmaciones no respaldadas.</span>
+  </div>
+</div>
+
+<!-- CHECKLIST AF -->
+<div class="section-title t-blue" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;">✅ ¿Está listo para el Analista Funcional?</div>
+<div class="pills">
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Formato PRD</div><div class="pill-st">Chat log</div></div>
+  <div class="pill pill-warn"><div class="pill-icon">⚠️</div><div class="pill-lbl">Visión Producto</div><div class="pill-st">Parcial/vaga</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">User Stories</div><div class="pill-st">Cero</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Criterios Acept.</div><div class="pill-st">Cero</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Análisis ROI</div><div class="pill-st">Cero</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Diagramas</div><div class="pill-st">Cero</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">NFRs</div><div class="pill-st">Cero</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Marco Legal IA</div><div class="pill-st">No abordado</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Cliente Real</div><div class="pill-st">Genérico</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">MVP Delimitado</div><div class="pill-st">Todo es MVP</div></div>
+</div>
+
+<!-- ROADMAP DE TRANSFORMACIÓN -->
+<div class="section">
+  <div class="section-title t-amber">🗺️ Roadmap de Transformación: De Chat Log a PRD Ejecutable</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Fase</th>
+        <th>Entregable requerido</th>
+        <th>Responsable</th>
+        <th>Esfuerzo est.</th>
+        <th>Estado actual</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>0 — Discovery</strong></td>
+        <td>Identificar puerto cliente real + relevamiento técnico del Node.js legacy</td>
+        <td>Product Owner + Arquitecto</td>
+        <td>1-2 semanas</td>
+        <td><span class="status-pill sp-no">NO INICIADO</span></td>
+      </tr>
+      <tr>
+        <td><strong>1 — Problem Statement</strong></td>
+        <td>One-Pager con problema validado, métricas de dolor reales (dwell time medido, incidentes ISPS documentados)</td>
+        <td>Product Owner</td>
+        <td>3-5 días</td>
+        <td><span class="status-pill sp-no">NO INICIADO</span></td>
+      </tr>
+      <tr>
+        <td><strong>2 — Épicas & Stories</strong></td>
+        <td>3 épicas mínimas (Gate Control, Dwell Time Monitor, Reefer Chain) con User Stories INVEST y criterios Gherkin</td>
+        <td>Analista Funcional</td>
+        <td>1 semana</td>
+        <td><span class="status-pill sp-no">BLOQUEADO</span></td>
+      </tr>
+      <tr>
+        <td><strong>3 — Arquitectura C4</strong></td>
+        <td>Diagramas Level 1 y Level 2: límites sistema, actores (OCR, RFID, Node.js API, COPARN EDI), flujos de datos</td>
+        <td>Arquitecto de Soluciones</td>
+        <td>3-5 días</td>
+        <td><span class="status-pill sp-no">BLOQUEADO</span></td>
+      </tr>
+      <tr>
+        <td><strong>4 — Marco Legal IA Autónoma</strong></td>
+        <td>Análisis de responsabilidad civil por acciones autónomas (cierre de barreras). Definir Human-in-the-Loop mínimo requerido.</td>
+        <td>Legal + Product Owner</td>
+        <td>1 semana</td>
+        <td><span class="status-pill sp-no">CRÍTICO / AUSENTE</span></td>
+      </tr>
+      <tr>
+        <td><strong>5 — Business Case</strong></td>
+        <td>TCO, pricing model, break-even, comparativa vs. costo operativo actual del puerto cliente</td>
+        <td>Product Owner + FinOps</td>
+        <td>1 semana</td>
+        <td><span class="status-pill sp-no">NO INICIADO</span></td>
+      </tr>
+      <tr>
+        <td><strong>6 — NFRs validados</strong></td>
+        <td>SLAs con valores: tiempo de respuesta OCR, uptime, retención de imágenes, tasa de falsos positivos máx. aceptable</td>
+        <td>Arquitecto + AF</td>
+        <td>3 días</td>
+        <td><span class="status-pill sp-no">BLOQUEADO</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SALVAGEABLE ASSETS -->
+<div class="section">
+  <div class="section-title t-green">♻️ Activos Rescatables del Documento (lo que SÍ tiene valor)</div>
+  <div class="af-grid">
+    <div class="af-card">
+      <div class="af-card-title">✓ Catálogo de Agentes conceptuales</div>
+      <div class="af-card-text">VIGÍA, CHRONOS, THERMOS, AUDITOR son nombres de dominio bien pensados. Sirven como base para nombrar las épicas del backlog y los microservicios de la arquitectura.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">✓ Señales de comportamiento de agentes</div>
+      <div class="af-card-text">Frases como "si el camión supera el P75 de tiempo en balanza → alerta" son proto-reglas de negocio. Con trabajo, se pueden convertir en criterios Gherkin reales.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">✓ Stack tecnológico como punto de partida</div>
+      <div class="af-card-text">LangGraph, Mastra, Docker Vision OCR, RFID EPC Gen2, Basler GigE son elecciones técnicas coherentes que el Arquitecto puede evaluar y validar contra el entorno real.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">✓ Estándares de compliance citados</div>
+      <div class="af-card-text">IMO MSC-FAL.1/Circ.3/Rev.3, ISPS Code, NIST Framework son referencias reales y relevantes que el equipo legal debe profundizar para el marco regulatorio formal.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

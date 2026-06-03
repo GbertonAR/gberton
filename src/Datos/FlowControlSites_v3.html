@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowControl Sites v3 — FlowState AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --v:   #9b00ff; --v2: #c044ff;
+    --b:   #0055ff; --b2: #00aaff;
+    --c:   #00d4ff; --c2: #00ffee;
+    --e:   #00ff88; --e2: #aaff44;
+    --pk:  #ff00cc; --rd: #ff2244;
+    --og:  #ff6600; --yw: #ffee00;
+    --bg0: #050412; --bg1: #08061e; --bg2: #0c0a28;
+    --bg3: #111035; --bg4: #181548; --bg5: #201d5a;
+    --tx:  #dde2ff; --td: #7880bb; --tm: #454880;
+    --br:  rgba(155,0,255,.22); --brh: rgba(0,212,255,.3);
+    --gv:  0 0 22px rgba(155,0,255,.6),0 0 55px rgba(155,0,255,.2);
+    --gb:  0 0 22px rgba(0,170,255,.6),0 0 55px rgba(0,170,255,.2);
+    --ge:  0 0 22px rgba(0,255,136,.6),0 0 55px rgba(0,255,136,.2);
+    --gr:  0 0 18px rgba(255,34,68,.6);
+    --gy:  0 0 14px rgba(255,238,0,.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Exo 2',sans-serif;background:var(--bg0);color:var(--tx);min-height:100vh;overflow-x:hidden}
+
+  body::before{content:'';position:fixed;inset:0;z-index:0;
+    background:
+      radial-gradient(ellipse 75% 55% at 12% 4%, rgba(155,0,255,.15) 0%,transparent 62%),
+      radial-gradient(ellipse 50% 45% at 88% 12%, rgba(0,85,255,.12) 0%,transparent 58%),
+      radial-gradient(ellipse 40% 38% at 55% 88%, rgba(0,212,255,.1) 0%,transparent 56%),
+      radial-gradient(ellipse 30% 32% at 82% 65%, rgba(0,255,136,.09) 0%,transparent 52%);
+    animation:meshAnim 20s ease-in-out infinite alternate;pointer-events:none}
+  @keyframes meshAnim{0%{filter:hue-rotate(0deg) brightness(1)}100%{filter:hue-rotate(20deg) brightness(1.05)}}
+  body::after{content:'';position:fixed;inset:0;z-index:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.035) 3px,rgba(0,0,0,.035) 6px);
+    pointer-events:none}
+  .wrap{display:flex;min-height:100vh;position:relative;z-index:1}
+
+  /* ─── SIDEBAR ─── */
+  .sb{width:70px;background:linear-gradient(180deg,var(--bg2) 0%,var(--bg1) 100%);
+    border-right:1px solid var(--br);display:flex;flex-direction:column;align-items:center;
+    padding:18px 0;position:fixed;height:100vh;z-index:100;transition:width .3s cubic-bezier(.4,0,.2,1);
+    box-shadow:3px 0 40px rgba(155,0,255,.1)}
+  .sb:hover{width:224px}
+  .sb:hover .nl,.sb:hover .lt,.sb:hover .ui,.sb:hover .sl{opacity:1}
+  .sb:hover .nl{width:auto}
+
+  .lm{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:14px;color:#fff;flex-shrink:0;margin-bottom:5px;position:relative;overflow:hidden;
+    background:var(--bg2)}
+  .lm::before{content:'';position:absolute;inset:-2px;
+    background:conic-gradient(from 0deg,var(--v),var(--b2),var(--c2),var(--e),var(--v));
+    border-radius:15px;z-index:-1;animation:spin 4s linear infinite;filter:blur(1px)}
+  .lm-i{position:relative;z-index:1;background:var(--bg2);padding:8px 10px;border-radius:11px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .lt{font-size:10px;font-weight:700;color:var(--td);text-transform:uppercase;letter-spacing:.1em;opacity:0;transition:opacity .2s;white-space:nowrap}
+
+  .ns{width:100%;margin-top:24px}
+  .sl{font-size:9px;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.14em;
+    padding:0 18px;margin-bottom:6px;opacity:0;transition:opacity .2s;white-space:nowrap}
+  .ni{display:flex;align-items:center;gap:13px;padding:10px 14px;cursor:pointer;width:100%;
+    border-left:3px solid transparent;transition:all .2s}
+  .ni:hover,.ni.on{background:rgba(155,0,255,.1);border-left-color:var(--v)}
+  .ni.on .ic{filter:drop-shadow(0 0 7px var(--v))}
+  .ic{font-size:16px;min-width:20px;text-align:center}
+  .nl{font-size:13px;font-weight:600;opacity:0;width:0;overflow:hidden;transition:opacity .2s;white-space:nowrap}
+
+  .sbb{margin-top:auto;width:100%}
+  .uc{display:flex;align-items:center;gap:10px;padding:12px 14px;border-top:1px solid var(--br)}
+  .av{width:32px;height:32px;background:linear-gradient(135deg,var(--pk),var(--v));
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:11px;flex-shrink:0;box-shadow:0 0 14px rgba(255,0,204,.4)}
+  .ui{opacity:0;transition:opacity .2s;white-space:nowrap}
+  .un{font-size:12px;font-weight:700}
+  .ur{font-size:10px;color:var(--td)}
+
+  /* ─── MAIN ─── */
+  .mn{margin-left:70px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+  /* TOPBAR */
+  .tb{height:64px;background:rgba(8,6,30,.85);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--br);display:flex;align-items:center;
+    padding:0 28px;gap:13px;position:sticky;top:0;z-index:50;
+    box-shadow:0 2px 40px rgba(0,0,0,.45)}
+  .tbt{font-size:21px;font-weight:900;flex:1;letter-spacing:-.01em}
+  .tbt span{background:linear-gradient(90deg,var(--v2),var(--b2),var(--c),var(--e));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    filter:drop-shadow(0 0 14px rgba(0,212,255,.3))}
+
+  .pill{display:flex;align-items:center;gap:6px;padding:5px 13px;border-radius:20px;
+    font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+  .p-live{background:rgba(0,255,136,.11);color:var(--e);border:1px solid rgba(0,255,136,.3)}
+  .p-auto{background:rgba(155,0,255,.15);color:var(--v2);border:1px solid rgba(155,0,255,.35);
+    cursor:pointer;transition:all .2s}
+  .p-auto:hover{background:rgba(155,0,255,.28);box-shadow:var(--gv)}
+  .dot{width:7px;height:7px;border-radius:50%;background:currentColor;animation:p 1.4s infinite}
+  @keyframes p{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+
+  .cs{display:flex;gap:3px;background:var(--bg3);border-radius:9px;padding:3px;border:1px solid var(--br)}
+  .cb{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;
+    transition:all .2s;text-transform:uppercase;letter-spacing:.05em;color:var(--td)}
+  .cb:hover{background:var(--bg4);color:var(--tx)}
+  .cb.az{background:linear-gradient(135deg,#0041cc,#0099ee);color:#fff;box-shadow:0 0 12px rgba(0,153,238,.4)}
+  .cb.gcp{background:linear-gradient(135deg,#bb1100,#ee5500);color:#fff;box-shadow:0 0 12px rgba(238,85,0,.4)}
+
+  .tbtn{width:35px;height:35px;background:var(--bg3);border:1px solid var(--br);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;
+    transition:all .2s;position:relative}
+  .tbtn:hover{background:var(--bg4);border-color:var(--c);box-shadow:0 0 12px rgba(0,212,255,.25)}
+  .nb{position:absolute;top:-5px;right:-5px;width:16px;height:16px;background:var(--rd);
+    border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--bg0);box-shadow:var(--gr)}
+
+  /* ─── CONTENT ─── */
+  .ct{padding:24px 28px;flex:1}
+
+  /* SECTION HEADING */
+  .sh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--tm);
+    margin-bottom:13px;display:flex;align-items:center;gap:10px}
+  .sh::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--br),transparent)}
+
+  /* STATS */
+  .sg{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
+  .sc{background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);border:1px solid var(--br);
+    border-radius:15px;padding:16px;position:relative;overflow:hidden;cursor:pointer;transition:all .25s}
+  .sc:hover{transform:translateY(-3px);border-color:var(--brh);box-shadow:0 8px 40px rgba(0,0,0,.4),0 0 18px rgba(0,212,255,.1)}
+  .sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--acc,linear-gradient(90deg,var(--v),var(--b2)))}
+  .sc::after{content:'';position:absolute;inset:0;background:linear-gradient(130deg,rgba(255,255,255,.025) 0%,transparent 60%);border-radius:15px;pointer-events:none}
+  .si{font-size:20px;margin-bottom:9px}
+  .slb{font-size:9px;font-weight:700;color:var(--td);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+  .sv{font-size:26px;font-weight:900;font-family:'JetBrains Mono',monospace;line-height:1}
+  .ss{font-size:10px;color:var(--td);margin-top:4px}
+  .str{font-size:9px;font-weight:700;padding:2px 7px;border-radius:9px;margin-top:6px;display:inline-block}
+  .tu{background:rgba(0,255,136,.14);color:var(--e)}
+  .tw{background:rgba(255,238,0,.14);color:var(--yw)}
+  .td2{background:rgba(255,34,68,.14);color:var(--rd)}
+
+  /* NEON TEXT */
+  .nv{color:var(--v2);text-shadow:0 0 16px rgba(192,68,255,.65)}
+  .nb2{color:var(--b2);text-shadow:0 0 16px rgba(0,170,255,.65)}
+  .ne{color:var(--e);text-shadow:0 0 16px rgba(0,255,136,.65)}
+  .nr{color:var(--rd);text-shadow:0 0 16px rgba(255,34,68,.5)}
+  .ny{color:var(--yw)}
+  .nc{color:var(--c);text-shadow:0 0 14px rgba(0,212,255,.55)}
+
+  /* FLOWSCORE PANEL */
+  .fs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px}
+  .fsc{background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1px solid var(--br);
+    border-radius:14px;padding:16px;position:relative;overflow:hidden;cursor:pointer;transition:all .25s}
+  .fsc:hover{transform:translateY(-2px);border-color:rgba(0,212,255,.4)}
+  .fs-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+  .fs-name{font-size:13px;font-weight:700}
+  .fs-client{font-size:10px;color:var(--td);margin-top:2px}
+  .fs-score{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:900}
+  .fs-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .fs-bar-track{height:6px;background:var(--bg5);border-radius:3px;overflow:hidden;margin:8px 0}
+  .fs-bar-fill{height:100%;border-radius:3px}
+  .fs-tags{display:flex;gap:6px;flex-wrap:wrap}
+  .fs-tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px}
+  .tag-roi{background:rgba(0,255,136,.12);color:var(--e)}
+  .tag-risk{background:rgba(255,34,68,.12);color:var(--rd)}
+  .tag-med{background:rgba(255,238,0,.12);color:var(--yw)}
+  .tag-info{background:rgba(0,170,255,.12);color:var(--b2)}
+
+  /* AI AGENT */
+  .ag{background:linear-gradient(135deg,rgba(155,0,255,.11),rgba(0,85,255,.1),rgba(0,212,255,.06));
+    border:1px solid rgba(155,0,255,.38);border-radius:18px;padding:20px;
+    position:relative;overflow:hidden;margin-bottom:20px;
+    box-shadow:0 0 60px rgba(155,0,255,.07),inset 0 1px 0 rgba(255,255,255,.04)}
+  .ag::before{content:'';position:absolute;top:-55%;right:-8%;width:240px;height:240px;
+    background:radial-gradient(circle,rgba(155,0,255,.16),transparent 70%);
+    pointer-events:none;animation:agp 5s ease-in-out infinite}
+  @keyframes agp{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+  .ag-h{display:flex;align-items:center;gap:13px;margin-bottom:13px}
+  .orb{width:44px;height:44px;background:linear-gradient(135deg,var(--v),var(--b),var(--c));
+    border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;
+    flex-shrink:0;box-shadow:var(--gv);animation:orbp 3s ease-in-out infinite}
+  @keyframes orbp{0%,100%{box-shadow:0 0 18px rgba(155,0,255,.5)}50%{box-shadow:0 0 40px rgba(155,0,255,.85),0 0 80px rgba(0,170,255,.3)}}
+  .ag-title{font-size:14px;font-weight:700}
+  .ag-sub{font-size:11px;color:var(--td)}
+  .ag-modes{display:flex;gap:6px;margin-left:auto}
+  .mode-btn{padding:4px 10px;border-radius:14px;font-size:10px;font-weight:700;cursor:pointer;
+    border:1px solid;transition:all .2s}
+  .m-obs{border-color:var(--td);color:var(--td)}
+  .m-rec{border-color:var(--b2);color:var(--b2);background:rgba(0,170,255,.1)}
+  .m-aut{border-color:var(--v);color:var(--v2);background:rgba(155,0,255,.15);box-shadow:0 0 10px rgba(155,0,255,.3)}
+  .ag-txt{font-size:12px;color:var(--td);line-height:1.65;font-style:italic;margin-bottom:13px}
+  .ag-txt strong{color:var(--c);font-style:normal}
+  .ag-btns{display:flex;gap:7px;flex-wrap:wrap}
+  .agb{padding:7px 15px;border-radius:9px;font-size:11px;font-weight:700;cursor:pointer;
+    border:none;transition:all .2s;font-family:'Exo 2',sans-serif}
+  .agb:hover{transform:translateY(-2px);filter:brightness(1.15)}
+  .agb-p{background:linear-gradient(135deg,var(--v),var(--b));color:#fff;box-shadow:0 0 14px rgba(155,0,255,.38)}
+  .agb-s{background:var(--bg3);color:var(--td);border:1px solid var(--br)}
+  .agb-d{background:rgba(255,34,68,.15);color:var(--rd);border:1px solid rgba(255,34,68,.3)}
+  .agb-g{background:rgba(0,255,136,.12);color:var(--e);border:1px solid rgba(0,255,136,.28)}
+
+  /* TWIN SIMULATOR */
+  .twin{background:linear-gradient(135deg,rgba(0,212,255,.08),rgba(0,255,136,.05));
+    border:1px solid rgba(0,212,255,.25);border-radius:14px;padding:16px;margin-bottom:20px}
+  .twin-h{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .twin-icon{font-size:22px}
+  .twin-title{font-size:13px;font-weight:700;color:var(--c)}
+  .twin-sub{font-size:11px;color:var(--td)}
+  .twin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .twin-card{background:var(--bg3);border-radius:10px;padding:13px;border:1px solid rgba(255,255,255,.06)}
+  .twin-lbl{font-size:10px;color:var(--td);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+  .twin-val{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700}
+  .twin-change{font-size:11px;margin-top:3px}
+
+  /* SUBS */
+  .subg{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:20px}
+  .subc{background:var(--bg2);border:1px solid var(--br);border-radius:14px;padding:16px;
+    cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+  .subc:hover{border-color:rgba(0,212,255,.4);transform:translateY(-3px);box-shadow:0 8px 35px rgba(0,0,0,.35),0 0 18px rgba(0,212,255,.08)}
+  .sst{position:absolute;top:0;left:0;right:0;height:3px}
+  .saz .sst{background:linear-gradient(90deg,var(--v),var(--b2));box-shadow:0 0 10px rgba(0,170,255,.5)}
+  .sgcp .sst{background:linear-gradient(90deg,#cc2200,#ffaa00,#22aa44,#2266ff)}
+  .scl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+  .snm{font-size:13px;font-weight:700;margin-bottom:3px}
+  .sid{font-size:10px;color:var(--td);font-family:'JetBrains Mono',monospace;margin-bottom:11px}
+  .sco{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900}
+  .spr{font-size:10px;color:var(--td);margin-top:2px}
+  .sbs{display:flex;gap:4px;margin-top:8px}
+  .sb-tag{font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700}
+  .tprod{background:rgba(0,255,136,.12);color:var(--e)}
+  .tdev{background:rgba(255,238,0,.12);color:var(--yw)}
+
+  /* TWO / THREE COL */
+  .tc{display:grid;grid-template-columns:1fr 370px;gap:18px;margin-bottom:20px}
+  .thc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
+
+  /* PANEL */
+  .pn{background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1px solid var(--br);border-radius:16px;overflow:hidden}
+  .ph{padding:15px 19px;border-bottom:1px solid var(--br);display:flex;align-items:center;gap:9px}
+  .pt{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;flex:1;color:var(--td)}
+  .pa{font-size:11px;color:var(--v2);cursor:pointer;font-weight:600}
+  .pa:hover{color:var(--c)}
+  .pb{padding:17px 19px}
+
+  /* TABLE */
+  .rt{width:100%;border-collapse:collapse}
+  .rt th{font-size:10px;font-weight:700;color:var(--td);text-transform:uppercase;letter-spacing:.1em;
+    padding:8px 11px;text-align:left;border-bottom:1px solid var(--br)}
+  .rt td{padding:10px 11px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04)}
+  .rt tr:last-child td{border-bottom:none}
+  .rt tr:hover td{background:rgba(155,0,255,.055)}
+
+  .eb{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;text-transform:uppercase;letter-spacing:.06em}
+  .ep{background:rgba(0,255,136,.12);color:var(--e);border:1px solid rgba(0,255,136,.28)}
+  .ed{background:rgba(255,238,0,.12);color:var(--yw);border:1px solid rgba(255,238,0,.28)}
+  .es{background:rgba(155,0,255,.12);color:var(--v2);border:1px solid rgba(155,0,255,.28)}
+
+  .ct2{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace}
+  .caz{background:rgba(0,85,255,.2);color:#66aaff}
+  .cgcp{background:rgba(220,60,40,.2);color:#ff8070}
+
+  .cv{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600}
+  .ch{color:var(--rd);text-shadow:0 0 10px rgba(255,34,68,.35)}
+  .cm{color:var(--yw)}
+  .cl{color:var(--e)}
+
+  .sd{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+  .sg2{background:var(--e);box-shadow:0 0 7px var(--e)}
+  .sy{background:var(--yw);box-shadow:0 0 7px var(--yw)}
+  .sr{background:var(--rd);box-shadow:0 0 7px var(--rd)}
+  .sb2{background:var(--b2);box-shadow:0 0 7px var(--b2)}
+
+  /* ALERTS */
+  .al{display:flex;flex-direction:column;gap:9px}
+  .ai{display:flex;gap:11px;align-items:flex-start;padding:11px 13px;
+    border-radius:10px;font-size:12px;border-left:3px solid}
+  .acr{background:rgba(255,34,68,.07);border-color:var(--rd)}
+  .aw{background:rgba(255,238,0,.07);border-color:var(--yw)}
+  .ainf{background:rgba(0,212,255,.07);border-color:var(--c)}
+  .aok{background:rgba(0,255,136,.07);border-color:var(--e)}
+  .aico{font-size:15px;margin-top:1px}
+  .atx{flex:1}
+  .ati{font-weight:700;margin-bottom:2px}
+  .ade{color:var(--td);font-size:11px}
+  .atm{font-size:10px;color:var(--td);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+
+  /* COST BARS */
+  .cbs{display:flex;flex-direction:column;gap:10px}
+  .cbi{display:flex;justify-content:space-between;margin-bottom:4px}
+  .cbn{font-size:12px;font-weight:600}
+  .cba{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--td)}
+  .cbtr{height:7px;background:var(--bg5);border-radius:4px;overflow:hidden}
+  .cbf{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+
+  /* DEV KANBAN */
+  .kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:20px}
+  .kancol{background:var(--bg2);border:1px solid var(--br);border-radius:13px;padding:12px;min-height:160px}
+  .kh{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+    color:var(--td);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .kc{font-size:10px;font-weight:700;padding:2px 7px;border-radius:9px}
+  .kcard{background:var(--bg3);border:1px solid rgba(255,255,255,.07);border-radius:9px;
+    padding:10px;margin-bottom:8px;cursor:pointer;transition:all .2s}
+  .kcard:hover{border-color:rgba(155,0,255,.3);transform:translateX(2px)}
+  .kcard:last-child{margin-bottom:0}
+  .kcn{font-size:12px;font-weight:700;margin-bottom:3px}
+  .kcc{font-size:10px;color:var(--td)}
+  .kcprog{margin-top:6px}
+  .kcpt{display:flex;justify-content:space-between;font-size:9px;color:var(--td);margin-bottom:2px}
+  .kctrack{height:3px;background:var(--bg5);border-radius:2px;overflow:hidden}
+  .kcfill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--v),var(--b2));
+    box-shadow:0 0 6px rgba(0,170,255,.35)}
+
+  /* LOG */
+  .log{background:#030215;border-radius:10px;padding:13px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;
+    max-height:210px;overflow-y:auto;border:1px solid rgba(255,255,255,.05)}
+  .log::-webkit-scrollbar{width:3px}
+  .log::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
+  .ll{display:flex;gap:11px}
+  .lt2{color:var(--tm);flex-shrink:0}
+  .lv{font-weight:700;flex-shrink:0;width:44px}
+  .lv.er{color:var(--rd);text-shadow:0 0 7px rgba(255,34,68,.4)}
+  .lv.wn{color:var(--yw)}
+  .lv.if{color:var(--b2)}
+  .lv.ok{color:var(--e)}
+  .lm2{color:#7888bb}
+
+  /* ANIMATIONS */
+  @keyframes fu{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+  .fu{animation:fu .5s ease forwards;opacity:0}
+  .d1{animation-delay:.05s}.d2{animation-delay:.10s}.d3{animation-delay:.15s}
+  .d4{animation-delay:.20s}.d5{animation-delay:.25s}.d6{animation-delay:.30s}
+
+  @media(max-width:1400px){.sg{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:1200px){.sg{grid-template-columns:repeat(3,1fr)}.tc{grid-template-columns:1fr}.subg{grid-template-columns:repeat(2,1fr)}.kanban{grid-template-columns:repeat(2,1fr)}.fs-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:768px){.sg{grid-template-columns:1fr 1fr}.thc{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sb">
+    <div class="lm"><div class="lm-i">FC</div></div>
+    <div class="lt">FlowControl</div>
+    <nav class="ns">
+      <div class="sl">Monitoreo</div>
+      <div class="ni on"><span class="ic">⬡</span><span class="nl">Dashboard</span></div>
+      <div class="ni"><span class="ic">☁</span><span class="nl">Infraestructura</span></div>
+      <div class="ni"><span class="ic">💰</span><span class="nl">Costos &amp; Budget</span></div>
+      <div class="ni"><span class="ic">📋</span><span class="nl">Logs &amp; Errores</span></div>
+    </nav>
+    <nav class="ns">
+      <div class="sl">Proyectos</div>
+      <div class="ni"><span class="ic">🚀</span><span class="nl">En Producción</span></div>
+      <div class="ni"><span class="ic">🔧</span><span class="nl">En Desarrollo</span></div>
+      <div class="ni"><span class="ic">📊</span><span class="nl">FlowScore™</span></div>
+      <div class="ni"><span class="ic">🗺️</span><span class="nl">Roadmap</span></div>
+      <div class="ni"><span class="ic">📈</span><span class="nl">Mercado &amp; ROI</span></div>
+    </nav>
+    <nav class="ns">
+      <div class="sl">Agente AI</div>
+      <div class="ni"><span class="ic">🤖</span><span class="nl">FlowAgent</span></div>
+      <div class="ni"><span class="ic">🧬</span><span class="nl">Digital Twin</span></div>
+      <div class="ni"><span class="ic">⚡</span><span class="nl">Automatizaciones</span></div>
+      <div class="ni"><span class="ic">🎨</span><span class="nl">Brand Audit</span></div>
+      <div class="ni"><span class="ic">⚙️</span><span class="nl">Configuración</span></div>
+    </nav>
+    <div class="sbb">
+      <div class="uc">
+        <div class="av">GB</div>
+        <div class="ui"><div class="un">G. Berton</div><div class="ur">Founder · Admin</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="mn">
+    <header class="tb">
+      <h1 class="tbt"><span>FlowControl Sites</span></h1>
+      <div class="cs">
+        <div class="cb az">Azure</div>
+        <div class="cb gcp">GCP</div>
+        <div class="cb">All</div>
+      </div>
+      <!-- AGENT MODE SELECTOR -->
+      <div style="display:flex;gap:5px;background:var(--bg3);border:1px solid var(--br);border-radius:9px;padding:3px">
+        <div class="mode-btn m-obs">👁 Observer</div>
+        <div class="mode-btn m-rec">💡 Recom.</div>
+        <div class="mode-btn m-aut">⚡ Autónomo</div>
+      </div>
+      <div class="pill p-live"><div class="dot"></div>Live · 2 Clouds</div>
+      <div class="tbtn">🔔<div class="nb">3</div></div>
+      <div class="tbtn">↻</div>
+      <div class="tbtn">⚙</div>
+    </header>
+
+    <div class="ct">
+
+      <!-- STATS 6-COL -->
+      <div class="sg">
+        <div class="sc fu d1" style="--acc:linear-gradient(90deg,var(--b2),var(--c))">
+          <div class="si">☁️</div><div class="slb">Recursos</div>
+          <div class="sv nb2">147</div><div class="ss">Azure + GCP</div>
+          <div class="str tu">↑ +12 este mes</div>
+        </div>
+        <div class="sc fu d2" style="--acc:linear-gradient(90deg,var(--rd),var(--og))">
+          <div class="si">💵</div><div class="slb">Costo MTD</div>
+          <div class="sv nr">$4,218</div><div class="ss">Mes actual · USD</div>
+          <div class="str tw">⚠ +8% vs anterior</div>
+        </div>
+        <div class="sc fu d3" style="--acc:linear-gradient(90deg,var(--e),var(--c))">
+          <div class="si">✅</div><div class="slb">Uptime</div>
+          <div class="sv ne">99.7%</div><div class="ss">Últimos 30 días</div>
+          <div class="str tu">↑ Estable</div>
+        </div>
+        <div class="sc fu d4" style="--acc:linear-gradient(90deg,var(--v),var(--pk))">
+          <div class="si">🚀</div><div class="slb">Apps Prod.</div>
+          <div class="sv nv">18</div><div class="ss">SLA 99.9%</div>
+          <div class="str tu">↑ 3 nuevas</div>
+        </div>
+        <div class="sc fu d5" style="--acc:linear-gradient(90deg,var(--yw),var(--e2))">
+          <div class="si">🔧</div><div class="slb">En Dev</div>
+          <div class="sv ny">9</div><div class="ss">Proyectos activos</div>
+          <div class="str tw">2 próximos a release</div>
+        </div>
+        <div class="sc fu d6" style="--acc:linear-gradient(90deg,var(--c),var(--e))">
+          <div class="si">⚡</div><div class="slb">FlowScore™ Avg</div>
+          <div class="sv nc">74.2</div><div class="ss">Portfolio salud</div>
+          <div class="str tu">↑ +4.1 este sprint</div>
+        </div>
+      </div>
+
+      <!-- FLOWAGENT -->
+      <div class="ag fu">
+        <div class="ag-h">
+          <div class="orb">🤖</div>
+          <div>
+            <div class="ag-title">FlowAgent — Agente de Control Autónomo · Modo Autónomo Activo</div>
+            <div class="ag-sub">Guardian de Sinergia · Sentinela de Resiliencia · Arquitecto de Madurez · Resource Optimizer — Última acción: hace 4 min</div>
+          </div>
+          <div class="ag-modes">
+            <div class="mode-btn m-obs">👁 Observer</div>
+            <div class="mode-btn m-rec">💡 Recom.</div>
+            <div class="mode-btn m-aut">⚡ Autónomo</div>
+          </div>
+          <div class="pill p-live" style="margin-left:8px"><div class="dot"></div>Activo</div>
+        </div>
+        <div class="ag-txt">
+          "Detecté consumo anómalo en <strong>gpt4-prod-eastus</strong> (340% sobre baseline horario) — ejecuté throttle automático de nivel 1. El servicio <strong>db-ventas-legacy</strong> registra p95=2.8s; la cuota de GPUs en East US está al 94%. Sugerencia: mover carga de inferencia a West Europe (proyección de ahorro: <strong>$218/mes</strong>). FlowScore de <strong>AgentFlow CRM</strong> bajó de 82→71 por incremento de deuda técnica. Tengo 3 acciones pendientes de autorización."
+        </div>
+        <div class="ag-btns">
+          <button class="agb agb-p">✓ Autorizar 3 acciones</button>
+          <button class="agb agb-s">📊 Ver análisis completo</button>
+          <button class="agb agb-d">⏸ Pausar gpt4-prod</button>
+          <button class="agb agb-g">🌍 Migrar a West Europe</button>
+          <button class="agb agb-s">💬 Chat con el agente</button>
+          <button class="agb agb-s">📧 Reporte ejecutivo</button>
+        </div>
+      </div>
+
+      <!-- DIGITAL TWIN -->
+      <div class="twin fu">
+        <div class="twin-h">
+          <div class="twin-icon">🧬</div>
+          <div>
+            <div class="twin-title">Digital Twin de Costos — Simulador de Escenarios</div>
+            <div class="twin-sub">Simulación: ¿Qué pasa si migramos toda la inferencia AI de Azure a GCP? Proyección a 6 meses.</div>
+          </div>
+          <button class="agb agb-s" style="margin-left:auto">Nuevo escenario</button>
+        </div>
+        <div class="twin-grid">
+          <div class="twin-card">
+            <div class="twin-lbl">Escenario actual (baseline)</div>
+            <div class="twin-val nr">$50,616/año</div>
+            <div class="twin-change" style="color:var(--td)">Azure $34,092 + GCP $16,524</div>
+          </div>
+          <div class="twin-card">
+            <div class="twin-lbl">Escenario: Full GCP inferencia</div>
+            <div class="twin-val ne">$44,280/año</div>
+            <div class="twin-change ne">↓ Ahorro proyectado: $6,336/año</div>
+          </div>
+          <div class="twin-card">
+            <div class="twin-lbl">Escenario: Hybrid + Reserved</div>
+            <div class="twin-val nc">$39,960/año</div>
+            <div class="twin-change nc">↓ Ahorro máximo: $10,656/año</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOWSCORE PANEL -->
+      <div class="sh fu">FlowScore™ — Scoring de Proyectos en Tiempo Real</div>
+      <div class="fs-grid fu">
+        <div class="fsc">
+          <div class="fs-top">
+            <div><div class="fs-name">AgentFlow CRM</div><div class="fs-client">Retail Corp · SaaS B2B</div></div>
+            <div style="text-align:right"><div class="fs-score nc">71</div><div class="fs-label" style="color:var(--c)">FlowScore™</div></div>
+          </div>
+          <div class="fs-bar-track"><div class="fs-bar-fill" style="width:71%;background:linear-gradient(90deg,var(--b2),var(--c));box-shadow:0 0 8px rgba(0,212,255,.4)"></div></div>
+          <div class="fs-tags">
+            <span class="fs-tag tag-roi">ROI Alto</span>
+            <span class="fs-tag tag-med">Riesgo Medio</span>
+            <span class="fs-tag tag-info">Beta · 72%</span>
+          </div>
+        </div>
+        <div class="fsc">
+          <div class="fs-top">
+            <div><div class="fs-name">FlowDoc Analyzer</div><div class="fs-client">LegalTech SA · B2B</div></div>
+            <div style="text-align:right"><div class="fs-score nv">48</div><div class="fs-label" style="color:var(--v2)">FlowScore™</div></div>
+          </div>
+          <div class="fs-bar-track"><div class="fs-bar-fill" style="width:48%;background:linear-gradient(90deg,var(--v),var(--pk))"></div></div>
+          <div class="fs-tags">
+            <span class="fs-tag tag-roi">ROI Medio</span>
+            <span class="fs-tag tag-risk">Riesgo Alto</span>
+            <span class="fs-tag tag-info">Alpha · 41%</span>
+          </div>
+        </div>
+        <div class="fsc">
+          <div class="fs-top">
+            <div><div class="fs-name">VoiceBot Suite</div><div class="fs-client">Interno · FlowState AI</div></div>
+            <div style="text-align:right"><div class="fs-score ne">88</div><div class="fs-label" style="color:var(--e)">FlowScore™</div></div>
+          </div>
+          <div class="fs-bar-track"><div class="fs-bar-fill" style="width:88%;background:linear-gradient(90deg,var(--e),var(--c));box-shadow:0 0 8px rgba(0,255,136,.4)"></div></div>
+          <div class="fs-tags">
+            <span class="fs-tag tag-roi">ROI Muy Alto</span>
+            <span class="fs-tag tag-info">Bajo Riesgo</span>
+            <span class="fs-tag" style="background:rgba(0,255,136,.12);color:var(--e)">Review · 88%</span>
+          </div>
+        </div>
+        <div class="fsc">
+          <div class="fs-top">
+            <div><div class="fs-name">Neural Map API</div><div class="fs-client">En evaluación · SaaS</div></div>
+            <div style="text-align:right"><div class="fs-score ny">34</div><div class="fs-label" style="color:var(--yw)">FlowScore™</div></div>
+          </div>
+          <div class="fs-bar-track"><div class="fs-bar-fill" style="width:34%;background:linear-gradient(90deg,var(--yw),var(--og))"></div></div>
+          <div class="fs-tags">
+            <span class="fs-tag tag-risk">⚠ Revisión ejecutiva</span>
+            <span class="fs-tag tag-info">Concept · 12%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBSCRIPTIONS -->
+      <div class="sh fu">Suscripciones Activas</div>
+      <div class="subg fu">
+        <div class="subc saz">
+          <div class="sst"></div>
+          <div class="scl" style="color:#66aaff">☁ Azure — Producción</div>
+          <div class="snm">FlowState-Prod-01</div>
+          <div class="sid">sub-a1b2c3d4-prod</div>
+          <div class="sco nr">$2,841</div><div class="spr">MTD · 23 recursos</div>
+          <div class="sbs"><span class="sb-tag tprod">Prod</span><span class="sb-tag" style="background:rgba(0,170,255,.12);color:var(--b2)">23 res</span></div>
+        </div>
+        <div class="subc saz">
+          <div class="sst"></div>
+          <div class="scl" style="color:#66aaff">☁ Azure — Dev</div>
+          <div class="snm">FlowState-Dev-02</div>
+          <div class="sid">sub-e5f6a7b8-dev</div>
+          <div class="sco ny">$312</div><div class="spr">MTD · 11 recursos</div>
+          <div class="sbs"><span class="sb-tag tdev">Dev</span><span class="sb-tag" style="background:rgba(0,170,255,.12);color:var(--b2)">11 res</span></div>
+        </div>
+        <div class="subc sgcp">
+          <div class="sst"></div>
+          <div class="scl" style="color:#ff8070">⬡ GCP — Producción</div>
+          <div class="snm">FlowState-GCP-Prod</div>
+          <div class="sid">proj-flowstate-prod-9x2k</div>
+          <div class="sco nr">$891</div><div class="spr">MTD · 18 recursos</div>
+          <div class="sbs"><span class="sb-tag tprod">Prod</span><span class="sb-tag" style="background:rgba(220,60,40,.12);color:#ff8070">18 res</span></div>
+        </div>
+        <div class="subc sgcp">
+          <div class="sst"></div>
+          <div class="scl" style="color:#ff8070">⬡ GCP — Dev</div>
+          <div class="snm">FlowState-GCP-Dev</div>
+          <div class="sid">proj-flowstate-dev-7q1m</div>
+          <div class="sco ne">$174</div><div class="spr">MTD · 9 recursos</div>
+          <div class="sbs"><span class="sb-tag tdev">Dev</span><span class="sb-tag" style="background:rgba(220,60,40,.12);color:#ff8070">9 res</span></div>
+        </div>
+      </div>
+
+      <!-- KANBAN -->
+      <div class="sh fu">Pipeline de Proyectos — Vista Kanban</div>
+      <div class="kanban fu">
+        <div class="kancol">
+          <div class="kh">💡 Concepto <span class="kc" style="background:rgba(125,125,125,.15);color:var(--td)">2</span></div>
+          <div class="kcard"><div class="kcn">Neural Map API</div><div class="kcc">Interno · SaaS</div>
+            <div class="kcprog"><div class="kcpt"><span>FlowScore</span><span class="ny">34</span></div>
+            <div class="kctrack"><div class="kcfill" style="width:12%"></div></div></div></div>
+          <div class="kcard"><div class="kcn">FlowAudit Brand</div><div class="kcc">Interno</div>
+            <div class="kcprog"><div class="kcpt"><span>FlowScore</span><span class="ny">22</span></div>
+            <div class="kctrack"><div class="kcfill" style="width:8%"></div></div></div></div>
+        </div>
+        <div class="kancol">
+          <div class="kh">🧪 Alpha/Beta <span class="kc" style="background:rgba(155,0,255,.15);color:var(--v2)">3</span></div>
+          <div class="kcard"><div class="kcn">FlowDoc Analyzer</div><div class="kcc">LegalTech SA</div>
+            <div class="kcprog"><div class="kcpt"><span>Progreso</span><span class="nv">41%</span></div>
+            <div class="kctrack"><div class="kcfill" style="width:41%"></div></div></div></div>
+          <div class="kcard"><div class="kcn">AgentFlow CRM</div><div class="kcc">Retail Corp</div>
+            <div class="kcprog"><div class="kcpt"><span>Progreso</span><span class="nc">72%</span></div>
+            <div class="kctrack"><div class="kcfill" style="width:72%"></div></div></div></div>
+        </div>
+        <div class="kancol">
+          <div class="kh">🔍 Review <span class="kc" style="background:rgba(255,238,0,.15);color:var(--yw)">1</span></div>
+          <div class="kcard"><div class="kcn">VoiceBot Suite</div><div class="kcc">Interno · FlowState</div>
+            <div class="kcprog"><div class="kcpt"><span>Progreso</span><span class="ne">88%</span></div>
+            <div class="kctrack"><div class="kcfill" style="width:88%"></div></div></div></div>
+        </div>
+        <div class="kancol">
+          <div class="kh">🚀 Producción <span class="kc" style="background:rgba(0,255,136,.15);color:var(--e)">4</span></div>
+          <div class="kcard"><div class="kcn">FlowAgent Core</div><div class="kcc">Interno · Live</div>
+            <div class="kcprog"><div class="kcpt"><span>Uptime</span><span class="ne">99.8%</span></div>
+            <div class="kctrack"><div class="kcfill" style="width:99%"></div></div></div></div>
+          <div class="kcard"><div class="kcn">AI Consulting API</div><div class="kcc">Enterprise Clients</div>
+            <div class="kcprog"><div class="kcpt"><span>Uptime</span><span class="ne">99.5%</span></div>
+            <div class="kctrack"><div class="kcfill" style="width:98%"></div></div></div></div>
+        </div>
+      </div>
+
+      <!-- TABLE + ALERTS -->
+      <div class="tc fu">
+        <div class="pn">
+          <div class="ph"><span class="pt">📡 Recursos Cloud — Vista Unificada</span><span class="pa">Ver todos →</span></div>
+          <div style="padding:0">
+            <table class="rt">
+              <thead><tr><th>Recurso</th><th>Cloud</th><th>Tipo</th><th>Entorno</th><th>Estado</th><th>Costo</th></tr></thead>
+              <tbody>
+                <tr><td>gpt4-prod-eastus</td><td><span class="ct2 caz">AZ</span></td><td style="color:var(--td);font-size:11px">OpenAI</td><td><span class="eb ep">prod</span></td><td><span class="sd sy"></span>Throttled</td><td><span class="cv ch">$845</span></td></tr>
+                <tr><td>ai-hub-flowstate-01</td><td><span class="ct2 caz">AZ</span></td><td style="color:var(--td);font-size:11px">ML Workspace</td><td><span class="eb ep">prod</span></td><td><span class="sd sg2"></span>OK</td><td><span class="cv cm">$220</span></td></tr>
+                <tr><td>db-ventas-legacy</td><td><span class="ct2 caz">AZ</span></td><td style="color:var(--td);font-size:11px">SQL Server</td><td><span class="eb ep">prod</span></td><td><span class="sd sy"></span>Lento</td><td><span class="cv cm">$120</span></td></tr>
+                <tr><td>vertex-ai-agents</td><td><span class="ct2 cgcp">GCP</span></td><td style="color:var(--td);font-size:11px">Vertex AI</td><td><span class="eb ep">prod</span></td><td><span class="sd sg2"></span>OK</td><td><span class="cv cm">$310</span></td></tr>
+                <tr><td>storage-logs-ai</td><td><span class="ct2 caz">AZ</span></td><td style="color:var(--td);font-size:11px">Storage</td><td><span class="eb ep">prod</span></td><td><span class="sd sg2"></span>OK</td><td><span class="cv cl">$5</span></td></tr>
+                <tr><td>dev-gpt4-sandbox</td><td><span class="ct2 caz">AZ</span></td><td style="color:var(--td);font-size:11px">OpenAI Dev</td><td><span class="eb ed">dev</span></td><td><span class="sd sb2"></span>Dev</td><td><span class="cv cl">$45</span></td></tr>
+                <tr><td>gcp-run-flow-api</td><td><span class="ct2 cgcp">GCP</span></td><td style="color:var(--td);font-size:11px">Cloud Run</td><td><span class="eb es">staging</span></td><td><span class="sd sb2"></span>Test</td><td><span class="cv cl">$22</span></td></tr>
+                <tr><td>postgres-prod-01</td><td><span class="ct2 caz">AZ</span></td><td style="color:var(--td);font-size:11px">PostgreSQL</td><td><span class="eb ep">prod</span></td><td><span class="sd sg2"></span>OK</td><td><span class="cv cm">$180</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="pn">
+          <div class="ph">
+            <span class="pt">🚨 Alertas Activas</span>
+            <span style="font-size:11px;background:rgba(255,34,68,.18);color:var(--rd);padding:2px 9px;border-radius:10px;font-weight:700;box-shadow:0 0 10px rgba(255,34,68,.18)">3 críticas</span>
+          </div>
+          <div class="pb">
+            <div class="al">
+              <div class="ai acr"><div class="aico">🔴</div><div class="atx"><div class="ati">Consumo anómalo — throttle aplicado</div><div class="ade">gpt4-prod-eastus · 340% baseline · FlowAgent actuó</div></div><div class="atm">4m</div></div>
+              <div class="ai aw"><div class="aico">🟡</div><div class="atx"><div class="ati">Alta latencia DB</div><div class="ade">db-ventas-legacy · p95=2.8s · SQL Azure</div></div><div class="atm">11m</div></div>
+              <div class="ai acr"><div class="aico">🔴</div><div class="atx"><div class="ati">Presupuesto: proyección $5,200</div><div class="ade">FlowState-Prod-01 · Budget $4,000 · +30%</div></div><div class="atm">1h</div></div>
+              <div class="ai aw"><div class="aico">🟡</div><div class="atx"><div class="ati">Error 503 recurrente</div><div class="ade">gcp-run-flow-api · 12 errores · 2h</div></div><div class="atm">2h</div></div>
+              <div class="ai ainf"><div class="aico">🔵</div><div class="atx"><div class="ati">FlowScore caída: AgentFlow CRM</div><div class="ade">82→71 · Deuda técnica incrementó</div></div><div class="atm">3h</div></div>
+              <div class="ai aok"><div class="aico">🟢</div><div class="atx"><div class="ati">Backup completado</div><div class="ade">postgres-prod-01 · 2.1 GB · OK</div></div><div class="atm">3h</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COSTS + LOG -->
+      <div class="thc fu">
+        <div class="pn">
+          <div class="ph"><span class="pt">💰 Costo por Servicio (MTD)</span></div>
+          <div class="pb">
+            <div class="cbs">
+              <div><div class="cbi"><span class="cbn">Azure OpenAI</span><span class="cba">$845</span></div><div class="cbtr"><div class="cbf" style="width:100%;background:linear-gradient(90deg,var(--rd),var(--og));box-shadow:0 0 8px rgba(255,34,68,.4)"></div></div></div>
+              <div><div class="cbi"><span class="cbn">Vertex AI (GCP)</span><span class="cba">$311</span></div><div class="cbtr"><div class="cbf" style="width:37%;background:linear-gradient(90deg,#cc3300,#ffaa00)"></div></div></div>
+              <div><div class="cbi"><span class="cbn">ML Workspace AZ</span><span class="cba">$220</span></div><div class="cbtr"><div class="cbf" style="width:26%;background:linear-gradient(90deg,var(--v),var(--b2));box-shadow:0 0 6px rgba(0,170,255,.3)"></div></div></div>
+              <div><div class="cbi"><span class="cbn">PostgreSQL AZ</span><span class="cba">$180</span></div><div class="cbtr"><div class="cbf" style="width:21%;background:linear-gradient(90deg,var(--b),var(--c))"></div></div></div>
+              <div><div class="cbi"><span class="cbn">SQL Server</span><span class="cba">$120</span></div><div class="cbtr"><div class="cbf" style="width:14%;background:linear-gradient(90deg,var(--v),var(--pk))"></div></div></div>
+              <div><div class="cbi"><span class="cbn">Storage / Otros</span><span class="cba">$142</span></div><div class="cbtr"><div class="cbf" style="width:17%;background:var(--bg5)"></div></div></div>
+            </div>
+            <div style="margin-top:14px;padding-top:11px;border-top:1px solid var(--br);display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:11px;color:var(--td)">Total acumulado</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:21px;font-weight:900" class="nr">$4,218</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BRAND AUDIT (Gemini idea) -->
+        <div class="pn">
+          <div class="ph"><span class="pt">🎨 Brand Audit — FlowAgent</span><span class="pa">Ver detalles →</span></div>
+          <div class="pb">
+            <div style="font-size:11px;color:var(--td);margin-bottom:12px;font-style:italic">"Auditando consistencia de identidad visual en 4 sitios desplegados..."</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="background:var(--bg3);border-radius:8px;padding:10px;border:1px solid rgba(0,255,136,.2)">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:12px;font-weight:700">flowstate-prod-ui</span>
+                  <span style="font-size:10px;font-weight:700;color:var(--e)">✓ Compliant</span>
+                </div>
+                <div style="font-size:10px;color:var(--td);margin-top:2px">Gradientes OK · Tipografía OK · Colores OK</div>
+              </div>
+              <div style="background:var(--bg3);border-radius:8px;padding:10px;border:1px solid rgba(255,238,0,.2)">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:12px;font-weight:700">agentflow-crm-beta</span>
+                  <span style="font-size:10px;font-weight:700;color:var(--yw)">⚠ 2 issues</span>
+                </div>
+                <div style="font-size:10px;color:var(--td);margin-top:2px">Rojo incorrecto (#ff0000 → debe ser #ef4444)</div>
+              </div>
+              <div style="background:var(--bg3);border-radius:8px;padding:10px;border:1px solid rgba(255,34,68,.2)">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:12px;font-weight:700">flowdoc-alpha</span>
+                  <span style="font-size:10px;font-weight:700;color:var(--rd)">✗ 5 issues</span>
+                </div>
+                <div style="font-size:10px;color:var(--td);margin-top:2px">Fuente no autorizada · Gradiente incorrecto</div>
+              </div>
+            </div>
+            <button class="agb agb-p" style="margin-top:12px;width:100%">🤖 Aplicar correcciones automáticas</button>
+          </div>
+        </div>
+
+        <!-- LIVE LOG -->
+        <div class="pn">
+          <div class="ph">
+            <span class="pt">📄 Log en Vivo — Unificado</span>
+            <div class="pill p-live" style="font-size:9px;padding:3px 8px"><div class="dot"></div>Streaming</div>
+          </div>
+          <div class="pb">
+            <div class="log" id="logArea">
+              <div class="ll"><span class="lt2">14:32:01</span><span class="lv er">ERR </span><span class="lm2">gpt4-prod · 503 tokens_exceeded [AZ]</span></div>
+              <div class="ll"><span class="lt2">14:31:55</span><span class="lv wn">WARN</span><span class="lm2">db-ventas · p95=2810ms [AZ]</span></div>
+              <div class="ll"><span class="lt2">14:31:48</span><span class="lv if">INFO</span><span class="lm2">vertex-ai · inference 142ms [GCP]</span></div>
+              <div class="ll"><span class="lt2">14:31:40</span><span class="lv ok">OK  </span><span class="lm2">postgres-prod · healthcheck ✓</span></div>
+              <div class="ll"><span class="lt2">14:31:35</span><span class="lv er">ERR </span><span class="lm2">gcp-run-api · 503 upstream [GCP]</span></div>
+              <div class="ll"><span class="lt2">14:31:22</span><span class="lv if">INFO</span><span class="lm2">storage-logs · 48MB uploaded</span></div>
+              <div class="ll"><span class="lt2">14:31:10</span><span class="lv ok">OK  </span><span class="lm2">ai-hub · pipeline completed</span></div>
+              <div class="ll"><span class="lt2">14:31:00</span><span class="lv wn">WARN</span><span class="lm2">cost-monitor · projected=$5214 &gt; $4000</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /ct -->
+  </main>
+</div>
+
+<script>
+const logs=[
+  ['INFO','flowagent · scanning all subscriptions [AZ+GCP]'],
+  ['OK  ','postgres-prod · query avg=12ms'],
+  ['WARN','gpt4-prod · throttle active token_rate=180%'],
+  ['INFO','gcp-run-api · requests=1420/min [GCP]'],
+  ['OK  ','storage-logs · replication synced'],
+  ['ERR ','db-ventas · connection pool exhausted'],
+  ['INFO','vertex-ai · autoscale 4→6 instances'],
+  ['OK  ','ai-hub · experiment run logged'],
+  ['WARN','flowscore · agentflow-crm dropped 82→71'],
+  ['INFO','brand-audit · scanning 4 deployed sites'],
+  ['OK  ','twin-simulator · scenario completed -$528/mo'],
+  ['INFO','flowagent · guardian mode: cost baseline updated'],
+];
+let li=0;
+const la=document.getElementById('logArea');
+function addLog(){
+  const n=new Date();
+  const t=`${n.getHours().toString().padStart(2,'0')}:${n.getMinutes().toString().padStart(2,'0')}:${n.getSeconds().toString().padStart(2,'0')}`;
+  const[lv,msg]=logs[li++%logs.length];
+  const cls=lv.trim()==='ERR'?'er':lv.trim()==='WARN'?'wn':lv.trim()==='OK'?'ok':'if';
+  const el=document.createElement('div');el.className='ll';
+  el.innerHTML=`<span class="lt2">${t}</span><span class="lv ${cls}">${lv}</span><span class="lm2">${msg}</span>`;
+  la.insertBefore(el,la.firstChild);
+  if(la.children.length>22)la.removeChild(la.lastChild);
+}
+setInterval(addLog,2400);
+
+document.querySelectorAll('.ni').forEach(el=>{
+  el.addEventListener('click',function(){
+    document.querySelectorAll('.ni').forEach(x=>x.classList.remove('on'));
+    this.classList.add('on');
+  });
+});
+document.querySelectorAll('.cb').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    const p=this.closest('.cs');
+    p.querySelectorAll('.cb').forEach(b=>b.classList.remove('az','gcp'));
+    if(this.textContent==='Azure')this.classList.add('az');
+    else if(this.textContent==='GCP')this.classList.add('gcp');
+  });
+});
+</script>
+</body>
+</html>

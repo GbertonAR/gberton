@@ -1,0 +1,382 @@
+<!-- Chosen Palette: Warm Neutrals & Subdued Libertarian Gold (Stone-50, Stone-800, Amber-600, Sky-700) -->
+<!-- Application Structure Plan: A centralized interactive dashboard layout with a lateral navigation menu. This structure was chosen because it allows users to explore the 5 distinct pillars of the tech agenda non-linearly without being overwhelmed by a massive wall of text. Each pillar loads dynamically, presenting specific context, interactive requirement toggles, and a dedicated visualization (chart or HTML diagram) tailored to that specific topic's goal. -->
+<!-- Visualization & Content Choices: 1) Talent Export -> Compare -> Bar Chart (Chart.js) to show income differences. 2) Open Gov -> Organize -> Interactive HTML flow (Tailwind) to show system architecture without SVG. 3) Hackathons -> Compare/Composition -> Doughnut Chart (Chart.js) for resource allocation. 4) Ambassadors -> Organize -> HTML interactive nodes representing network influence. 5) Digital Nomads -> Change -> Line/Area Chart (Chart.js) showing projected growth. Confirming NO SVG/Mermaid used. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Tecnológica LLA - Panel Interactivo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #fafaf9; color: #1c1917; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; max-height: 450px; } }
+        .nav-item.active { background-color: #fef3c7; border-left: 4px solid #d97706; color: #b45309; font-weight: 700; }
+        .nav-item { border-left: 4px solid transparent; transition: all 0.2s ease-in-out; cursor: pointer; }
+        .nav-item:hover:not(.active) { background-color: #f5f5f4; border-left: 4px solid #d6d3d1; }
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .html-diagram-node { transition: transform 0.2s; cursor: pointer; }
+        .html-diagram-node:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <header class="bg-white border-b border-stone-200 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-stone-800">Plan de Acción <span class="text-amber-600">Tecnológico</span></h1>
+                <p class="text-xs text-stone-500 uppercase tracking-widest mt-1">Marco de Políticas LLA</p>
+            </div>
+            <div class="hidden md:flex space-x-2">
+                <span class="px-3 py-1 bg-amber-100 text-amber-800 text-xs rounded-full font-medium">Libre Mercado</span>
+                <span class="px-3 py-1 bg-sky-100 text-sky-800 text-xs rounded-full font-medium">Desregulación</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8 flex-grow flex flex-col md:flex-row gap-8">
+        
+        <aside class="w-full md:w-1/4 bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden h-max">
+            <div class="p-4 bg-stone-50 border-b border-stone-200">
+                <h2 class="text-sm font-bold text-stone-600 uppercase tracking-wider">Pilares Estratégicos</h2>
+            </div>
+            <nav id="navMenu" class="flex flex-col">
+                <button data-target="talento" class="nav-item active text-left px-6 py-4 text-stone-700 border-b border-stone-100">
+                    1. Exportación de Talento
+                </button>
+                <button data-target="opengov" class="nav-item text-left px-6 py-4 text-stone-700 border-b border-stone-100">
+                    2. Open Government
+                </button>
+                <button data-target="hackathons" class="nav-item text-left px-6 py-4 text-stone-700 border-b border-stone-100">
+                    3. Hackathons Institucionales
+                </button>
+                <button data-target="embajadores" class="nav-item text-left px-6 py-4 text-stone-700 border-b border-stone-100">
+                    4. Embajadores Tech
+                </button>
+                <button data-target="nomades" class="nav-item text-left px-6 py-4 text-stone-700">
+                    5. Visas Nómades Digitales
+                </button>
+            </nav>
+        </aside>
+
+        <main class="w-full md:w-3/4 bg-white rounded-xl shadow-sm border border-stone-200 p-6 md:p-10 min-h-[600px] flex flex-col relative overflow-hidden">
+            
+            <div id="contentArea" class="flex-grow fade-in">
+                
+                <div class="mb-8 border-b border-stone-100 pb-6">
+                    <h2 id="mainTitle" class="text-3xl font-bold text-stone-800 mb-4">Cargando...</h2>
+                    <p id="mainDescription" class="text-stone-600 leading-relaxed text-lg">
+                        Seleccione un pilar en el menú para visualizar los datos.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+                    
+                    <div>
+                        <h3 class="text-lg font-bold text-stone-800 mb-4 flex items-center">
+                            <span class="inline-block w-2 h-6 bg-amber-500 mr-2 rounded-sm"></span>
+                            Requisitos y Entidades Clave
+                        </h3>
+                        <p class="text-sm text-stone-500 mb-4">Interactúe con los elementos a continuación para explorar los requerimientos de implementación y los actores clave del sector privado sugeridos para este pilar.</p>
+                        
+                        <div id="reqList" class="space-y-3">
+                        </div>
+                    </div>
+
+                    <div class="bg-stone-50 rounded-xl p-4 border border-stone-200 flex flex-col justify-center min-h-[400px]">
+                        <h3 id="vizTitle" class="text-center font-semibold text-stone-700 mb-4">Visualización de Impacto</h3>
+                        
+                        <div id="chartWrapper" class="chart-container hidden">
+                            <canvas id="mainCanvas"></canvas>
+                        </div>
+
+                        <div id="htmlVizWrapper" class="w-full h-full hidden flex-col items-center justify-center p-4">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        const wrapLabel = (label) => {
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > 16) {
+                    if (currentLine) lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const globalTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        const appData = {
+            talento: {
+                title: "1. Exportación de Talento",
+                desc: "Explicar cómo la unificación cambiaria y la baja de retenciones a servicios benefician directamente el bolsillo del freelancer. El modelo busca eliminar el peso del Estado sobre la generación de riqueza individual en el sector servicios.",
+                reqs: [
+                    { type: 'req', text: "Unificación cambiaria inmediata para liquidación de divisas." },
+                    { type: 'req', text: "Eliminación total de retenciones a la exportación de servicios." },
+                    { type: 'ent', text: "Cámaras Fintech, ONG Bitcoin Argentina, Referentes del ecosistema freelance." }
+                ],
+                vizType: 'chart',
+                vizTitle: "Comparativa de Ingreso Neto (Base 1000 USD)",
+                chartConfig: {
+                    type: 'bar',
+                    data: {
+                        labels: wrapLabel('Modelo Anterior (Cepo + Retenciones)').concat(wrapLabel('Modelo LLA (Mercado Libre)')),
+                        datasets: [
+                            {
+                                label: 'Ingreso Neto Retenido (USD Equivalente)',
+                                data: [450, 1000],
+                                backgroundColor: '#d97706',
+                                borderRadius: 4
+                            },
+                            {
+                                label: 'Pérdida por Brecha/Impuestos',
+                                data: [550, 0],
+                                backgroundColor: '#d6d3d1',
+                                borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { tooltip: globalTooltipConfig, legend: { position: 'bottom' } },
+                        scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }
+                    }
+                }
+            },
+            opengov: {
+                title: "2. Programa 'Open Government'",
+                desc: "Invitar a desarrolladores a contribuir en proyectos de código abierto para mejorar la interacción ciudadano-estado, inspirados en el modelo de Estonia. Se busca transparencia total y reducción de contratos burocráticos.",
+                reqs: [
+                    { type: 'req', text: "Creación de repositorio público nacional oficial (GitHub/GitLab Gov)." },
+                    { type: 'req', text: "Identidad digital soberana y arquitectura descentralizada tipo X-Road." },
+                    { type: 'ent', text: "Comunidades Open Source, RSK (Rootstock), Devs por la Libertad." }
+                ],
+                vizType: 'html',
+                vizTitle: "Arquitectura Descentralizada Ciudadano-Estado",
+                htmlContent: `
+                    <div class="flex flex-col items-center w-full space-y-4">
+                        <div class="html-diagram-node bg-white border-2 border-amber-500 rounded-lg p-4 text-center w-full max-w-xs shadow-sm" onclick="alert('El ciudadano contribuye código y audita sistemas.')">
+                            <span class="text-2xl block mb-1">👨‍💻</span>
+                            <span class="font-bold text-stone-700">Comunidad de Desarrolladores</span>
+                            <p class="text-xs text-stone-500 mt-1">Aportes Open Source</p>
+                        </div>
+                        <div class="h-6 w-1 bg-stone-300"></div>
+                        <div class="html-diagram-node bg-sky-50 border-2 border-sky-400 rounded-lg p-4 text-center w-full max-w-xs shadow-sm" onclick="alert('Capa de interoperabilidad segura.')">
+                            <span class="text-2xl block mb-1">🔗</span>
+                            <span class="font-bold text-sky-800">Capa de Interoperabilidad (API)</span>
+                            <p class="text-xs text-sky-600 mt-1">Transparencia y Seguridad</p>
+                        </div>
+                        <div class="h-6 w-1 bg-stone-300"></div>
+                        <div class="html-diagram-node bg-stone-800 border-2 border-stone-800 rounded-lg p-4 text-center w-full max-w-xs shadow-sm" onclick="alert('El Estado se reduce a proveer servicios esenciales eficientes.')">
+                            <span class="text-2xl block mb-1">🏛️</span>
+                            <span class="font-bold text-white">Estado Eficiente (Mínimo)</span>
+                            <p class="text-xs text-stone-300 mt-1">Sistemas Auditables</p>
+                        </div>
+                    </div>
+                `
+            },
+            hackathons: {
+                title: "3. Hackathons Institucionales",
+                desc: "Desafíos orientados a resolver problemas de gestión pública mediante tecnología. El objetivo es aplicar la 'motosierra' a la ineficiencia mediante automatización, IA y Blockchain, financiando ideas del sector privado.",
+                reqs: [
+                    { type: 'req', text: "Bases y condiciones orientadas a la reducción de gasto y burocracia." },
+                    { type: 'req', text: "Premios exentos de impuestos financiados por sponsors privados." },
+                    { type: 'ent', text: "Laboratorios de IA, Ethereum Argentina, Kleros, Empresas Tech Locales." }
+                ],
+                vizType: 'chart',
+                vizTitle: "Distribución de Focos de Solución Tecnológica",
+                chartConfig: {
+                    type: 'doughnut',
+                    data: {
+                        labels: [wrapLabel('Automatización Administrativa'), wrapLabel('Transparencia Blockchain'), wrapLabel('Auditoría de IA'), wrapLabel('Identidad Digital')],
+                        datasets: [{
+                            data: [40, 30, 20, 10],
+                            backgroundColor: ['#d97706', '#0284c7', '#1c1917', '#d6d3d1'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false, cutout: '65%',
+                        plugins: { tooltip: globalTooltipConfig, legend: { position: 'right' } }
+                    }
+                }
+            },
+            embajadores: {
+                title: "4. Embajadores Tech",
+                desc: "Identificar referentes del sector en redes (Twitter/X) que ya simpaticen con las ideas de la libertad y darles una plataforma oficial. La batalla cultural requiere amplificadores orgánicos validados institucionalmente.",
+                reqs: [
+                    { type: 'req', text: "Mapeo de actores influyentes orgánicos pro-mercado." },
+                    { type: 'req', text: "Creación de un canal de comunicación directo (Mesa chica tech)." },
+                    { type: 'ent', text: "Fundadores de Unicornios, Influencers Financieros/Crypto en X, Divulgadores." }
+                ],
+                vizType: 'html',
+                vizTitle: "Efecto de Red: Amplificación del Mensaje",
+                htmlContent: `
+                    <div class="relative w-full h-full flex items-center justify-center min-h-[250px]">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-20">
+                            <div class="w-48 h-48 rounded-full border-2 border-dashed border-stone-800"></div>
+                            <div class="absolute w-32 h-32 rounded-full border-2 border-dashed border-amber-600"></div>
+                        </div>
+                        <div class="z-10 flex flex-col items-center relative">
+                            <div class="bg-amber-100 text-amber-800 p-3 rounded-full font-bold shadow-md text-center z-20 border border-amber-300">
+                                🏛️ Plataforma<br>Oficial
+                            </div>
+                            
+                            <div class="absolute top-[-60px] left-[-80px] bg-white p-2 rounded-lg shadow text-xs border border-stone-200 font-semibold html-diagram-node">
+                                🐦 Referente X
+                            </div>
+                            <div class="absolute top-[-40px] right-[-90px] bg-white p-2 rounded-lg shadow text-xs border border-stone-200 font-semibold html-diagram-node">
+                                🦄 Founder Tech
+                            </div>
+                            <div class="absolute bottom-[-50px] left-[-60px] bg-white p-2 rounded-lg shadow text-xs border border-stone-200 font-semibold html-diagram-node">
+                                ₿ Divulgador Crypto
+                            </div>
+                            <div class="absolute bottom-[-30px] right-[-70px] bg-white p-2 rounded-lg shadow text-xs border border-stone-200 font-semibold html-diagram-node">
+                                💻 Dev Influencer
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-center text-stone-500 mt-8">Validación oficial irradia hacia nodos orgánicos, multiplicando el alcance de la ideología de libre mercado.</p>
+                `
+            },
+            nomades: {
+                title: "5. Visas para Nómades Digitales",
+                desc: "Liderar la iniciativa para que Argentina sea el destino número 1 de programadores extranjeros, generando un efecto de derrame de conocimiento y consumo local sin costo fiscal.",
+                reqs: [
+                    { type: 'req', text: "Trámite 100% digital, automático y exento de trabas burocráticas." },
+                    { type: 'req', text: "Régimen especial de ingreso de divisas sin pesificación forzada." },
+                    { type: 'ent', text: "Startups Inmobiliarias, Comunidades de Expatriados, Cámaras de Turismo." }
+                ],
+                vizType: 'chart',
+                vizTitle: "Proyección: Derrame Económico Anual (Millones USD)",
+                chartConfig: {
+                    type: 'line',
+                    data: {
+                        labels: ['Año 1', 'Año 2', 'Año 3', 'Año 4'],
+                        datasets: [{
+                            label: 'Impacto Económico Estimado',
+                            data: [120, 350, 780, 1500],
+                            borderColor: '#0284c7',
+                            backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.3,
+                            pointBackgroundColor: '#d97706',
+                            pointRadius: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { tooltip: globalTooltipConfig, legend: { position: 'bottom' } },
+                        scales: { y: { beginAtZero: true } }
+                    }
+                }
+            }
+        };
+
+        let currentChart = null;
+
+        function renderTab(tabId) {
+            const data = appData[tabId];
+            if (!data) return;
+
+            const contentArea = document.getElementById('contentArea');
+            contentArea.classList.remove('fade-in');
+            void contentArea.offsetWidth; 
+            contentArea.classList.add('fade-in');
+
+            document.getElementById('mainTitle').innerHTML = data.title;
+            document.getElementById('mainDescription').innerHTML = data.desc;
+            document.getElementById('vizTitle').innerText = data.vizTitle;
+
+            const reqList = document.getElementById('reqList');
+            reqList.innerHTML = '';
+            data.reqs.forEach(req => {
+                const isReq = req.type === 'req';
+                const icon = isReq ? `<span class="text-sky-600 mr-2 text-lg">⚙️</span>` : `<span class="text-amber-600 mr-2 text-lg">🤝</span>`;
+                const label = isReq ? `<strong class="text-stone-700">Requisito:</strong>` : `<strong class="text-stone-700">Entidades Sugeridas:</strong>`;
+                
+                const el = document.createElement('div');
+                el.className = 'flex items-start p-3 bg-white rounded-lg border border-stone-100 shadow-sm hover:shadow-md transition-shadow cursor-default';
+                el.innerHTML = `
+                    <div class="mt-1">${icon}</div>
+                    <div>
+                        <div class="text-xs mb-1">${label}</div>
+                        <div class="text-stone-600 text-sm leading-snug">${req.text}</div>
+                    </div>
+                `;
+                reqList.appendChild(el);
+            });
+
+            const chartWrapper = document.getElementById('chartWrapper');
+            const htmlVizWrapper = document.getElementById('htmlVizWrapper');
+
+            if (currentChart) {
+                currentChart.destroy();
+                currentChart = null;
+            }
+
+            if (data.vizType === 'chart') {
+                htmlVizWrapper.classList.add('hidden');
+                chartWrapper.classList.remove('hidden');
+                
+                const ctx = document.getElementById('mainCanvas').getContext('2d');
+                
+                const configCopy = JSON.parse(JSON.stringify(data.chartConfig));
+                configCopy.options.plugins.tooltip = globalTooltipConfig.callbacks; 
+                
+                currentChart = new Chart(ctx, data.chartConfig);
+            } else if (data.vizType === 'html') {
+                chartWrapper.classList.add('hidden');
+                htmlVizWrapper.classList.remove('hidden');
+                htmlVizWrapper.innerHTML = data.htmlContent;
+            }
+        }
+
+        document.querySelectorAll('.nav-item').forEach(button => {
+            button.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                renderTab(e.currentTarget.dataset.target);
+            });
+        });
+
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = '#78716c';
+
+        renderTab('talento');
+    </script>
+</body>
+</html>

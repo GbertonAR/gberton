@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowState AI — Executive Brief 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --ink:       #0C0C0E;
+  --paper:     #F5F0E8;
+  --paper2:    #EDE8DC;
+  --paper3:    #E0D9CC;
+  --gold:      #C8941A;
+  --gold-lt:   #E8B84B;
+  --red:       #C41E1E;
+  --blue-deep: #0B2545;
+  --teal:      #1A6B6B;
+  --cream:     #FBF8F2;
+  --warm-gray: #8A8070;
+  --rule:      rgba(12,12,14,0.12);
+
+  --serif:  'Playfair Display', Georgia, serif;
+  --sans:   'Barlow', sans-serif;
+  --cond:   'Barlow Condensed', sans-serif;
+  --mono:   'IBM Plex Mono', monospace;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════
+   NOISE TEXTURE OVERLAY
+═══════════════════════════════════════════ */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 1000; opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  height: 56px;
+  background: var(--ink);
+  border-bottom: 2px solid var(--gold);
+}
+.nav-brand {
+  font-family: var(--cond);
+  font-weight: 800; font-size: 1.1rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--paper);
+}
+.nav-brand span { color: var(--gold); }
+.nav-items { display: flex; gap: 2.5rem; }
+.nav-items a {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(245,240,232,0.5);
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-items a:hover { color: var(--gold-lt); }
+.nav-stamp {
+  font-family: var(--mono);
+  font-size: 0.6rem; letter-spacing: 0.1em;
+  color: var(--gold); text-transform: uppercase;
+  border: 1px solid rgba(200,148,26,0.4);
+  padding: 0.25rem 0.6rem;
+}
+
+/* ═══════════════════════════════════════════
+   HERO — COVER PAGE FEEL
+═══════════════════════════════════════════ */
+.cover {
+  min-height: 100vh;
+  background: var(--ink);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  position: relative;
+  overflow: hidden;
+  padding-top: 56px;
+}
+
+/* Diagonal split line */
+.cover::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%; width: 1px;
+  background: linear-gradient(180deg, transparent 0%, var(--gold) 30%, var(--gold) 70%, transparent 100%);
+  opacity: 0.4;
+}
+
+.cover-left {
+  padding: 6rem 4rem 4rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; z-index: 2;
+}
+
+.cover-issue {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.cover-issue::before {
+  content: ''; width: 32px; height: 1px; background: var(--gold);
+}
+
+.cover-headline {
+  font-family: var(--serif);
+  font-size: clamp(4.5rem, 8vw, 7.5rem);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  margin-bottom: 0;
+}
+.cover-headline .accent { color: var(--gold); font-style: italic; }
+.cover-headline .outline {
+  -webkit-text-stroke: 1.5px var(--paper);
+  color: transparent;
+}
+
+.cover-sub {
+  margin-top: 2.5rem;
+  font-size: 1rem; font-weight: 300;
+  color: rgba(245,240,232,0.55);
+  line-height: 1.7; max-width: 380px;
+}
+.cover-sub strong { color: rgba(245,240,232,0.9); font-weight: 500; }
+
+.cover-actions {
+  margin-top: 3rem;
+  display: flex; gap: 1rem; align-items: center;
+}
+.btn-cover {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 0.8rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.75rem 2rem; text-decoration: none;
+  transition: all 0.3s var(--ease);
+}
+.btn-fill {
+  background: var(--gold); color: var(--ink);
+}
+.btn-fill:hover { background: var(--gold-lt); }
+.btn-outline-cover {
+  border: 1px solid rgba(245,240,232,0.25);
+  color: rgba(245,240,232,0.7);
+}
+.btn-outline-cover:hover {
+  border-color: var(--gold); color: var(--gold);
+}
+
+.cover-right {
+  padding: 6rem 4rem 4rem 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; z-index: 2;
+}
+
+/* Big rotated word */
+.cover-right::before {
+  content: 'AI';
+  position: absolute;
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 28rem;
+  color: rgba(200,148,26,0.04);
+  line-height: 1;
+  right: -2rem; top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  letter-spacing: -0.05em;
+}
+
+.cover-kpis {
+  display: flex; flex-direction: column; gap: 0;
+}
+.kpi-row {
+  display: flex; align-items: baseline;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(245,240,232,0.08);
+}
+.kpi-row:first-child { border-top: 1px solid rgba(245,240,232,0.08); }
+.kpi-num {
+  font-family: var(--serif);
+  font-size: 3.2rem; font-weight: 700;
+  color: var(--gold); line-height: 1;
+  min-width: 160px;
+}
+.kpi-info {}
+.kpi-name {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 0.85rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--paper);
+}
+.kpi-desc {
+  font-size: 0.78rem; color: rgba(245,240,232,0.4);
+  margin-top: 0.15rem;
+}
+
+.cover-footer {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 5rem;
+  border-top: 1px solid rgba(245,240,232,0.08);
+  z-index: 2;
+}
+.cover-footer-left {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.08em;
+  color: rgba(245,240,232,0.35);
+}
+.cover-footer-right {
+  font-family: var(--mono);
+  font-size: 0.65rem; color: rgba(245,240,232,0.35);
+}
+
+/* ═══════════════════════════════════════════
+   CHAPTER HEADERS
+═══════════════════════════════════════════ */
+.chapter {
+  background: var(--ink);
+  padding: 5rem;
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.chapter-num {
+  font-family: var(--serif);
+  font-size: 6rem; font-weight: 900;
+  color: var(--gold); line-height: 1;
+  opacity: 0.6;
+}
+.chapter-content { padding-top: 0.5rem; }
+.chapter-label {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+.chapter-title {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 900; line-height: 1;
+  color: var(--paper);
+  letter-spacing: -0.02em;
+}
+.chapter-sub {
+  font-size: 1rem; font-weight: 300;
+  color: rgba(245,240,232,0.5);
+  margin-top: 0.8rem;
+}
+
+/* ═══════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════ */
+.section {
+  max-width: 1180px; margin: 0 auto;
+  padding: 6rem 5rem;
+}
+.section-sm { padding: 4rem 5rem; }
+@media (max-width: 900px) {
+  .section, .section-sm { padding: 4rem 2rem; }
+  nav { padding: 0 1.5rem; }
+  .cover { grid-template-columns: 1fr; }
+  .cover-right { display: none; }
+  .cover-left { padding: 4rem 2rem; }
+  .chapter { padding: 3rem 2rem; }
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.eyebrow::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--gold); opacity: 0.5; }
+
+h2.display {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 3.5vw, 3rem);
+  font-weight: 900; line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.5rem;
+}
+h3.label {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 1.1rem;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 0.6rem; color: var(--blue-deep);
+}
+
+p.body { font-weight: 300; line-height: 1.8; color: #3a3530; }
+p.body + p.body { margin-top: 1em; }
+p.body strong { font-weight: 600; color: var(--ink); }
+
+.rule { height: 1px; background: var(--rule); margin: 0; }
+.rule-gold { height: 2px; background: var(--gold); opacity: 0.3; }
+
+/* ═══════════════════════════════════════════
+   PULL QUOTE
+═══════════════════════════════════════════ */
+.pull-quote {
+  border-left: 4px solid var(--gold);
+  padding: 1.5rem 0 1.5rem 2.5rem;
+  margin: 3rem 0;
+}
+.pull-quote-text {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 700; line-height: 1.3;
+  font-style: italic; color: var(--blue-deep);
+  letter-spacing: -0.01em;
+}
+.pull-quote-attr {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.1em;
+  color: var(--warm-gray); margin-top: 1rem;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   PROBLEM CARDS — ASYMMETRIC GRID
+═══════════════════════════════════════════ */
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--rule);
+}
+.problem-card {
+  padding: 2.5rem;
+  border-right: 1px solid var(--rule);
+  position: relative;
+  transition: background 0.3s;
+}
+.problem-card:last-child { border-right: none; }
+.problem-card:hover { background: var(--paper2); }
+.problem-num {
+  font-family: var(--serif);
+  font-size: 5rem; font-weight: 900;
+  color: rgba(12,12,14,0.06);
+  line-height: 1; margin-bottom: 0.5rem;
+}
+.problem-title {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 1.1rem;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.problem-body { font-size: 0.88rem; color: var(--warm-gray); line-height: 1.7; }
+
+/* ═══════════════════════════════════════════
+   MISSION/VISION — FULL-BLEED DARK
+═══════════════════════════════════════════ */
+.mv-block {
+  background: var(--ink);
+  padding: 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 4rem;
+}
+.mv-divider { background: rgba(245,240,232,0.08); }
+.mv-label {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.mv-text {
+  font-family: var(--serif);
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--paper); line-height: 1.5;
+  font-style: italic;
+}
+.mv-sub {
+  font-size: 0.88rem; font-weight: 300;
+  color: rgba(245,240,232,0.5);
+  line-height: 1.7; margin-top: 1rem;
+}
+@media(max-width: 700px) {
+  .mv-block { grid-template-columns: 1fr; gap: 2rem; }
+  .mv-divider { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   VALUES — ROW LAYOUT
+═══════════════════════════════════════════ */
+.values-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.value-item {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid var(--rule);
+  position: relative;
+}
+.value-item:last-child { border-right: none; }
+.value-item::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.value-item:nth-child(1)::before { background: var(--gold); }
+.value-item:nth-child(2)::before { background: var(--red); }
+.value-item:nth-child(3)::before { background: var(--teal); }
+.value-item:nth-child(4)::before { background: var(--blue-deep); }
+.value-item:hover::before { transform: scaleX(1); }
+.value-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+.value-name {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 1rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.value-desc { font-size: 0.85rem; color: var(--warm-gray); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════
+   LEGAL PHASES
+═══════════════════════════════════════════ */
+.phase-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+}
+.phase-item {
+  padding: 3rem;
+  border: 1px solid var(--rule);
+  margin: -1px 0 0 -1px;
+  transition: background 0.25s;
+}
+.phase-item:hover { background: var(--paper2); }
+.phase-header {
+  display: flex; align-items: center; gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.phase-badge {
+  font-family: var(--cond);
+  font-weight: 800; font-size: 0.75rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  background: var(--ink); color: var(--gold);
+  padding: 0.3rem 0.8rem;
+}
+.phase-title-sm {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 1.2rem;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
+.tag {
+  font-family: var(--mono);
+  font-size: 0.65rem; padding: 0.25rem 0.6rem;
+  border: 1px solid var(--rule); color: var(--warm-gray);
+  transition: border-color 0.2s, color 0.2s;
+}
+.tag:hover { border-color: var(--gold); color: var(--ink); }
+.tag-gold { border-color: rgba(200,148,26,0.4); color: var(--gold); }
+@media(max-width:700px) { .phase-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════
+   PRODUCT TABLE — EDITORIAL STYLE
+═══════════════════════════════════════════ */
+.product-list { }
+.product-entry {
+  display: grid;
+  grid-template-columns: 220px 1fr 200px 120px;
+  gap: 2rem;
+  padding: 1.8rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+  transition: background 0.2s;
+}
+.product-entry:first-of-type { border-top: 1px solid var(--rule); }
+.product-entry:hover { background: var(--paper2); margin: 0 -5rem; padding: 1.8rem 5rem; }
+.p-name {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 1.2rem;
+  letter-spacing: 0.05em;
+}
+.p-tech {
+  font-family: var(--mono);
+  font-size: 0.62rem; letter-spacing: 0.08em;
+  color: var(--teal); margin-top: 0.3rem;
+}
+.p-desc { font-size: 0.88rem; color: var(--warm-gray); line-height: 1.65; }
+.p-sector { font-size: 0.82rem; color: var(--ink); font-style: italic; }
+.p-status {
+  font-family: var(--mono);
+  font-size: 0.62rem; letter-spacing: 0.1em;
+  text-transform: uppercase; text-align: right;
+}
+.status-live { color: var(--teal); }
+.status-soon { color: var(--gold); }
+@media(max-width:800px) {
+  .product-entry { grid-template-columns: 1fr; gap: 0.5rem; }
+  .product-entry:hover { margin: 0; padding: 1.8rem 0; }
+}
+
+/* ═══════════════════════════════════════════
+   AZURE STACK
+═══════════════════════════════════════════ */
+.azure-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.azure-item {
+  padding: 2.5rem;
+  border: 1px solid var(--rule);
+  margin: -1px 0 0 -1px;
+}
+.azure-item:hover { background: var(--paper2); }
+.azure-title {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 1rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 0.6rem; color: var(--blue-deep);
+}
+.azure-body { font-size: 0.87rem; color: var(--warm-gray); line-height: 1.65; }
+@media(max-width:700px) { .azure-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════
+   COMPARISON — MAGAZINE TABLE
+═══════════════════════════════════════════ */
+.comp-wrap {
+  background: var(--ink);
+  padding: 4rem 5rem;
+}
+.comp-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 2rem;
+}
+.comp-table { width: 100%; border-collapse: collapse; }
+.comp-table thead th {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 0.85rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  color: rgba(245,240,232,0.4);
+  border-bottom: 1px solid rgba(245,240,232,0.08);
+}
+.comp-table thead th.hl {
+  color: var(--gold);
+  border-bottom: 2px solid var(--gold);
+}
+.comp-table tbody td {
+  padding: 1.1rem 1.5rem; font-size: 0.88rem;
+  color: rgba(245,240,232,0.5);
+  border-bottom: 1px solid rgba(245,240,232,0.04);
+}
+.comp-table tbody td:first-child {
+  font-family: var(--cond);
+  font-weight: 600; font-size: 0.9rem;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: rgba(245,240,232,0.7);
+}
+.comp-table tbody td.hl {
+  color: var(--paper);
+  font-weight: 500;
+  background: rgba(200,148,26,0.06);
+}
+.comp-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+.comp-table tbody tr:hover td.hl { background: rgba(200,148,26,0.1); }
+
+/* ═══════════════════════════════════════════
+   MARKET SECTORS
+═══════════════════════════════════════════ */
+.sector-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.sector-item {
+  padding: 2.5rem;
+  border: 1px solid var(--rule);
+  margin: -1px 0 0 -1px;
+  transition: background 0.25s;
+}
+.sector-item:hover { background: var(--paper2); }
+.sector-icon {
+  font-size: 2rem; margin-bottom: 1.2rem;
+  display: block;
+}
+.sector-title {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 1rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.sector-stat {
+  font-family: var(--serif);
+  font-size: 1.8rem; font-weight: 700;
+  color: var(--red); margin-bottom: 0.5rem;
+}
+.sector-body { font-size: 0.85rem; color: var(--warm-gray); line-height: 1.6; }
+@media(max-width:700px) { .sector-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════
+   PRICING — LUXURY CARDS
+═══════════════════════════════════════════ */
+.pricing-trio {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 0;
+}
+.price-card {
+  padding: 3rem 2.5rem;
+  border: 1px solid var(--rule);
+  margin: 0 -1px;
+  transition: background 0.25s;
+  position: relative;
+}
+.price-card.prime {
+  background: var(--ink);
+  border-color: var(--gold);
+  z-index: 2;
+}
+.price-card:not(.prime):hover { background: var(--paper2); }
+.prime-label {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 0.6rem; letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--gold); color: var(--ink);
+  padding: 0.2rem 0.9rem; font-weight: 600;
+}
+.price-tier {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--warm-gray); margin-bottom: 1.5rem;
+}
+.price-card.prime .price-tier { color: rgba(245,240,232,0.5); }
+.price-amount {
+  font-family: var(--serif);
+  font-size: 3.5rem; font-weight: 900;
+  line-height: 1; letter-spacing: -0.03em;
+  margin-bottom: 0.2rem;
+}
+.price-card.prime .price-amount { color: var(--gold); }
+.price-period {
+  font-family: var(--mono);
+  font-size: 0.7rem; color: var(--warm-gray);
+  margin-bottom: 2rem;
+}
+.price-card.prime .price-period { color: rgba(245,240,232,0.4); }
+.price-feats { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+.price-feat {
+  font-size: 0.87rem; color: var(--warm-gray);
+  display: flex; gap: 0.7rem; align-items: flex-start;
+}
+.price-feat::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+.price-card.prime .price-feat { color: rgba(245,240,232,0.6); }
+@media(max-width:700px) { .pricing-trio { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════
+   TIMELINE
+═══════════════════════════════════════════ */
+.tl { position: relative; padding-left: 3rem; }
+.tl::before {
+  content: '';
+  position: absolute; left: 6px; top: 8px; bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, var(--gold), var(--teal), transparent);
+}
+.tl-item {
+  position: relative; padding-bottom: 3rem;
+}
+.tl-dot {
+  position: absolute; left: -3rem; top: 6px;
+  width: 14px; height: 14px;
+  border: 2px solid var(--gold);
+  background: var(--paper);
+  transform: rotate(45deg);
+  transition: background 0.2s;
+}
+.tl-item:hover .tl-dot { background: var(--gold); }
+.tl-period {
+  font-family: var(--mono);
+  font-size: 0.62rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+.tl-title {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 1.2rem;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  margin-bottom: 0.5rem; color: var(--blue-deep);
+}
+.tl-body { font-size: 0.88rem; color: var(--warm-gray); line-height: 1.7; max-width: 580px; }
+
+/* ═══════════════════════════════════════════
+   FINANCIAL TABLE
+═══════════════════════════════════════════ */
+.fin-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.fin-table thead th {
+  font-family: var(--mono);
+  font-size: 0.62rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--warm-gray);
+  padding: 0.8rem 1rem; text-align: left;
+  border-bottom: 2px solid var(--rule);
+}
+.fin-table tbody td {
+  padding: 1rem; border-bottom: 1px solid var(--rule);
+  color: #3a3530;
+}
+.fin-table tbody tr.total td {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 0.95rem;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  border-top: 2px solid var(--gold);
+  border-bottom: none; color: var(--blue-deep);
+}
+.mono { font-family: var(--mono); color: var(--blue-deep); }
+
+/* ═══════════════════════════════════════════
+   ROADMAP
+═══════════════════════════════════════════ */
+.roadmap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.rm-item {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid var(--rule);
+  position: relative;
+}
+.rm-item:last-child { border-right: none; }
+.rm-item::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.rm-item:nth-child(1)::before { background: var(--gold); }
+.rm-item:nth-child(2)::before { background: var(--red); }
+.rm-item:nth-child(3)::before { background: var(--teal); }
+.rm-item:nth-child(4)::before { background: var(--blue-deep); }
+.rm-phase {
+  font-family: var(--mono);
+  font-size: 0.6rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--warm-gray);
+  margin-bottom: 0.8rem;
+}
+.rm-year {
+  font-family: var(--serif);
+  font-size: 2.2rem; font-weight: 900;
+  line-height: 1; letter-spacing: -0.02em;
+  margin-bottom: 0.8rem;
+}
+.rm-items { font-size: 0.82rem; color: var(--warm-gray); line-height: 1.7; }
+.rm-goal {
+  margin-top: 1.5rem;
+  font-family: var(--cond);
+  font-weight: 700; font-size: 0.8rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink); border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+@media(max-width:800px) { .roadmap { grid-template-columns: 1fr 1fr; } }
+
+/* ═══════════════════════════════════════════
+   RISK
+═══════════════════════════════════════════ */
+.risk-list { }
+.risk-row {
+  display: grid;
+  grid-template-columns: 1fr 100px 100px 1fr;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+.risk-row:first-of-type { border-top: 1px solid var(--rule); }
+.risk-name { font-weight: 500; font-size: 0.92rem; }
+.risk-badge {
+  font-family: var(--mono);
+  font-size: 0.62rem; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem; display: inline-block;
+}
+.rb-high { background: rgba(196,30,30,0.1); color: var(--red); }
+.rb-mid { background: rgba(200,148,26,0.12); color: #9A6A00; }
+.rb-low { background: rgba(26,107,107,0.1); color: var(--teal); }
+.risk-plan { font-size: 0.84rem; color: var(--warm-gray); line-height: 1.6; }
+@media(max-width:700px) { .risk-row { grid-template-columns: 1fr; gap: 0.4rem; } }
+
+/* ═══════════════════════════════════════════
+   CLOSING — FULL DRAMA
+═══════════════════════════════════════════ */
+.closing {
+  background: var(--ink);
+  min-height: 60vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 8rem 4rem;
+  position: relative; overflow: hidden;
+}
+.closing::before {
+  content: 'FLOW';
+  position: absolute;
+  font-family: var(--serif);
+  font-weight: 900; font-size: 26rem;
+  color: rgba(200,148,26,0.03);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(-20%);
+}
+.closing-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 2rem; position: relative; z-index: 2;
+}
+.closing-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 900; line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--paper);
+  position: relative; z-index: 2;
+  margin-bottom: 2rem;
+}
+.closing-title em { color: var(--gold); font-style: italic; }
+.closing-body {
+  font-size: 1.1rem; font-weight: 300;
+  color: rgba(245,240,232,0.5);
+  max-width: 560px; line-height: 1.8;
+  position: relative; z-index: 2;
+  margin-bottom: 3rem;
+}
+.closing-body strong { color: rgba(245,240,232,0.9); font-weight: 500; }
+.closing-meta {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.1em;
+  color: rgba(245,240,232,0.25); text-transform: uppercase;
+  position: relative; z-index: 2;
+  margin-top: 3rem;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════ */
+.sr {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.sr.in { opacity: 1; transform: none; }
+.sr-d1 { transition-delay: 0.1s; }
+.sr-d2 { transition-delay: 0.2s; }
+.sr-d3 { transition-delay: 0.3s; }
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════ */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--paper2); }
+::-webkit-scrollbar-thumb { background: var(--gold); }
+
+/* ═══════════════════════════════════════════
+   READING PROGRESS
+═══════════════════════════════════════════ */
+#progress {
+  position: fixed; top: 56px; left: 0; right: 0;
+  height: 2px; background: var(--gold);
+  transform-origin: left; transform: scaleX(0);
+  z-index: 600; transition: transform 0.1s linear;
+}
+
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(245,240,232,0.06);
+  padding: 2rem 5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer span {
+  font-family: var(--mono);
+  font-size: 0.62rem; letter-spacing: 0.08em;
+  color: rgba(245,240,232,0.25); text-transform: uppercase;
+}
+
+/* highlight box */
+.hbox {
+  background: var(--paper2);
+  border-left: 3px solid var(--gold);
+  padding: 1.5rem 2rem;
+  font-size: 0.9rem; line-height: 1.75;
+  color: #3a3530; margin: 1.5rem 0;
+}
+.hbox strong { color: var(--ink); font-weight: 600; }
+
+/* two col */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media(max-width:700px) { .two-col { grid-template-columns: 1fr; } }
+
+/* projection table */
+.proj-table { width: 100%; border-collapse: collapse; }
+.proj-table thead th {
+  font-family: var(--mono);
+  font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.8rem 1rem; color: var(--warm-gray);
+  border-bottom: 2px solid var(--rule); text-align: left;
+}
+.proj-table tbody td {
+  padding: 1rem; border-bottom: 1px solid var(--rule);
+  font-size: 0.9rem; color: #3a3530;
+}
+.proj-table tbody tr:last-child td {
+  font-family: var(--cond);
+  font-weight: 700; font-size: 0.95rem;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--blue-deep); border-top: 2px solid var(--gold);
+  border-bottom: none;
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Flow<span>State</span> AI</div>
+  <div class="nav-items">
+    <a href="#fundacional">Fundacional</a>
+    <a href="#innovacion">Innovación</a>
+    <a href="#marketing">Marketing</a>
+    <a href="#financiero">Finanzas</a>
+  </div>
+  <div class="nav-stamp">Confidencial · 2026</div>
+</nav>
+
+<!-- ═════════════════════════════
+     COVER
+═════════════════════════════ -->
+<div class="cover">
+  <div class="cover-left">
+    <div class="cover-issue">Executive Brief · Buenos Aires 2026</div>
+    <h1 class="cover-headline">
+      <span class="accent">Flow</span><br>
+      <span>State</span><br>
+      <span class="outline">AI</span>
+    </h1>
+    <p class="cover-sub">
+      El <strong>socio estratégico</strong> de empresas en Latinoamérica.<br>
+      Transformación digital real impulsada por inteligencia artificial —
+      resultados medibles desde el primer trimestre.
+    </p>
+    <div class="cover-actions">
+      <a href="#innovacion" class="btn-cover btn-fill">Ver Propuesta</a>
+      <a href="#financiero" class="btn-cover btn-outline-cover">Plan Financiero</a>
+    </div>
+  </div>
+  <div class="cover-right">
+    <div class="cover-kpis">
+      <div class="kpi-row">
+        <div class="kpi-num">LATAM</div>
+        <div class="kpi-info">
+          <div class="kpi-name">Mercado Objetivo</div>
+          <div class="kpi-desc">Foco inicial Argentina, expansión Chile y México 2027</div>
+        </div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-num">USD 250</div>
+        <div class="kpi-info">
+          <div class="kpi-name">Ticket Mensual</div>
+          <div class="kpi-desc">Plan Professional · Punto dulce del mercado PyME</div>
+        </div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-num">6</div>
+        <div class="kpi-info">
+          <div class="kpi-name">Agentes en Portfolio</div>
+          <div class="kpi-desc">Todos en producción sobre Microsoft Azure</div>
+        </div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi-num">Q1</div>
+        <div class="kpi-info">
+          <div class="kpi-name">Break-even 2026</div>
+          <div class="kpi-desc">Solo 2 clientes cubren costos operativos totales</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div class="cover-footer-left">Gustavo Gabriel Buongiorno Berton · Analista de Sistemas · CABA, Argentina</div>
+    <div class="cover-footer-right">FlowState AI S.A.S. · Documento Fundacional v1.0</div>
+  </div>
+</div>
+
+<!-- ═════════════════════════════
+     PARTE I — FUNDACIONAL
+═════════════════════════════ -->
+<div id="fundacional" class="chapter">
+  <div class="chapter-num">I</div>
+  <div class="chapter-content">
+    <div class="chapter-label">Primera Parte</div>
+    <div class="chapter-title">Documento Fundacional</div>
+    <div class="chapter-sub">Origen, Visión, Misión, Valores y Estructura Legal</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Génesis</div>
+  <h2 class="display">La observación que lo originó todo</h2>
+
+  <div class="pull-quote sr sr-d1">
+    <div class="pull-quote-text">"Las empresas no carecen de herramientas de IA. Carecen de un socio estratégico que traduzca esa tecnología en resultados operativos concretos y medibles."</div>
+    <div class="pull-quote-attr">Gustavo Buongiorno Berton · Fundador, FlowState AI</div>
+  </div>
+
+  <p class="body sr sr-d2">FlowState AI nació de una observación directa del mercado latinoamericano: la disponibilidad masiva de tecnología de inteligencia artificial no se traduce automáticamente en valor para las empresas. Su fundador — Analista de Sistemas con experiencia comprobada en despliegue de soluciones sobre Microsoft Azure — identificó una brecha crítica entre la promesa de la IA y su implementación real.</p>
+  <p class="body sr sr-d2">La idea central es tan simple como poderosa: las empresas alcanzan su máximo rendimiento cuando sus procesos operan en un estado de <strong>"Flow"</strong> — flujo continuo, sin fricción, sin tareas repetitivas que consuman energía humana valiosa. La inteligencia artificial es el habilitador de ese estado. FlowState AI es el arquitecto que diseña y construye ese camino.</p>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">El Problema</div>
+  <h2 class="display">Tres barreras que bloquean la transformación digital</h2>
+  <div class="problem-grid sr sr-d1" style="margin-top:2rem;">
+    <div class="problem-card">
+      <div class="problem-num">01</div>
+      <div class="problem-title" style="color:var(--gold)">Brecha de Conocimiento</div>
+      <div class="problem-body">Las organizaciones carecen de equipos internos capaces de implementar IA de manera efectiva y adaptada a sus procesos específicos. Contratar talento especializado es costoso e ineficiente para una PyME.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">02</div>
+      <div class="problem-title" style="color:var(--red)">Fatiga Administrativa</div>
+      <div class="problem-body">Los profesionales dedican una proporción desmedida de su tiempo a tareas repetitivas — cobranzas, consultas frecuentes, carga de datos, seguimiento — que la IA puede automatizar completamente.</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">03</div>
+      <div class="problem-title" style="color:var(--teal)">Soluciones Genéricas</div>
+      <div class="problem-body">Los grandes proveedores globales ofrecen productos masivos que no se adaptan a la especificidad operativa, normativa y cultural de cada organización latinoamericana.</div>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="mv-block sr">
+  <div>
+    <div class="mv-label">Misión</div>
+    <div class="mv-text">"Ser el socio estratégico de empresas en Latinoamérica, convirtiendo la complejidad de los datos en una ventaja competitiva tangible y sostenible."</div>
+    <div class="mv-sub">Ayudamos a nuestros clientes a dominar la IA para lograr una transformación radical en su eficiencia e innovación — no mediante teoría, sino mediante implementaciones reales y medibles.</div>
+  </div>
+  <div class="mv-divider"></div>
+  <div>
+    <div class="mv-label">Visión</div>
+    <div class="mv-text">"Construir el futuro de la eficiencia digital, desbloqueando el potencial de cada organización para que alcancen su estado de 'Flow' a través de la inteligencia artificial."</div>
+    <div class="mv-sub">Liderar el mercado de soluciones de IA en Latinoamérica siendo reconocidos por nuestra innovación, calidad de implementación y compromiso genuino con los resultados de cada cliente.</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Valores</div>
+  <h2 class="display">Los principios que nos guían</h2>
+  <div class="values-row sr sr-d1" style="margin-top:2rem;">
+    <div class="value-item">
+      <div class="value-icon">⚡</div>
+      <div class="value-name">Innovación</div>
+      <div class="value-desc">Búsqueda constante de nuevas soluciones y tecnologías emergentes que generen ventajas reales.</div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">🤝</div>
+      <div class="value-name">Asociación</div>
+      <div class="value-desc">Relaciones a largo plazo como socios estratégicos genuinos, no como vendedores de software.</div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">🚀</div>
+      <div class="value-name">Agilidad</div>
+      <div class="value-desc">Velocidad de respuesta que las grandes consultoras no pueden igualar. Implementamos en semanas.</div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">⚖️</div>
+      <div class="value-name">Ética</div>
+      <div class="value-desc">Responsabilidad en el uso de IA y datos sensibles. Transparencia total con cada cliente.</div>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Estructura Legal</div>
+  <h2 class="display">Sociedad diseñada para escalar</h2>
+  <div class="phase-grid sr sr-d1" style="margin-top:2rem;">
+    <div class="phase-item">
+      <div class="phase-header">
+        <div class="phase-badge">Fase 1</div>
+        <div class="phase-title-sm">Argentina — S.A.S.</div>
+      </div>
+      <p class="body" style="font-size:0.88rem;">Constitución como <strong>FlowState AI S.A.S.</strong> en CABA bajo Ley 27.349. Estructura ágil, flexible, con responsabilidad limitada al capital aportado. División accionaria ponderada: 20% capital / 40% sweat equity / 40% propiedad intelectual. Vesting 4 años, cliff de 12 meses.</p>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">Capital USD 50.000</span>
+        <span class="tag">Inscripción IGJ</span>
+        <span class="tag">AFIP + IIBB</span>
+        <span class="tag">Crypto habilitado</span>
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-header">
+        <div class="phase-badge">Fase 2</div>
+        <div class="phase-title-sm">Delaware LLC — Inversión Internacional</div>
+      </div>
+      <p class="body" style="font-size:0.88rem;">Para atraer capital de VCs extranjeros. La LLC actúa como holding que recibe inversión y la transfiere a la sociedad operativa LATAM. Fiscalmente eficiente (pass-through), convertible a C-Corp. Opción avanzada: estructura Caimán → Delaware → LATAM para exit óptimo.</p>
+      <div class="tag-cloud">
+        <span class="tag tag-gold">Delaware LLC</span>
+        <span class="tag">VCs Extranjeros</span>
+        <span class="tag">Cap Table formal</span>
+        <span class="tag">Ronda Ángel Ready</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════════════════════
+     PARTE II — INNOVACIÓN
+═════════════════════════════ -->
+<div id="innovacion" class="chapter">
+  <div class="chapter-num">II</div>
+  <div class="chapter-content">
+    <div class="chapter-label">Segunda Parte</div>
+    <div class="chapter-title">Propuesta de Valor<br>e Innovación</div>
+    <div class="chapter-sub">Por qué FlowState AI conquista mercados que otros no pueden alcanzar</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Diferencial Radical</div>
+  <h2 class="display">No vendemos tecnología.<br>Vendemos resultados.</h2>
+
+  <div class="pull-quote sr sr-d1">
+    <div class="pull-quote-text">"Inteligencia Conectada + Soporte Humano. El poder de la IA amplificado por consultoría especializada — no un SaaS genérico más."</div>
+  </div>
+
+  <p class="body sr sr-d2">En un mercado saturado de chatbots ineficaces, la diferenciación de FlowState AI es estructural: cada implementación incluye setup personalizado, calibración específica al negocio del cliente y soporte humano continuo. No vendemos acceso a software — vendemos la <strong>eliminación sistemática de la fricción administrativa</strong> con ROI demostrable en el primer trimestre.</p>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Portfolio</div>
+  <h2 class="display">6 agentes. Problemas reales.<br>Resultados medibles.</h2>
+  <div class="product-list sr sr-d1" style="margin-top:2rem;">
+    <div class="product-entry">
+      <div><div class="p-name">DataAssist</div><div class="p-tech">Azure OpenAI · RAG · GPT-4</div></div>
+      <div class="p-desc">Asistente conversacional personalizable para consultas internas y atención al cliente. Se entrena con el conocimiento específico de cada organización.</div>
+      <div class="p-sector">Gobierno · Educación · Retail · PyMEs</div>
+      <div class="p-status status-live">● En Producción</div>
+    </div>
+    <div class="product-entry">
+      <div><div class="p-name">ConsorcioFlow</div><div class="p-tech">Azure Communication · Logic Apps · GPT-4</div></div>
+      <div class="p-desc">Cobranzas empáticas vía WhatsApp con IA adaptativa al historial del deudor. Mediación vecinal 24/7. Auditoría automática de gastos comunes.</div>
+      <div class="p-sector">Administradores de Consorcios</div>
+      <div class="p-status status-soon">◐ Lanzamiento Q1</div>
+    </div>
+    <div class="product-entry">
+      <div><div class="p-name">LNC Agent</div><div class="p-tech">Azure Static Web Apps · RAG</div></div>
+      <div class="p-desc">Sistema de consulta inteligente sobre manuales y normativas internas. Reduce el tiempo de respuesta operativo en un 90%.</div>
+      <div class="p-sector">Logística · Legal · Recursos Humanos</div>
+      <div class="p-status status-live">● En Producción</div>
+    </div>
+    <div class="product-entry">
+      <div><div class="p-name">Auditxt</div><div class="p-tech">Azure Form Recognizer · OpenAI</div></div>
+      <div class="p-desc">Automatización de lectura de expedientes y carga de comprobantes. Libera horas facturables de alto valor para los profesionales.</div>
+      <div class="p-sector">Contabilidad · Derecho · Compliance</div>
+      <div class="p-status status-live">● En Producción</div>
+    </div>
+    <div class="product-entry">
+      <div><div class="p-name">EmailService</div><div class="p-tech">Azure Logic Apps · OpenAI</div></div>
+      <div class="p-desc">Orquestación inteligente de comunicaciones empresariales, alertas de compliance y derivación automática a responsables humanos.</div>
+      <div class="p-sector">Mesas de Ayuda · Compliance · Operaciones</div>
+      <div class="p-status status-live">● En Producción</div>
+    </div>
+    <div class="product-entry">
+      <div><div class="p-name">Compliance Pack</div><div class="p-tech">Blockchain · Azure · IGJ Res. 15/2024</div></div>
+      <div class="p-desc">Registro automático en Blockchain para libros digitales exigidos por IGJ. Cumplimiento normativo con cero errores manuales ni riesgo de multas.</div>
+      <div class="p-sector">SAS · PyMEs · Estudios Contables</div>
+      <div class="p-status status-soon">◐ Q1 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Infraestructura</div>
+  <h2 class="display">La ventaja del ecosistema Azure</h2>
+  <p class="body sr sr-d1" style="max-width:680px;">FlowState AI no experimenta con tecnología — tiene productos funcionales desplegados en producción. Para clientes corporativos, <strong>"nuestra infraestructura corre en Microsoft Azure"</strong> es un argumento de cierre, no una promesa.</p>
+  <div class="azure-grid sr sr-d2" style="margin-top:2rem;">
+    <div class="azure-item">
+      <div class="azure-title">Azure OpenAI Service</div>
+      <div class="azure-body">Acceso a GPT-4 dentro de la infraestructura de nube privada. Garantiza compliance corporativo y confidencialidad de datos — no negociable para clientes legales y contables.</div>
+    </div>
+    <div class="azure-item">
+      <div class="azure-title">Azure Communication Services</div>
+      <div class="azure-body">Canal nativo para WhatsApp, SMS y email. Crítico para los agentes de cobranza empática y recordatorios de turnos médicos con IA adaptativa.</div>
+    </div>
+    <div class="azure-item">
+      <div class="azure-title">Azure Logic Apps</div>
+      <div class="azure-body">Orquestación de flujos de trabajo complejos. Permite integraciones rápidas con sistemas legacy — ERP, Cobol, Access — sin reescribir infraestructura existente.</div>
+    </div>
+    <div class="azure-item">
+      <div class="azure-title">Arquitectura Agnóstica</div>
+      <div class="azure-body">Capacidad de integrar OpenAI, Gemini y modelos open-source según la tarea. La consultora vende la solución, no el modelo. Optimización de costo por caso de uso.</div>
+    </div>
+  </div>
+</div>
+
+<div class="comp-wrap sr">
+  <div class="comp-eyebrow">Análisis Competitivo</div>
+  <h2 class="display" style="color:var(--paper);margin-bottom:2rem;">FlowState AI<br><em style="font-style:italic;color:var(--gold)">vs.</em> el mercado</h2>
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Atributo</th>
+        <th class="hl">FlowState AI</th>
+        <th>Gran Consultora</th>
+        <th>SaaS Genérico</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Personalización</td><td class="hl">✓ Alta</td><td>⚠ Media</td><td>✗ Baja</td></tr>
+      <tr><td>Velocidad de implementación</td><td class="hl">✓ Semanas</td><td>✗ Meses</td><td>✓ Días (sin customizar)</td></tr>
+      <tr><td>Precio mensual</td><td class="hl">✓ USD 250</td><td>✗ Miles USD</td><td>⚠ USD 50–500</td></tr>
+      <tr><td>Soporte humano incluido</td><td class="hl">✓ Siempre</td><td>✓ Sí</td><td>✗ No</td></tr>
+      <tr><td>Conocimiento local LATAM</td><td class="hl">✓ Nativo</td><td>⚠ Global</td><td>✗ Sin contexto</td></tr>
+      <tr><td>Portfolio en producción</td><td class="hl">✓ Azure real</td><td>✓ Sí</td><td>⚠ Variable</td></tr>
+      <tr><td>Integración sistemas legacy</td><td class="hl">✓ ERP/Cobol/Access</td><td>✓ Sí</td><td>✗ Raramente</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═════════════════════════════
+     PARTE III — MARKETING
+═════════════════════════════ -->
+<div id="marketing" class="chapter">
+  <div class="chapter-num">III</div>
+  <div class="chapter-content">
+    <div class="chapter-label">Tercera Parte</div>
+    <div class="chapter-title">Plan de Marketing<br>Integral</div>
+    <div class="chapter-sub">Estrategia de Go-To-Market · Q1 2026 · Horizonte LATAM</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Contexto 2026</div>
+  <h2 class="display">Argentina 2026: el terreno está listo</h2>
+  <p class="body sr sr-d1">La transformación digital ha dejado de ser un concepto abstracto para convertirse en una <strong>exigencia normativa y operativa</strong>. Los sectores tradicionales se enfrentan a un punto de inflexión donde la digitalización forzosa choca con estructuras de trabajo arcaicas. FlowState AI no entra en un mercado que hay que crear — entra a un mercado que está hambriento de soluciones que realmente funcionen.</p>
+  <div class="sector-grid sr sr-d2" style="margin-top:2rem;">
+    <div class="sector-item">
+      <span class="sector-icon">🏢</span>
+      <div class="sector-title">Consorcios</div>
+      <div class="sector-stat">15–16%</div>
+      <div class="sector-body">Tasa de morosidad en expensas en 2025. Los administradores destinan la mayor parte de su tiempo a cobranzas y conflictos vecinales. El agente ConsorcioFlow los libera.</div>
+    </div>
+    <div class="sector-item">
+      <span class="sector-icon">⚖️</span>
+      <div class="sector-title">Legal · Contabilidad</div>
+      <div class="sector-stat">+40%</div>
+      <div class="sector-body">Incremento en carga de trabajo manual por digitalización IGJ. La "inflación normativa" genera nuevas obligaciones sin eliminar el trabajo repetitivo existente.</div>
+    </div>
+    <div class="sector-item">
+      <span class="sector-icon">🏥</span>
+      <div class="sector-title">Salud</div>
+      <div class="sector-stat">30–40%</div>
+      <div class="sector-body">Tasa de ausentismo de pacientes. Pérdida directa de ingresos que la tecnología de agendamiento actual no logra mitigar. El agente de recordatorios cambia la ecuación.</div>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Precios</div>
+  <h2 class="display">Paquetes comerciales</h2>
+  <p class="body sr sr-d1">Posicionado en el <strong>"punto dulce"</strong>: USD 250 es suficientemente accesible para aprobarse como gasto operativo (OPEX) sin requerir deliberaciones de inversión de capital (CAPEX), pero lo suficientemente significativo para garantizar un servicio premium con soporte humano dedicado.</p>
+  <div class="pricing-trio sr sr-d2" style="margin-top:2.5rem;">
+    <div class="price-card">
+      <div class="price-tier">Starter</div>
+      <div class="price-amount">150</div>
+      <div class="price-period">USD / mes</div>
+      <ul class="price-feats">
+        <li class="price-feat">1 agente configurado</li>
+        <li class="price-feat">Setup inicial incluido</li>
+        <li class="price-feat">Soporte vía email</li>
+        <li class="price-feat">Hasta 1.000 interacciones/mes</li>
+      </ul>
+    </div>
+    <div class="price-card prime">
+      <div class="prime-label">Recomendado</div>
+      <div class="price-tier">Professional</div>
+      <div class="price-amount">250</div>
+      <div class="price-period">USD / mes</div>
+      <ul class="price-feats">
+        <li class="price-feat">2–3 agentes integrados</li>
+        <li class="price-feat">Consultoría de implementación</li>
+        <li class="price-feat">Soporte prioritario humano</li>
+        <li class="price-feat">Dashboard de métricas ROI</li>
+        <li class="price-feat">Interacciones ilimitadas</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Enterprise</div>
+      <div class="price-amount">500+</div>
+      <div class="price-period">USD / mes</div>
+      <ul class="price-feats">
+        <li class="price-feat">Agentes ilimitados</li>
+        <li class="price-feat">Integración sistemas legacy</li>
+        <li class="price-feat">SLA garantizado</li>
+        <li class="price-feat">Desarrollo a medida</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Plan de Acción</div>
+  <h2 class="display">Go-to-Market: Q1 2026 semana a semana</h2>
+  <div class="tl sr sr-d1" style="margin-top:2.5rem;">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-period">Semana 1 — 2</div>
+      <div class="tl-title">Empaquetar la Oferta</div>
+      <div class="tl-body">Definir el "Producto Estrella" — ConsorcioFlow o LNC adaptado. Configurar entorno Azure de producción separado de demos. Documentar caso de uso con métricas reales y ROI cuantificable.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--red);"></div>
+      <div class="tl-period">Semana 3 — 4</div>
+      <div class="tl-title">Prospección LinkedIn Sales Navigator</div>
+      <div class="tl-body">Filtro: administradores de consorcios, gerentes de estudios contables y jurídicos en CABA. Mensaje: <em>"Tengo un agente de IA funcionando que reduce el tiempo de respuesta en 90%. Te lo muestro en vivo en 5 minutos. No es PowerPoint, es real."</em></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--teal);"></div>
+      <div class="tl-period">Semana 5 — 6</div>
+      <div class="tl-title">Cerrar 2 Clientes Beta</div>
+      <div class="tl-body">2 clientes al plan Professional (USD 250/mes c/u = USD 500/mes). Activar feedback loop. Documentar ROI demostrable: tiempo ahorrado, morosidad reducida, consultas automatizadas. Esto es el combustible para escalar.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--blue-deep);"></div>
+      <div class="tl-period">Semana 7 — 12</div>
+      <div class="tl-title">Alianzas y Escala</div>
+      <div class="tl-body">Contactar 5 estudios contables grandes con propuesta de alianza para Compliance Digital Pack: ellos traen volumen, FlowState AI provee la tecnología. Meta: 6 clientes activos al cierre del trimestre. ARR proyectado: USD 18.000.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════════════════════
+     PARTE IV — FINANZAS
+═════════════════════════════ -->
+<div id="financiero" class="chapter">
+  <div class="chapter-num">IV</div>
+  <div class="chapter-content">
+    <div class="chapter-label">Cuarta Parte</div>
+    <div class="chapter-title">Plan de Sustentabilidad</div>
+    <div class="chapter-sub">Modelo Financiero · Escalabilidad · Roadmap 2026–2028</div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Modelo de Ingresos</div>
+  <h2 class="display">Recurrente, predecible y escalable</h2>
+  <p class="body sr sr-d1" style="max-width:700px;">La sustentabilidad de FlowState AI se construye sobre un modelo SaaS/Service Retainer que prioriza la estabilidad del flujo de caja sobre proyectos de pago único. Esto garantiza predictibilidad financiera y permite planificar el crecimiento del equipo y la tecnología con certeza.</p>
+
+  <div class="hbox sr sr-d2">
+    <strong>Punto de equilibrio operativo:</strong> con solo 2 clientes al plan Professional (USD 500/mes total), FlowState AI cubre sus costos tecnológicos directos desde el Q1 2026. A partir del 3° cliente, el margen de contribución es sustancialmente alto — los costos de desarrollo de los agentes ya están completamente amortizados.
+  </div>
+
+  <h3 class="label sr" style="margin-top:3rem;">Estructura de Costos Operativos Mensuales</h3>
+  <table class="fin-table sr sr-d1">
+    <thead>
+      <tr>
+        <th>Concepto</th>
+        <th>Costo USD</th>
+        <th>Costo ARS Estimado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Stack Tecnológico (Azure, O365, LinkedIn Premium, Gemini)</td><td class="mono">~USD 223</td><td>~$ 323.350</td></tr>
+      <tr><td>Contador + Gestión Legal (SAS, balances anuales)</td><td>—</td><td>~$ 150.000</td></tr>
+      <tr><td>Impuestos estimados (IIBB + Monotributo/Autónomos)</td><td>—</td><td>~$ 450.000</td></tr>
+      <tr><td>Marketing y Dominio</td><td>—</td><td>~$ 100.000</td></tr>
+      <tr><td>Fondo de contingencia (fluctuación + imprevistos)</td><td>—</td><td>~$ 100.000</td></tr>
+      <tr class="total"><td>Total Costos Operativos Mensuales</td><td class="mono">~USD 223</td><td>~$ 1.123.350</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="label sr" style="margin-top:3rem;">Proyección de Crecimiento 2026</h3>
+  <table class="proj-table sr sr-d1">
+    <thead>
+      <tr>
+        <th>Escenario</th>
+        <th>Clientes Activos</th>
+        <th>Facturación / Mes</th>
+        <th>Ingreso Neto Estimado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Q1 2026 — Validación</td><td class="mono">2</td><td class="mono">USD 500</td><td>Cubre costos operativos</td></tr>
+      <tr><td>Q2 2026 — Crecimiento</td><td class="mono">6</td><td class="mono">USD 1.500</td><td>~ARS 1.800.000 / mes</td></tr>
+      <tr><td>Q3 2026 — Expansión</td><td class="mono">12</td><td class="mono">USD 3.000</td><td>~ARS 3.500.000 / mes</td></tr>
+      <tr><td>Q4 2026 — Consolidación</td><td class="mono">20+</td><td class="mono">USD 5.000+</td><td>~ARS 6.000.000+ / mes</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Hoja de Ruta</div>
+  <h2 class="display">Roadmap estratégico 2026–2028</h2>
+  <div class="roadmap sr sr-d1" style="margin-top:2rem;">
+    <div class="rm-item">
+      <div class="rm-phase">Fase 1</div>
+      <div class="rm-year">2025–<br>Q1 2026</div>
+      <div class="rm-items">Constitución SAS. MVP DataAssist / ConsorcioFlow. 2 clientes beta. Validación de propuesta de valor. Break-even operativo.</div>
+      <div class="rm-goal">→ Probar que el modelo funciona</div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-phase">Fase 2</div>
+      <div class="rm-year">Q2–Q4<br>2026</div>
+      <div class="rm-items">Equipo de 4 personas. 20 clientes. Compliance Digital Pack. Alianzas con estudios contables. ARR USD 60.000.</div>
+      <div class="rm-goal">→ Crecer rentablemente</div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-phase">Fase 3</div>
+      <div class="rm-year">2027</div>
+      <div class="rm-items">Registro de marca. Expansión Chile y México. Ronda ángel USD 80K–165K. LLC Delaware activa. ARR USD 200.000.</div>
+      <div class="rm-goal">→ Internacionalización</div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-phase">Fase 4</div>
+      <div class="rm-year">2028</div>
+      <div class="rm-items">Serie A. Equipo 15+. DataAssist como plataforma SaaS horizontal. ARR USD 1M+. Análisis de exit óptimo.</div>
+      <div class="rm-goal">→ Liderazgo regional</div>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="section sr">
+  <div class="eyebrow">Gestión de Riesgos</div>
+  <h2 class="display">Anticipar en lugar de reaccionar</h2>
+  <div class="risk-list sr sr-d1" style="margin-top:2rem;">
+    <div style="display:grid;grid-template-columns:1fr 100px 100px 1fr;gap:2rem;padding:0.5rem 0;border-bottom:1px solid var(--rule);">
+      <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm-gray);">Riesgo</div>
+      <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm-gray);">Prob.</div>
+      <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm-gray);">Impacto</div>
+      <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--warm-gray);">Mitigación</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">Lenta adopción de IA por PyMEs</div>
+      <div><span class="risk-badge rb-mid">Media</span></div>
+      <div><span class="risk-badge rb-high">Alto</span></div>
+      <div class="risk-plan">Webinars educativos. Demos en vivo en lugar de teoría. ROI documentado desde el día 1. El mercado educa comprando.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">Competencia de grandes consultoras</div>
+      <div><span class="risk-badge rb-low">Baja</span></div>
+      <div><span class="risk-badge rb-mid">Medio</span></div>
+      <div class="risk-plan">Diferenciación por personalización, velocidad y precio. Nicho específico primero — consorcios — antes de expandir.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">Seguridad / privacidad de datos de clientes</div>
+      <div><span class="risk-badge rb-mid">Media</span></div>
+      <div><span class="risk-badge rb-high">Alto</span></div>
+      <div class="risk-plan">Ley 25.326. Encriptación Azure. Seguros de responsabilidad civil. NDAs con todos los clientes desde el día 1.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">Dificultad para retener talento especializado en IA</div>
+      <div><span class="risk-badge rb-high">Alta</span></div>
+      <div><span class="risk-badge rb-high">Alto</span></div>
+      <div class="risk-plan">Equity plan para empleados clave. Cultura de innovación. Trabajo 100% remoto y salario en USD desde el inicio.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">Volatilidad macroeconómica Argentina</div>
+      <div><span class="risk-badge rb-high">Alta</span></div>
+      <div><span class="risk-badge rb-mid">Medio</span></div>
+      <div class="risk-plan">Precios en USD. Tesorería diversificada con criptoactivos (habilitado por estatuto SAS). LLC Delaware como escudo.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════════════════════
+     CLOSING
+═════════════════════════════ -->
+<div class="closing">
+  <div class="closing-eyebrow">La Oportunidad</div>
+  <div class="closing-title">
+    La pregunta no es <em>si</em><br>las empresas adoptarán IA.
+  </div>
+  <p class="closing-body">
+    La pregunta es <strong>quién va a ser su socio estratégico cuando lo hagan.</strong><br>
+    FlowState AI no está esperando que el mercado madure.<br>
+    El mercado ya está maduro.
+  </p>
+  <a href="#fundacional" class="btn-cover btn-fill" style="text-decoration:none;font-size:0.85rem;">Volver al inicio</a>
+  <div class="closing-meta">
+    Gustavo Gabriel Buongiorno Berton &nbsp;·&nbsp; FlowState AI S.A.S.<br>
+    Buenos Aires, Argentina &nbsp;·&nbsp; Documento Confidencial &nbsp;·&nbsp; © 2025–2026
+  </div>
+</div>
+
+<footer>
+  <span>FlowState AI S.A.S. · Buenos Aires, Argentina</span>
+  <span>Documento Fundacional Executive Brief v2.0 · 2026</span>
+</footer>
+
+<script>
+// Reading progress bar
+const bar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  bar.style.transform = `scaleX(${pct})`;
+});
+
+// Scroll reveal
+const sr = document.querySelectorAll('.sr');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+sr.forEach(el => obs.observe(el));
+
+// Active nav
+const sections = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.nav-items a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) current = s.id; });
+  links.forEach(a => {
+    const active = a.getAttribute('href') === '#' + current;
+    a.style.color = active ? 'var(--gold-lt)' : '';
+  });
+});
+</script>
+</body>
+</html>

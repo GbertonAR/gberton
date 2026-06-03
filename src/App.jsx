@@ -1,23 +1,25 @@
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainLayout from './components/layout/MainLayout';
+import HomeDashboard from './components/HomeDashboard';
 import ProfessionalExperience from './components/ProfessionalExperience';
-import FlowStateEcosystem from './components/FlowStateEcosystem';
+import FlowStateFactory from './components/FlowStateFactory';
+import ProjectsView from './components/ProjectsView';
 import ContactForm from './components/ContactForm';
-import Footer from './components/Footer';
 import './index.css';
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      <main>
-        <Hero />
-        <ProfessionalExperience />
-        <FlowStateEcosystem />
-        <ContactForm />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<HomeDashboard />} />
+          <Route path="cv" element={<ProfessionalExperience />} />
+          <Route path="factory" element={<FlowStateFactory />} />
+          <Route path="contact" element={<ContactForm />} />
+          <Route path="projects" element={<ProjectsView />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

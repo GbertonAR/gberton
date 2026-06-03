@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LexIA — Plataforma SaaS para el Poder Legislativo | FlowState AI</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap');
+
+  :root {
+    --dark:     #0D1B3E;
+    --mid:      #1A237E;
+    --purple:   #6A1B9A;
+    --blue:     #0D47A1;
+    --cian:     #0097A7;
+    --cian-light: #00BCD4;
+    --accent:   #00E5FF;
+    --red:      #C62828;
+    --gold:     #FFD54F;
+    --white:    #FFFFFF;
+    --off-white:#F0F4FF;
+    --gray:     #90A4AE;
+    --light-gray:#E8EAF6;
+    --text:     #263238;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 3rem;
+    background: rgba(13,27,62,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,229,255,0.15);
+  }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .nav-logo-text {
+    font-size: 1.5rem; font-weight: 900;
+    background: linear-gradient(90deg, #00E5FF, #FFFFFF);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+  }
+
+  .nav-badge {
+    font-size: 0.6rem; font-weight: 600; letter-spacing: 2px;
+    color: var(--gray); margin-top: 2px;
+  }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--gray); text-decoration: none;
+    font-size: 0.85rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent); color: var(--dark);
+    padding: 0.5rem 1.4rem; border-radius: 4px;
+    font-weight: 700; font-size: 0.85rem;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 7rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(106,27,154,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(0,151,167,0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(13,71,161,0.2) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 680px; position: relative; z-index: 2;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 3px;
+    color: var(--accent); text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-eyebrow::before {
+    content: ''; width: 24px; height: 2px; background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 900; line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 .lex { color: var(--white); }
+  .hero h1 .ia-text { color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.2rem; font-weight: 300; color: var(--off-white);
+    line-height: 1.7; margin-bottom: 2rem; max-width: 520px;
+  }
+
+  .hero-sub strong { color: var(--accent); font-weight: 600; }
+
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .btn-primary {
+    background: var(--accent); color: var(--dark);
+    padding: 0.85rem 2rem; border-radius: 4px;
+    font-weight: 700; font-size: 0.95rem;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0,229,255,0.3);
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,229,255,0.4); }
+
+  .btn-secondary {
+    background: transparent; color: var(--white);
+    padding: 0.85rem 2rem; border-radius: 4px;
+    font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.3);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; flex-wrap: wrap;
+  }
+
+  .stat { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem; font-weight: 900;
+    color: var(--accent); line-height: 1;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--gray); font-weight: 500; }
+
+  /* Hero visual panel */
+  .hero-visual {
+    position: absolute; right: 3rem; top: 50%; transform: translateY(-50%);
+    width: 420px; z-index: 2;
+    display: flex; flex-direction: column; gap: 0.8rem;
+  }
+
+  .card-mock {
+    background: rgba(26,35,126,0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    position: relative;
+    animation: floatCard 4s ease-in-out infinite;
+  }
+
+  .card-mock:nth-child(2) { animation-delay: 0.8s; margin-left: 1.5rem; }
+  .card-mock:nth-child(3) { animation-delay: 1.6s; }
+
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .card-mock-dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); margin-right: 0.5rem;
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  .card-mock-title { font-size: 0.75rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+  .card-mock-content { font-size: 0.88rem; color: var(--off-white); margin-top: 0.5rem; line-height: 1.5; }
+  .card-mock-tag {
+    display: inline-block; margin-top: 0.6rem;
+    background: rgba(0,229,255,0.12); color: var(--accent);
+    font-size: 0.72rem; font-weight: 600; padding: 2px 10px; border-radius: 20px;
+  }
+
+  .accent-line {
+    position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--accent), transparent);
+    border-radius: 12px 0 0 12px;
+  }
+
+  /* TICKER */
+  .ticker {
+    background: rgba(0,229,255,0.08); border-top: 1px solid rgba(0,229,255,0.15);
+    border-bottom: 1px solid rgba(0,229,255,0.15);
+    padding: 0.7rem 0; overflow: hidden;
+  }
+
+  .ticker-track {
+    display: flex; gap: 3rem; white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+
+  .ticker-item {
+    font-size: 0.78rem; font-weight: 600; color: var(--accent);
+    letter-spacing: 2px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+
+  .ticker-item::after { content: '◆'; font-size: 0.5rem; color: rgba(0,229,255,0.4); }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 3rem; }
+
+  .section-eyebrow {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 4px;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800; line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .section-desc {
+    font-size: 1rem; color: var(--gray); max-width: 600px;
+    line-height: 1.8; margin-bottom: 3rem;
+  }
+
+  /* FEATURES GRID */
+  .features-section { background: rgba(26,35,126,0.15); }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem; margin-top: 1rem;
+  }
+
+  .feature-card {
+    background: rgba(26,35,126,0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 1.8rem;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+
+  .feature-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); }
+
+  .feature-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent-color, var(--accent));
+    transform: scaleX(0); transition: transform 0.3s;
+    transform-origin: left;
+  }
+
+  .feature-card:hover::before { transform: scaleX(1); }
+
+  .feature-icon {
+    font-size: 1.8rem; margin-bottom: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    width: 50px; height: 50px; border-radius: 10px;
+    background: var(--accent-color-bg, rgba(0,229,255,0.1));
+    color: var(--accent-color, var(--accent));
+  }
+
+  .feature-title { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .feature-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+  .feature-wfd { font-size: 0.72rem; color: var(--accent); margin-top: 0.8rem; font-weight: 600; }
+
+  /* USERS */
+  .users-section { background: var(--dark); }
+
+  .users-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .user-card {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform 0.3s;
+  }
+
+  .user-card:hover { transform: translateY(-6px); }
+
+  .user-card-header {
+    padding: 2rem; display: flex; align-items: center; gap: 1rem;
+  }
+
+  .user-avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 900;
+    font-family: 'Montserrat', sans-serif;
+    flex-shrink: 0;
+  }
+
+  .user-card-body { padding: 0 2rem 2rem; }
+
+  .user-feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .user-feature-list li {
+    font-size: 0.85rem; color: var(--off-white);
+    display: flex; align-items: flex-start; gap: 0.5rem;
+  }
+
+  .user-feature-list li::before {
+    content: '→'; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: 0;
+  }
+
+  /* ETHICS */
+  .ethics-section {
+    background: linear-gradient(135deg, rgba(106,27,154,0.15) 0%, rgba(13,71,161,0.1) 100%);
+    border-top: 1px solid rgba(0,229,255,0.1);
+    border-bottom: 1px solid rgba(0,229,255,0.1);
+  }
+
+  .ethics-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem; margin-top: 2rem;
+  }
+
+  .ethics-card {
+    background: rgba(13,27,62,0.8); border-radius: 10px;
+    padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;
+    border-left: 3px solid var(--accent);
+    transition: background 0.2s;
+  }
+
+  .ethics-card:hover { background: rgba(26,35,126,0.5); }
+
+  .ethics-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem; font-weight: 900; color: var(--accent);
+    line-height: 1; flex-shrink: 0; width: 48px;
+  }
+
+  .ethics-label { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .ethics-desc { font-size: 0.8rem; color: var(--gray); line-height: 1.6; }
+
+  /* PLANS */
+  .plans-section { background: var(--dark); }
+
+  .plans-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .plan-card {
+    background: rgba(26,35,126,0.3); border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem; transition: transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+
+  .plan-card.featured {
+    background: rgba(106,27,154,0.3);
+    border-color: var(--purple);
+    transform: scale(1.03);
+  }
+
+  .plan-card:hover { transform: translateY(-5px); }
+  .plan-card.featured:hover { transform: scale(1.03) translateY(-5px); }
+
+  .plan-badge {
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    background: var(--gold); color: var(--dark);
+    font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  .plan-name { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .plan-target { font-size: 0.82rem; color: var(--gray); margin-bottom: 1.5rem; }
+
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+
+  .plan-features li {
+    font-size: 0.88rem; display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .plan-features li::before { content: '✓'; color: var(--accent); font-weight: 700; }
+
+  .plan-cta {
+    display: block; text-align: center; padding: 0.75rem;
+    border-radius: 6px; font-weight: 700; font-size: 0.9rem;
+    text-decoration: none; transition: opacity 0.2s;
+    background: var(--plan-color, var(--accent));
+    color: var(--dark);
+  }
+
+  .plan-cta:hover { opacity: 0.85; }
+
+  /* INTERACTIVE DEMO */
+  .demo-section {
+    background: rgba(26,35,126,0.15);
+  }
+
+  .demo-wrapper {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .demo-interface {
+    background: rgba(13,27,62,0.9); border-radius: 14px;
+    border: 1px solid rgba(0,229,255,0.2);
+    overflow: hidden;
+  }
+
+  .demo-topbar {
+    background: rgba(26,35,126,0.8); padding: 0.9rem 1.2rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    border-bottom: 1px solid rgba(0,229,255,0.1);
+  }
+
+  .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .demo-body { padding: 1.5rem; min-height: 340px; display: flex; flex-direction: column; }
+
+  .demo-chat { flex: 1; display: flex; flex-direction: column; gap: 0.8rem; overflow-y: auto; max-height: 260px; }
+
+  .msg {
+    padding: 0.7rem 1rem; border-radius: 8px;
+    font-size: 0.85rem; line-height: 1.6; max-width: 85%;
+  }
+
+  .msg-user {
+    background: rgba(106,27,154,0.4); border: 1px solid rgba(106,27,154,0.4);
+    align-self: flex-end; color: var(--off-white);
+  }
+
+  .msg-ai {
+    background: rgba(26,35,126,0.6); border: 1px solid rgba(0,229,255,0.15);
+    align-self: flex-start; color: var(--white);
+  }
+
+  .msg-ai .ai-label {
+    display: block; font-size: 0.68rem; color: var(--accent);
+    font-weight: 700; letter-spacing: 1px; margin-bottom: 0.4rem;
+    text-transform: uppercase;
+  }
+
+  .demo-input-row {
+    display: flex; gap: 0.5rem; margin-top: 1rem;
+  }
+
+  .demo-input {
+    flex: 1; background: rgba(26,35,126,0.4); border: 1px solid rgba(0,229,255,0.2);
+    color: var(--white); padding: 0.6rem 1rem; border-radius: 6px;
+    font-family: 'Poppins', sans-serif; font-size: 0.85rem; outline: none;
+  }
+
+  .demo-input::placeholder { color: var(--gray); }
+  .demo-input:focus { border-color: var(--accent); }
+
+  .demo-send {
+    background: var(--accent); color: var(--dark); border: none;
+    padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer;
+    font-weight: 700; font-size: 0.85rem;
+    transition: opacity 0.2s;
+  }
+
+  .demo-send:hover { opacity: 0.85; }
+
+  .demo-info {
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+
+  .demo-info-item {
+    background: rgba(26,35,126,0.4); border-radius: 10px;
+    padding: 1.2rem; border-left: 3px solid var(--accent);
+  }
+
+  .demo-info-title { font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-bottom: 0.3rem; }
+  .demo-info-text { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+  .typing-indicator {
+    display: none; align-items: center; gap: 0.3rem;
+    padding: 0.7rem 1rem;
+  }
+
+  .typing-indicator.visible { display: flex; }
+
+  .typing-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); opacity: 0.7;
+    animation: typing 1.2s infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typing {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-4px); opacity: 1; }
+  }
+
+  /* WFD SECTION */
+  .wfd-section { background: var(--dark); }
+
+  .wfd-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .wfd-pillar {
+    background: rgba(26,35,126,0.4); border-radius: 10px;
+    padding: 1.5rem 1rem; text-align: center;
+    border-top: 3px solid var(--pillar-color);
+    transition: transform 0.2s;
+  }
+
+  .wfd-pillar:hover { transform: translateY(-4px); }
+
+  .wfd-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.4rem; font-weight: 900;
+    color: var(--pillar-color);
+    display: block; margin-bottom: 0.3rem;
+  }
+
+  .wfd-label { font-size: 0.78rem; font-weight: 600; color: var(--off-white); line-height: 1.4; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, var(--mid) 0%, rgba(106,27,154,0.6) 100%);
+    text-align: center; padding: 6rem 3rem;
+    position: relative; overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(0,229,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900; margin-bottom: 1rem; position: relative;
+  }
+
+  .cta-sub { font-size: 1.1rem; color: var(--off-white); margin-bottom: 2.5rem; position: relative; }
+
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+
+  /* FOOTER */
+  footer {
+    background: rgba(13,27,62,0.95);
+    border-top: 1px solid rgba(0,229,255,0.1);
+    padding: 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-brand {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem; font-weight: 900;
+    background: linear-gradient(90deg, #00E5FF, #FFFFFF);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .footer-text { font-size: 0.8rem; color: var(--gray); }
+
+  /* NOTIFICATION */
+  .notification {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    background: var(--mid); border: 1px solid var(--accent);
+    border-radius: 10px; padding: 1rem 1.5rem;
+    font-size: 0.85rem; color: var(--white);
+    transform: translateX(120%); transition: transform 0.4s ease;
+    max-width: 300px;
+  }
+
+  .notification.show { transform: translateX(0); }
+  .notification strong { color: var(--accent); display: block; margin-bottom: 0.2rem; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .hero-visual { display: none; }
+    .users-grid, .plans-grid, .wfd-grid { grid-template-columns: repeat(2, 1fr); }
+    .demo-wrapper { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 700px) {
+    nav { padding: 0.9rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 3rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .users-grid, .plans-grid { grid-template-columns: 1fr; }
+    .wfd-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-brand">
+    <div>
+      <div class="nav-logo-text">LexIA</div>
+      <div class="nav-badge">by FlowState AI</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#modulos">Módulos</a></li>
+    <li><a href="#usuarios">Usuarios</a></li>
+    <li><a href="#etica">Ética</a></li>
+    <li><a href="#planes">Planes</a></li>
+    <li><a href="#demo">Demo</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Solicitar Demo</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Plataforma SaaS para el Poder Legislativo</div>
+    <h1><span class="lex">Lex</span><span class="ia-text">IA</span></h1>
+    <p class="hero-sub">
+      La plataforma de <strong>inteligencia artificial</strong> diseñada exclusivamente para legisladores, asesores y personal parlamentario.<br>
+      Construida sobre las <strong>40 Directrices WFD 2024</strong>.
+    </p>
+    <div class="hero-actions">
+      <a href="#demo" class="btn-primary">Ver Demo en Vivo</a>
+      <a href="#modulos" class="btn-secondary">Explorar Módulos →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">40</span>
+        <span class="stat-label">Directrices WFD</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">8</span>
+        <span class="stat-label">Módulos Core</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">IA Explicable</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">0</span>
+        <span class="stat-label">Decisiones sin Humano</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero visual cards -->
+  <div class="hero-visual">
+    <div class="card-mock">
+      <div class="accent-line"></div>
+      <div class="card-mock-dot"></div><span class="card-mock-title">Asistente Legislativo</span>
+      <div class="card-mock-content">Analizo el Proyecto de Ley N°1234/26 y detecto 3 potenciales conflictos con la Ley 27.741...</div>
+      <span class="card-mock-tag">IA Explicable · Fuentes Citadas</span>
+    </div>
+    <div class="card-mock">
+      <div class="accent-line"></div>
+      <div class="card-mock-dot"></div><span class="card-mock-title">Búsqueda Jurídica</span>
+      <div class="card-mock-content">Encontré 12 precedentes relevantes en derecho comparado para "habeas data legislativo".</div>
+      <span class="card-mock-tag">Búsqueda Semántica</span>
+    </div>
+    <div class="card-mock">
+      <div class="accent-line"></div>
+      <div class="card-mock-dot"></div><span class="card-mock-title">Auditoría Activa</span>
+      <div class="card-mock-content">Todas las operaciones de IA del día: 47 consultas · 0 incidentes · 100% trazabilidad.</div>
+      <span class="card-mock-tag">Gobernanza WFD Dir. 4.3</span>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Transparencia Algorítmica</span>
+    <span class="ticker-item">Control Humano Final</span>
+    <span class="ticker-item">40 Directrices WFD 2024</span>
+    <span class="ticker-item">Soberanía de Datos</span>
+    <span class="ticker-item">IA al Servicio de la Democracia</span>
+    <span class="ticker-item">Ley de IA UE Compliant</span>
+    <span class="ticker-item">No Discriminación</span>
+    <span class="ticker-item">Auditoría Permanente</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">Transparencia Algorítmica</span>
+    <span class="ticker-item">Control Humano Final</span>
+    <span class="ticker-item">40 Directrices WFD 2024</span>
+    <span class="ticker-item">Soberanía de Datos</span>
+    <span class="ticker-item">IA al Servicio de la Democracia</span>
+    <span class="ticker-item">Ley de IA UE Compliant</span>
+    <span class="ticker-item">No Discriminación</span>
+    <span class="ticker-item">Auditoría Permanente</span>
+  </div>
+</div>
+
+<!-- MODULES SECTION -->
+<section class="features-section" id="modulos">
+  <div class="section-eyebrow">Módulos de la Plataforma</div>
+  <h2 class="section-title">8 Módulos Core Interoperables</h2>
+  <p class="section-desc">Cada módulo está diseñado para ser utilizado de forma independiente o integrada, adaptándose al rol y necesidades de cada usuario del ecosistema parlamentario.</p>
+
+  <div class="features-grid">
+    <div class="feature-card" style="--accent-color: #00E5FF; --accent-color-bg: rgba(0,229,255,0.1)">
+      <div class="feature-icon">⚖️</div>
+      <div class="feature-title">Asistente Legislativo con IA</div>
+      <div class="feature-desc">Análisis de proyectos de ley, detección de conflictos normativos, armonización con legislación vigente. El asistente cita sus fuentes en cada respuesta.</div>
+      <div class="feature-wfd">WFD: Dir. 2.1 · 1.1 · 5.2</div>
+    </div>
+
+    <div class="feature-card" style="--accent-color: #9C27B0; --accent-color-bg: rgba(156,39,176,0.1)">
+      <div class="feature-icon">🔍</div>
+      <div class="feature-title">Búsqueda Jurídica Semántica</div>
+      <div class="feature-desc">Recuperación de legislación, jurisprudencia y doctrina mediante lenguaje natural. Comparativa entre jurisdicciones nacionales e internacionales.</div>
+      <div class="feature-wfd">WFD: Dir. 5.1 · 6.8</div>
+    </div>
+
+    <div class="feature-card" style="--accent-color: #0097A7; --accent-color-bg: rgba(0,151,167,0.1)">
+      <div class="feature-icon">✍️</div>
+      <div class="feature-title">Redacción y Generación Asistida</div>
+      <div class="feature-desc">Co-redacción de proyectos, discursos e informes técnicos. Historial versionado con autor humano siempre identificado. La IA sugiere; el humano decide.</div>
+      <div class="feature-wfd">WFD: Dir. 2.1 · 2.2</div>
+    </div>
+
+    <div class="feature-card" style="--accent-color: #C62828; --accent-color-bg: rgba(198,40,40,0.1)">
+      <div class="feature-icon">📁</div>
+      <div class="feature-title">Gestión Documental Inteligente</div>
+      <div class="feature-desc">Clasificación automática, OCR avanzado, transcripción de sesiones e identificación de oradores. Workflow de aprobación y firma digital.</div>
+      <div class="feature-wfd">WFD: Dir. 5.1 · 4.2</div>
+    </div>
+
+    <div class="feature-card" style="--accent-color: #FFD54F; --accent-color-bg: rgba(255,213,79,0.1)">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Panel de Monitoreo y Control</div>
+      <div class="feature-desc">Seguimiento de respuestas del Ejecutivo, análisis de medios y redes sociales, detección de desinformación. Alertas de vencimiento de plazos parlamentarios.</div>
+      <div class="feature-wfd">WFD: Dir. 1.7 · 4.4</div>
+    </div>
+
+    <div class="feature-card" style="--accent-color: #00E5FF; --accent-color-bg: rgba(0,229,255,0.1)">
+      <div class="feature-icon">🛡️</div>
+      <div class="feature-title">Ética, Auditoría y Gobernanza</div>
+      <div class="feature-desc">Log inmutable de todas las operaciones de IA. Evaluación continua de sesgos. Órgano de supervisión ética integrado. Cumplimiento Ley de IA UE 2024.</div>
+      <div class="feature-wfd">WFD: Dir. 4.3 · 5.5 · 5.6</div>
+    </div>
+
+    <div class="feature-card" style="--accent-color: #0D47A1; --accent-color-bg: rgba(13,71,161,0.1)">
+      <div class="feature-icon">🔐</div>
+      <div class="feature-title">Seguridad, Privacidad y Datos</div>
+      <div class="feature-desc">Cifrado AES-256, control de acceso RBAC granular, opción de despliegue en nube soberana o infraestructura propia. PIA/DPIA periódicas.</div>
+      <div class="feature-wfd">WFD: Dir. 3.1 · 3.2 · 4.5</div>
+    </div>
+
+    <div class="feature-card" style="--accent-color: #9C27B0; --accent-color-bg: rgba(156,39,176,0.1)">
+      <div class="feature-icon">🎓</div>
+      <div class="feature-title">Academia LexIA</div>
+      <div class="feature-desc">Formación continua en IA para todo el personal legislativo. Certificaciones, simuladores y biblioteca de mejores prácticas internacionales en IA parlamentaria.</div>
+      <div class="feature-wfd">WFD: Dir. 6.1–6.12</div>
+    </div>
+  </div>
+</section>
+
+<!-- USERS SECTION -->
+<section class="users-section" id="usuarios">
+  <div class="section-eyebrow">Perfiles de Usuario</div>
+  <h2 class="section-title">Diseñado para cada rol parlamentario</h2>
+  <p class="section-desc">LexIA se adapta a las necesidades específicas de cada perfil del Poder Legislativo, ofreciendo interfaces y funcionalidades personalizadas.</p>
+
+  <div class="users-grid">
+    <div class="user-card" style="border-color: rgba(106,27,154,0.4)">
+      <div class="user-card-header" style="background: linear-gradient(135deg, rgba(106,27,154,0.5), rgba(13,27,62,0.8))">
+        <div class="user-avatar" style="background: rgba(106,27,154,0.6); color: #fff;">⚖️</div>
+        <div>
+          <div style="font-family: Montserrat; font-weight: 800; font-size: 1.05rem;">Legisladores</div>
+          <div style="font-size: 0.8rem; color: var(--gray);">Senadores · Diputados · Representantes</div>
+        </div>
+      </div>
+      <div class="user-card-body">
+        <ul class="user-feature-list">
+          <li>Análisis de proyectos de ley con conflictos normativos identificados</li>
+          <li>Preparación inteligente de discursos e interpelaciones</li>
+          <li>Resúmenes ejecutivos previos a cada votación</li>
+          <li>Monitor de seguimiento al Ejecutivo</li>
+          <li>Alertas sobre vencimientos parlamentarios</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="user-card" style="border-color: rgba(13,71,161,0.4)">
+      <div class="user-card-header" style="background: linear-gradient(135deg, rgba(13,71,161,0.5), rgba(13,27,62,0.8))">
+        <div class="user-avatar" style="background: rgba(13,71,161,0.6); color: #fff;">🔍</div>
+        <div>
+          <div style="font-family: Montserrat; font-weight: 800; font-size: 1.05rem;">Asesores Parlamentarios</div>
+          <div style="font-size: 0.8rem; color: var(--gray);">Investigadores jurídicos · Analistas</div>
+        </div>
+      </div>
+      <div class="user-card-body">
+        <ul class="user-feature-list">
+          <li>Búsqueda semántica en corpus legislativo nacional e internacional</li>
+          <li>Generación automática de informes técnicos con fuentes</li>
+          <li>Análisis comparado de normativa entre jurisdicciones</li>
+          <li>Detección de sesgos en propuestas legislativas</li>
+          <li>Gestión integrada de expedientes parlamentarios</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="user-card" style="border-color: rgba(0,151,167,0.4)">
+      <div class="user-card-header" style="background: linear-gradient(135deg, rgba(0,151,167,0.5), rgba(13,27,62,0.8))">
+        <div class="user-avatar" style="background: rgba(0,151,167,0.6); color: #fff;">🏛️</div>
+        <div>
+          <div style="font-family: Montserrat; font-weight: 800; font-size: 1.05rem;">Personal Administrativo</div>
+          <div style="font-size: 0.8rem; color: var(--gray);">Administrativos · Técnicos · Comunicación</div>
+        </div>
+      </div>
+      <div class="user-card-body">
+        <ul class="user-feature-list">
+          <li>Transcripción automática de sesiones con identificación de oradores</li>
+          <li>Clasificación y archivo inteligente de documentos</li>
+          <li>Generación de comunicados y notas de prensa</li>
+          <li>Acceso a Academia LexIA para formación continua</li>
+          <li>Panel de auditoría y reportes para dirección</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WFD SECTION -->
+<section class="wfd-section" id="wfd">
+  <div class="section-eyebrow">Fundamento Normativo</div>
+  <h2 class="section-title">Las 40 Directrices WFD 2024</h2>
+  <p class="section-desc">LexIA ha sido diseñado siguiendo cada uno de los seis ejes temáticos de las Directrices de la Westminster Foundation for Democracy para el uso de la IA en los Parlamentos.</p>
+
+  <div class="wfd-grid">
+    <div class="wfd-pillar" style="--pillar-color: #9C27B0">
+      <span class="wfd-num">10</span>
+      <span class="wfd-label">Principios Éticos</span>
+    </div>
+    <div class="wfd-pillar" style="--pillar-color: #0D47A1">
+      <span class="wfd-num">3</span>
+      <span class="wfd-label">IA General & Autonomía Humana</span>
+    </div>
+    <div class="wfd-pillar" style="--pillar-color: #C62828">
+      <span class="wfd-num">3</span>
+      <span class="wfd-label">Privacidad & Seguridad</span>
+    </div>
+    <div class="wfd-pillar" style="--pillar-color: #0097A7">
+      <span class="wfd-num">6</span>
+      <span class="wfd-label">Gobernanza & Supervisión</span>
+    </div>
+    <div class="wfd-pillar" style="--pillar-color: #9C27B0">
+      <span class="wfd-num">6</span>
+      <span class="wfd-label">Diseño de Sistemas</span>
+    </div>
+    <div class="wfd-pillar" style="--pillar-color: #FFD54F">
+      <span class="wfd-num">12</span>
+      <span class="wfd-label">Desarrollo de Capacidades</span>
+    </div>
+  </div>
+</section>
+
+<!-- ETHICS SECTION -->
+<section class="ethics-section" id="etica">
+  <div class="section-eyebrow">Compromisos Éticos</div>
+  <h2 class="section-title">La IA al servicio de la Democracia</h2>
+  <p class="section-desc">LexIA no es solo software. Es un compromiso ético con los valores democráticos, la transparencia y el control humano final en todas las decisiones.</p>
+
+  <div class="ethics-grid">
+    <div class="ethics-card">
+      <div class="ethics-num">01</div>
+      <div>
+        <div class="ethics-label">Transparencia Algorítmica</div>
+        <div class="ethics-desc">Toda respuesta de IA incluye la cadena de razonamiento, fuentes citadas y nivel de confianza del modelo.</div>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-num">02</div>
+      <div>
+        <div class="ethics-label">Control Humano Final</div>
+        <div class="ethics-desc">Ninguna acción legislativa crítica se ejecuta sin validación humana explícita. La IA asiste, no decide.</div>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-num">03</div>
+      <div>
+        <div class="ethics-label">Soberanía de Datos</div>
+        <div class="ethics-desc">El parlamento retiene propiedad y control total. LexIA no usa datos parlamentarios para entrenar modelos externos.</div>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-num">04</div>
+      <div>
+        <div class="ethics-label">Auditoría Permanente</div>
+        <div class="ethics-desc">Log completo e inmutable de todas las operaciones de IA. Reportes para el órgano de supervisión parlamentaria.</div>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-num">05</div>
+      <div>
+        <div class="ethics-label">No Discriminación</div>
+        <div class="ethics-desc">Auditorías continuas de sesgo y equidad en todos los modelos. Equipos de desarrollo diversos y multiculturales.</div>
+      </div>
+    </div>
+    <div class="ethics-card">
+      <div class="ethics-num">06</div>
+      <div>
+        <div class="ethics-label">Estado de Derecho</div>
+        <div class="ethics-desc">LexIA respeta y refuerza los marcos jurídicos y constitucionales vigentes de cada jurisdicción cliente.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO SECTION -->
+<section class="demo-section" id="demo">
+  <div class="section-eyebrow">Demo Interactivo</div>
+  <h2 class="section-title">Prueba el Asistente Legislativo</h2>
+  <p class="section-desc">Interactúa con una versión simplificada del Asistente Legislativo de LexIA. En producción, el sistema tiene acceso al corpus legislativo completo de tu jurisdicción.</p>
+
+  <div class="demo-wrapper">
+    <div class="demo-interface">
+      <div class="demo-topbar">
+        <div class="demo-dot" style="background: #C62828;"></div>
+        <div class="demo-dot" style="background: #FFD54F;"></div>
+        <div class="demo-dot" style="background: #00E5FF;"></div>
+        <span style="margin-left: 0.8rem; font-size: 0.8rem; color: var(--gray);">LexIA — Asistente Legislativo (Demo)</span>
+        <span style="margin-left: auto; font-size: 0.7rem; color: var(--accent); font-weight: 600;">● LIVE</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-chat" id="demoChat">
+          <div class="msg msg-ai">
+            <span class="ai-label">LexIA</span>
+            ¡Bienvenido/a! Soy el Asistente Legislativo de LexIA. Puedo ayudarte a analizar proyectos de ley, buscar jurisprudencia, detectar conflictos normativos o preparar un informe técnico. ¿Cómo puedo asistirte hoy?
+          </div>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <span style="font-size: 0.75rem; color: var(--gray); margin-left: 0.5rem;">LexIA está analizando...</span>
+        </div>
+        <div class="demo-input-row">
+          <input type="text" class="demo-input" id="demoInput" placeholder="Ej: ¿Cuáles son los principios éticos para usar IA en un parlamento?" />
+          <button class="demo-send" onclick="sendMessage()">Enviar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-info">
+      <div class="demo-info-item">
+        <div class="demo-info-title">💡 Sugerencias de consulta</div>
+        <div class="demo-info-text">
+          • "¿Qué dice la WFD sobre transparencia algorítmica en parlamentos?"<br>
+          • "¿Cómo debería gobernar un parlamento el uso de la IA?"<br>
+          • "Explícame la directriz 2.1 sobre autonomía humana"<br>
+          • "¿Qué desafíos enfrenta la regulación de IA en legislaturas?"
+        </div>
+      </div>
+      <div class="demo-info-item">
+        <div class="demo-info-title">🛡️ Garantías de esta demo</div>
+        <div class="demo-info-text">
+          Todas las respuestas son generadas por IA con acceso a las Directrices WFD 2024. Cada respuesta incluye la base documental utilizada. Ningún dato personal es almacenado.
+        </div>
+      </div>
+      <div class="demo-info-item">
+        <div class="demo-info-title">📋 En producción, LexIA incluye:</div>
+        <div class="demo-info-text">
+          Corpus legislativo completo de tu jurisdicción · Jurisprudencia actualizada · Derecho comparado · Proyectos en trámite · Historial parlamentario · Log de auditoría por consulta.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS SECTION -->
+<section class="plans-section" id="planes">
+  <div class="section-eyebrow">Planes de Suscripción</div>
+  <h2 class="section-title">Modelo SaaS B2G adaptado a cada escala</h2>
+  <p class="section-desc">LexIA ofrece tres planes diseñados para cubrir desde legislaturas municipales hasta congresos nacionales y asambleas supranacionales.</p>
+
+  <div class="plans-grid">
+    <div class="plan-card">
+      <div class="plan-name" style="color: var(--cian-light)">Starter</div>
+      <div class="plan-target">Legislaturas Municipales y Provinciales pequeñas</div>
+      <ul class="plan-features">
+        <li>Hasta 50 usuarios</li>
+        <li>4 módulos core</li>
+        <li>Nube compartida segura</li>
+        <li>Soporte por email y base de conocimiento</li>
+        <li>Academia LexIA — acceso básico</li>
+      </ul>
+      <a href="#cta" class="plan-cta" style="--plan-color: #00BCD4;">Solicitar Información</a>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="plan-badge">Más Popular</div>
+      <div class="plan-name" style="color: #CE93D8">Profesional</div>
+      <div class="plan-target">Cámaras Provinciales y Municipios grandes</div>
+      <ul class="plan-features">
+        <li>Hasta 300 usuarios</li>
+        <li>8 módulos completos</li>
+        <li>Nube dedicada</li>
+        <li>Soporte prioritario 24/7</li>
+        <li>Academia LexIA — acceso completo</li>
+        <li>Integración con sistemas parlamentarios</li>
+      </ul>
+      <a href="#cta" class="plan-cta" style="--plan-color: #9C27B0;">Solicitar Demo</a>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-name" style="color: var(--gold)">Soberano</div>
+      <div class="plan-target">Congresos Nacionales y Asambleas Supranacionales</div>
+      <ul class="plan-features">
+        <li>Usuarios ilimitados</li>
+        <li>8 módulos + personalización total</li>
+        <li>On-premise o nube soberana nacional</li>
+        <li>Equipo dedicado + SLA garantizado</li>
+        <li>Contenido académico personalizado</li>
+        <li>Modelos fine-tuned en corpus propio</li>
+      </ul>
+      <a href="#cta" class="plan-cta" style="--plan-color: #FFD54F;">Contactar Equipo</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section" id="cta">
+  <div class="cta-title">El Parlamento del Futuro<br><span style="color: var(--accent)">empieza hoy.</span></div>
+  <p class="cta-sub">Únete a los parlamentos que ya están usando IA responsable para fortalecer la democracia.</p>
+  <div class="cta-actions">
+    <button class="btn-primary" onclick="showNotification()">Solicitar Demo Gratuito</button>
+    <a href="mailto:contacto@flowstateai.com" class="btn-secondary">Contactar Equipo →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">LexIA · FlowState AI</div>
+    <div class="footer-text" style="margin-top: 0.3rem">Plataforma SaaS para el Poder Legislativo</div>
+  </div>
+  <div class="footer-text" style="text-align: center">
+    Basado en las Directrices WFD 2024<br>
+    para el uso de la IA en Parlamentos
+  </div>
+  <div class="footer-text" style="text-align: right">
+    © 2026 FlowState AI<br>
+    Todos los derechos reservados
+  </div>
+</footer>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notification">
+  <strong>¡Solicitud recibida! ✓</strong>
+  Nuestro equipo se comunicará en menos de 24 horas para coordinar tu demo personalizado.
+</div>
+
+<script>
+// Demo chat functionality
+const responses = {
+  default: [
+    "Según las **Directrices WFD 2024**, los parlamentos deben garantizar la rendición de cuentas y la transparencia en el uso y despliegue de los sistemas de IA, siendo esto necesario para mantener la integridad de los procesos democráticos.\n\n📌 *Fuente: Directriz 1.1 — Responsabilidad y Transparencia, WFD 2024*",
+    "Las Directrices WFD identifican las siguientes aplicaciones prioritarias de IA para los parlamentos: subtitulado en directo de sesiones, análisis de proyectos legislativos, sistemas de votación confiables, y generación de contenidos para intervenciones parlamentarias.\n\n📌 *Fuente: Aplicaciones parlamentarias basadas en IA, WFD 2024, pág. 16*",
+    "Un principio fundamental es que la IA parlamentaria debe **complementar y no reemplazar** la autonomía humana. Esto implica que los sistemas de IA deben estar diseñados para apoyar el juicio de los legisladores, no para sustituirlo en decisiones críticas.\n\n📌 *Fuente: Directriz 2.1 — Promoción de la autonomía humana, WFD 2024*",
+    "Respecto a gobernanza, la WFD recomienda que los parlamentos **establezcan un órgano de supervisión ética** específico para la IA, implementen protocolos de gestión de datos, y cooperen con todas las partes interesadas en el diseño de sistemas de IA.\n\n📌 *Fuente: Directrices 4.1–4.6, WFD 2024*",
+  ],
+  transparencia: "La **transparencia algorítmica** en LexIA significa que cada respuesta del sistema incluye: (1) la cadena de razonamiento utilizada, (2) las fuentes consultadas, y (3) el nivel de confianza del modelo. Ninguna acción crítica se puede ejecutar sin validación humana explícita.\n\n📌 *Basado en: Directriz 1.1 WFD 2024 y principio de XAI*",
+  gobernanza: "Según la WFD (Directrices 4.1–4.6), los parlamentos deben: integrar la IA en una estrategia digital parlamentaria más amplia, establecer protocolos de gestión de datos, crear un órgano de supervisión ética, evaluar los efectos en la función parlamentaria, y asegurar el control sobre los datos.\n\n📌 *Fuente: Eje 4 — Gobernanza y Supervisión, WFD 2024*",
+  autonomia: "La Directriz 2.1 establece que los sistemas de IA parlamentarios deben **promover la autonomía humana**, actuando como herramientas de apoyo y no como sustitutos del criterio político o jurídico. El control humano es no negociable en decisiones legislativas.\n\n📌 *Fuente: Directriz 2.1 — Promoción de la autonomía humana, WFD 2024*",
+  desafios: "Los principales desafíos identificados por la WFD para la IA en parlamentos son: (1) ausencia de marcos regulatorios específicos, (2) vulnerabilidades de ciberseguridad, (3) conocimiento limitado de IA incluso entre profesionales, y (4) riesgo de influencias externas por falta de capacitación.\n\n📌 *Fuente: Desafíos y barreras para el uso de la IA en los parlamentos, WFD 2024*",
+};
+
+let responseIndex = 0;
+
+function getResponse(input) {
+  const lower = input.toLowerCase();
+  if (lower.includes('transparencia') || lower.includes('explicable')) return responses.transparencia;
+  if (lower.includes('gobernanza') || lower.includes('supervisión') || lower.includes('auditoria')) return responses.gobernanza;
+  if (lower.includes('autonomia') || lower.includes('humano') || lower.includes('control')) return responses.autonomia;
+  if (lower.includes('desafio') || lower.includes('problema') || lower.includes('barrera') || lower.includes('riesgo')) return responses.desafios;
+  const r = responses.default[responseIndex % responses.default.length];
+  responseIndex++;
+  return r;
+}
+
+function addMessage(text, type) {
+  const chat = document.getElementById('demoChat');
+  const div = document.createElement('div');
+  div.className = `msg msg-${type}`;
+  if (type === 'ai') {
+    div.innerHTML = `<span class="ai-label">LexIA</span>${text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>')}`;
+  } else {
+    div.textContent = text;
+  }
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function sendMessage() {
+  const input = document.getElementById('demoInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMessage(text, 'user');
+  input.value = '';
+
+  const typing = document.getElementById('typingIndicator');
+  typing.classList.add('visible');
+
+  setTimeout(() => {
+    typing.classList.remove('visible');
+    addMessage(getResponse(text), 'ai');
+  }, 1400 + Math.random() * 800);
+}
+
+document.getElementById('demoInput').addEventListener('keypress', e => {
+  if (e.key === 'Enter') sendMessage();
+});
+
+// Notification
+function showNotification() {
+  const n = document.getElementById('notification');
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 4000);
+}
+
+// Smooth nav
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>

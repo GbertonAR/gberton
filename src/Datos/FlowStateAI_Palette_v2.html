@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowState AI — Sistema de Color Completo</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #07080F;
+  --surface: #0D0E1A;
+  --card:    #11131F;
+  --border:  rgba(255,255,255,0.06);
+  --text:    #E8EDF8;
+  --muted:   #5A6480;
+  --font: 'Plus Jakarta Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 3rem 1.5rem 5rem;
+}
+
+/* dot bg */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none; z-index: 0;
+}
+* { position: relative; z-index: 1; }
+
+/* ── HEADER ── */
+.page-header {
+  text-align: center;
+  max-width: 700px; margin: 0 auto 4rem;
+}
+.page-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #7DF9FF;
+  margin-bottom: 0.8rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+}
+.page-eyebrow::before, .page-eyebrow::after {
+  content: ''; width: 32px; height: 1px;
+  background: #7DF9FF; opacity: 0.4;
+}
+h1 {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1.1; margin-bottom: 0.6rem;
+}
+.page-sub {
+  font-size: 0.88rem; color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── VARIANT HEADER ── */
+.variant-header {
+  display: flex; align-items: center; gap: 1.2rem;
+  max-width: 1120px; margin: 0 auto 1.2rem;
+  padding: 0 0.2rem;
+}
+.variant-label {
+  font-family: var(--mono);
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  white-space: nowrap;
+}
+.variant-line {
+  flex: 1; height: 1px;
+  background: var(--border);
+}
+.variant-badge {
+  font-family: var(--mono);
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.2rem 0.7rem; border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── COLOR GRID ── */
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  max-width: 1120px; margin: 0 auto 3.5rem;
+}
+@media(max-width: 800px) { .palette-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 460px) { .palette-grid { grid-template-columns: 1fr; } }
+
+/* ── SWATCH CARD ── */
+.swatch-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition: transform 0.3s, border-color 0.3s;
+}
+.swatch-card:hover { transform: translateY(-4px); }
+
+.swatch-block {
+  height: 110px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  padding: 0.7rem;
+  position: relative;
+  overflow: hidden;
+}
+/* shine layer */
+.swatch-block::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* neon glow effect on the block */
+.neon-glow .swatch-block {
+  box-shadow: inset 0 0 30px rgba(255,255,255,0.05);
+}
+
+.swatch-hex {
+  font-family: var(--mono);
+  font-size: 0.72rem; font-weight: 600;
+  padding: 0.22rem 0.55rem; border-radius: 6px;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+  letter-spacing: 0.05em;
+  position: relative; z-index: 1;
+}
+.swatch-icon {
+  font-size: 1.1rem;
+  position: relative; z-index: 1;
+  filter: drop-shadow(0 0 6px rgba(0,0,0,0.5));
+}
+
+.swatch-info {
+  padding: 0.9rem 1rem 1rem;
+}
+.swatch-name {
+  font-size: 0.82rem; font-weight: 700;
+  margin-bottom: 0.2rem; line-height: 1.3;
+}
+.swatch-role {
+  font-size: 0.7rem; color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── NEON GLOW EFFECTS ── */
+/* applied per card via inline style on swatch-block */
+
+/* ── FULL GRADIENT BAR ── */
+.gradient-showcase {
+  max-width: 1120px; margin: 0 auto 1rem;
+  border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.grad-bar {
+  height: 56px;
+  position: relative;
+}
+.grad-label {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.grad-codes {
+  background: var(--card);
+  padding: 0.7rem 1.2rem;
+  font-family: var(--mono);
+  font-size: 0.65rem; letter-spacing: 0.04em;
+  color: var(--muted); text-align: center;
+  line-height: 1.7;
+}
+
+/* ── SECTION SPACER ── */
+.section-gap { margin-bottom: 4rem; }
+
+/* ── COMPARISON ROW ── */
+.comparison {
+  max-width: 1120px; margin: 4rem auto 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.comparison-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1rem;
+}
+.comparison-title {
+  font-size: 0.85rem; font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.comparison-sub {
+  font-size: 0.75rem; color: var(--muted);
+}
+.comp-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.comp-row:last-child { border-bottom: none; }
+.comp-cell {
+  padding: 1rem 1.2rem;
+  font-size: 0.82rem;
+  border-right: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.comp-cell:last-child { border-right: none; }
+.comp-dot {
+  width: 28px; height: 28px; border-radius: 8px;
+  flex-shrink: 0;
+}
+.comp-pair-name {
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--muted); letter-spacing: 0.04em;
+}
+@media(max-width:700px) {
+  .comp-row { grid-template-columns: 1fr; }
+  .comp-cell { border-right: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-eyebrow">Brand Color System</div>
+  <h1>FlowState AI<br>Sistema de Color Completo</h1>
+  <p class="page-sub">4 pares cromáticos × 3 variantes: Original · Neon · Fluo<br>24 valores totales para todos los contextos de marca</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     VARIANTE 1 — ORIGINAL
+═══════════════════════════════════════ -->
+<div class="variant-header">
+  <span class="variant-label" style="color:#E8EDF8;">Original</span>
+  <div class="variant-line"></div>
+  <span class="variant-badge" style="background:rgba(255,255,255,0.06);color:#6B7A99;border:1px solid rgba(255,255,255,0.1);">Base · Uso Principal</span>
+</div>
+
+<div class="palette-grid section-gap">
+
+  <div class="swatch-card" style="border-color:rgba(125,249,255,0.2);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#7DF9FF 0%,#0082FF 100%);">
+      <span class="swatch-hex" style="color:#001A2C;">#7DF9FF → #0082FF</span>
+      <span class="swatch-icon">⚡</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#7DF9FF;">Azul Eléctrico · Azul-Cian</div>
+      <div class="swatch-role">Acento principal · CTAs · Datos destacados · Links activos</div>
+    </div>
+  </div>
+
+  <div class="swatch-card" style="border-color:rgba(143,48,161,0.3);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#8F30A1 0%,#580C82 100%);">
+      <span class="swatch-hex" style="color:#F0D0FF;">#8F30A1 → #580C82</span>
+      <span class="swatch-icon">🔮</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#C97FDB;">Violeta · Púrpura-Magenta</div>
+      <div class="swatch-role">Innovación · Fondos premium · Gradientes secundarios</div>
+    </div>
+  </div>
+
+  <div class="swatch-card" style="border-color:rgba(70,179,165,0.25);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#46B3A5 0%,#B8FF2C 100%);">
+      <span class="swatch-hex" style="color:#001A15;">#46B3A5 → #B8FF2C</span>
+      <span class="swatch-icon">🌿</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#46B3A5;">Verde Esmeralda · Verde Fresco</div>
+      <div class="swatch-role">Estados activos · Métricas positivas · Indicadores de ROI</div>
+    </div>
+  </div>
+
+  <div class="swatch-card" style="border-color:rgba(254,71,115,0.25);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#FE4773 0%,#F6D68D 100%);">
+      <span class="swatch-hex" style="color:#3A0010;">#FE4773 → #F6D68D</span>
+      <span class="swatch-icon">🔥</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#FE4773;">Naranja Enérgico · Rojo AI</div>
+      <div class="swatch-role">Alertas · Urgencia · Precios destacados · Badges</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     VARIANTE 2 — NEON
+═══════════════════════════════════════ -->
+<div class="variant-header">
+  <span class="variant-label" style="color:#00FFFF;text-shadow:0 0 12px #00FFFF;">Neon</span>
+  <div class="variant-line" style="background:rgba(0,255,255,0.15);"></div>
+  <span class="variant-badge" style="background:rgba(0,255,255,0.08);color:#00FFFF;border:1px solid rgba(0,255,255,0.25);">+Saturación · +Luminosidad · Glow</span>
+</div>
+
+<div class="palette-grid section-gap">
+
+  <!-- NEON CYAN/BLUE -->
+  <div class="swatch-card neon-glow" style="border-color:rgba(0,255,255,0.35);box-shadow:0 0 24px rgba(0,255,255,0.1);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#00FFFF 0%,#0066FF 100%);box-shadow:inset 0 0 40px rgba(0,255,255,0.2);">
+      <span class="swatch-hex" style="color:#001A2C;">#00FFFF → #0066FF</span>
+      <span class="swatch-icon" style="filter:drop-shadow(0 0 8px #00FFFF);">⚡</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#00FFFF;text-shadow:0 0 16px rgba(0,255,255,0.6);">Cyan Neon · Electric Blue</div>
+      <div class="swatch-role">Interfaces oscuras · Efectos de brillo · UI de alta energía · Pantallas LED</div>
+    </div>
+  </div>
+
+  <!-- NEON VIOLET/PURPLE -->
+  <div class="swatch-card neon-glow" style="border-color:rgba(220,50,255,0.35);box-shadow:0 0 24px rgba(180,0,255,0.1);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#DC32FF 0%,#7700FF 100%);box-shadow:inset 0 0 40px rgba(200,0,255,0.2);">
+      <span class="swatch-hex" style="color:#FFE0FF;">#DC32FF → #7700FF</span>
+      <span class="swatch-icon" style="filter:drop-shadow(0 0 8px #DC32FF);">🔮</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#DC32FF;text-shadow:0 0 16px rgba(220,50,255,0.6);">Violeta Neon · Ultra Purple</div>
+      <div class="swatch-role">Efectos especiales · Hover states · Partículas · Animaciones destacadas</div>
+    </div>
+  </div>
+
+  <!-- NEON GREEN/LIME -->
+  <div class="swatch-card neon-glow" style="border-color:rgba(0,255,150,0.35);box-shadow:0 0 24px rgba(0,255,100,0.1);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#00FFB3 0%,#CCFF00 100%);box-shadow:inset 0 0 40px rgba(0,255,150,0.2);">
+      <span class="swatch-hex" style="color:#001A0D;">#00FFB3 → #CCFF00</span>
+      <span class="swatch-icon" style="filter:drop-shadow(0 0 8px #00FFB3);">🌿</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#00FFB3;text-shadow:0 0 16px rgba(0,255,180,0.6);">Verde Neon · Lime Eléctrico</div>
+      <div class="swatch-role">Indicadores live · Pulsos de actividad · Métricas en tiempo real · Éxito</div>
+    </div>
+  </div>
+
+  <!-- NEON CORAL/GOLD -->
+  <div class="swatch-card neon-glow" style="border-color:rgba(255,50,100,0.35);box-shadow:0 0 24px rgba(255,50,80,0.1);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#FF2255 0%,#FFE040 100%);box-shadow:inset 0 0 40px rgba(255,50,80,0.2);">
+      <span class="swatch-hex" style="color:#3A0010;">#FF2255 → #FFE040</span>
+      <span class="swatch-icon" style="filter:drop-shadow(0 0 8px #FF2255);">🔥</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#FF2255;text-shadow:0 0 16px rgba(255,50,100,0.6);">Rojo Neon · Amarillo Eléctrico</div>
+      <div class="swatch-role">Alertas críticas · Notificaciones urgentes · CTA máxima atención</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     VARIANTE 3 — FLUO
+═══════════════════════════════════════ -->
+<div class="variant-header">
+  <span class="variant-label" style="color:#EEFF00;text-shadow:0 0 12px rgba(238,255,0,0.7);">Fluo</span>
+  <div class="variant-line" style="background:rgba(238,255,0,0.12);"></div>
+  <span class="variant-badge" style="background:rgba(238,255,0,0.08);color:#EEFF00;border:1px solid rgba(238,255,0,0.3);">Fluorescente · Alto Contraste · Impacto Visual Máximo</span>
+</div>
+
+<div class="palette-grid section-gap">
+
+  <!-- FLUO CYAN/BLUE -->
+  <div class="swatch-card" style="border-color:rgba(100,255,220,0.4);box-shadow:0 0 32px rgba(80,255,200,0.12);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#40FFE8 0%,#40AAFF 100%);">
+      <span class="swatch-hex" style="color:#001A14;">#40FFE8 → #40AAFF</span>
+      <span class="swatch-icon" style="filter:drop-shadow(0 0 10px #40FFE8) brightness(1.3);">⚡</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#40FFE8;text-shadow:0 0 20px rgba(64,255,232,0.8),0 0 40px rgba(64,255,232,0.4);">Cyan Fluo · Aqua Fluo</div>
+      <div class="swatch-role">Marcadores fluorescentes · Resaltado de información clave · Modo alto contraste</div>
+    </div>
+  </div>
+
+  <!-- FLUO VIOLET/PURPLE -->
+  <div class="swatch-card" style="border-color:rgba(240,100,255,0.4);box-shadow:0 0 32px rgba(220,80,255,0.12);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#F040FF 0%,#A040FF 100%);">
+      <span class="swatch-hex" style="color:#FFE8FF;">#F040FF → #A040FF</span>
+      <span class="swatch-icon" style="filter:drop-shadow(0 0 10px #F040FF) brightness(1.3);">🔮</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#F040FF;text-shadow:0 0 20px rgba(240,64,255,0.8),0 0 40px rgba(200,40,255,0.4);">Magenta Fluo · Violeta Fluo</div>
+      <div class="swatch-role">Categorización visual · Etiquetas de alta visibilidad · Stickers digitales</div>
+    </div>
+  </div>
+
+  <!-- FLUO GREEN/LIME -->
+  <div class="swatch-card" style="border-color:rgba(180,255,50,0.4);box-shadow:0 0 32px rgba(160,255,30,0.12);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#88FF00 0%,#EEFF00 100%);">
+      <span class="swatch-hex" style="color:#0A1500;">#88FF00 → #EEFF00</span>
+      <span class="swatch-icon" style="filter:drop-shadow(0 0 10px #AAFF00) brightness(1.2);">🌿</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#AAFF00;text-shadow:0 0 20px rgba(180,255,0,0.8),0 0 40px rgba(180,255,0,0.4);">Verde Fluo · Amarillo Fluo</div>
+      <div class="swatch-role">El más visible del espectro · Señalización digital · Highlights de datos críticos</div>
+    </div>
+  </div>
+
+  <!-- FLUO CORAL/GOLD -->
+  <div class="swatch-card" style="border-color:rgba(255,100,80,0.4);box-shadow:0 0 32px rgba(255,80,60,0.12);">
+    <div class="swatch-block" style="background:linear-gradient(135deg,#FF6040 0%,#FFD600 100%);">
+      <span class="swatch-hex" style="color:#2A0800;">#FF6040 → #FFD600</span>
+      <span class="swatch-icon" style="filter:drop-shadow(0 0 10px #FF6040) brightness(1.3);">🔥</span>
+    </div>
+    <div class="swatch-info">
+      <div class="swatch-name" style="color:#FF6040;text-shadow:0 0 20px rgba(255,96,64,0.8),0 0 40px rgba(255,96,64,0.4);">Naranja Fluo · Amarillo Solar</div>
+      <div class="swatch-role">Máxima urgencia · Banners de advertencia · Call-to-action imposible de ignorar</div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     FULL GRADIENT BARS
+═══════════════════════════════════════ -->
+
+<div style="max-width:1120px;margin:0 auto 0.6rem;">
+  <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;">ORIGINAL</div>
+  <div class="gradient-showcase">
+    <div class="grad-bar" style="background:linear-gradient(90deg,#7DF9FF,#0082FF,#8F30A1,#580C82,#46B3A5,#B8FF2C,#FE4773,#F6D68D);">
+      <div class="grad-label">Original · 8 valores base</div>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1120px;margin:0 auto 0.6rem;margin-top:0.8rem;">
+  <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#00FFFF;opacity:0.6;margin-bottom:0.6rem;">NEON</div>
+  <div class="gradient-showcase" style="border-color:rgba(0,255,255,0.15);box-shadow:0 0 20px rgba(0,255,200,0.06);">
+    <div class="grad-bar" style="background:linear-gradient(90deg,#00FFFF,#0066FF,#DC32FF,#7700FF,#00FFB3,#CCFF00,#FF2255,#FFE040);">
+      <div class="grad-label" style="color:rgba(0,0,0,0.45);">Neon · Saturación máxima + Glow</div>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1120px;margin:0 auto 0.6rem;margin-top:0.8rem;">
+  <div style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#AAFF00;opacity:0.6;margin-bottom:0.6rem;">FLUO</div>
+  <div class="gradient-showcase" style="border-color:rgba(180,255,0,0.15);box-shadow:0 0 20px rgba(160,255,0,0.06);">
+    <div class="grad-bar" style="background:linear-gradient(90deg,#40FFE8,#40AAFF,#F040FF,#A040FF,#88FF00,#EEFF00,#FF6040,#FFD600);">
+      <div class="grad-label" style="color:rgba(0,0,0,0.4);">Fluo · Alto contraste · Impacto máximo</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     COMPARISON TABLE
+═══════════════════════════════════════ -->
+<div class="comparison" style="margin-top:3.5rem;">
+  <div class="comparison-header">
+    <div>
+      <div class="comparison-title">Comparativa de Variantes por Par Cromático</div>
+      <div class="comparison-sub" style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem;">Original → Neon → Fluo · Evolución de luminosidad y saturación</div>
+    </div>
+  </div>
+
+  <!-- header row -->
+  <div class="comp-row" style="background:rgba(255,255,255,0.02);">
+    <div class="comp-cell" style="color:var(--muted);font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;">Par</div>
+    <div class="comp-cell" style="color:var(--muted);font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;">Original</div>
+    <div class="comp-cell" style="color:#00FFFF;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;">Neon</div>
+    <div class="comp-cell" style="color:#AAFF00;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;">Fluo</div>
+  </div>
+
+  <!-- PAR 1 -->
+  <div class="comp-row">
+    <div class="comp-cell"><span class="comp-pair-name">⚡ Azul</span></div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#7DF9FF,#0082FF);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);line-height:1.5;">#7DF9FF<br>#0082FF</div>
+    </div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#00FFFF,#0066FF);box-shadow:0 0 10px rgba(0,255,255,0.5);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:#00FFFF;line-height:1.5;">#00FFFF<br>#0066FF</div>
+    </div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#40FFE8,#40AAFF);box-shadow:0 0 14px rgba(64,255,232,0.6);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:#40FFE8;line-height:1.5;">#40FFE8<br>#40AAFF</div>
+    </div>
+  </div>
+
+  <!-- PAR 2 -->
+  <div class="comp-row">
+    <div class="comp-cell"><span class="comp-pair-name">🔮 Violeta</span></div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#8F30A1,#580C82);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);line-height:1.5;">#8F30A1<br>#580C82</div>
+    </div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#DC32FF,#7700FF);box-shadow:0 0 10px rgba(220,50,255,0.5);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:#DC32FF;line-height:1.5;">#DC32FF<br>#7700FF</div>
+    </div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#F040FF,#A040FF);box-shadow:0 0 14px rgba(240,64,255,0.6);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:#F040FF;line-height:1.5;">#F040FF<br>#A040FF</div>
+    </div>
+  </div>
+
+  <!-- PAR 3 -->
+  <div class="comp-row">
+    <div class="comp-cell"><span class="comp-pair-name">🌿 Verde</span></div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#46B3A5,#B8FF2C);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);line-height:1.5;">#46B3A5<br>#B8FF2C</div>
+    </div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#00FFB3,#CCFF00);box-shadow:0 0 10px rgba(0,255,180,0.5);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:#00FFB3;line-height:1.5;">#00FFB3<br>#CCFF00</div>
+    </div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#88FF00,#EEFF00);box-shadow:0 0 14px rgba(180,255,0,0.6);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:#AAFF00;line-height:1.5;">#88FF00<br>#EEFF00</div>
+    </div>
+  </div>
+
+  <!-- PAR 4 -->
+  <div class="comp-row">
+    <div class="comp-cell"><span class="comp-pair-name">🔥 Coral</span></div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#FE4773,#F6D68D);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted);line-height:1.5;">#FE4773<br>#F6D68D</div>
+    </div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#FF2255,#FFE040);box-shadow:0 0 10px rgba(255,50,100,0.5);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:#FF2255;line-height:1.5;">#FF2255<br>#FFE040</div>
+    </div>
+    <div class="comp-cell">
+      <div class="comp-dot" style="background:linear-gradient(135deg,#FF6040,#FFD600);box-shadow:0 0 14px rgba(255,96,64,0.6);"></div>
+      <div style="font-family:var(--mono);font-size:0.68rem;color:#FF6040;line-height:1.5;">#FF6040<br>#FFD600</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+import { motion } from "framer-motion";
+
+export default function FuturisticDashboard() {
+  return (
+    <div className="min-h-screen bg-[#070b1a] flex items-center justify-center p-10 perspective-[1400px]">
+      {/* Curved HUD container */}
+      <div className="relative w-full max-w-6xl transform rotate-x-[8deg]">
+        <div className="relative rounded-[40px] border border-cyan-400/30 bg-white/5 backdrop-blur-xl shadow-[0_0_60px_rgba(0,255,255,0.35)] p-10 overflow-hidden">
+          {/* Curved glow overlay */}
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,255,255,0.15),transparent_70%)]" />
+
+          {/* Subtle curved mask illusion */}
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-[#070b1a]/60" />
+
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-between items-center mb-10 text-cyan-300"
+          >
+            <h1 className="text-3xl font-semibold tracking-wider drop-shadow-[0_0_10px_cyan]">
+              AI Control Panel
+            </h1>
+            <div className="text-xs opacity-70">Neural System Active</div>
+          </motion.div>
+
+          {/* Panels */}
+          <div className="grid md:grid-cols-3 gap-8 text-cyan-300">
+            {["Data Streams", "Intelligent Notes", "Mind Maps"].map(
+              (title, i) => (
+                <motion.div
+                  key={title}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.2 }}
+                  className="rounded-3xl border border-cyan-400/20 bg-white/5 backdrop-blur-md p-6 shadow-[0_0_25px_rgba(0,255,255,0.25)] hover:shadow-[0_0_50px_rgba(0,255,255,0.45)] transition"
+                >
+                  <h2 className="text-lg mb-3 drop-shadow-[0_0_6px_cyan]">
+                    {title}
+                  </h2>
+
+                  <div className="space-y-2 text-xs opacity-80">
+                    <div className="h-2 bg-cyan-400/30 rounded-full" />
+                    <div className="h-2 bg-cyan-400/20 rounded-full w-3/4" />
+                    <div className="h-2 bg-cyan-400/20 rounded-full w-1/2" />
+                  </div>
+                </motion.div>
+              )
+            )}
+          </div>
+
+          {/* Footer */}
+          <div className="mt-12 text-center text-xs text-cyan-300 opacity-60">
+            MCP Neural Interface • Experimental UI
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

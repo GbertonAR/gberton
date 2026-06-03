@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowState AI — Product Strategy Hub v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:      #0d1117;
+  --navy2:     #161b22;
+  --navy3:     #1c2333;
+  --navy4:     #21283a;
+  --border:    #2a3548;
+  --border2:   #1e2a3a;
+  --teal:      #1ecb8a;
+  --teal-d:    #0f8a5f;
+  --teal-dim:  rgba(30,203,138,.12);
+  --gold:      #f0a500;
+  --gold-dim:  rgba(240,165,0,.12);
+  --red:       #f05252;
+  --red-dim:   rgba(240,82,82,.12);
+  --amber:     #f0803a;
+  --amber-dim: rgba(240,128,58,.12);
+  --blue:      #58a6ff;
+  --blue-dim:  rgba(88,166,255,.12);
+  --purple:    #bc8cff;
+  --purple-dim:rgba(188,140,255,.12);
+  --text:      #e6edf3;
+  --text2:     #8b949e;
+  --text3:     #484f58;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); min-height: 100vh; font-size: 13px; }
+.page { max-width: 1120px; margin: 0 auto; padding: 0 20px 60px; }
+
+/* HEADER */
+.header { padding: 20px 0 16px; border-bottom: 1px solid var(--border2); margin-bottom: 16px; display: flex; align-items: flex-start; gap: 14px; }
+.header-icon { width: 40px; height: 40px; flex-shrink: 0; border-radius: 8px; background: var(--navy3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-top: 2px; }
+.header-body { flex: 1; }
+.header-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+.header-title { font-size: 20px; font-weight: 800; color: var(--text); line-height: 1.15; margin-bottom: 5px; }
+.header-title .hl { color: var(--teal); }
+.header-meta { font-size: 11px; color: var(--text2); line-height: 1.5; }
+.header-tags { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
+.h-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 3px; background: var(--navy3); border: 1px solid var(--border); color: var(--text2); }
+.h-tag.new { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
+.header-score { text-align: right; flex-shrink: 0; }
+.score-big { font-size: 52px; font-weight: 900; line-height: 1; color: var(--gold); font-family: 'JetBrains Mono', monospace; }
+.score-lbl { font-size: 10px; color: var(--text2); margin-top: 2px; }
+.score-status { font-size: 10px; color: var(--amber); font-family: 'JetBrains Mono', monospace; margin-top: 1px; }
+
+/* VERDICT */
+.verdict { border: 1px solid var(--gold); border-radius: 8px; padding: 14px 18px; background: linear-gradient(135deg, var(--navy3), var(--navy2)); display: flex; align-items: center; gap: 18px; margin-bottom: 16px; }
+.verdict-score { font-size: 52px; font-weight: 900; color: var(--gold); font-family: 'JetBrains Mono', monospace; line-height: 1; flex-shrink: 0; }
+.verdict-label { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+.verdict-sub { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+/* CHANGELOG BANNER */
+.changelog {
+  border: 1px solid var(--teal); border-radius: 8px; padding: 10px 16px;
+  background: var(--teal-dim); margin-bottom: 16px;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.cl-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.cl-title { font-size: 11px; font-weight: 700; color: var(--teal); margin-bottom: 3px; font-family: 'JetBrains Mono', monospace; letter-spacing: .04em; }
+.cl-items { display: flex; gap: 10px; flex-wrap: wrap; }
+.cl-item { font-size: 11px; color: var(--text2); display: flex; gap: 5px; align-items: center; }
+.cl-dot { color: var(--teal); font-weight: 700; }
+
+/* NAV */
+.nav { display: flex; gap: 2px; margin-bottom: 16px; border-bottom: 1px solid var(--border2); flex-wrap: wrap; }
+.nav-btn { padding: 8px 16px; background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: var(--text2); transition: all .15s; margin-bottom: -1px; }
+.nav-btn:hover { color: var(--text); border-bottom-color: var(--border); }
+.nav-btn.active { color: var(--teal); border-bottom-color: var(--teal); font-weight: 600; }
+
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* SECTION HEAD */
+.sec-head { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; margin-top: 18px; font-family: 'JetBrains Mono', monospace; display: flex; align-items: center; gap: 8px; }
+.sec-head::after { content: ''; flex: 1; height: 1px; background: var(--border2); }
+.sec-head:first-child { margin-top: 0; }
+.sec-head .new-tag { font-size: 9px; background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(30,203,138,.3); padding: 1px 6px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; }
+
+/* GRIDS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 10px; }
+@media (max-width: 680px) { .grid-2,.grid-3 { grid-template-columns: 1fr; } }
+
+/* DIMENSION CARDS */
+.dim-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.dim-card.bg { border-left: 3px solid var(--teal); }
+.dim-card.br { border-left: 3px solid var(--red); }
+.dim-card.ba { border-left: 3px solid var(--amber); }
+.dim-card.bb { border-left: 3px solid var(--gold); }
+.dim-hd { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+.dim-icon { font-size: 13px; }
+.dim-name { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); flex: 1; }
+.dim-sv { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; }
+.dim-sv.ok { color: var(--teal); } .dim-sv.warn { color: var(--gold); } .dim-sv.bad { color: var(--red); }
+.bar-wrap { margin: 6px 0 10px; }
+.bar-track { height: 4px; background: var(--navy4); border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 4px; border-radius: 2px; }
+.dim-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid var(--border2); font-size: 12px; }
+.dim-row:last-child { border: none; padding-bottom: 0; }
+.drk { color: var(--text2); }
+.drv { font-weight: 600; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+.drv.ok { color: var(--teal); } .drv.warn { color: var(--gold); } .drv.bad { color: var(--red); }
+
+/* STAT MINI */
+.stat-mini { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.sm-num { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; line-height: 1; margin-bottom: 5px; }
+.sm-lbl { font-size: 11px; color: var(--text2); line-height: 1.4; }
+.sm-num.red { color: var(--red); } .sm-num.gold { color: var(--gold); } .sm-num.teal { color: var(--teal); }
+.sm-num.blue { color: var(--blue); } .sm-num.amber { color: var(--amber); } .sm-num.purple { color: var(--purple); }
+
+/* FRAUD GRID */
+.fraud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fraud-item { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.fi-tag { display: inline-block; font-size: 9px; margin-bottom: 5px; padding: 2px 7px; border-radius: 3px; font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: .04em; }
+.fi-tag.r { background: var(--red-dim); color: var(--red); border: 1px solid rgba(240,82,82,.2); }
+.fi-tag.a { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(240,128,58,.2); }
+.fraud-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.fraud-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+/* GAP LIST */
+.gap-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.gap-item { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start; }
+.gap-badge { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 3px; white-space: nowrap; margin-top: 1px; flex-shrink: 0; letter-spacing: .06em; }
+.gb-c { background: var(--red-dim); color: var(--red); border: 1px solid rgba(240,82,82,.3); }
+.gb-h { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(240,128,58,.3); }
+.gb-m { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(88,166,255,.3); }
+.gap-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.gap-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
+
+/* MODULE GRID */
+.mod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+.mod-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; cursor: pointer; transition: border-color .15s, background .15s; position: relative; }
+.mod-card:hover { border-color: var(--teal); background: var(--navy3); }
+.mod-card.new-mod { border-color: rgba(30,203,138,.3); }
+.mod-card.new-mod:hover { border-color: var(--teal); }
+.mod-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.mod-nb { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.mod-nb.mvp  { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(30,203,138,.25); }
+.mod-nb.pro  { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(240,165,0,.25); }
+.mod-nb.ent  { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(88,166,255,.25); }
+.mod-nb.new  { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(188,140,255,.25); }
+.mod-name { font-size: 12px; font-weight: 600; color: var(--text); flex: 1; }
+.mod-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+.mod-tl { position: absolute; top: 10px; right: 10px; font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 1px 5px; border-radius: 2px; }
+.mtl-mvp { background: var(--teal-dim); color: var(--teal); }
+.mtl-pro { background: var(--gold-dim); color: var(--gold); }
+.mtl-ent { background: var(--blue-dim); color: var(--blue); }
+.mtl-new { background: var(--purple-dim); color: var(--purple); }
+.mod-new-badge { display: inline-flex; align-items: center; gap: 4px; margin-top: 7px; font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--teal); }
+
+/* DIFFERENTIATOR CARDS */
+.diff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 10px; margin-bottom: 16px; }
+.diff-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; border-top: 2px solid var(--purple); }
+.diff-icon { font-size: 20px; margin-bottom: 8px; }
+.diff-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.diff-sub { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--purple); margin-bottom: 6px; letter-spacing: .04em; }
+.diff-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
+.diff-impact { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border2); font-size: 11px; color: var(--teal); }
+.diff-impact strong { color: var(--teal); }
+
+/* VISION TABLE */
+.vision-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+.vision-table th { background: var(--navy3); text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); font-family: 'JetBrains Mono', monospace; border-bottom: 1px solid var(--border); }
+.vision-table td { padding: 9px 12px; font-size: 12px; border-bottom: 1px solid var(--border2); vertical-align: top; }
+.vision-table tr:last-child td { border-bottom: none; }
+.vision-table tr:hover td { background: var(--navy2); }
+.vt-dim { color: var(--text2); font-weight: 500; }
+.vt-old { color: var(--red); }
+.vt-new { color: var(--teal); font-weight: 600; }
+
+/* TIER CARDS */
+.tier-cards { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.tier-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.tier-hd { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--navy2); cursor: pointer; border-left: 3px solid transparent; }
+.tier-card.s .tier-hd { border-left-color: var(--teal); }
+.tier-card.p .tier-hd { border-left-color: var(--gold); }
+.tier-card.e .tier-hd { border-left-color: var(--blue); }
+.tier-card.l .tier-hd { border-left-color: var(--purple); }
+.tier-lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px; flex-shrink: 0; }
+.tier-card.s .tier-lbl { background: var(--teal-dim); color: var(--teal); }
+.tier-card.p .tier-lbl { background: var(--gold-dim); color: var(--gold); }
+.tier-card.e .tier-lbl { background: var(--blue-dim); color: var(--blue); }
+.tier-card.l .tier-lbl { background: var(--purple-dim); color: var(--purple); }
+.tier-name { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+.tier-time { font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+.tier-body { padding: 12px 16px; background: var(--navy); border-top: 1px solid var(--border2); display: none; grid-template-columns: 1fr 1fr; gap: 5px; }
+.tier-body.o { display: grid; }
+.tier-row { font-size: 11px; color: var(--text2); display: flex; gap: 7px; }
+.ti-plus { color: var(--teal); font-weight: 700; }
+.tier-new-badge { font-size: 9px; background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(188,140,255,.3); padding: 1px 5px; border-radius: 2px; font-family: 'JetBrains Mono', monospace; margin-left: 4px; }
+
+/* SEGMENT CARDS */
+.seg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 10px; margin-bottom: 16px; }
+.seg-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.seg-card.new-seg { border-color: rgba(188,140,255,.3); border-top: 2px solid var(--purple); }
+.seg-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.seg-icon { font-size: 18px; }
+.seg-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.seg-badge { font-size: 9px; font-family: 'JetBrains Mono', monospace; padding: 1px 6px; border-radius: 3px; }
+.seg-badge.existing { background: var(--teal-dim); color: var(--teal); }
+.seg-badge.new { background: var(--purple-dim); color: var(--purple); }
+.seg-icp { font-size: 11px; color: var(--text2); margin-bottom: 8px; line-height: 1.5; }
+.seg-arr { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: var(--teal); margin-bottom: 2px; }
+.seg-arr-lbl { font-size: 10px; color: var(--text3); }
+
+/* PROVINCE */
+.prov-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.prov-card { background: var(--navy2); border: 1px solid var(--border); border-top: 2px solid var(--teal); border-radius: 6px; padding: 10px 12px; }
+.prov-name { font-size: 11px; color: var(--text2); margin-bottom: 4px; }
+.prov-fraud { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--red); line-height: 1; }
+.prov-save { font-size: 10px; color: var(--teal); margin-top: 2px; }
+
+/* ROI */
+.roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.roi-box { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.roi-box.old { border-top: 2px solid var(--red); }
+.roi-box.new { border-top: 2px solid var(--teal); }
+.roi-head { font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 10px; font-family: 'JetBrains Mono', monospace; }
+.roi-box.old .roi-head { color: var(--red); }
+.roi-box.new .roi-head { color: var(--teal); }
+.roi-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border2); font-size: 12px; }
+.roi-row:last-child { border: none; }
+.roi-row .rk { color: var(--text2); }
+.roi-row .rv { font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.roi-box.old .rv { color: var(--red); }
+.roi-box.new .rv { color: var(--teal); }
+@media (max-width: 640px) { .roi-grid { grid-template-columns: 1fr; } }
+
+/* BREAK-EVEN */
+.be-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; margin-bottom: 5px; }
+.be-track { height: 28px; background: var(--navy2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; position: relative; }
+.be-fill { height: 100%; background: linear-gradient(90deg, var(--teal-d), var(--teal)); display: flex; align-items: center; padding: 0 10px; transition: width 1s ease; }
+.be-fill-txt { font-size: 11px; font-weight: 600; color: var(--navy); font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+.be-marker { position: absolute; right: 20%; top: 0; bottom: 0; width: 1px; background: var(--gold); }
+.be-marker-lbl { position: absolute; top: -16px; right: 20%; transform: translateX(50%); font-size: 9px; color: var(--gold); font-family: 'JetBrains Mono', monospace; }
+
+/* LAW CARDS */
+.law-list { display: flex; flex-direction: column; gap: 8px; }
+.law-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; gap: 12px; }
+.law-bw { flex-shrink: 0; padding-top: 1px; }
+.law-badge { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 3px; white-space: nowrap; letter-spacing: .05em; }
+.lb-c { background: var(--red-dim); color: var(--red); border: 1px solid rgba(240,82,82,.3); }
+.lb-h { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(240,128,58,.3); }
+.lb-m { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(88,166,255,.3); }
+.law-art { font-size: 10px; color: var(--text3); margin-bottom: 3px; font-family: 'JetBrains Mono', monospace; }
+.law-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.law-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
+
+/* PHASES */
+.phase-list { display: flex; flex-direction: column; gap: 8px; }
+.phase-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.phase-hd { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--navy2); cursor: pointer; }
+.phase-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.phase-name { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+.phase-time { font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+.phase-chev { font-size: 10px; color: var(--text3); transition: transform .2s; }
+.phase-chev.o { transform: rotate(180deg); }
+.phase-body { display: none; background: var(--navy); border-top: 1px solid var(--border2); padding: 12px 14px; grid-template-columns: 1fr 1fr; gap: 5px; }
+.phase-body.o { display: grid; }
+.ph-item { font-size: 11px; color: var(--text2); display: flex; gap: 7px; }
+.ph-dot { color: var(--teal); font-weight: 700; }
+.ph-dot.purple { color: var(--purple); }
+
+/* READINESS */
+.readiness-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.rp { flex: 1; min-width: 90px; border-radius: 6px; padding: 10px 8px; text-align: center; border: 1px solid var(--border); background: var(--navy2); }
+.rp.ok   { border-top: 2px solid var(--teal); }
+.rp.warn { border-top: 2px solid var(--gold); }
+.rp.bad  { border-top: 2px solid var(--red); }
+.rp-icon { font-size: 15px; margin-bottom: 3px; }
+.rp-lbl  { font-size: 10px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.rp-st   { font-size: 9px; color: var(--text3); margin-top: 1px; font-family: 'JetBrains Mono', monospace; }
+
+/* CTA */
+.cta { background: linear-gradient(135deg, rgba(30,203,138,.06), rgba(30,203,138,.03)); border: 1px solid rgba(30,203,138,.25); border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+.cta-txt { font-size: 12px; color: var(--text2); flex: 1; min-width: 180px; line-height: 1.5; }
+.cta-txt strong { color: var(--teal); }
+.cta-btn { padding: 7px 16px; border-radius: 5px; border: 1px solid var(--teal); background: var(--teal-dim); cursor: pointer; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: var(--teal); transition: all .15s; white-space: nowrap; }
+.cta-btn:hover { background: rgba(30,203,138,.2); }
+
+/* SMART RECALL FLOW */
+.recall-flow { display: flex; flex-direction: column; gap: 0; margin-bottom: 16px; }
+.rf-phase { background: var(--navy2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; display: flex; gap: 12px; }
+.rf-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--purple); background: var(--purple-dim); border: 1px solid rgba(188,140,255,.25); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.rf-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.rf-sub { font-size: 10px; color: var(--purple); font-family: 'JetBrains Mono', monospace; margin-bottom: 5px; }
+.rf-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
+
+/* STAKEHOLDER TABLE */
+.sth-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+.sth-table th { background: var(--navy3); text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); font-family: 'JetBrains Mono', monospace; border-bottom: 1px solid var(--border); }
+.sth-table td { padding: 9px 12px; font-size: 11px; border-bottom: 1px solid var(--border2); vertical-align: top; }
+.sth-table tr:last-child td { border-bottom: none; }
+.sth-table tr:hover td { background: rgba(255,255,255,.02); }
+.sth-actor { font-weight: 600; color: var(--text); }
+.sth-view { color: var(--text2); }
+.sth-action { color: var(--teal); }
+
+/* AF GRID */
+.af-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.af-card { background: var(--navy3); border: 1px solid var(--border2); border-radius: 6px; padding: 10px 12px; }
+.af-title { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 4px; }
+.af-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-icon">📋</div>
+  <div class="header-body">
+    <div class="header-eyebrow">Product Readiness Scorecard v2 · PRD Completeness · INVEST Criteria · AF Readiness · Technical Viability</div>
+    <div class="header-title">Auditoría de <span class="hl">Recetas Médicas IA</span> — FlowState AI</div>
+    <div class="header-meta">Infraestructura antifraude modular B2B · Sistema de salud argentino · Evaluado: Abril 2026</div>
+    <div class="header-tags">
+      <span class="h-tag">Farmacias</span>
+      <span class="h-tag">Obras Sociales</span>
+      <span class="h-tag">Gobierno</span>
+      <span class="h-tag">PAMI</span>
+      <span class="h-tag new">+ Laboratorios ★</span>
+    </div>
+  </div>
+  <div class="header-score">
+    <div class="score-big">61</div>
+    <div class="score-lbl">PRD score actual</div>
+    <div class="score-status">⚠ CONCEPT NOTE</div>
+  </div>
+</div>
+
+<!-- VERDICT -->
+<div class="verdict">
+  <div class="verdict-score">61</div>
+  <div>
+    <div class="verdict-label">⚠ CONCEPT NOTE — No califica como Producto todavía</div>
+    <div class="verdict-sub">
+      Valor actual: Discovery Artifact / Pre-PRD de alta calidad técnica.<br>
+      Requiere resolver 6 gaps críticos antes de entregar a un Analista Funcional.<br>
+      <span style="color:var(--teal)">v2: +3 módulos incorporados · nuevo segmento Laboratorios · roadmap 2027-2028 definido.</span>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGELOG -->
+<div class="changelog">
+  <div class="cl-icon">⚡</div>
+  <div>
+    <div class="cl-title">Actualización v2 — Incorporado del análisis de innovación</div>
+    <div class="cl-items">
+      <div class="cl-item"><span class="cl-dot">+</span>Módulo 6 ampliado → Health Trust Score (scoring de reputación por grafos)</div>
+      <div class="cl-item"><span class="cl-dot">+</span>Módulo 7 ampliado → Smart Settlement (liquidación T+24hs para farmacias)</div>
+      <div class="cl-item"><span class="cl-dot">+</span>Módulo 9 nuevo → Trazabilidad GS1 + Smart Recall (nuevo cliente: Laboratorios)</div>
+      <div class="cl-item"><span class="cl-dot">~</span>DIDs, NFT-Rx, biometría → movidos a roadmap 2027-2028</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="show('diag',this)">📊 Diagnóstico</button>
+  <button class="nav-btn" onclick="show('arch',this)">⚙️ Módulos</button>
+  <button class="nav-btn" onclick="show('diff',this)">🚀 Diferenciadores</button>
+  <button class="nav-btn" onclick="show('mkt',this)">💼 Mercado B2B</button>
+  <button class="nav-btn" onclick="show('roi',this)">💰 ROI</button>
+  <button class="nav-btn" onclick="show('road',this)">🗺️ Roadmap</button>
+  <button class="nav-btn" onclick="show('legal',this)">🔒 Legal</button>
+  <button class="nav-btn" onclick="show('gaps',this)">🚨 PRD Gaps</button>
+</nav>
+
+<!-- ════ DIAGNÓSTICO ════ -->
+<div id="p-diag" class="panel active">
+  <div class="sec-head">El problema en números</div>
+  <div class="grid-auto" style="margin-bottom:14px">
+    <div class="stat-mini"><div class="sm-num red">USD 450M</div><div class="sm-lbl">fraude anual estimado en Argentina</div></div>
+    <div class="stat-mini"><div class="sm-num gold">20–25%</div><div class="sm-lbl">recetas ambulatorias con inconsistencias</div></div>
+    <div class="stat-mini"><div class="sm-num gold">7–11%</div><div class="sm-lbl">errores de prescripción en hospitales</div></div>
+    <div class="stat-mini"><div class="sm-num blue">322M</div><div class="sm-lbl">recetas procesadas por año en Argentina</div></div>
+    <div class="stat-mini"><div class="sm-num teal">USD 247M</div><div class="sm-lbl">ahorro potencial escenario Pro (55%)</div></div>
+    <div class="stat-mini"><div class="sm-num teal">&lt;$0.10</div><div class="sm-lbl">costo IA por receta vs USD 1.50–3 manual</div></div>
+  </div>
+  <div class="sec-head">Vectores de fraude identificados</div>
+  <div class="fraud-grid" style="margin-bottom:14px">
+    <div class="fraud-item"><div class="fi-tag r">SISTÉMICO</div><div class="fraud-title">Suplantación de médicos</div><div class="fraud-desc">Matrículas reales con firma falsificada. Sin validación REFEPS en tiempo real, indetectable en el flujo actual.</div></div>
+    <div class="fraud-item"><div class="fi-tag r">MASIVO</div><div class="fraud-title">Reutilización de recetas</div><div class="fraud-desc">Una receta válida usada múltiples veces en distintas farmacias. El sistema actual no tiene estado "consumida" verificable.</div></div>
+    <div class="fraud-item"><div class="fi-tag a">ORGANIZADO</div><div class="fraud-title">Sobreprescripción / connivencia</div><div class="fraud-desc">Triángulo médico + paciente + farmacia para facturar medicación innecesaria a la obra social o prepaga.</div></div>
+    <div class="fraud-item"><div class="fi-tag a">DETECTABLE</div><div class="fraud-title">Doctor Shopping</div><div class="fraud-desc">Paciente con múltiples recetas del mismo fármaco en distintas farmacias. Requiere análisis de red transversal entre obras sociales.</div></div>
+    <div class="fraud-item"><div class="fi-tag r">INVISIBLE</div><div class="fraud-title">Facturación fantasma</div><div class="fraud-desc">Recetas inexistentes cargadas a financiadores. Imposible detectar sin trazabilidad completa de emisión y dispensa.</div></div>
+    <div class="fraud-item"><div class="fi-tag a">CADENA</div><div class="fraud-title">Desvío de medicamentos</div><div class="fraud-desc">Medicamentos de alto costo o controlados que se "pierden" entre laboratorio, farmacia y paciente. Sin GS1, inrastreable.</div></div>
+  </div>
+  <div class="cta">
+    <div class="cta-txt"><strong>Buenos Aires + CABA = 45% del problema nacional:</strong> USD 200M/año en fraude. Con Laboratorios como nuevo segmento, el TAM se expande un 40% adicional.</div>
+    <button class="cta-btn">Ver mercado B2B →</button>
+  </div>
+</div>
+
+<!-- ════ MÓDULOS ════ -->
+<div id="p-arch" class="panel">
+  <div class="sec-head">9 módulos — adoptables de forma incremental (B2B modular)</div>
+  <div class="mod-grid" style="margin-bottom:14px">
+    <div class="mod-card"><span class="mod-tl mtl-mvp">MVP</span><div class="mod-hd"><div class="mod-nb mvp">01</div><div class="mod-name">Identidad y Firma PKI</div></div><div class="mod-desc">Certificados X.509, validación REFEPS en tiempo real, Ley 25.506. Base legal para todas las recetas del sistema.</div></div>
+    <div class="mod-card"><span class="mod-tl mtl-mvp">MVP</span><div class="mod-hd"><div class="mod-nb mvp">02</div><div class="mod-name">Receta Digital CUIR</div></div><div class="mod-desc">UUID único + hash SHA-256, inmutabilidad, HL7/FHIR MedicationRequest. La receta como activo digital único.</div></div>
+    <div class="mod-card"><span class="mod-tl mtl-mvp">MVP</span><div class="mod-hd"><div class="mod-nb mvp">03</div><div class="mod-name">QR Inteligente</div></div><div class="mod-desc">Token dinámico sin datos sensibles embebidos. Validación online obligatoria. Dispensa única forzada criptográficamente.</div></div>
+    <div class="mod-card"><span class="mod-tl mtl-mvp">MVP</span><div class="mod-hd"><div class="mod-nb mvp">04</div><div class="mod-name">API de Validación</div></div><div class="mod-desc">Estado / vigencia / uso / cobertura / nombre genérico (Ley 25.649). FastAPI + Python. SLA P95 ≤ 3s.</div></div>
+    <div class="mod-card"><span class="mod-tl mtl-pro">Pro</span><div class="mod-hd"><div class="mod-nb pro">05</div><div class="mod-name">Trazabilidad Ledger</div></div><div class="mod-desc">Log inmutable: emisión → validación → dispensación. Azure Table Storage + hash encadenado. Evidencia legal auditable.</div></div>
+    <div class="mod-card new-mod"><span class="mod-tl mtl-ent">Enterprise</span><div class="mod-hd"><div class="mod-nb ent">06</div><div class="mod-name">Health Trust Score ★</div></div><div class="mod-desc">Motor de reputación por grafos de conocimiento. Scoring de médicos, farmacias y pacientes por comportamiento histórico. Detección predictiva antes de que el fraude ocurra.</div><div class="mod-new-badge">★ Diferenciador Enterprise — v2</div></div>
+    <div class="mod-card new-mod"><span class="mod-tl mtl-ent">Enterprise</span><div class="mod-hd"><div class="mod-nb ent">07</div><div class="mod-name">Smart Settlement ★</div></div><div class="mod-desc">Liquidación automática farmacia ↔ obra social. Si la receta es "limpia" desde el origen, el pago se procesa en T+24hs. Killer feature para adopción de farmacias.</div><div class="mod-new-badge">★ Killer Feature Farmacias — v2</div></div>
+    <div class="mod-card"><span class="mod-tl mtl-ent">Enterprise</span><div class="mod-hd"><div class="mod-nb ent">08</div><div class="mod-name">Auditxt — IDP</div></div><div class="mod-desc">Vision AI (Claude/GPT-4o) para recetas manuscritas. Extracción CIE-10. LangGraph + RAG normativo en tiempo real.</div></div>
+    <div class="mod-card new-mod"><span class="mod-tl mtl-new">Laboratorios</span><div class="mod-hd"><div class="mod-nb new">09</div><div class="mod-name">Trazabilidad GS1 + Smart Recall ★</div></div><div class="mod-desc">Serialización unitaria GS1 EPCIS 2.0. Trazabilidad laboratorio → farmacia → paciente. Alertas de vencimiento. Recall quirúrgico instantáneo por lote.</div><div class="mod-new-badge">★ Nuevo segmento B2B Laboratorios — v2</div></div>
+  </div>
+  <div class="cta">
+    <div class="cta-txt"><strong>Módulos 1–4 = MVP en 90 días.</strong> Módulos 6 y 7 son los diferenciadores Enterprise que justifican el precio premium. Módulo 9 abre el segmento Laboratorios.</div>
+    <button class="cta-btn">Generar backlog técnico →</button>
+  </div>
+</div>
+
+<!-- ════ DIFERENCIADORES ════ -->
+<div id="p-diff" class="panel">
+  <div class="sec-head">3 diferenciadores incorporados en v2</div>
+  <div class="diff-grid">
+    <div class="diff-card">
+      <div class="diff-icon">🧠</div>
+      <div class="diff-sub">Módulo 06 · Enterprise</div>
+      <div class="diff-title">Health Trust Score</div>
+      <div class="diff-desc">Motor de reputación basado en grafos de conocimiento. No es una lista negra — es análisis de comportamiento en red. Si un médico prescribe un fármaco de alto costo inconsistente con el diagnóstico SNOMED CT, o una farmacia valida recetas en horarios atípicos recurrentemente, el sistema eleva el nivel de verificación automáticamente. El fraude de guante blanco se detecta antes de ejecutarse.</div>
+      <div class="diff-impact">↳ <strong>Impacto:</strong> Único en Argentina. Eleva el estándar de seguridad para aseguradoras y es el argumento central del precio Enterprise.</div>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">⚡</div>
+      <div class="diff-sub">Módulo 07 · Enterprise</div>
+      <div class="diff-title">Smart Settlement</div>
+      <div class="diff-desc">Dado que cada receta es "limpia" desde su origen — firmada, validada y trazada — el pago a la farmacia puede ser automático o T+24hs sin intervención humana. Las farmacias hoy esperan 30–90 días para cobrar y sufren débitos por errores administrativos. Smart Settlement invierte el incentivo: las farmacias exigirán usar FlowState porque es el único sistema que les garantiza el cobro inmediato y sin deducciones.</div>
+      <div class="diff-impact">↳ <strong>Impacto:</strong> Convierte a las farmacias de usuarios pasivos a promotores activos de la plataforma. Viral B2B.</div>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">🔬</div>
+      <div class="diff-sub">Módulo 09 · Laboratorios</div>
+      <div class="diff-title">Trazabilidad GS1 + Smart Recall</div>
+      <div class="diff-desc">Integración con serialización unitaria GS1 EPCIS 2.0. Cada caja de medicamento tiene un Datamatrix con GTIN, Lote, Serie y Fecha de Vencimiento anclados en el ledger de FlowState. Si el laboratorio detecta una falla en un lote, un "Botón Rojo" invalida instantáneamente todos los códigos del lote en todas las farmacias del país y envía alertas al celular de cada paciente que ya lo compró. Hoy esto se hace con avisos en diarios.</div>
+      <div class="diff-impact">↳ <strong>Impacto:</strong> Abre un segmento B2B nuevo. Los laboratorios gastan fortunas en recalls. Este módulo se paga solo con un solo evento de retiro.</div>
+    </div>
+  </div>
+
+  <div class="sec-head">Visión estratégica — FlowState AI como "VISA de la Salud"</div>
+  <table class="vision-table">
+    <thead>
+      <tr>
+        <th>Dimensión</th>
+        <th>Sistema Actual (Tradicional)</th>
+        <th>FlowState AI 2026 (Disrupción)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="vt-dim">Validación de identidad</td><td class="vt-old">Manual / PDF con QR sin backend</td><td class="vt-new">CUIR Criptográfico + PKI + REFEPS real-time</td></tr>
+      <tr><td class="vt-dim">Auditoría de recetas</td><td class="vt-old">Posterior a la facturación (muestreo)</td><td class="vt-new">Preventiva · IA Agéntica en tiempo real · 100% cobertura</td></tr>
+      <tr><td class="vt-dim">Intercambio de datos</td><td class="vt-old">Email / mensajería / sistemas cerrados</td><td class="vt-new">Bus de interoperabilidad FHIR R4 nativo</td></tr>
+      <tr><td class="vt-dim">Detección de fraude</td><td class="vt-old">Reactiva · por muestreo · post-pago</td><td class="vt-new">Health Trust Score · grafos de red · predictivo</td></tr>
+      <tr><td class="vt-dim">Liquidación farmacias</td><td class="vt-old">30–90 días · débitos por errores</td><td class="vt-new">Smart Settlement · T+24hs · zero-touch</td></tr>
+      <tr><td class="vt-dim">Trazabilidad medicamentos</td><td class="vt-old">Inexistente de laboratorio a paciente</td><td class="vt-new">GS1 EPCIS 2.0 · Smart Recall · alertas push paciente</td></tr>
+      <tr><td class="vt-dim">Recall de lotes</td><td class="vt-old">Avisos en diarios · días de demora</td><td class="vt-new">Botón Rojo · invalidación instantánea nacional · SMS/push al paciente</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec-head">Smart Recall — flujo end-to-end (nuevo módulo 09)</div>
+  <div class="recall-flow">
+    <div class="rf-phase">
+      <div class="rf-num">1</div>
+      <div>
+        <div class="rf-title">Origen — Laboratorio registra en ledger</div>
+        <div class="rf-sub">Fase de producción · GS1 EPCIS 2.0</div>
+        <div class="rf-desc">El laboratorio asigna un Datamatrix a cada caja individual con GTIN, Lote, Serie y Fecha de Vencimiento. Los datos se sincronizan con el bus de FlowState AI. El sistema ya sabe que la "Caja X" del "Lote Y" vence el 15/06/2026 antes de que salga de la planta.</div>
+      </div>
+    </div>
+    <div class="rf-phase">
+      <div class="rf-num">2</div>
+      <div>
+        <div class="rf-title">Punto de venta — Farmacia escanea Datamatrix</div>
+        <div class="rf-sub">Validación en tiempo real · Módulo 04 + 09</div>
+        <div class="rf-desc">Al dispensar, la farmacia escanea el Datamatrix. Si el producto está vencido: bloqueo automático del "quemado" de la receta con alerta roja. Si es apto: se vincula el ID único de la caja con el CUIR de la receta y el DNI del paciente en el ledger.</div>
+      </div>
+    </div>
+    <div class="rf-phase">
+      <div class="rf-num">3</div>
+      <div>
+        <div class="rf-title">Post-dispensa — Monitoreo silencioso del paciente</div>
+        <div class="rf-sub">Alerta T-15 días · App / WhatsApp</div>
+        <div class="rf-desc">El motor monitorea la vida útil de los medicamentos dispensados. A 15 días del vencimiento: alerta push al paciente ("su caja de [Medicamento] vence en 15 días — no lo consuma después del [Fecha]") y alerta en el tablero del auditor médico y de la obra social.</div>
+      </div>
+    </div>
+    <div class="rf-phase">
+      <div class="rf-num">4</div>
+      <div>
+        <div class="rf-title">Evento crítico — Smart Recall (Botón Rojo)</div>
+        <div class="rf-sub">Recall quirúrgico · Invalidación nacional instantánea</div>
+        <div class="rf-desc">Si el laboratorio detecta una falla en un lote: (1) Invalidación instantánea de todos los códigos de ese lote en todas las farmacias del país. (2) Push notification a cada paciente que ya lo compró, con instrucciones de no consumir y dónde canjearlo. Lo que hoy tarda días (avisos en diarios) ocurre en segundos.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head">Tablero de Transparencia — vistas por stakeholder</div>
+  <table class="sth-table">
+    <thead><tr><th>Actor</th><th>¿Qué ve en su tablero?</th><th>Acción sugerida por la IA</th></tr></thead>
+    <tbody>
+      <tr><td class="sth-actor">CFO / Director OS</td><td class="sth-view">Dinero ahorrado hoy por recetas duplicadas o médicos no habilitados bloqueados</td><td class="sth-action">Ajustar cobertura y reducir auditoría manual en zonas de bajo riesgo</td></tr>
+      <tr><td class="sth-actor">Auditor Médico</td><td class="sth-view">Patrones de sobreprescripción, Health Trust Score por médico, alertas de interacciones peligrosas</td><td class="sth-action">Iniciar proceso disciplinario o elevar nivel de verificación para médicos outlier</td></tr>
+      <tr><td class="sth-actor">Ministerio de Salud</td><td class="sth-view">Mapa de calor de enfermedades y consumo por zona. Trazabilidad de psicotrópicos y estupefacientes</td><td class="sth-action">Bloqueo preventivo de lote nacional. Detección de brotes epidemiológicos anticipada</td></tr>
+      <tr><td class="sth-actor">Laboratorio</td><td class="sth-view">Mapa de lotes próximos a vencer en stock de farmacias. Tasa de consumo por zona</td><td class="sth-action">Logística inversa preventiva. Activar Smart Recall antes de que el vencimiento genere daño</td></tr>
+      <tr><td class="sth-actor">Farmacia</td><td class="sth-view">Estado de liquidaciones pendientes, tasa de recetas "limpias" vs rechazadas, SLA de pago</td><td class="sth-action">Optimizar stock según consumo validado. Priorizar despacho de productos próximos a vencer</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sec-head">Decisiones de alcance — qué va ahora y qué va al roadmap 2027-2028</div>
+  <div class="grid-2" style="margin-bottom:14px">
+    <div class="dim-card bg">
+      <div class="dim-hd"><span class="dim-icon">✅</span><span class="dim-name">Incorporado en v2 — 2026</span></div>
+      <div class="dim-row"><span class="drk">Health Trust Score (grafos)</span><span class="drv ok">Módulo 06</span></div>
+      <div class="dim-row"><span class="drk">Smart Settlement T+24hs</span><span class="drv ok">Módulo 07</span></div>
+      <div class="dim-row"><span class="drk">Trazabilidad GS1 + Recall</span><span class="drv ok">Módulo 09</span></div>
+      <div class="dim-row"><span class="drk">Tablero multi-stakeholder</span><span class="drv ok">Enterprise</span></div>
+      <div class="dim-row"><span class="drk">Alertas vencimiento paciente</span><span class="drv ok">Módulo 09</span></div>
+    </div>
+    <div class="dim-card ba">
+      <div class="dim-hd"><span class="dim-icon">🔮</span><span class="dim-name">Roadmap 2027-2028 — Visión futura</span></div>
+      <div class="dim-row"><span class="drk">DIDs / Self-Sovereign Identity</span><span class="drv warn">2027</span></div>
+      <div class="dim-row"><span class="drk">Tokenización NFT-like de receta</span><span class="drv warn">2027</span></div>
+      <div class="dim-row"><span class="drk">Prescripción por voz con IA</span><span class="drv warn">2027</span></div>
+      <div class="dim-row"><span class="drk">Biometría facial en farmacia</span><span class="drv warn">2028</span></div>
+      <div class="dim-row"><span class="drk">Sustitución SNOMED CT en tiempo real</span><span class="drv warn">2027</span></div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-txt"><strong>¿Por qué no todo ahora?</strong> Los DIDs y la biometría facial tienen baja adopción de usuario en Argentina 2026 y carecen de marco regulatorio en salud. Prometerse sin entregarlo destruye credibilidad ante obras sociales y gobierno.</div>
+    <button class="cta-btn">Ver roadmap completo →</button>
+  </div>
+</div>
+
+<!-- ════ MERCADO B2B ════ -->
+<div id="p-mkt" class="panel">
+  <div class="sec-head">4 segmentos de cliente — modelo de adopción progresiva</div>
+  <div class="seg-grid">
+    <div class="seg-card">
+      <div class="seg-head"><span class="seg-icon">🏥</span><div><div class="seg-name">Obras Sociales</div><span class="seg-badge existing">Segmento original</span></div></div>
+      <div class="seg-icp">Obras sociales medianas de PBA + CABA. 50k–500k afiliados. Auditoría actualmente manual con alto costo operativo.</div>
+      <div class="seg-arr">USD 140K ARR</div>
+      <div class="seg-arr-lbl">por cliente (200k afiliados · 1.4M recetas/año)</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-head"><span class="seg-icon">💊</span><div><div class="seg-name">Farmacias</div><span class="seg-badge existing">Segmento original</span></div></div>
+      <div class="seg-icp">Redes de farmacias medianas y grandes. Adopción por Smart Settlement: cobro T+24hs sin débitos por errores administrativos.</div>
+      <div class="seg-arr">Fee por validación</div>
+      <div class="seg-arr-lbl">modelo transaccional · escalable con volumen</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-head"><span class="seg-icon">🏛️</span><div><div class="seg-name">Gobierno / Ministerios</div><span class="seg-badge existing">Segmento original</span></div></div>
+      <div class="seg-icp">Gobiernos provinciales y nacionales. Interesados en trazabilidad de psicotrópicos, mapas de calor epidemiológicos y cumplimiento de Ley 27.553.</div>
+      <div class="seg-arr">Licencia Enterprise</div>
+      <div class="seg-arr-lbl">ticket alto · contrato plurianual</div>
+    </div>
+    <div class="seg-card new-seg">
+      <div class="seg-head"><span class="seg-icon">🔬</span><div><div class="seg-name">Laboratorios ★</div><span class="seg-badge new">Nuevo — v2</span></div></div>
+      <div class="seg-icp">Laboratorios farmacéuticos nacionales e internacionales. Pain point: recalls costosísimos, logística inversa ineficiente, incumplimiento GS1. Un solo recall mal manejado cuesta más que el SaaS de por vida.</div>
+      <div class="seg-arr">USD 80–200K ARR</div>
+      <div class="seg-arr-lbl">por laboratorio · Módulo 09 · Smart Recall incluido</div>
+    </div>
+  </div>
+
+  <div class="sec-head">Paquetes comerciales actualizados</div>
+  <div class="tier-cards">
+    <div class="tier-card s">
+      <div class="tier-hd" onclick="togT('tb1','tc1')">
+        <span class="tier-lbl">STARTER</span><span class="tier-name">Control inmediato del fraude básico</span><span class="tier-time">semanas</span><span class="phase-chev o" id="tc1">▾</span>
+      </div>
+      <div class="tier-body o" id="tb1">
+        <div class="tier-row"><span class="ti-plus">✓</span>Receta digital + CUIR único</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>QR dinámico antifalsificación</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>API de validación básica</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Registro de uso (single-use)</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Dashboard operativo inicial</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Onboarding de médicos</div>
+      </div>
+    </div>
+    <div class="tier-card p">
+      <div class="tier-hd" onclick="togT('tb2','tc2')">
+        <span class="tier-lbl">PRO</span><span class="tier-name">Trazabilidad real + integración del sistema</span><span class="tier-time">1–3 meses</span><span class="phase-chev" id="tc2">▾</span>
+      </div>
+      <div class="tier-body" id="tb2">
+        <div class="tier-row"><span class="ti-plus">✓</span>Todo Starter incluido</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Firma digital PKI (Ley 25.506)</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Trazabilidad ledger completa</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Integración obras sociales FHIR</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Reglas antifraude configurables</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Auditoría estructurada</div>
+      </div>
+    </div>
+    <div class="tier-card e">
+      <div class="tier-hd" onclick="togT('tb3','tc3')">
+        <span class="tier-lbl">ENTERPRISE</span><span class="tier-name">Infraestructura nacional inteligente</span><span class="tier-time">3–9 meses</span><span class="phase-chev" id="tc3">▾</span>
+      </div>
+      <div class="tier-body" id="tb3">
+        <div class="tier-row"><span class="ti-plus">✓</span>Todo Pro incluido</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Health Trust Score <span class="tier-new-badge">nuevo</span></div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Smart Settlement T+24hs <span class="tier-new-badge">nuevo</span></div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Graph analysis médico-farmacia</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Tablero multi-stakeholder</div>
+        <div class="tier-row"><span class="ti-plus">✓</span>Alta disponibilidad cloud 99.5%</div>
+      </div>
+    </div>
+    <div class="tier-card l">
+      <div class="tier-hd" onclick="togT('tb4','tc4')">
+        <span class="tier-lbl">LABORATORIOS ★</span><span class="tier-name">Trazabilidad GS1 end-to-end + Smart Recall</span><span class="tier-time">nuevo — v2</span><span class="phase-chev" id="tc4">▾</span>
+      </div>
+      <div class="tier-body" id="tb4">
+        <div class="tier-row"><span class="ti-plus" style="color:var(--purple)">✓</span>Serialización GS1 EPCIS 2.0</div>
+        <div class="tier-row"><span class="ti-plus" style="color:var(--purple)">✓</span>Trazabilidad laboratorio → paciente</div>
+        <div class="tier-row"><span class="ti-plus" style="color:var(--purple)">✓</span>Alertas vencimiento automáticas</div>
+        <div class="tier-row"><span class="ti-plus" style="color:var(--purple)">✓</span>Smart Recall — Botón Rojo nacional</div>
+        <div class="tier-row"><span class="ti-plus" style="color:var(--purple)">✓</span>Tablero logística inversa</div>
+        <div class="tier-row"><span class="ti-plus" style="color:var(--purple)">✓</span>Push notifications a pacientes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head">Potencial de fraude por provincia — top 5</div>
+  <div class="prov-grid">
+    <div class="prov-card"><div class="prov-name">Buenos Aires</div><div class="prov-fraud">USD 171M</div><div class="prov-save">↳ ahorro: USD 94M/año</div></div>
+    <div class="prov-card"><div class="prov-name">CABA</div><div class="prov-fraud">USD 30M</div><div class="prov-save">↳ ahorro: USD 16.5M/año</div></div>
+    <div class="prov-card"><div class="prov-name">Córdoba</div><div class="prov-fraud">USD 38M</div><div class="prov-save">↳ ahorro: USD 21M/año</div></div>
+    <div class="prov-card"><div class="prov-name">Santa Fe</div><div class="prov-fraud">USD 35M</div><div class="prov-save">↳ ahorro: USD 19M/año</div></div>
+    <div class="prov-card"><div class="prov-name">Mendoza</div><div class="prov-fraud">USD 19.6M</div><div class="prov-save">↳ ahorro: USD 10.7M/año</div></div>
+  </div>
+  <div class="cta">
+    <div class="cta-txt"><strong>Con el segmento Laboratorios incorporado,</strong> el TAM se expande un 40% adicional. Un solo cliente laboratorio mediano representa USD 80–200K ARR con el Módulo 09.</div>
+    <button class="cta-btn">Definir ICP laboratorios →</button>
+  </div>
+</div>
+
+<!-- ════ ROI ════ -->
+<div id="p-roi" class="panel">
+  <div class="sec-head">Comparativa de costo por receta auditada</div>
+  <div class="roi-grid">
+    <div class="roi-box old">
+      <div class="roi-head">// Auditoría manual — estado actual</div>
+      <div class="roi-row"><span class="rk">Costo por receta</span><span class="rv">USD 1.50 – 3.00</span></div>
+      <div class="roi-row"><span class="rk">Cobertura</span><span class="rv">Muestreo parcial</span></div>
+      <div class="roi-row"><span class="rk">Tiempo de respuesta</span><span class="rv">Días / semanas</span></div>
+      <div class="roi-row"><span class="rk">Detección de fraude</span><span class="rv">Reactiva post-pago</span></div>
+      <div class="roi-row"><span class="rk">Liquidación farmacia</span><span class="rv">30–90 días</span></div>
+      <div class="roi-row"><span class="rk">Recall de medicamentos</span><span class="rv">Días / avisos en diarios</span></div>
+    </div>
+    <div class="roi-box new">
+      <div class="roi-head">// FlowState AI v2 — propuesto</div>
+      <div class="roi-row"><span class="rk">Costo por receta</span><span class="rv">&lt; USD 0.10</span></div>
+      <div class="roi-row"><span class="rk">Cobertura</span><span class="rv">100% tiempo real</span></div>
+      <div class="roi-row"><span class="rk">Tiempo de respuesta</span><span class="rv">P95 ≤ 3s</span></div>
+      <div class="roi-row"><span class="rk">Detección de fraude</span><span class="rv">Health Trust Score · predictivo</span></div>
+      <div class="roi-row"><span class="rk">Liquidación farmacia</span><span class="rv">Smart Settlement · T+24hs</span></div>
+      <div class="roi-row"><span class="rk">Recall de medicamentos</span><span class="rv">Smart Recall · segundos · push</span></div>
+    </div>
+  </div>
+  <div class="sec-head" style="margin-top:16px">Break-even estimado</div>
+  <div style="position:relative;margin-bottom:22px;margin-top:20px">
+    <span class="be-marker-lbl">break-even</span>
+    <div class="be-track">
+      <div class="be-fill" id="be-fill" style="width:0%"><span class="be-fill-txt" id="be-txt"></span></div>
+      <div class="be-marker"></div>
+    </div>
+  </div>
+  <div class="be-labels"><span>Mes 0 — lanzamiento</span><span>12–18 meses</span><span>Mes 24 — 60%+ margen</span></div>
+  <div class="sec-head" style="margin-top:16px">Estructura de costos — MVP SaaS</div>
+  <div class="grid-auto" style="margin-bottom:14px">
+    <div class="stat-mini"><div class="sm-num amber">USD 200K</div><div class="sm-lbl">desarrollo 6 meses, equipo 3–4 personas</div></div>
+    <div class="stat-mini"><div class="sm-num blue">USD 1K/mes</div><div class="sm-lbl">infraestructura cloud Azure/AWS</div></div>
+    <div class="stat-mini"><div class="sm-num amber">USD 15K</div><div class="sm-lbl">compliance legal y certificaciones</div></div>
+    <div class="stat-mini"><div class="sm-num teal">&gt; 60%</div><div class="sm-lbl">margen operativo una vez estabilizado</div></div>
+  </div>
+  <div class="sec-head">ARR potencial por segmento</div>
+  <div class="grid-auto" style="margin-bottom:14px">
+    <div class="stat-mini"><div class="sm-num teal">USD 140K</div><div class="sm-lbl">por Obra Social (200k afiliados · 1.4M recetas/año)</div></div>
+    <div class="stat-mini"><div class="sm-num teal">Fee/tx</div><div class="sm-lbl">farmacias · modelo transaccional · escala con volumen</div></div>
+    <div class="stat-mini"><div class="sm-num purple">USD 80–200K</div><div class="sm-lbl">por Laboratorio · Módulo 09 · Smart Recall ★ nuevo</div></div>
+    <div class="stat-mini"><div class="sm-num gold">Plurianual</div><div class="sm-lbl">gobierno provincial · licencia Enterprise · ticket alto</div></div>
+  </div>
+  <div class="cta">
+    <div class="cta-txt"><strong>Con 5 obras sociales + 3 laboratorios + 2 redes de farmacia</strong>, FlowState AI supera el break-even en el mes 12 sin depender de un solo contrato gubernamental.</div>
+    <button class="cta-btn">Modelo financiero 36 meses →</button>
+  </div>
+</div>
+
+<!-- ════ ROADMAP ════ -->
+<div id="p-road" class="panel">
+  <div class="sec-head">Fases de lanzamiento — estrategia de adopción progresiva</div>
+  <div class="phase-list" style="margin-bottom:14px">
+    <div class="phase-card">
+      <div class="phase-hd" onclick="togP('pp1','pc1')">
+        <div class="phase-dot" style="background:var(--teal)"></div>
+        <span class="phase-name">Fase 1 — MVP en 90 días</span>
+        <span class="phase-time">Meses 1–3</span>
+        <span class="phase-chev o" id="pc1">▾</span>
+      </div>
+      <div class="phase-body o" id="pp1">
+        <div class="ph-item"><span class="ph-dot">+</span>Módulos 1–4 operativos (Core)</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Receta digital firmada PKI</div>
+        <div class="ph-item"><span class="ph-dot">+</span>QR dinámico + API validación</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Dashboard antifraude básico</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Piloto con 1–2 obras sociales</div>
+        <div class="ph-item"><span class="ph-dot">+</span>User stories + criterios Gherkin</div>
+      </div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-hd" onclick="togP('pp2','pc2')">
+        <div class="phase-dot" style="background:var(--gold)"></div>
+        <span class="phase-name">Fase 2 — Escalado Pro + diferenciadores</span>
+        <span class="phase-time">Meses 4–9</span>
+        <span class="phase-chev" id="pc2">▾</span>
+      </div>
+      <div class="phase-body" id="pp2">
+        <div class="ph-item"><span class="ph-dot">+</span>Módulos 5–7 integrados</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Health Trust Score activado</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Smart Settlement T+24hs live</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Integración obras sociales FHIR</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Red de farmacias piloto</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Certificación compliance ANMAT</div>
+      </div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-hd" onclick="togP('pp3','pc3')">
+        <div class="phase-dot" style="background:var(--blue)"></div>
+        <span class="phase-name">Fase 3 — Infraestructura Nacional + Laboratorios</span>
+        <span class="phase-time">Meses 10–24</span>
+        <span class="phase-chev" id="pc3">▾</span>
+      </div>
+      <div class="phase-body" id="pp3">
+        <div class="ph-item"><span class="ph-dot">+</span>Módulo 08 IDP/Auditxt activo</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Módulo 09 GS1 + Smart Recall</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Onboarding primeros laboratorios</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Tablero multi-stakeholder completo</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Estándar provincial / nacional</div>
+        <div class="ph-item"><span class="ph-dot">+</span>Break-even alcanzado ✓</div>
+      </div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-hd" onclick="togP('pp4','pc4')">
+        <div class="phase-dot" style="background:var(--purple)"></div>
+        <span class="phase-name">Visión 2027–2028 — Próxima frontera tecnológica</span>
+        <span class="phase-time">Post mes 24</span>
+        <span class="phase-chev" id="pc4">▾</span>
+      </div>
+      <div class="phase-body" id="pp4">
+        <div class="ph-item"><span class="ph-dot purple">◆</span>DIDs / Self-Sovereign Identity</div>
+        <div class="ph-item"><span class="ph-dot purple">◆</span>Tokenización NFT-like de receta</div>
+        <div class="ph-item"><span class="ph-dot purple">◆</span>Prescripción por voz con IA</div>
+        <div class="ph-item"><span class="ph-dot purple">◆</span>Sustitución SNOMED CT real-time</div>
+        <div class="ph-item"><span class="ph-dot purple">◆</span>Biometría facial en punto de venta</div>
+        <div class="ph-item"><span class="ph-dot purple">◆</span>Expansión regional LATAM</div>
+      </div>
+    </div>
+  </div>
+  <div class="cta">
+    <div class="cta-txt"><strong>El roadmap 2027-2028 no es promesa, es visión.</strong> Se activa cuando el marco regulatorio madure y la adopción del usuario lo permita. Evita el error de overpromise ante inversores y clientes.</div>
+    <button class="cta-btn">Generar épicas INVEST →</button>
+  </div>
+</div>
+
+<!-- ════ LEGAL ════ -->
+<div id="p-legal" class="panel">
+  <div class="sec-head">Marco legal argentino — obligatorio para go-live comercial</div>
+  <div class="law-list" style="margin-bottom:14px">
+    <div class="law-card"><div class="law-bw"><span class="law-badge lb-c">CRÍTICO</span></div><div><div class="law-art">Ley 27.553 + Res. 2214/2025</div><div class="law-name">Receta Electrónica Obligatoria — CUIR</div><div class="law-desc">Obligatoriedad nacional de la receta digital. Requiere CUIR, código QR/barras para trazabilidad, y firma digital validada por el Ministerio de Salud. Vigencia 30 días, dispensa única. Core del producto — sin esto, no hay objeto de negocio.</div></div></div>
+    <div class="law-card"><div class="law-bw"><span class="law-badge lb-c">CRÍTICO</span></div><div><div class="law-art">Ley 25.326 — Datos Personales</div><div class="law-name">Protección de Datos de Salud (Sensibles)</div><div class="law-desc">Datos de salud = datos sensibles con protección reforzada. Consentimiento informado, cifrado AES-256, TLS 1.3, derechos ARCO, retención de imágenes ≤ 90 días, registro de bases ante la AAIP. Aplica a todo procesamiento IA incluyendo el Health Trust Score.</div></div></div>
+    <div class="law-card"><div class="law-bw"><span class="law-badge lb-c">CRÍTICO</span></div><div><div class="law-art">Ley 25.506 — Firma Digital</div><div class="law-name">Infraestructura PKI — Base Legal de Identidad</div><div class="law-desc">Certificados emitidos por AC licenciada por el Estado (AFIP AC, OCA, BNA). Auto-firmados sin validez probatoria. Consulta CRL/OCSP obligatoria para verificar vigencia del certificado médico en tiempo real en cada validación.</div></div></div>
+    <div class="law-card"><div class="law-bw"><span class="law-badge lb-h">ALTO</span></div><div><div class="law-art">Ley 25.649 + SNOMED CT</div><div class="law-name">Prescripción por Nombre Genérico + Codificación Clínica</div><div class="law-desc">Toda receta debe incluir el nombre genérico (DCI). El Health Trust Score utiliza SNOMED CT para detectar inconsistencias diagnóstico-medicamento. Ambas normativas se aplican en el Módulo 04 de validación.</div></div></div>
+    <div class="law-card"><div class="law-bw"><span class="law-badge lb-h">ALTO</span></div><div><div class="law-art">ANMAT — Disposiciones 2025-2026</div><div class="law-name">Software Médico e IA en Salud</div><div class="law-desc">El Health Trust Score y el Módulo 08 (IDP/Auditxt) pueden clasificar como software médico. Evaluación de riesgo formal requerida. Human-in-the-loop mandatorio para rechazos automáticos. Decisión ANMAT pendiente sobre IA diagnóstica.</div></div></div>
+    <div class="law-card"><div class="law-bw"><span class="law-badge lb-h">ALTO</span></div><div><div class="law-art">GS1 EPCIS 2.0 + ANMAT Trazabilidad</div><div class="law-name">Serialización de Medicamentos — Módulo 09</div><div class="law-desc">El Módulo 09 debe alinearse con la normativa ANMAT sobre trazabilidad de medicamentos y el estándar GS1 EPCIS 2.0. Los laboratorios ya tienen obligación de serialización unitaria. FlowState se integra como capa de inteligencia sobre esa infraestructura.</div></div></div>
+    <div class="law-card"><div class="law-bw"><span class="law-badge lb-m">MEDIO</span></div><div><div class="law-art">HL7/FHIR R4 + Obras Sociales + PAMI</div><div class="law-name">Interoperabilidad y Contratos con Financiadores</div><div class="law-desc">Recursos FHIR obligatorios: Patient (DNI), Practitioner (REFEPS), MedicationRequest, AuditEvent. Los contratos con financiadores deben definir: SLA, política de datos, integración API y limitación de responsabilidad. Sin esto, el piloto es informal.</div></div></div>
+  </div>
+  <div class="cta">
+    <div class="cta-txt"><strong>Acción inmediata:</strong> contratar abogado especialista en salud digital + consulta formal a ANMAT antes del MVP. Agregar especialista GS1 para el Módulo 09 y el segmento Laboratorios.</div>
+    <button class="cta-btn">Ver matriz compliance completa →</button>
+  </div>
+</div>
+
+<!-- ════ PRD GAPS ════ -->
+<div id="p-gaps" class="panel">
+  <div class="sec-head">Score por dimensión — PRD actual</div>
+  <div class="grid-2" style="margin-bottom:14px">
+    <div class="dim-card bg"><div class="dim-hd"><span class="dim-icon">🎯</span><span class="dim-name">Visión &amp; Definición del Problema</span><span class="dim-sv ok">75 / 100</span></div><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--teal)"></div></div></div><div class="dim-row"><span class="drk">Problema articulado</span><span class="drv ok">✓ Sólido</span></div><div class="dim-row"><span class="drk">Segmento objetivo</span><span class="drv warn">Parcial</span></div><div class="dim-row"><span class="drk">Pain cuantificado</span><span class="drv ok">✓ Con estadísticas</span></div></div>
+    <div class="dim-card br"><div class="dim-hd"><span class="dim-icon">📝</span><span class="dim-name">Requerimientos Funcionales (User Stories)</span><span class="dim-sv bad">10 / 100</span></div><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:10%;background:var(--red)"></div></div></div><div class="dim-row"><span class="drk">User Stories escritas</span><span class="drv bad">✗ Ausentes</span></div><div class="dim-row"><span class="drk">Criterios de Aceptación</span><span class="drv bad">✗ Ausentes</span></div><div class="dim-row"><span class="drk">Casos de uso detallados</span><span class="drv bad">✗ Ausentes</span></div></div>
+    <div class="dim-card ba"><div class="dim-hd"><span class="dim-icon">⚙️</span><span class="dim-name">Arquitectura &amp; Stack Técnico</span><span class="dim-sv warn">45 / 100</span></div><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:45%;background:var(--amber)"></div></div></div><div class="dim-row"><span class="drk">Stack definido</span><span class="drv ok">✓ Nombrado</span></div><div class="dim-row"><span class="drk">Diagramas C4 / BPMN</span><span class="drv bad">✗ Ausentes</span></div><div class="dim-row"><span class="drk">NFRs (SLA, latencia, vol.)</span><span class="drv bad">✗ Ausentes</span></div></div>
+    <div class="dim-card bb"><div class="dim-hd"><span class="dim-icon">💰</span><span class="dim-name">Análisis de Negocio &amp; ROI</span><span class="dim-sv ok">70 / 100</span></div><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:var(--teal)"></div></div></div><div class="dim-row"><span class="drk">Estructura de costos</span><span class="drv ok">✓ Estimada</span></div><div class="dim-row"><span class="drk">Break-even definido</span><span class="drv ok">✓ 12-18 meses</span></div><div class="dim-row"><span class="drk">Modelo SaaS / Pricing</span><span class="drv warn">Mencionado (vago)</span></div></div>
+    <div class="dim-card br"><div class="dim-hd"><span class="dim-icon">🔒</span><span class="dim-name">Compliance, Legal &amp; Regulatorio</span><span class="dim-sv bad">20 / 100</span></div><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--red)"></div></div></div><div class="dim-row"><span class="drk">Ley 25.326 (Datos Pers.)</span><span class="drv bad">✗ No mencionado</span></div><div class="dim-row"><span class="drk">Normativas ANMAT / IA</span><span class="drv bad">✗ No detallado</span></div><div class="dim-row"><span class="drk">PAMI / Obras Sociales</span><span class="drv warn">Solo mencionado</span></div></div>
+    <div class="dim-card ba"><div class="dim-hd"><span class="dim-icon">🗺️</span><span class="dim-name">MVP, Alcance &amp; Roadmap</span><span class="dim-sv warn">35 / 100</span></div><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:35%;background:var(--amber)"></div></div></div><div class="dim-row"><span class="drk">Scope MVP definido</span><span class="drv warn">Sugerido (PoC)</span></div><div class="dim-row"><span class="drk">Roadmap de releases</span><span class="drv bad">✗ Ausente</span></div><div class="dim-row"><span class="drk">Definition of Done</span><span class="drv bad">✗ Ausente</span></div></div>
+  </div>
+
+  <div class="sec-head">🚨 Gaps identificados — bloqueadores para el Analista Funcional</div>
+  <div class="gap-list">
+    <div class="gap-item"><span class="gap-badge gb-c">CRÍTICO</span><div><div class="gap-title">Cero User Stories</div><div class="gap-desc">No existe ningún enunciado "Como [rol] quiero [acción] para [valor]". El documento describe la solución de IA, no el comportamiento esperado del usuario. Sin user stories, el AF no tiene punto de partida. Los 3 nuevos módulos amplifican este problema sin resolverlo.</div></div></div>
+    <div class="gap-item"><span class="gap-badge gb-c">CRÍTICO</span><div><div class="gap-title">Sin Criterios de Aceptación</div><div class="gap-desc">No hay definición de "cuándo está bien hecho". Sin criterios Gherkin (Given/When/Then), QA no puede generar casos de prueba. Particularmente crítico para el Health Trust Score: ¿cuándo el score es correcto? ¿cuál es la tasa de falsos positivos aceptable?</div></div></div>
+    <div class="gap-item"><span class="gap-badge gb-c">CRÍTICO</span><div><div class="gap-title">Marco regulatorio argentino ausente del PRD</div><div class="gap-desc">Con el Módulo 09 (GS1 + Laboratorios) y el Health Trust Score incorporados, el gap legal se amplía. Ahora aplican además: normativa ANMAT de trazabilidad de medicamentos, GS1 EPCIS 2.0, y responsabilidad civil por decisiones automáticas del scoring.</div></div></div>
+    <div class="gap-item"><span class="gap-badge gb-h">ALTO</span><div><div class="gap-title">Sin diagramas de arquitectura ni flujos</div><div class="gap-desc">El stack está en prosa pero no hay C4 Level 1, BPMN del flujo de auditoría, ni diagrama de secuencia para el Smart Recall o el Health Trust Score. Con 9 módulos, la deuda de diagramas es ahora más grande que antes.</div></div></div>
+    <div class="gap-item"><span class="gap-badge gb-h">ALTO</span><div><div class="gap-title">NFRs completamente ausentes</div><div class="gap-desc">Sin SLAs, tiempos de respuesta (P95 ≤ 3s), volumen de recetas/día, política de retención de datos. El Smart Settlement agrega un NFR nuevo: latencia de liquidación T+24hs. El Smart Recall agrega otro: tiempo máximo de invalidación nacional de lote.</div></div></div>
+    <div class="gap-item"><span class="gap-badge gb-m">MEDIO</span><div><div class="gap-title">Stakeholders y Personas sin definir — ahora más complejos</div><div class="gap-desc">Con el segmento Laboratorios incorporado, hay al menos 3 personas nuevas a definir: Director de Calidad de Laboratorio, Jefe de Logística Inversa, y Responsable de Farmacovigilancia. El ICP de cada segmento sigue sin formalizar.</div></div></div>
+  </div>
+
+  <div class="sec-head">¿Está listo para el Analista Funcional?</div>
+  <div class="readiness-grid">
+    <div class="rp ok"><div class="rp-icon">✅</div><div class="rp-lbl">Contexto Negocio</div><div class="rp-st">listo</div></div>
+    <div class="rp ok"><div class="rp-icon">✅</div><div class="rp-lbl">Pain Cuantificado</div><div class="rp-st">listo</div></div>
+    <div class="rp ok"><div class="rp-icon">✅</div><div class="rp-lbl">Diferenciadores v2</div><div class="rp-st">definidos</div></div>
+    <div class="rp warn"><div class="rp-icon">⚠️</div><div class="rp-lbl">Stack Técnico</div><div class="rp-st">parcial</div></div>
+    <div class="rp warn"><div class="rp-icon">⚠️</div><div class="rp-lbl">Análisis ROI</div><div class="rp-st">parcial</div></div>
+    <div class="rp bad"><div class="rp-icon">❌</div><div class="rp-lbl">User Stories</div><div class="rp-st">falta</div></div>
+    <div class="rp bad"><div class="rp-icon">❌</div><div class="rp-lbl">Criterios Acept.</div><div class="rp-st">falta</div></div>
+    <div class="rp bad"><div class="rp-icon">❌</div><div class="rp-lbl">Compliance Legal</div><div class="rp-st">falta</div></div>
+    <div class="rp bad"><div class="rp-icon">❌</div><div class="rp-lbl">Diagramas</div><div class="rp-st">falta</div></div>
+    <div class="rp bad"><div class="rp-icon">❌</div><div class="rp-lbl">NFRs</div><div class="rp-st">falta</div></div>
+    <div class="rp bad"><div class="rp-icon">❌</div><div class="rp-lbl">Roadmap DoD</div><div class="rp-st">falta</div></div>
+  </div>
+  <div class="cta">
+    <div class="cta-txt"><strong>Primer paso para desbloquear el AF:</strong> escribir las épicas con User Stories INVEST del MVP (Módulos 1–4). El Health Trust Score y el Smart Recall son épicas separadas para Fase 2. Sin esto, el Sprint 1 no existe.</div>
+    <button class="cta-btn">Generar épicas INVEST ahora →</button>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='roi'){
+    setTimeout(()=>{
+      const f=document.getElementById('be-fill');
+      const t=document.getElementById('be-txt');
+      if(f)f.style.width='55%';
+      if(t)t.textContent='camino al break-even';
+    },150);
+  }
+}
+function togT(bid,cid){
+  const b=document.getElementById(bid);
+  const c=document.getElementById(cid);
+  const o=b.classList.contains('o');
+  b.classList.toggle('o',!o);
+  if(c)c.classList.toggle('o',!o);
+}
+function togP(bid,cid){
+  const b=document.getElementById(bid);
+  const c=document.getElementById(cid);
+  const o=b.classList.contains('o');
+  b.classList.toggle('o',!o);
+  if(c)c.classList.toggle('o',!o);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,539 @@
+
+<style>
+  :root {
+    --fs-accent: #1D9E75;
+    --fs-accent2: #0F6E56;
+    --fs-amber: #BA7517;
+    --fs-red: #A32D2D;
+    --fs-blue: #185FA5;
+    --fs-purple: #534AB7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+
+  .hub { padding: 0 0 2rem; }
+
+  .hero {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    display: flex; gap: 1.5rem; align-items: center;
+  }
+  .hero-logo {
+    width: 56px; height: 56px; border-radius: var(--border-radius-md);
+    background: var(--color-background-success);
+    border: 0.5px solid var(--color-border-success);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .hero h1 { font-size: 20px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .hero p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+  .hero-score { margin-left: auto; text-align: center; flex-shrink: 0; }
+  .hero-score .num { font-size: 36px; font-weight: 500; color: var(--color-text-warning); line-height: 1; }
+  .hero-score .lbl { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+
+  .nav { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .nav-btn {
+    padding: 7px 14px; border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-secondary);
+    background: transparent; cursor: pointer; font-size: 13px;
+    color: var(--color-text-secondary); transition: all .15s;
+    font-family: var(--font-sans);
+  }
+  .nav-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); }
+  .nav-btn.active {
+    background: var(--color-background-success);
+    border-color: var(--color-border-success);
+    color: var(--color-text-success); font-weight: 500;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* PANEL: Diagnóstico */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
+  .stat-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 1rem; text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 500; }
+  .stat-lbl { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; }
+  .s-red { color: var(--color-text-danger); }
+  .s-amber { color: var(--color-text-warning); }
+  .s-green { color: var(--color-text-success); }
+  .s-blue { color: var(--color-text-info); }
+
+  .fraud-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .fraud-item {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    padding: 10px 12px;
+  }
+  .fraud-item .fi-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+  .fraud-item .fi-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
+  .fi-icon { font-size: 14px; margin-bottom: 4px; }
+
+  /* PANEL: Arquitectura */
+  .module-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+  .mod-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    padding: 12px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .mod-card:hover { border-color: var(--color-border-success); background: var(--color-background-success); }
+  .mod-num { font-size: 11px; font-weight: 500; color: var(--color-text-success); margin-bottom: 4px; }
+  .mod-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .mod-desc { font-size: 11px; color: var(--color-text-secondary); line-height: 1.4; }
+  .mod-tag {
+    display: inline-block; margin-top: 6px; padding: 2px 7px;
+    border-radius: 4px; font-size: 10px; font-weight: 500;
+    background: var(--color-background-success);
+    color: var(--color-text-success);
+    border: 0.5px solid var(--color-border-success);
+  }
+  .mod-tag.warn { background: var(--color-background-warning); color: var(--color-text-warning); border-color: var(--color-border-warning); }
+  .mod-tag.info { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
+
+  /* PANEL: Mercado */
+  .tier-cards { display: flex; flex-direction: column; gap: 10px; }
+  .tier { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; }
+  .tier-header { padding: 10px 14px; display: flex; align-items: center; gap: 10px; background: var(--color-background-secondary); }
+  .tier-badge { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 4px; }
+  .tier-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .tier-price { margin-left: auto; font-size: 13px; color: var(--color-text-secondary); }
+  .tier-body { padding: 10px 14px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .tier-body .tb-item { font-size: 12px; color: var(--color-text-secondary); display: flex; gap: 5px; align-items: flex-start; }
+  .tb-check { color: var(--color-text-success); font-weight: 500; flex-shrink: 0; }
+
+  .prov-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-top: 1rem; }
+  .prov-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md); padding: 10px;
+    border-left: 3px solid var(--color-border-success);
+  }
+  .prov-name { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+  .prov-fraud { font-size: 18px; font-weight: 500; color: var(--color-text-danger); }
+  .prov-save { font-size: 11px; color: var(--color-text-success); }
+
+  /* PANEL: ROI */
+  .roi-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
+  .roi-side { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 14px; }
+  .roi-side h3 { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+  .roi-side.old h3 { color: var(--color-text-danger); }
+  .roi-side.new h3 { color: var(--color-text-success); }
+  .roi-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 12px; }
+  .roi-row:last-child { border: none; }
+  .roi-row .rv { font-weight: 500; }
+
+  .be-bar { height: 32px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); overflow: hidden; position: relative; margin: 12px 0; }
+  .be-fill { height: 100%; background: var(--color-background-success); border-radius: var(--border-radius-md); display: flex; align-items: center; padding: 0 10px; font-size: 12px; font-weight: 500; color: var(--color-text-success); transition: width 1s ease; }
+  .be-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); }
+
+  /* PANEL: Roadmap */
+  .phase { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); margin-bottom: 10px; overflow: hidden; }
+  .phase-header { padding: 10px 14px; display: flex; align-items: center; gap: 10px; background: var(--color-background-secondary); cursor: pointer; }
+  .phase-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .phase-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .phase-time { margin-left: auto; font-size: 12px; color: var(--color-text-secondary); }
+  .phase-body { padding: 10px 14px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .phase-item { font-size: 12px; color: var(--color-text-secondary); display: flex; gap: 6px; }
+
+  /* PANEL: Compliance */
+  .law-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 12px 14px; margin-bottom: 8px; display: flex; gap: 12px; }
+  .law-badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; white-space: nowrap; align-self: flex-start; }
+  .law-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+  .law-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
+
+  /* PANEL: PRD gaps */
+  .gap-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .gap-row:last-child { border: none; }
+  .gap-badge { padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 500; white-space: nowrap; }
+  .gap-badge.c { background: var(--color-background-danger); color: var(--color-text-danger); border: 0.5px solid var(--color-border-danger); }
+  .gap-badge.h { background: var(--color-background-warning); color: var(--color-text-warning); border: 0.5px solid var(--color-border-warning); }
+  .gap-badge.m { background: var(--color-background-info); color: var(--color-text-info); border: 0.5px solid var(--color-border-info); }
+  .gap-text { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+  .gap-text strong { color: var(--color-text-primary); }
+
+  .section-title { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+
+  .cta-bar {
+    background: var(--color-background-success);
+    border: 0.5px solid var(--color-border-success);
+    border-radius: var(--border-radius-md);
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 1rem;
+  }
+  .cta-text { font-size: 13px; color: var(--color-text-success); flex: 1; }
+  .cta-btn {
+    padding: 7px 14px; border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-success);
+    background: transparent; cursor: pointer;
+    font-size: 12px; font-weight: 500;
+    color: var(--color-text-success);
+    font-family: var(--font-sans);
+  }
+  .cta-btn:hover { background: var(--color-background-primary); }
+</style>
+
+<div class="hub">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">FlowState AI — Product Strategy Hub para el Sistema Nacional de Recetas Digitales Seguras</h2>
+
+  <div class="hero">
+    <div class="hero-logo">&#127963;</div>
+    <div>
+      <h1>FlowState AI — Recetas Digitales Seguras</h1>
+      <p>Infraestructura antifraude modular B2B para el sistema de salud argentino.<br>Farmacias · Obras Sociales · Laboratorios · Gobierno</p>
+    </div>
+    <div class="hero-score">
+      <div class="num">61</div>
+      <div class="lbl">PRD score<br>actual</div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="show('diagnostico', this)">Diagnóstico</button>
+    <button class="nav-btn" onclick="show('arquitectura', this)">Módulos</button>
+    <button class="nav-btn" onclick="show('mercado', this)">Mercado B2B</button>
+    <button class="nav-btn" onclick="show('roi', this)">ROI</button>
+    <button class="nav-btn" onclick="show('roadmap', this)">Roadmap</button>
+    <button class="nav-btn" onclick="show('compliance', this)">Legal</button>
+    <button class="nav-btn" onclick="show('gaps', this)">PRD gaps</button>
+  </div>
+
+  <!-- DIAGNÓSTICO -->
+  <div id="panel-diagnostico" class="panel active">
+    <div class="section-title">El problema en números</div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num s-red">USD 450M</div><div class="stat-lbl">fraude anual estimado en Argentina</div></div>
+      <div class="stat-card"><div class="stat-num s-amber">20–25%</div><div class="stat-lbl">recetas ambulatorias con inconsistencias</div></div>
+      <div class="stat-card"><div class="stat-num s-amber">7–11%</div><div class="stat-lbl">errores de prescripción en hospitales</div></div>
+      <div class="stat-card"><div class="stat-num s-blue">322M</div><div class="stat-lbl">recetas/año en Argentina</div></div>
+      <div class="stat-card"><div class="stat-num s-green">USD 247M</div><div class="stat-lbl">ahorro potencial (escenario Pro)</div></div>
+      <div class="stat-card"><div class="stat-num s-green">&lt;USD 0.10</div><div class="stat-lbl">costo IA por receta (vs USD 1.50–3 manual)</div></div>
+    </div>
+    <div class="section-title">Vectores de fraude identificados</div>
+    <div class="fraud-list">
+      <div class="fraud-item"><div class="fi-icon">&#128100;</div><div class="fi-title">Suplantación de médicos</div><div class="fi-desc">Uso de matrículas reales con firma falsificada</div></div>
+      <div class="fraud-item"><div class="fi-icon">&#128260;</div><div class="fi-title">Reutilización de recetas</div><div class="fi-desc">Una receta válida usada múltiples veces en distintas farmacias</div></div>
+      <div class="fraud-item"><div class="fi-icon">&#128138;</div><div class="fi-title">Sobreprescripción / connivencia</div><div class="fi-desc">Triángulo médico + paciente + farmacia para facturar medicación innecesaria</div></div>
+      <div class="fraud-item"><div class="fi-icon">&#129504;</div><div class="fi-title">Doctor Shopping</div><div class="fi-desc">Paciente con múltiples recetas del mismo fármaco en diferentes farmacias</div></div>
+      <div class="fraud-item"><div class="fi-icon">&#128203;</div><div class="fi-title">Facturación fantasma</div><div class="fi-desc">Recetas inexistentes cargadas a obras sociales y prepagas</div></div>
+      <div class="fraud-item"><div class="fi-icon">&#128290;</div><div class="fi-title">Manipulación digital</div><div class="fi-desc">Edición de PDFs, QR falsos sin backend de validación real</div></div>
+    </div>
+    <div class="cta-bar">
+      <div class="cta-text">Buenos Aires + CABA representan el 45% del problema nacional: USD 200M/año en fraude de recetas.</div>
+      <button class="cta-btn" onclick="sendPrompt('Armame el argumentario comercial para vender en Provincia de Buenos Aires')">Armar pitch PBA ↗</button>
+    </div>
+  </div>
+
+  <!-- ARQUITECTURA -->
+  <div id="panel-arquitectura" class="panel">
+    <div class="section-title">8 módulos independientes — adoptables de forma incremental</div>
+    <div class="module-grid">
+      <div class="mod-card" onclick="sendPrompt('Explicame en detalle el Módulo 1: Identidad y Firma PKI')">
+        <div class="mod-num">Módulo 1 · Core</div>
+        <div class="mod-title">Identidad y Firma</div>
+        <div class="mod-desc">PKI real, certificados X.509, validación REFEPS/matrícula, Ley 25.506</div>
+        <span class="mod-tag">MVP</span>
+      </div>
+      <div class="mod-card" onclick="sendPrompt('Explicame en detalle el Módulo 2: Receta como activo digital CUIR')">
+        <div class="mod-num">Módulo 2 · Core</div>
+        <div class="mod-title">Receta Digital CUIR</div>
+        <div class="mod-desc">UUID único, hash criptográfico, inmutabilidad, HL7/FHIR MedicationRequest</div>
+        <span class="mod-tag">MVP</span>
+      </div>
+      <div class="mod-card" onclick="sendPrompt('Cómo funciona el QR inteligente sin datos sensibles embebidos?')">
+        <div class="mod-num">Módulo 3 · Core</div>
+        <div class="mod-title">QR Inteligente</div>
+        <div class="mod-desc">Token dinámico apuntando a endpoint seguro, sin datos sensibles embebidos, validación online obligatoria</div>
+        <span class="mod-tag">MVP</span>
+      </div>
+      <div class="mod-card" onclick="sendPrompt('Arquitectura del módulo API de validación en tiempo real')">
+        <div class="mod-num">Módulo 4</div>
+        <div class="mod-title">API de Validación</div>
+        <div class="mod-desc">Estado, vigencia, uso único, cobertura. FastAPI + Python, SLA P95 ≤ 3s</div>
+        <span class="mod-tag">MVP</span>
+      </div>
+      <div class="mod-card" onclick="sendPrompt('Cómo funciona el módulo de trazabilidad tipo ledger?')">
+        <div class="mod-num">Módulo 5</div>
+        <div class="mod-title">Trazabilidad Ledger</div>
+        <div class="mod-desc">Log inmutable: emisión → validación → dispensación. Azure Table Storage / blockchain ligero</div>
+        <span class="mod-tag warn">Pro</span>
+      </div>
+      <div class="mod-card" onclick="sendPrompt('Detalles técnicos del motor antifraude IA — anomaly detection y graph analysis')">
+        <div class="mod-num">Módulo 6 · IA</div>
+        <div class="mod-title">Motor Antifraude</div>
+        <div class="mod-desc">Anomaly detection, graph analysis (médico-paciente-farmacia), scoring de riesgo, alertas automáticas</div>
+        <span class="mod-tag warn">Pro/Enterprise</span>
+      </div>
+      <div class="mod-card" onclick="sendPrompt('Cómo es la integración con obras sociales, prepagas y farmacias via FHIR?')">
+        <div class="mod-num">Módulo 7</div>
+        <div class="mod-title">Integration Hub</div>
+        <div class="mod-desc">Obras sociales, prepagas, farmacias, hospitales. APIs FHIR, webhooks, HL7 estándar</div>
+        <span class="mod-tag warn">Pro</span>
+      </div>
+      <div class="mod-card" onclick="sendPrompt('Diseñame el módulo IDP con GPT-4o/Claude Vision para recetas manuscritas')">
+        <div class="mod-num">Módulo 8 · IDP</div>
+        <div class="mod-title">Auditor IA (Auditxt)</div>
+        <div class="mod-desc">IDP con visión (Claude/GPT-4o), extracción CIE-10, LangGraph para validaciones cruzadas, RAG normativo</div>
+        <span class="mod-tag info">Enterprise</span>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <div class="cta-text">Los módulos 1–4 son el MVP lanzable en 90 días. El stack es FastAPI + Azure + React/Tailwind.</div>
+      <button class="cta-btn" onclick="sendPrompt('Arma el backlog técnico completo del MVP en 90 días con los módulos 1 a 4')">Backlog MVP ↗</button>
+    </div>
+  </div>
+
+  <!-- MERCADO -->
+  <div id="panel-mercado" class="panel">
+    <div class="section-title">Paquetes comerciales B2B</div>
+    <div class="tier-cards">
+      <div class="tier">
+        <div class="tier-header">
+          <span class="tier-badge" style="background:var(--color-background-success);color:var(--color-text-success);border:0.5px solid var(--color-border-success)">Starter</span>
+          <span class="tier-name">Control inmediato del fraude básico</span>
+          <span class="tier-price">Implementación rápida (semanas)</span>
+        </div>
+        <div class="tier-body">
+          <div class="tb-item"><span class="tb-check">+</span>Receta digital + UUID</div>
+          <div class="tb-item"><span class="tb-check">+</span>QR dinámico</div>
+          <div class="tb-item"><span class="tb-check">+</span>API validación básica</div>
+          <div class="tb-item"><span class="tb-check">+</span>Registro de uso</div>
+          <div class="tb-item"><span class="tb-check">+</span>Dashboard operativo</div>
+          <div class="tb-item"><span class="tb-check">+</span>Onboarding médicos</div>
+        </div>
+      </div>
+      <div class="tier" style="border-color:var(--color-border-warning)">
+        <div class="tier-header">
+          <span class="tier-badge" style="background:var(--color-background-warning);color:var(--color-text-warning);border:0.5px solid var(--color-border-warning)">Pro</span>
+          <span class="tier-name">Trazabilidad real + integración del sistema</span>
+          <span class="tier-price">1–3 meses</span>
+        </div>
+        <div class="tier-body">
+          <div class="tb-item"><span class="tb-check">+</span>Todo Starter</div>
+          <div class="tb-item"><span class="tb-check">+</span>Firma digital PKI</div>
+          <div class="tb-item"><span class="tb-check">+</span>Trazabilidad ledger</div>
+          <div class="tb-item"><span class="tb-check">+</span>Integración financiadores</div>
+          <div class="tb-item"><span class="tb-check">+</span>Reglas antifraude conf.</div>
+          <div class="tb-item"><span class="tb-check">+</span>Auditoría estructurada</div>
+        </div>
+      </div>
+      <div class="tier" style="border-color:var(--color-border-info)">
+        <div class="tier-header">
+          <span class="tier-badge" style="background:var(--color-background-info);color:var(--color-text-info);border:0.5px solid var(--color-border-info)">Enterprise</span>
+          <span class="tier-name">Infraestructura nacional inteligente</span>
+          <span class="tier-price">3–9 meses escalonados</span>
+        </div>
+        <div class="tier-body">
+          <div class="tb-item"><span class="tb-check">+</span>Todo Pro</div>
+          <div class="tb-item"><span class="tb-check">+</span>IA motor antifraude</div>
+          <div class="tb-item"><span class="tb-check">+</span>Graph analysis red</div>
+          <div class="tb-item"><span class="tb-check">+</span>Alertas regulatorias</div>
+          <div class="tb-item"><span class="tb-check">+</span>Alta disponibilidad cloud</div>
+          <div class="tb-item"><span class="tb-check">+</span>Auditoría legal completa</div>
+        </div>
+      </div>
+    </div>
+    <div class="section-title" style="margin-top:1.25rem">Fraude potencial por provincia — top 5</div>
+    <div class="prov-grid">
+      <div class="prov-card"><div class="prov-name">Buenos Aires</div><div class="prov-fraud">USD 171M</div><div class="prov-save">ahorro: USD 94M/año</div></div>
+      <div class="prov-card"><div class="prov-name">CABA</div><div class="prov-fraud">USD 30M</div><div class="prov-save">ahorro: USD 16.5M/año</div></div>
+      <div class="prov-card"><div class="prov-name">Córdoba</div><div class="prov-fraud">USD 38M</div><div class="prov-save">ahorro: USD 21M/año</div></div>
+      <div class="prov-card"><div class="prov-name">Santa Fe</div><div class="prov-fraud">USD 35M</div><div class="prov-save">ahorro: USD 19M/año</div></div>
+      <div class="prov-card"><div class="prov-name">Mendoza</div><div class="prov-fraud">USD 19.6M</div><div class="prov-save">ahorro: USD 10.7M/año</div></div>
+    </div>
+    <div class="cta-bar">
+      <div class="cta-text">Objetivo de entrada: obras sociales medianas de PBA + CABA. ICP: 50k–500k afiliados, auditoría actualmente manual.</div>
+      <button class="cta-btn" onclick="sendPrompt('Definime el ICP y las personas detalladas para el plan comercial Starter dirigido a obras sociales medianas en Argentina')">Definir ICP ↗</button>
+    </div>
+  </div>
+
+  <!-- ROI -->
+  <div id="panel-roi" class="panel">
+    <div class="section-title">Comparativa de costo por receta</div>
+    <div class="roi-compare">
+      <div class="roi-side old">
+        <h3>Auditoría manual (actual)</h3>
+        <div class="roi-row"><span>Costo por receta</span><span class="rv s-red">USD 1.50–3.00</span></div>
+        <div class="roi-row"><span>Cobertura</span><span class="rv s-red">Muestreo (%)</span></div>
+        <div class="roi-row"><span>Tiempo de respuesta</span><span class="rv s-red">Días / semanas</span></div>
+        <div class="roi-row"><span>Detección fraude</span><span class="rv s-red">Reactiva</span></div>
+        <div class="roi-row"><span>Escalabilidad</span><span class="rv s-red">Lineal (RRHH)</span></div>
+      </div>
+      <div class="roi-side new">
+        <h3>FlowState AI (propuesto)</h3>
+        <div class="roi-row"><span>Costo por receta</span><span class="rv s-green">&lt;USD 0.10</span></div>
+        <div class="roi-row"><span>Cobertura</span><span class="rv s-green">100% en tiempo real</span></div>
+        <div class="roi-row"><span>Tiempo de respuesta</span><span class="rv s-green">P95 ≤ 3s</span></div>
+        <div class="roi-row"><span>Detección fraude</span><span class="rv s-green">Predictiva + IA</span></div>
+        <div class="roi-row"><span>Escalabilidad</span><span class="rv s-green">Cloud (FinOps)</span></div>
+      </div>
+    </div>
+    <div class="section-title">Break-even estimado</div>
+    <div class="be-labels"><span>Mes 0</span><span>Break-even (12–18 meses)</span><span>Mes 24</span></div>
+    <div class="be-bar"><div class="be-fill" id="be-fill" style="width:0%">rentable</div></div>
+    <div class="section-title">Estructura de costos — MVP SaaS</div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num s-amber">USD 200K</div><div class="stat-lbl">desarrollo 6 meses (equipo 3–4 personas)</div></div>
+      <div class="stat-card"><div class="stat-num s-blue">USD 1K/mes</div><div class="stat-lbl">infraestructura cloud (Azure/AWS)</div></div>
+      <div class="stat-card"><div class="stat-num s-amber">USD 15K</div><div class="stat-lbl">compliance legal y certificaciones</div></div>
+      <div class="stat-card"><div class="stat-num s-green">&gt;60%</div><div class="stat-lbl">margen operativo una vez estabilizado</div></div>
+    </div>
+    <div class="cta-bar">
+      <div class="cta-text">Un cliente obra social de 200k afiliados genera ~1.4M recetas/año. A USD 0.10/validación = USD 140K MRR potencial.</div>
+      <button class="cta-btn" onclick="sendPrompt('Arma el modelo financiero detallado SaaS para FlowState AI con proyección 36 meses')">Modelo financiero ↗</button>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div id="panel-roadmap" class="panel">
+    <div class="section-title">Fases de lanzamiento</div>
+    <div class="phase">
+      <div class="phase-header" onclick="togglePhase('p1')">
+        <div class="phase-dot" style="background:var(--color-text-success)"></div>
+        <span class="phase-title">Fase 1 — MVP (90 días)</span>
+        <span class="phase-time">Meses 1–3</span>
+      </div>
+      <div id="p1" class="phase-body">
+        <div class="phase-item"><span class="tb-check">+</span>Módulos 1–4 operativos</div>
+        <div class="phase-item"><span class="tb-check">+</span>Receta digital firmada PKI</div>
+        <div class="phase-item"><span class="tb-check">+</span>QR dinámico + API validación</div>
+        <div class="phase-item"><span class="tb-check">+</span>Dashboard antifraude básico</div>
+        <div class="phase-item"><span class="tb-check">+</span>Piloto con 1–2 clientes</div>
+        <div class="phase-item"><span class="tb-check">+</span>User stories + criterios Gherkin</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-header" onclick="togglePhase('p2')">
+        <div class="phase-dot" style="background:var(--color-text-warning)"></div>
+        <span class="phase-title">Fase 2 — Escalado Pro (meses 4–9)</span>
+        <span class="phase-time">Meses 4–9</span>
+      </div>
+      <div id="p2" class="phase-body" style="display:none">
+        <div class="phase-item"><span class="tb-check">+</span>Módulos 5–7 integrados</div>
+        <div class="phase-item"><span class="tb-check">+</span>Integración obras sociales FHIR</div>
+        <div class="phase-item"><span class="tb-check">+</span>Trazabilidad ledger completa</div>
+        <div class="phase-item"><span class="tb-check">+</span>Red de farmacias piloto</div>
+        <div class="phase-item"><span class="tb-check">+</span>Analítica avanzada antifraude</div>
+        <div class="phase-item"><span class="tb-check">+</span>Certificación compliance legal</div>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-header" onclick="togglePhase('p3')">
+        <div class="phase-dot" style="background:var(--color-text-info)"></div>
+        <span class="phase-title">Fase 3 — Infraestructura Nacional</span>
+        <span class="phase-time">Meses 10–24</span>
+      </div>
+      <div id="p3" class="phase-body" style="display:none">
+        <div class="phase-item"><span class="tb-check">+</span>Módulo 8 IDP/Auditxt activo</div>
+        <div class="phase-item"><span class="tb-check">+</span>Motor IA graph analysis</div>
+        <div class="phase-item"><span class="tb-check">+</span>Integración multi-organismo</div>
+        <div class="phase-item"><span class="tb-check">+</span>Estándar provincial/nacional</div>
+        <div class="phase-item"><span class="tb-check">+</span>API marketplace laboratorios</div>
+        <div class="phase-item"><span class="tb-check">+</span>Break-even alcanzado</div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <div class="cta-text">Próximo paso crítico: resolver los 6 gaps del PRD antes de entregar al Analista Funcional.</div>
+      <button class="cta-btn" onclick="sendPrompt('Escribime las 3 épicas principales del MVP con user stories INVEST y criterios de aceptación Gherkin')">Generar épicas ↗</button>
+    </div>
+  </div>
+
+  <!-- COMPLIANCE -->
+  <div id="panel-compliance" class="panel">
+    <div class="section-title">Marco legal argentino — obligatorio para go-live</div>
+    <div class="law-card">
+      <span class="law-badge" style="background:var(--color-background-danger);color:var(--color-text-danger);border:0.5px solid var(--color-border-danger)">Crítico</span>
+      <div><div class="law-name">Ley 27.553 + Res. 2214/2025</div><div class="law-desc">Obligatoriedad de receta electrónica/digital en todo el territorio nacional. Requiere CUIR, código QR/barras, firma digital o electrónica validada.</div></div>
+    </div>
+    <div class="law-card">
+      <span class="law-badge" style="background:var(--color-background-danger);color:var(--color-text-danger);border:0.5px solid var(--color-border-danger)">Crítico</span>
+      <div><div class="law-name">Ley 25.326 — Protección de Datos Personales</div><div class="law-desc">Datos de salud son sensibles. Retención de imagen cifrada máx. 90 días, consentimiento informado, habeas data. Aplica a todo procesamiento IA.</div></div>
+    </div>
+    <div class="law-card">
+      <span class="law-badge" style="background:var(--color-background-danger);color:var(--color-text-danger);border:0.5px solid var(--color-border-danger)">Crítico</span>
+      <div><div class="law-name">Ley 25.506 — Firma Digital</div><div class="law-desc">Base legal para PKI, certificados X.509 y validez probatoria de las recetas. Rige la infraestructura de identidad digital médica.</div></div>
+    </div>
+    <div class="law-card">
+      <span class="law-badge" style="background:var(--color-background-warning);color:var(--color-text-warning);border:0.5px solid var(--color-border-warning)">Alto</span>
+      <div><div class="law-name">Ley 25.649 — Prescripción por nombre genérico</div><div class="law-desc">Toda receta debe incluir el nombre genérico del medicamento. El validador normativo debe verificar cumplimiento automáticamente.</div></div>
+    </div>
+    <div class="law-card">
+      <span class="law-badge" style="background:var(--color-background-warning);color:var(--color-text-warning);border:0.5px solid var(--color-border-warning)">Alto</span>
+      <div><div class="law-name">Normativas ANMAT — Software médico e IA</div><div class="law-desc">Disposiciones vigentes 2025–2026 sobre IA en salud y software de auditoría médica. Bloqueante para cualquier comercialización con financiadores.</div></div>
+    </div>
+    <div class="law-card">
+      <span class="law-badge" style="background:var(--color-background-info);color:var(--color-text-info);border:0.5px solid var(--color-border-info)">Medio</span>
+      <div><div class="law-name">Estándar HL7/FHIR — Interoperabilidad</div><div class="law-desc">Patient, Practitioner, MedicationRequest como recursos core. REFEPS para validación de credenciales médicas. No crear campos custom si existe atributo FHIR.</div></div>
+    </div>
+    <div class="cta-bar">
+      <div class="cta-text">El marco legal es un bloqueante crítico del PRD. Requiere abogado especialista en salud digital + ANMAT antes del go-live.</div>
+      <button class="cta-btn" onclick="sendPrompt('Arma la matriz de compliance legal completa para FlowState AI con artículos específicos de cada ley y obligaciones técnicas')">Matriz compliance ↗</button>
+    </div>
+  </div>
+
+  <!-- PRD GAPS -->
+  <div id="panel-gaps" class="panel">
+    <div class="section-title">6 gaps bloqueantes — deben resolverse antes del Analista Funcional</div>
+    <div class="gap-row">
+      <span class="gap-badge c">Crítico</span>
+      <div class="gap-text"><strong>Cero User Stories.</strong> No existe ningún enunciado "Como [rol] quiero [acción] para [valor]". El documento describe la solución de IA, no el comportamiento esperado del usuario del producto.</div>
+    </div>
+    <div class="gap-row">
+      <span class="gap-badge c">Crítico</span>
+      <div class="gap-text"><strong>Sin Criterios de Aceptación.</strong> No hay definición de "cuándo está bien hecho". Sin esto, el AF no puede generar casos de prueba y QA no puede validar nada.</div>
+    </div>
+    <div class="gap-row">
+      <span class="gap-badge c">Crítico</span>
+      <div class="gap-text"><strong>Marco regulatorio argentino ausente.</strong> Ley 25.326, disposiciones ANMAT 2025–2026 sobre IA médica y normativas contractuales con Obras Sociales son bloqueadores legales reales para cualquier go-live.</div>
+    </div>
+    <div class="gap-row">
+      <span class="gap-badge h">Alto</span>
+      <div class="gap-text"><strong>Sin diagramas de arquitectura ni flujos.</strong> El stack está en prosa pero no hay C4 Level 1, BPMN de flujo de auditoría, ni diagrama de secuencia IDP → LangGraph → Resultado.</div>
+    </div>
+    <div class="gap-row">
+      <span class="gap-badge h">Alto</span>
+      <div class="gap-text"><strong>NFRs completamente ausentes.</strong> Sin SLAs, tiempos de respuesta (P95 ≤ 3s), volumen de recetas/día esperado, política de retención de datos sensibles ni niveles de disponibilidad requeridos.</div>
+    </div>
+    <div class="gap-row">
+      <span class="gap-badge m">Medio</span>
+      <div class="gap-text"><strong>Stakeholders y Personas sin definir.</strong> "Obras Sociales medianas" es ambiguo. No está definido quién es el usuario primario: ¿el auditor interno?, ¿el farmacéutico? El ICP no está formalizado.</div>
+    </div>
+    <div class="cta-bar">
+      <div class="cta-text">Con estos gaps resueltos, el PRD puede subir de 61 a 85+ y estar listo para el Analista Funcional.</div>
+      <button class="cta-btn" onclick="sendPrompt('Resolvé el gap más crítico: escribime las 3 épicas principales con User Stories INVEST y criterios Gherkin para el MVP de FlowState AI')">Resolver gaps ahora ↗</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'roi') {
+    setTimeout(() => {
+      const el = document.getElementById('be-fill');
+      if (el) el.style.width = '55%';
+    }, 200);
+  }
+}
+function togglePhase(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = el.style.display === 'none' ? 'grid' : 'none';
+}
+setTimeout(() => {
+  const el = document.getElementById('be-fill');
+  if (el) el.style.width = '0%';
+}, 100);
+</script>

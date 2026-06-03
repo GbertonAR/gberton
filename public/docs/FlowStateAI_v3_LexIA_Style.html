@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowState AI — Presentación Ejecutiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy-deep:  #0B1120;
+  --navy-mid:   #0F1A35;
+  --navy-card:  #152040;
+  --navy-light: #1C2E55;
+  --cyan:       #00D4FF;
+  --cyan-dim:   #00A8CC;
+  --cyan-glow:  rgba(0,212,255,0.15);
+  --cyan-subtle:rgba(0,212,255,0.08);
+  --blue-acc:   #1A6EF5;
+  --purple-acc: #7C3AED;
+  --gold:       #F59E0B;
+  --green:      #10B981;
+  --red:        #EF4444;
+  --text:       #E2E8F8;
+  --text-dim:   #8B9DC3;
+  --text-faint: #4A5A80;
+  --border:     rgba(255,255,255,0.07);
+  --border-cyan:rgba(0,212,255,0.25);
+  --font: 'Plus Jakarta Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--navy-deep);
+  color: var(--text);
+  overflow-x: hidden;
+  font-size: 15px;
+}
+
+/* ── scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--navy-deep); }
+::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 4px; }
+
+/* ── progress ── */
+#progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--blue-acc));
+  transform-origin: left; transform: scaleX(0);
+  z-index: 999; transition: transform 0.1s linear;
+}
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav {
+  position: fixed; top: 3px; left: 0; right: 0; z-index: 800;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; height: 62px;
+  background: rgba(11,17,32,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display: flex; flex-direction: column; line-height: 1;
+}
+.nav-logo-name {
+  font-size: 1.35rem; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.nav-logo-name span { color: var(--cyan); }
+.nav-logo-sub {
+  font-size: 0.65rem; color: var(--text-dim);
+  letter-spacing: 0.06em; margin-top: 1px;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-size: 0.85rem; font-weight: 500;
+  color: var(--text-dim); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--cyan); }
+.nav-cta {
+  background: var(--cyan);
+  color: var(--navy-deep);
+  font-weight: 700; font-size: 0.82rem;
+  padding: 0.55rem 1.4rem; border-radius: 8px;
+  text-decoration: none; transition: opacity 0.2s;
+  letter-spacing: 0.01em;
+}
+.nav-cta:hover { opacity: 0.85; }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 3rem;
+  align-items: center;
+  padding: 8rem 5rem 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* mesh gradient bg */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 700px 500px at 10% 50%, rgba(0,212,255,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 400px at 80% 20%, rgba(26,110,245,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 300px at 60% 80%, rgba(124,58,237,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* grid lines subtle */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.hero-left { position: relative; z-index: 2; }
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 1.8rem;
+}
+.hero-eyebrow::before {
+  content: ''; width: 28px; height: 2px; background: var(--cyan);
+}
+
+.hero-title {
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  font-weight: 800; line-height: 0.95;
+  letter-spacing: -0.04em; margin-bottom: 1.5rem;
+}
+.hero-title .lex { color: var(--text); }
+.hero-title .ia  { color: var(--cyan); }
+.hero-title .flow { color: var(--text); }
+.hero-title .state { color: var(--cyan); }
+.hero-title .ai-word { color: var(--text); }
+
+.hero-desc {
+  font-size: 1.05rem; font-weight: 400;
+  color: var(--text-dim); line-height: 1.75;
+  max-width: 520px; margin-bottom: 2.5rem;
+}
+.hero-desc strong { color: var(--cyan); font-weight: 600; }
+.hero-desc b { color: var(--text); font-weight: 600; }
+
+.hero-btns { display: flex; gap: 1rem; align-items: center; margin-bottom: 4rem; }
+.btn-primary {
+  background: var(--cyan);
+  color: var(--navy-deep);
+  font-weight: 700; font-size: 0.9rem;
+  padding: 0.8rem 2rem; border-radius: 10px;
+  text-decoration: none; transition: all 0.2s;
+  box-shadow: 0 0 24px rgba(0,212,255,0.3);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 40px rgba(0,212,255,0.5);
+  transform: translateY(-1px);
+}
+.btn-secondary {
+  border: 1.5px solid var(--border-cyan);
+  color: var(--text);
+  font-weight: 600; font-size: 0.9rem;
+  padding: 0.8rem 2rem; border-radius: 10px;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
+
+/* stat strip */
+.stat-strip {
+  display: flex; gap: 3rem;
+}
+.stat-item {}
+.stat-val {
+  font-size: 2.4rem; font-weight: 800;
+  color: var(--cyan); letter-spacing: -0.03em; line-height: 1;
+}
+.stat-label {
+  font-size: 0.72rem; color: var(--text-dim);
+  margin-top: 0.2rem; font-weight: 500;
+}
+
+/* hero right — feature cards */
+.hero-right {
+  display: flex; flex-direction: column; gap: 1rem;
+  position: relative; z-index: 2;
+}
+.feature-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.3rem 1.5rem;
+  transition: border-color 0.3s, transform 0.3s;
+  position: relative; overflow: hidden;
+}
+.feature-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--blue-acc));
+  opacity: 0; transition: opacity 0.3s;
+}
+.feature-card:hover {
+  border-color: var(--border-cyan);
+  transform: translateX(4px);
+}
+.feature-card:hover::before { opacity: 1; }
+.fc-tag {
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.fc-tag::before {
+  content: '●'; font-size: 0.5rem;
+  color: var(--green);
+  animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.fc-body {
+  font-size: 0.9rem; font-weight: 500;
+  color: var(--text); line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+.fc-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.badge {
+  font-size: 0.65rem; font-weight: 600;
+  padding: 0.2rem 0.6rem; border-radius: 20px;
+}
+.badge-cyan {
+  background: rgba(0,212,255,0.12);
+  color: var(--cyan);
+  border: 1px solid rgba(0,212,255,0.2);
+}
+.badge-blue {
+  background: rgba(26,110,245,0.12);
+  color: #7DB4FF;
+  border: 1px solid rgba(26,110,245,0.2);
+}
+.badge-purple {
+  background: rgba(124,58,237,0.12);
+  color: #B48EFF;
+  border: 1px solid rgba(124,58,237,0.2);
+}
+.badge-gold {
+  background: rgba(245,158,11,0.12);
+  color: var(--gold);
+  border: 1px solid rgba(245,158,11,0.2);
+}
+.badge-green {
+  background: rgba(16,185,129,0.12);
+  color: var(--green);
+  border: 1px solid rgba(16,185,129,0.2);
+}
+
+/* ══════════════════════════════════════
+   SECTION WRAPPER
+══════════════════════════════════════ */
+.section {
+  max-width: 1200px; margin: 0 auto;
+  padding: 5rem 5rem;
+}
+@media(max-width:900px) {
+  .section { padding: 4rem 1.5rem; }
+  nav { padding: 0 1.5rem; }
+  .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; }
+  .hero-right { display: none; }
+}
+
+.section-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 1rem;
+}
+.section-eyebrow::before { content: '—'; }
+
+.section-title {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.1; margin-bottom: 0.8rem;
+}
+.section-sub {
+  font-size: 0.95rem; color: var(--text-dim);
+  line-height: 1.75; max-width: 620px;
+}
+
+/* divider */
+.sep {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  max-width: 1200px; margin: 0 auto;
+}
+
+/* ── part banner ── */
+.part-banner {
+  background: var(--navy-mid);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 3.5rem 5rem;
+  display: flex; align-items: center; gap: 2rem;
+  position: relative; overflow: hidden;
+}
+.part-banner::after {
+  content: '';
+  position: absolute; right: 0; top: 0; bottom: 0; width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.04));
+  pointer-events: none;
+}
+.part-num-big {
+  font-size: 5rem; font-weight: 800;
+  color: rgba(0,212,255,0.08); line-height: 1;
+  letter-spacing: -0.04em; flex-shrink: 0;
+}
+.part-info {}
+.part-label {
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 0.4rem;
+}
+.part-title {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 800; letter-spacing: -0.02em;
+}
+.part-sub { font-size: 0.9rem; color: var(--text-dim); margin-top: 0.3rem; }
+
+/* ══════════════════════════════════════
+   CARDS GRID
+══════════════════════════════════════ */
+.cards-3 {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem;
+}
+.cards-2 {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem;
+}
+.cards-4 {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem;
+}
+@media(max-width:900px) {
+  .cards-3, .cards-4 { grid-template-columns: 1fr; }
+  .cards-2 { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.8rem;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  position: relative; overflow: hidden;
+}
+.card:hover {
+  border-color: var(--border-cyan);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,212,255,0.08);
+}
+.card-icon {
+  font-size: 2rem; margin-bottom: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px;
+  background: var(--cyan-subtle);
+  border-radius: 12px;
+  border: 1px solid var(--border-cyan);
+}
+.card-icon-purple {
+  background: rgba(124,58,237,0.1);
+  border-color: rgba(124,58,237,0.25);
+}
+.card-icon-blue {
+  background: rgba(26,110,245,0.1);
+  border-color: rgba(26,110,245,0.25);
+}
+.card-icon-gold {
+  background: rgba(245,158,11,0.1);
+  border-color: rgba(245,158,11,0.25);
+}
+.card-icon-green {
+  background: rgba(16,185,129,0.1);
+  border-color: rgba(16,185,129,0.25);
+}
+.card-title {
+  font-size: 1rem; font-weight: 700;
+  margin-bottom: 0.5rem; line-height: 1.3;
+}
+.card-body {
+  font-size: 0.85rem; color: var(--text-dim);
+  line-height: 1.65;
+}
+.card-wfd {
+  margin-top: 1rem;
+  font-size: 0.65rem; font-weight: 700;
+  color: var(--cyan); letter-spacing: 0.06em;
+}
+
+/* highlighted card */
+.card-featured {
+  border-color: var(--border-cyan);
+  background: linear-gradient(135deg, rgba(0,212,255,0.05) 0%, var(--navy-card) 100%);
+}
+.card-featured::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--blue-acc));
+}
+
+/* ══════════════════════════════════════
+   MISSION/VISION SPLIT
+══════════════════════════════════════ */
+.mv-split {
+  display: grid; grid-template-columns: 1fr 1px 1fr; gap: 3rem;
+  padding: 3rem;
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+.mv-divider { background: var(--border); }
+.mv-label {
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 1rem;
+}
+.mv-text {
+  font-size: 1.05rem; font-weight: 600;
+  line-height: 1.6; color: var(--text);
+}
+.mv-sub {
+  font-size: 0.88rem; color: var(--text-dim);
+  line-height: 1.7; margin-top: 0.8rem;
+}
+@media(max-width:700px) {
+  .mv-split { grid-template-columns: 1fr; gap: 2rem; }
+  .mv-divider { display: none; }
+}
+
+/* ══════════════════════════════════════
+   LEGAL PHASES
+══════════════════════════════════════ */
+.phase-cards {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+@media(max-width:700px) { .phase-cards { grid-template-columns: 1fr; } }
+.phase-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 2rem;
+}
+.phase-num-badge {
+  display: inline-block;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--cyan-subtle);
+  color: var(--cyan);
+  border: 1px solid var(--border-cyan);
+  padding: 0.25rem 0.7rem; border-radius: 6px;
+  margin-bottom: 1rem;
+}
+.phase-title {
+  font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;
+}
+.phase-body {
+  font-size: 0.86rem; color: var(--text-dim); line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+/* ══════════════════════════════════════
+   PRODUCT LIST — FULL WIDTH
+══════════════════════════════════════ */
+.product-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px 130px;
+  gap: 1.5rem;
+  padding: 1.5rem 1.8rem;
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 12px; margin-bottom: 0.6rem;
+  align-items: center;
+  transition: border-color 0.3s, transform 0.2s;
+}
+.product-row:hover {
+  border-color: var(--border-cyan);
+  transform: translateX(4px);
+}
+.pr-name { font-size: 1rem; font-weight: 700; }
+.pr-tech {
+  font-size: 0.65rem; font-weight: 600;
+  color: var(--cyan); margin-top: 0.2rem;
+  letter-spacing: 0.04em;
+}
+.pr-desc { font-size: 0.86rem; color: var(--text-dim); line-height: 1.6; }
+.pr-sector { font-size: 0.82rem; color: var(--text-dim); font-style: italic; }
+.pr-status { text-align: right; }
+@media(max-width:800px) {
+  .product-row { grid-template-columns: 1fr; gap: 0.4rem; }
+  .product-row:hover { transform: none; }
+  .pr-status { text-align: left; }
+}
+
+/* ══════════════════════════════════════
+   COMPARISON TABLE
+══════════════════════════════════════ */
+.comp-table { width: 100%; border-collapse: collapse; }
+.comp-table thead th {
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 1rem 1.2rem; text-align: left;
+  background: var(--navy-mid);
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+}
+.comp-table thead th.hl {
+  color: var(--cyan);
+  background: rgba(0,212,255,0.06);
+  border-bottom: 2px solid var(--cyan);
+}
+.comp-table tbody td {
+  padding: 1rem 1.2rem; font-size: 0.88rem;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+}
+.comp-table tbody td:first-child {
+  font-weight: 600; color: var(--text); font-size: 0.9rem;
+}
+.comp-table tbody td.hl {
+  color: var(--text); font-weight: 600;
+  background: rgba(0,212,255,0.04);
+}
+.comp-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+.comp-table tbody tr:hover td.hl { background: rgba(0,212,255,0.08); }
+
+/* ══════════════════════════════════════
+   SECTORS
+══════════════════════════════════════ */
+.sector-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem;
+}
+@media(max-width:700px) { .sector-grid { grid-template-columns: 1fr; } }
+.sector-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 2rem;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.sector-card:hover { border-color: var(--border-cyan); transform: translateY(-3px); }
+.sector-emoji { font-size: 2rem; margin-bottom: 1rem; display: block; }
+.sector-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.sector-stat {
+  font-size: 2rem; font-weight: 800;
+  color: var(--cyan); margin-bottom: 0.4rem;
+  letter-spacing: -0.03em;
+}
+.sector-stat.red { color: #F87171; }
+.sector-body { font-size: 0.84rem; color: var(--text-dim); line-height: 1.65; }
+
+/* ══════════════════════════════════════
+   PRICING
+══════════════════════════════════════ */
+.pricing-grid {
+  display: grid; grid-template-columns: 1fr 1.1fr 1fr; gap: 1rem;
+}
+@media(max-width:700px) { .pricing-grid { grid-template-columns: 1fr; } }
+.price-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 2.5rem 2rem;
+  position: relative; transition: transform 0.3s;
+}
+.price-card.prime {
+  border-color: var(--cyan);
+  background: linear-gradient(160deg, rgba(0,212,255,0.07) 0%, var(--navy-card) 100%);
+}
+.price-card:hover { transform: translateY(-4px); }
+.price-rec {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--cyan); color: var(--navy-deep);
+  padding: 0.2rem 0.9rem; border-radius: 20px;
+}
+.price-tier {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 1rem;
+}
+.price-card.prime .price-tier { color: var(--cyan); }
+.price-amount {
+  font-size: 3rem; font-weight: 800;
+  letter-spacing: -0.04em; line-height: 1;
+  margin-bottom: 0.2rem;
+}
+.price-card.prime .price-amount { color: var(--cyan); }
+.price-period {
+  font-size: 0.78rem; color: var(--text-dim); margin-bottom: 1.8rem;
+}
+.price-feats { display: flex; flex-direction: column; gap: 0.65rem; }
+.price-feat {
+  font-size: 0.86rem; color: var(--text-dim);
+  display: flex; gap: 0.6rem; align-items: flex-start;
+}
+.price-feat::before { content: '→'; color: var(--cyan); flex-shrink: 0; }
+.price-card.prime .price-feat { color: var(--text); }
+
+/* ══════════════════════════════════════
+   TIMELINE
+══════════════════════════════════════ */
+.timeline { position: relative; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 20px; top: 10px; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--cyan), var(--blue-acc), transparent);
+}
+.tl-item {
+  display: flex; gap: 2rem; padding-bottom: 2.5rem;
+  position: relative;
+}
+.tl-dot-wrap {
+  flex-shrink: 0; width: 42px;
+  display: flex; justify-content: center;
+}
+.tl-dot {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--navy-deep);
+  border: 2px solid var(--cyan);
+  margin-top: 4px; position: relative; z-index: 1;
+  transition: background 0.2s;
+  box-shadow: 0 0 12px rgba(0,212,255,0.3);
+}
+.tl-item:hover .tl-dot { background: var(--cyan); }
+.tl-content {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.5rem;
+  flex: 1;
+  transition: border-color 0.3s;
+}
+.tl-item:hover .tl-content { border-color: var(--border-cyan); }
+.tl-period {
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 0.4rem;
+}
+.tl-title {
+  font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;
+}
+.tl-body { font-size: 0.86rem; color: var(--text-dim); line-height: 1.65; }
+
+/* ══════════════════════════════════════
+   FINANCIAL TABLE
+══════════════════════════════════════ */
+.fin-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; }
+.fin-table thead th {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 1rem 1.2rem;
+  background: rgba(0,212,255,0.08);
+  color: var(--cyan); text-align: left;
+  border-bottom: 1px solid var(--border-cyan);
+}
+.fin-table tbody td {
+  padding: 1rem 1.2rem; font-size: 0.9rem;
+  color: var(--text-dim);
+  background: var(--navy-card);
+  border-bottom: 1px solid var(--border);
+}
+.fin-table tbody tr.total td {
+  font-weight: 700; color: var(--cyan);
+  background: rgba(0,212,255,0.06);
+  border-top: 1px solid var(--border-cyan);
+  border-bottom: none;
+}
+.mono-val { font-family: 'Courier New', monospace; color: var(--cyan); font-weight: 600; }
+
+/* ══════════════════════════════════════
+   ROADMAP
+══════════════════════════════════════ */
+.roadmap-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem;
+}
+@media(max-width:900px) { .roadmap-grid { grid-template-columns: 1fr 1fr; } }
+.rm-card {
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.8rem;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.rm-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.rm-card:nth-child(1)::before { background: var(--cyan); }
+.rm-card:nth-child(2)::before { background: var(--blue-acc); }
+.rm-card:nth-child(3)::before { background: var(--purple-acc); }
+.rm-card:nth-child(4)::before { background: var(--gold); }
+.rm-card:hover { border-color: var(--border-cyan); transform: translateY(-3px); }
+.rm-phase {
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.5rem;
+}
+.rm-year {
+  font-size: 1.6rem; font-weight: 800;
+  letter-spacing: -0.03em; margin-bottom: 0.8rem;
+  color: var(--text);
+}
+.rm-items {
+  font-size: 0.82rem; color: var(--text-dim); line-height: 1.65;
+  margin-bottom: 1rem;
+}
+.rm-goal {
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--cyan);
+  border-top: 1px solid var(--border);
+  padding-top: 0.8rem;
+}
+
+/* ══════════════════════════════════════
+   RISK TABLE
+══════════════════════════════════════ */
+.risk-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.risk-row {
+  display: grid;
+  grid-template-columns: 1fr 100px 100px 1fr;
+  gap: 1rem;
+  background: var(--navy-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  align-items: center;
+  transition: border-color 0.2s;
+}
+.risk-row:hover { border-color: var(--border-cyan); }
+.risk-name { font-size: 0.9rem; font-weight: 500; }
+.risk-badge {
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.25rem 0.6rem; border-radius: 6px;
+  display: inline-block; text-align: center;
+}
+.rb-high { background: rgba(239,68,68,0.12); color: #F87171; border: 1px solid rgba(239,68,68,0.25); }
+.rb-mid  { background: rgba(245,158,11,0.12); color: var(--gold); border: 1px solid rgba(245,158,11,0.25); }
+.rb-low  { background: rgba(16,185,129,0.12); color: var(--green); border: 1px solid rgba(16,185,129,0.25); }
+.risk-plan { font-size: 0.84rem; color: var(--text-dim); line-height: 1.6; }
+@media(max-width:700px) { .risk-row { grid-template-columns: 1fr; gap: 0.3rem; } }
+
+/* ══════════════════════════════════════
+   HIGHLIGHT BOX
+══════════════════════════════════════ */
+.hbox {
+  background: rgba(0,212,255,0.06);
+  border: 1px solid var(--border-cyan);
+  border-radius: 12px;
+  padding: 1.5rem 1.8rem;
+  font-size: 0.9rem; line-height: 1.75;
+  color: var(--text-dim); margin: 1.5rem 0;
+}
+.hbox strong { color: var(--text); font-weight: 600; }
+.hbox .cyan { color: var(--cyan); font-weight: 600; }
+
+/* ══════════════════════════════════════
+   CLOSING
+══════════════════════════════════════ */
+.closing {
+  background: var(--navy-mid);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 8rem 2rem;
+  position: relative; overflow: hidden;
+}
+.closing::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; height: 400px;
+  background: radial-gradient(ellipse, rgba(0,212,255,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.closing-eyebrow {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 1.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+}
+.closing-eyebrow::before, .closing-eyebrow::after {
+  content: ''; width: 40px; height: 1px; background: var(--cyan); opacity: 0.4;
+}
+.closing-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1.05; margin-bottom: 1.5rem;
+  position: relative; z-index: 1;
+}
+.closing-title span { color: var(--cyan); }
+.closing-body {
+  font-size: 1rem; color: var(--text-dim);
+  max-width: 560px; margin: 0 auto 2.5rem;
+  line-height: 1.8; position: relative; z-index: 1;
+}
+.closing-body strong { color: var(--text); }
+.closing-meta {
+  font-size: 0.72rem; color: var(--text-faint);
+  margin-top: 3rem; position: relative; z-index: 1;
+  line-height: 1.8;
+}
+
+footer {
+  background: var(--navy-deep);
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 5rem;
+  font-size: 0.72rem; color: var(--text-faint);
+}
+
+/* ══════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════ */
+.sr {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.sr.in { opacity: 1; transform: none; }
+.sr-d1 { transition-delay: 0.1s; }
+.sr-d2 { transition-delay: 0.2s; }
+.sr-d3 { transition-delay: 0.3s; }
+
+/* two col */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media(max-width:700px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- ════════════════════════════════
+     NAV
+════════════════════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-name">Flow<span>State</span> AI</div>
+    <div class="nav-logo-sub">by Buongiorno Berton · CABA</div>
+  </div>
+  <div class="nav-links">
+    <a href="#fundacional">Fundacional</a>
+    <a href="#innovacion">Innovación</a>
+    <a href="#marketing">Marketing</a>
+    <a href="#finanzas">Finanzas</a>
+  </div>
+  <a href="#finanzas" class="nav-cta">Solicitar Demo</a>
+</nav>
+
+<!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Plataforma SaaS de IA para empresas LATAM</div>
+    <h1 class="hero-title">
+      <span class="flow">Flow</span><span class="state">State</span><br>
+      <span class="ai-word">AI</span>
+    </h1>
+    <p class="hero-desc">
+      La plataforma de <strong>inteligencia artificial</strong> diseñada exclusivamente
+      para la <b>transformación digital real</b> de empresas en Latinoamérica.<br>
+      Construida sobre la infraestructura robusta de <strong>Microsoft Azure</strong>.
+    </p>
+    <div class="hero-btns">
+      <a href="#innovacion" class="btn-primary">Ver Demo en Vivo</a>
+      <a href="#marketing" class="btn-secondary">Explorar Módulos →</a>
+    </div>
+    <div class="stat-strip">
+      <div class="stat-item">
+        <div class="stat-val">6</div>
+        <div class="stat-label">Agentes en Producción</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">USD 250</div>
+        <div class="stat-label">Ticket mensual</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">100%</div>
+        <div class="stat-label">Azure nativo</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">Q1</div>
+        <div class="stat-label">Break-even 2026</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="feature-card">
+      <div class="fc-tag">Asistente Operativo</div>
+      <div class="fc-body">Analicé el Proyecto de Ley Nº1234/26 y detecté 3 conflictos normativos con regulación vigente...</div>
+      <div class="fc-tags">
+        <span class="badge badge-cyan">IA Explicable</span>
+        <span class="badge badge-blue">Fuentes Citadas</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-tag">Gestión de Cobranzas</div>
+      <div class="fc-body">Envié 47 recordatorios de expensas vía WhatsApp. Tasa de respuesta: 68%. Morosidad reducida 32% este mes.</div>
+      <div class="fc-tags">
+        <span class="badge badge-green">ConsorcioFlow</span>
+        <span class="badge badge-cyan">Azure Comms</span>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-tag">Auditoría Activa · 0 Incidentes</div>
+      <div class="fc-body">Todas las operaciones del día: 143 consultas · 0 incidentes · 100% trazabilidad sobre Azure.</div>
+      <div class="fc-tags">
+        <span class="badge badge-purple">Compliance</span>
+        <span class="badge badge-gold">Blockchain IGJ</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     PARTE I — FUNDACIONAL
+════════════════════════════════ -->
+<div class="sep"></div>
+<div id="fundacional" class="part-banner">
+  <div class="part-num-big">I</div>
+  <div class="part-info">
+    <div class="part-label">Primera Parte</div>
+    <div class="part-title">Documento Fundacional</div>
+    <div class="part-sub">Génesis, Misión, Visión, Valores y Estructura Legal de FlowState AI</div>
+  </div>
+</div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Génesis</div>
+  <h2 class="section-title">La observación que lo originó todo</h2>
+  <p class="section-sub">FlowState AI nació de una observación concreta: la brecha entre la disponibilidad masiva de tecnología de IA y la capacidad real de las empresas latinoamericanas para adoptarla de manera efectiva. <strong style="color:var(--text)">No faltaban herramientas — faltaba el socio estratégico que tradujera esa tecnología en resultados operativos reales y medibles.</strong></p>
+
+  <div class="cards-3 sr sr-d1" style="margin-top:2rem;">
+    <div class="card card-featured">
+      <div class="card-icon">🧠</div>
+      <div class="card-title">Brecha de Conocimiento</div>
+      <div class="card-body">Las organizaciones carecen de equipos internos capaces de implementar IA adaptada a sus procesos específicos. Contratar talento IA es costoso e ineficiente para una PyME.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon card-icon-purple">⏳</div>
+      <div class="card-title">Fatiga Administrativa</div>
+      <div class="card-body">Profesionales dedican su tiempo a tareas repetitivas — cobranzas, consultas frecuentes, carga de datos — que la IA puede automatizar por completo.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon card-icon-gold">📦</div>
+      <div class="card-title">Soluciones Genéricas</div>
+      <div class="card-body">Los grandes proveedores globales ofrecen productos masivos que no se adaptan a la especificidad operativa, normativa y cultural de cada organización LATAM.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Identidad</div>
+  <h2 class="section-title">Misión · Visión</h2>
+  <div class="mv-split sr sr-d1" style="margin-top:1.5rem;">
+    <div>
+      <div class="mv-label">🎯 Misión</div>
+      <div class="mv-text">"Ser el socio estratégico de empresas en Latinoamérica, convirtiendo la complejidad de los datos en una ventaja competitiva tangible y sostenible."</div>
+      <div class="mv-sub">Ayudamos a nuestros clientes a dominar la IA para lograr una transformación radical en eficiencia e innovación — no con teoría, sino con implementaciones reales.</div>
+    </div>
+    <div class="mv-divider"></div>
+    <div>
+      <div class="mv-label">🔭 Visión</div>
+      <div class="mv-text">"Construir el futuro de la eficiencia digital, desbloqueando el potencial de cada organización para que alcancen su estado de 'Flow'."</div>
+      <div class="mv-sub">Liderar el mercado de soluciones de IA en Latinoamérica siendo reconocidos por innovación, calidad y compromiso genuino con los resultados de cada cliente.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Valores</div>
+  <h2 class="section-title">Los principios que nos guían</h2>
+  <div class="cards-4 sr sr-d1" style="margin-top:1.5rem;">
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">Innovación</div>
+      <div class="card-body">Búsqueda constante de nuevas soluciones y tecnologías que generen ventajas reales y medibles.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon card-icon-purple">🤝</div>
+      <div class="card-title">Asociación</div>
+      <div class="card-body">Relaciones a largo plazo como socios estratégicos genuinos — no como vendedores de software.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon card-icon-blue">🚀</div>
+      <div class="card-title">Agilidad</div>
+      <div class="card-body">Velocidad de implementación que las grandes consultoras no pueden igualar. Resultados en semanas.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon card-icon-green">⚖️</div>
+      <div class="card-title">Ética</div>
+      <div class="card-body">Responsabilidad total en el uso de IA y datos sensibles. Transparencia con cada cliente.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Estructura Legal</div>
+  <h2 class="section-title">Sociedad diseñada para escalar</h2>
+  <div class="phase-cards sr sr-d1" style="margin-top:1.5rem;">
+    <div class="phase-card">
+      <div class="phase-num-badge">Fase 1 — Argentina</div>
+      <div class="phase-title">FlowState AI S.A.S.</div>
+      <div class="phase-body">Constitución bajo Ley 27.349 en CABA. Estructura ágil, flexible, con responsabilidad limitada. División accionaria: 20% capital / 40% sweat equity / 40% PI. Vesting 4 años, cliff 12 meses.</div>
+      <div class="tags">
+        <span class="badge badge-cyan">Capital USD 50.000</span>
+        <span class="badge badge-blue">Inscripción IGJ</span>
+        <span class="badge badge-blue">AFIP + IIBB</span>
+        <span class="badge badge-gold">Crypto habilitado</span>
+      </div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num-badge">Fase 2 — Internacional</div>
+      <div class="phase-title">Delaware LLC · VCs Extranjeros</div>
+      <div class="phase-body">La LLC actúa como holding que recibe inversión y la transfiere a la sociedad operativa LATAM. Fiscalmente eficiente (pass-through), convertible a C-Corp. Opción avanzada: Caimán → Delaware → LATAM.</div>
+      <div class="tags">
+        <span class="badge badge-purple">Delaware LLC</span>
+        <span class="badge badge-gold">VCs Extranjeros</span>
+        <span class="badge badge-cyan">Cap Table formal</span>
+        <span class="badge badge-blue">Ronda Ángel Ready</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     PARTE II — INNOVACIÓN
+════════════════════════════════ -->
+<div class="sep"></div>
+<div id="innovacion" class="part-banner">
+  <div class="part-num-big">II</div>
+  <div class="part-info">
+    <div class="part-label">Segunda Parte</div>
+    <div class="part-title">Propuesta de Valor e Innovación</div>
+    <div class="part-sub">Por qué FlowState AI conquista mercados que otros no pueden alcanzar</div>
+  </div>
+</div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Portfolio de Agentes</div>
+  <h2 class="section-title">8 módulos. Problemas reales. Resultados medibles.</h2>
+  <p class="section-sub" style="margin-bottom:2rem;">Todos los agentes están construidos sobre Microsoft Azure y desplegados en producción. No experimentamos — ejecutamos.</p>
+
+  <div class="product-row sr sr-d1">
+    <div><div class="pr-name">DataAssist</div><div class="pr-tech">Azure OpenAI · RAG · GPT-4</div></div>
+    <div class="pr-desc">Asistente conversacional personalizable. Consultas internas y atención al cliente. Se entrena con el conocimiento específico de cada organización.</div>
+    <div class="pr-sector">Gobierno · Educación · Retail · PyMEs</div>
+    <div class="pr-status"><span class="badge badge-green">● Producción</span></div>
+  </div>
+  <div class="product-row sr sr-d1">
+    <div><div class="pr-name">ConsorcioFlow</div><div class="pr-tech">Azure Comms · Logic Apps · GPT-4</div></div>
+    <div class="pr-desc">Cobranzas empáticas vía WhatsApp con IA adaptativa al historial. Mediación vecinal 24/7. Auditoría automática de gastos comunes.</div>
+    <div class="pr-sector">Administradores de Consorcios</div>
+    <div class="pr-status"><span class="badge badge-gold">◐ Q1 2026</span></div>
+  </div>
+  <div class="product-row sr sr-d1">
+    <div><div class="pr-name">LNC Agent</div><div class="pr-tech">Azure Static Apps · RAG</div></div>
+    <div class="pr-desc">Consulta inteligente sobre manuales y normativas internas. Reduce tiempo de respuesta operativo en 90%. Respuestas con fuentes citadas.</div>
+    <div class="pr-sector">Logística · Legal · RRHH</div>
+    <div class="pr-status"><span class="badge badge-green">● Producción</span></div>
+  </div>
+  <div class="product-row sr sr-d1">
+    <div><div class="pr-name">Auditxt</div><div class="pr-tech">Azure Form Recognizer · OpenAI</div></div>
+    <div class="pr-desc">Automatización de lectura de expedientes y carga de comprobantes. Libera horas facturables de alto valor para profesionales contables y jurídicos.</div>
+    <div class="pr-sector">Contabilidad · Derecho · Compliance</div>
+    <div class="pr-status"><span class="badge badge-green">● Producción</span></div>
+  </div>
+  <div class="product-row sr sr-d1">
+    <div><div class="pr-name">EmailService</div><div class="pr-tech">Azure Logic Apps · OpenAI</div></div>
+    <div class="pr-desc">Orquestación inteligente de comunicaciones empresariales, alertas de compliance y derivación automática a responsables humanos.</div>
+    <div class="pr-sector">Mesas de Ayuda · Compliance · Ops</div>
+    <div class="pr-status"><span class="badge badge-green">● Producción</span></div>
+  </div>
+  <div class="product-row sr sr-d1">
+    <div><div class="pr-name">Compliance Pack</div><div class="pr-tech">Blockchain · Azure · IGJ 2024</div></div>
+    <div class="pr-desc">Registro automático en Blockchain para libros digitales exigidos por IGJ Res. 15/2024. Cumplimiento normativo con cero errores manuales y cero riesgo de multas.</div>
+    <div class="pr-sector">SAS · PyMEs · Estudios Contables</div>
+    <div class="pr-status"><span class="badge badge-gold">◐ Q1 2026</span></div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Stack Tecnológico</div>
+  <h2 class="section-title">La ventaja del ecosistema Azure</h2>
+  <p class="section-sub" style="margin-bottom:2rem;">Para clientes corporativos, "corremos sobre Microsoft Azure" es un argumento de cierre. Seguridad, compliance y escalabilidad sin compromisos.</p>
+
+  <div class="two-col sr sr-d1">
+    <div class="card">
+      <div class="card-icon">☁️</div>
+      <div class="card-title">Azure OpenAI Service</div>
+      <div class="card-body">Acceso a GPT-4 dentro de la nube privada de Azure. Compliance corporativo y confidencialidad de datos — no negociable para clientes legales y contables.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon card-icon-blue">📱</div>
+      <div class="card-title">Azure Communication Services</div>
+      <div class="card-body">Canal nativo para WhatsApp, SMS y email. Crítico para los agentes de cobranza empática y recordatorios médicos con IA adaptativa.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon card-icon-purple">⚙️</div>
+      <div class="card-title">Azure Logic Apps</div>
+      <div class="card-body">Orquestación de flujos de trabajo complejos. Integraciones rápidas con sistemas legacy — ERP, Cobol, Access — sin reescribir infraestructura existente.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon card-icon-gold">🧩</div>
+      <div class="card-title">Arquitectura Agnóstica</div>
+      <div class="card-body">OpenAI, Gemini y modelos open-source según la tarea. Optimización de costo por caso de uso. La consultora vende la solución, no el modelo.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Análisis Competitivo</div>
+  <h2 class="section-title">FlowState AI vs. el mercado</h2>
+  <div style="margin-top:1.5rem;border-radius:16px;overflow:hidden;border:1px solid var(--border);" class="sr sr-d1">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Atributo</th>
+          <th class="hl">FlowState AI</th>
+          <th>Gran Consultora</th>
+          <th>SaaS Genérico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Personalización</td><td class="hl">✅ Alta</td><td>⚠️ Media</td><td>❌ Baja</td></tr>
+        <tr><td>Velocidad de implementación</td><td class="hl">✅ Semanas</td><td>❌ Meses</td><td>✅ Días (sin customizar)</td></tr>
+        <tr><td>Precio mensual</td><td class="hl">✅ USD 250</td><td>❌ Miles USD</td><td>⚠️ USD 50–500</td></tr>
+        <tr><td>Soporte humano incluido</td><td class="hl">✅ Siempre</td><td>✅ Sí</td><td>❌ No</td></tr>
+        <tr><td>Conocimiento local LATAM</td><td class="hl">✅ Nativo</td><td>⚠️ Global</td><td>❌ Sin contexto</td></tr>
+        <tr><td>Portfolio en producción</td><td class="hl">✅ Azure real</td><td>✅ Sí</td><td>⚠️ Variable</td></tr>
+        <tr><td>Integración sistemas legacy</td><td class="hl">✅ ERP/Cobol/Access</td><td>✅ Sí</td><td>❌ Raramente</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     PARTE III — MARKETING
+════════════════════════════════ -->
+<div class="sep"></div>
+<div id="marketing" class="part-banner">
+  <div class="part-num-big">III</div>
+  <div class="part-info">
+    <div class="part-label">Tercera Parte</div>
+    <div class="part-title">Plan de Marketing Integral</div>
+    <div class="part-sub">Estrategia Go-To-Market · Q1 2026 · Horizonte LATAM</div>
+  </div>
+</div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Mercado Objetivo 2026</div>
+  <h2 class="section-title">Argentina 2026: el terreno está listo</h2>
+  <p class="section-sub" style="margin-bottom:2rem;">La digitalización forzosa — impulsada por regulaciones estatales y demanda de transparencia — choca con estructuras de trabajo arcaicas. FlowState AI entra a un mercado que no hay que crear.</p>
+
+  <div class="sector-grid sr sr-d1">
+    <div class="sector-card">
+      <span class="sector-emoji">🏢</span>
+      <div class="sector-title">Consorcios</div>
+      <div class="sector-stat red">15–16%</div>
+      <div class="sector-body">Tasa de morosidad en expensas 2025. Los administradores destinan la mayor parte de su tiempo a cobranzas manuales y conflictos vecinales.</div>
+    </div>
+    <div class="sector-card">
+      <span class="sector-emoji">⚖️</span>
+      <div class="sector-title">Legal · Contabilidad</div>
+      <div class="sector-stat">+40%</div>
+      <div class="sector-body">Aumento en carga manual por digitalización IGJ. "Inflación normativa" genera nuevas obligaciones sin eliminar el trabajo repetitivo existente.</div>
+    </div>
+    <div class="sector-card">
+      <span class="sector-emoji">🏥</span>
+      <div class="sector-title">Salud</div>
+      <div class="sector-stat red">30–40%</div>
+      <div class="sector-body">Tasa de ausentismo de pacientes. Pérdida directa de ingresos que la tecnología de agendamiento actual no logra mitigar eficazmente.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Planes Comerciales</div>
+  <h2 class="section-title">Paquetes de servicio</h2>
+  <p class="section-sub" style="margin-bottom:2rem;">USD 250/mes: suficientemente accesible para aprobarse como OPEX sin deliberaciones de CAPEX, pero lo suficientemente significativo para garantizar un servicio premium con soporte humano dedicado.</p>
+
+  <div class="pricing-grid sr sr-d1">
+    <div class="price-card">
+      <div class="price-tier">Starter</div>
+      <div class="price-amount">150</div>
+      <div class="price-period">USD / mes</div>
+      <div class="price-feats">
+        <div class="price-feat">1 agente configurado</div>
+        <div class="price-feat">Setup inicial incluido</div>
+        <div class="price-feat">Soporte vía email</div>
+        <div class="price-feat">Hasta 1.000 interacciones/mes</div>
+      </div>
+    </div>
+    <div class="price-card prime">
+      <div class="price-rec">⭐ Recomendado</div>
+      <div class="price-tier">Professional</div>
+      <div class="price-amount">250</div>
+      <div class="price-period">USD / mes</div>
+      <div class="price-feats">
+        <div class="price-feat">2–3 agentes integrados</div>
+        <div class="price-feat">Consultoría de implementación</div>
+        <div class="price-feat">Soporte prioritario humano</div>
+        <div class="price-feat">Dashboard de métricas ROI</div>
+        <div class="price-feat">Interacciones ilimitadas</div>
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Enterprise</div>
+      <div class="price-amount">500+</div>
+      <div class="price-period">USD / mes</div>
+      <div class="price-feats">
+        <div class="price-feat">Agentes ilimitados</div>
+        <div class="price-feat">Integración sistemas legacy</div>
+        <div class="price-feat">SLA garantizado</div>
+        <div class="price-feat">Desarrollo a medida incluido</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Plan de Acción</div>
+  <h2 class="section-title">Go-To-Market: Q1 2026</h2>
+  <div class="timeline sr sr-d1" style="margin-top:2rem;">
+    <div class="tl-item">
+      <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-period">Semana 1 — 2</div>
+        <div class="tl-title">Empaquetar la Oferta</div>
+        <div class="tl-body">Definir el "Producto Estrella" — ConsorcioFlow o LNC adaptado. Configurar entorno Azure de producción separado de demos. Documentar caso de uso con métricas reales y ROI cuantificable desde el día 1.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--blue-acc);box-shadow:0 0 12px rgba(26,110,245,0.3);"></div></div>
+      <div class="tl-content">
+        <div class="tl-period">Semana 3 — 4</div>
+        <div class="tl-title">Prospección LinkedIn Sales Navigator</div>
+        <div class="tl-body">Filtro: administradores de consorcios, gerentes de estudios contables y jurídicos en CABA. Mensaje: <em style="color:var(--cyan)">"Tengo un agente de IA funcionando que reduce el tiempo de respuesta en 90%. Te lo muestro en vivo en 5 minutos. No es PowerPoint, es real."</em></div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--purple-acc);box-shadow:0 0 12px rgba(124,58,237,0.3);"></div></div>
+      <div class="tl-content">
+        <div class="tl-period">Semana 5 — 6</div>
+        <div class="tl-title">Cerrar 2 Clientes Beta · USD 500/mes</div>
+        <div class="tl-body">2 clientes al plan Professional. Activar feedback loop. Documentar ROI demostrable: tiempo ahorrado, morosidad reducida, consultas automatizadas. Este es el combustible para escalar.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot-wrap"><div class="tl-dot" style="border-color:var(--gold);box-shadow:0 0 12px rgba(245,158,11,0.3);"></div></div>
+      <div class="tl-content">
+        <div class="tl-period">Semana 7 — 12</div>
+        <div class="tl-title">Alianzas Estratégicas y Escala</div>
+        <div class="tl-body">Contactar 5 estudios contables grandes con propuesta Compliance Digital Pack: ellos traen volumen, FlowState AI provee la tecnología. Meta: 6 clientes activos al cierre del trimestre. ARR proyectado: USD 18.000.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     PARTE IV — FINANZAS
+════════════════════════════════ -->
+<div class="sep"></div>
+<div id="finanzas" class="part-banner">
+  <div class="part-num-big">IV</div>
+  <div class="part-info">
+    <div class="part-label">Cuarta Parte</div>
+    <div class="part-title">Plan de Sustentabilidad</div>
+    <div class="part-sub">Modelo Financiero · Escalabilidad · Roadmap 2026–2028</div>
+  </div>
+</div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Finanzas</div>
+  <h2 class="section-title">Modelo recurrente, predecible y escalable</h2>
+
+  <div class="hbox sr sr-d1">
+    <span class="cyan">⚡ Punto de equilibrio:</span> con solo <strong>2 clientes al plan Professional (USD 500/mes total)</strong>, FlowState AI cubre sus costos tecnológicos directos desde el <strong>Q1 2026</strong>. A partir del 3° cliente, el margen de contribución es sustancialmente alto — los costos de desarrollo de los agentes ya están amortizados.
+  </div>
+
+  <div class="two-col sr sr-d2" style="margin-top:2rem;">
+    <div>
+      <h3 style="font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem;">Costos Operativos Mensuales</h3>
+      <table class="fin-table">
+        <thead>
+          <tr><th>Concepto</th><th>USD</th><th>ARS Est.</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Stack Tecnológico (Azure, O365, LinkedIn, Gemini)</td><td class="mono-val">~223</td><td>~$323k</td></tr>
+          <tr><td>Contador + Legal</td><td>—</td><td>~$150k</td></tr>
+          <tr><td>Impuestos (IIBB + Autónomos)</td><td>—</td><td>~$450k</td></tr>
+          <tr><td>Marketing + Contingencia</td><td>—</td><td>~$200k</td></tr>
+          <tr class="total"><td>Total Mensual</td><td class="mono-val">~223</td><td>~$1.123k</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3 style="font-size:0.85rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem;">Proyección de Crecimiento 2026</h3>
+      <table class="fin-table">
+        <thead>
+          <tr><th>Trimestre</th><th>Clientes</th><th>Facturación</th><th>Neto Est.</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Q1 — Validación</td><td class="mono-val">2</td><td class="mono-val">$500</td><td>Break-even</td></tr>
+          <tr><td>Q2 — Crecimiento</td><td class="mono-val">6</td><td class="mono-val">$1.500</td><td>~$1.8M ARS</td></tr>
+          <tr><td>Q3 — Expansión</td><td class="mono-val">12</td><td class="mono-val">$3.000</td><td>~$3.5M ARS</td></tr>
+          <tr class="total"><td>Q4 — Consolidación</td><td class="mono-val">20+</td><td class="mono-val">$5.000+</td><td>~$6M+ ARS</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Hoja de Ruta</div>
+  <h2 class="section-title">Roadmap 2026–2028</h2>
+  <div class="roadmap-grid sr sr-d1" style="margin-top:1.5rem;">
+    <div class="rm-card">
+      <div class="rm-phase">Fase 1</div>
+      <div class="rm-year">2025–<br>Q1 2026</div>
+      <div class="rm-items">Constitución SAS. MVP DataAssist / ConsorcioFlow. 2 clientes beta. Validación de propuesta de valor. Break-even operativo.</div>
+      <div class="rm-goal">→ Probar que el modelo funciona y el mercado lo paga</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-phase">Fase 2</div>
+      <div class="rm-year">Q2–Q4<br>2026</div>
+      <div class="rm-items">Equipo de 4 personas. 20 clientes activos. Compliance Digital Pack. Alianzas con estudios contables. ARR USD 60.000.</div>
+      <div class="rm-goal">→ Crecer rentablemente sin deuda</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-phase">Fase 3</div>
+      <div class="rm-year">2027</div>
+      <div class="rm-items">Registro de marca. Expansión Chile y México. Ronda ángel USD 80K–165K. LLC Delaware activa. ARR USD 200.000.</div>
+      <div class="rm-goal">→ Internacionalización real</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-phase">Fase 4</div>
+      <div class="rm-year">2028</div>
+      <div class="rm-items">Serie A. Equipo 15+. DataAssist como plataforma SaaS horizontal. ARR USD 1M+. Exploración de exit óptimo.</div>
+      <div class="rm-goal">→ Liderazgo regional en IA para PyMEs</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<div class="section sr">
+  <div class="section-eyebrow">Gestión de Riesgos</div>
+  <h2 class="section-title">Anticipar en lugar de reaccionar</h2>
+  <div class="risk-list sr sr-d1" style="margin-top:1.5rem;">
+    <div class="risk-row">
+      <div class="risk-name">Lenta adopción de IA por PyMEs</div>
+      <div><span class="risk-badge rb-mid">Media</span></div>
+      <div><span class="risk-badge rb-high">Alto</span></div>
+      <div class="risk-plan">Webinars educativos. Demos en vivo en lugar de teoría. ROI documentado desde el día 1.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">Competencia de grandes consultoras</div>
+      <div><span class="risk-badge rb-low">Baja</span></div>
+      <div><span class="risk-badge rb-mid">Medio</span></div>
+      <div class="risk-plan">Diferenciación por personalización, velocidad y precio. Nicho específico primero, luego expansión.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">Brecha de seguridad / privacidad de datos</div>
+      <div><span class="risk-badge rb-mid">Media</span></div>
+      <div><span class="risk-badge rb-high">Alto</span></div>
+      <div class="risk-plan">Ley 25.326. Encriptación Azure. Seguros de responsabilidad. NDAs con todos los clientes desde el inicio.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">Dificultad para retener talento IA</div>
+      <div><span class="risk-badge rb-high">Alta</span></div>
+      <div><span class="risk-badge rb-high">Alto</span></div>
+      <div class="risk-plan">Equity plan. Cultura de innovación. Trabajo 100% remoto y salario en USD desde el inicio.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-name">Volatilidad macroeconómica Argentina</div>
+      <div><span class="risk-badge rb-high">Alta</span></div>
+      <div><span class="risk-badge rb-mid">Medio</span></div>
+      <div class="risk-plan">Precios en USD. Tesorería con criptoactivos (habilitado por estatuto SAS). Escudo LLC Delaware.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     CLOSING
+════════════════════════════════ -->
+<div class="closing">
+  <div class="closing-eyebrow">La Oportunidad</div>
+  <div class="closing-title">
+    La pregunta no es <span>si</span><br>
+    las empresas adoptarán IA.
+  </div>
+  <p class="closing-body">
+    La pregunta es <strong>quién va a ser su socio estratégico cuando lo hagan.</strong><br>
+    FlowState AI no está esperando que el mercado madure.<br>
+    El mercado ya está maduro.
+  </p>
+  <a href="#fundacional" class="btn-primary" style="text-decoration:none;display:inline-block;">Volver al inicio ↑</a>
+  <div class="closing-meta">
+    Gustavo Gabriel Buongiorno Berton · FlowState AI S.A.S.<br>
+    Buenos Aires, Argentina · Documento Fundacional Executive Brief v3.0 · © 2025–2026<br>
+    Confidencial — Todos los derechos reservados
+  </div>
+</div>
+
+<footer>
+  <span>FlowState AI S.A.S. · Buenos Aires, Argentina</span>
+  <span>Executive Brief v3.0 · 2026 · Confidencial</span>
+</footer>
+
+<script>
+// Reading progress
+const bar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  bar.style.transform = `scaleX(${pct})`;
+});
+
+// Scroll reveal
+const items = document.querySelectorAll('.sr');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+items.forEach(el => obs.observe(el));
+
+// Active nav
+const sections = document.querySelectorAll('[id]');
+const links = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
+  links.forEach(a => {
+    const isActive = a.getAttribute('href') === '#' + cur;
+    a.classList.toggle('active', isActive);
+  });
+});
+
+// Animate stats on hero
+const stats = document.querySelectorAll('.stat-val');
+const sObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.animation = 'none';
+      e.target.offsetHeight;
+      e.target.style.animation = 'fadeUpStat 0.5s ease forwards';
+      sObs.unobserve(e.target);
+    }
+  });
+});
+stats.forEach(s => sObs.observe(s));
+</script>
+<style>
+@keyframes fadeUpStat {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+</style>
+</body>
+</html>

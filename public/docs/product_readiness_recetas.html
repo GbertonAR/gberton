@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Product Readiness — Recetas Médicas</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; padding: 28px; max-width: 1000px; margin: auto; }
+  h1 { font-size: 1.4rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px; }
+  .subtitle { font-size: 0.8rem; color: #94a3b8; margin-bottom: 24px; }
+
+  .verdict-box {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 2px solid #f59e0b;
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .verdict-score { font-size: 3.5rem; font-weight: 900; color: #f59e0b; line-height: 1; }
+  .verdict-label { font-size: 1.1rem; font-weight: 700; color: #fbbf24; }
+  .verdict-sub { font-size: 0.8rem; color: #94a3b8; margin-top: 6px; line-height: 1.5; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { background: #1e293b; border-radius: 10px; padding: 16px; border-left: 4px solid #334155; }
+  .card.green { border-left-color: #22c55e; }
+  .card.yellow { border-left-color: #f59e0b; }
+  .card.red { border-left-color: #ef4444; }
+
+  .card-title { font-size: 0.73rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .metric-name { font-size: 0.82rem; color: #cbd5e1; }
+  .metric-val { font-size: 0.82rem; font-weight: 700; }
+  .g { color: #4ade80; } .y { color: #fbbf24; } .r { color: #f87171; }
+  .bar-bg { background: #0f172a; border-radius: 4px; height: 5px; margin-bottom: 10px; }
+  .bar { height: 5px; border-radius: 4px; }
+  .bg-g { background: #22c55e; } .bg-y { background: #f59e0b; } .bg-r { background: #ef4444; }
+
+  .section { background: #1e293b; border-radius: 10px; padding: 18px; margin-bottom: 20px; }
+  .section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+  .t-amber { color: #f59e0b; } .t-blue { color: #38bdf8; }
+
+  .gap-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  .tag { font-size: 0.68rem; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; margin-top: 1px; }
+  .tag-c { background: #7f1d1d; color: #fca5a5; }
+  .tag-h { background: #78350f; color: #fcd34d; }
+  .tag-m { background: #1e3a5f; color: #93c5fd; }
+  .gap-text { font-size: 0.81rem; color: #cbd5e1; line-height: 1.5; }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+  .pill { flex: 1; min-width: 110px; border-radius: 8px; padding: 12px 10px; text-align: center; }
+  .pill-ok { background: #14532d; border: 1px solid #22c55e; }
+  .pill-warn { background: #451a03; border: 1px solid #f59e0b; }
+  .pill-no { background: #450a0a; border: 1px solid #ef4444; }
+  .pill-icon { font-size: 1.3rem; margin-bottom: 4px; }
+  .pill-lbl { font-size: 0.7rem; font-weight: 700; color: #e2e8f0; }
+  .pill-st { font-size: 0.65rem; color: #94a3b8; margin-top: 2px; }
+
+  .af-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .af-card { background: #0f172a; border-radius: 8px; padding: 12px; }
+  .af-card-title { font-size: 0.72rem; font-weight: 700; color: #7dd3fc; margin-bottom: 5px; }
+  .af-card-text { font-size: 0.76rem; color: #94a3b8; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<h1>📋 Product Readiness Scorecard — Auditoría de Recetas Médicas IA</h1>
+<p class="subtitle">Framework: PRD Completeness · INVEST Criteria · AF Readiness · Technical Viability | Evaluado: Abril 2026</p>
+
+<div class="verdict-box">
+  <div class="verdict-score">61</div>
+  <div>
+    <div class="verdict-label">⚠️ CONCEPT NOTE — No califica como Producto todavía</div>
+    <div class="verdict-sub">Valor actual: Discovery Artifact / Pre-PRD de alta calidad técnica.<br>
+    Requiere resolver 6 gaps antes de entregar a un Analista Funcional.</div>
+  </div>
+</div>
+
+<div class="grid">
+
+  <div class="card green">
+    <div class="card-title">🎯 Visión & Definición del Problema</div>
+    <div class="metric-row"><span class="metric-name">Problema articulado</span><span class="metric-val g">✓ Sólido</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:85%"></div></div>
+    <div class="metric-row"><span class="metric-name">Segmento objetivo</span><span class="metric-val y">Parcial</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:60%"></div></div>
+    <div class="metric-row"><span class="metric-name">Pain cuantificado</span><span class="metric-val g">✓ Con estadísticas</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:80%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val g">75 / 100</span></div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">📝 Requerimientos Funcionales (User Stories)</div>
+    <div class="metric-row"><span class="metric-name">User Stories escritas</span><span class="metric-val r">✗ Ausentes</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:5%"></div></div>
+    <div class="metric-row"><span class="metric-name">Criterios de Aceptación</span><span class="metric-val r">✗ Ausentes</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:5%"></div></div>
+    <div class="metric-row"><span class="metric-name">Casos de uso detallados</span><span class="metric-val r">✗ Ausentes</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:5%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val r">10 / 100</span></div>
+  </div>
+
+  <div class="card yellow">
+    <div class="card-title">⚙️ Arquitectura & Stack Técnico</div>
+    <div class="metric-row"><span class="metric-name">Stack definido</span><span class="metric-val g">✓ Nombrado</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:70%"></div></div>
+    <div class="metric-row"><span class="metric-name">Diagramas C4 / BPMN</span><span class="metric-val r">✗ Ausentes</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">NFRs (SLA, latencia, vol.)</span><span class="metric-val r">✗ Ausentes</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val y">45 / 100</span></div>
+  </div>
+
+  <div class="card green">
+    <div class="card-title">💰 Análisis de Negocio & ROI</div>
+    <div class="metric-row"><span class="metric-name">Estructura de costos</span><span class="metric-val g">✓ Estimada</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:75%"></div></div>
+    <div class="metric-row"><span class="metric-name">Break-even definido</span><span class="metric-val g">✓ 12-18 meses</span></div>
+    <div class="bar-bg"><div class="bar bg-g" style="width:80%"></div></div>
+    <div class="metric-row"><span class="metric-name">Modelo SaaS / Pricing</span><span class="metric-val y">Mencionado (vago)</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:50%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val g">70 / 100</span></div>
+  </div>
+
+  <div class="card red">
+    <div class="card-title">🔒 Compliance, Legal & Regulatorio</div>
+    <div class="metric-row"><span class="metric-name">Ley 25.326 (Datos Pers.)</span><span class="metric-val r">✗ No mencionado</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Normativas ANMAT / IA</span><span class="metric-val r">✗ No detallado</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">PAMI / Obras Sociales</span><span class="metric-val y">Solo mencionado</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:30%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val r">20 / 100</span></div>
+  </div>
+
+  <div class="card yellow">
+    <div class="card-title">🗺️ MVP, Alcance & Roadmap</div>
+    <div class="metric-row"><span class="metric-name">Scope MVP definido</span><span class="metric-val y">Sugerido (PoC)</span></div>
+    <div class="bar-bg"><div class="bar bg-y" style="width:40%"></div></div>
+    <div class="metric-row"><span class="metric-name">Roadmap de releases</span><span class="metric-val r">✗ Ausente</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Definition of Done</span><span class="metric-val r">✗ Ausente</span></div>
+    <div class="bar-bg"><div class="bar bg-r" style="width:0%"></div></div>
+    <div class="metric-row"><span class="metric-name">Score dimensión</span><span class="metric-val y">35 / 100</span></div>
+  </div>
+
+</div>
+
+<!-- GAPS -->
+<div class="section">
+  <div class="section-title t-amber">🚨 Gaps Identificados — Bloqueadores para el Analista Funcional</div>
+
+  <div class="gap-item">
+    <span class="tag tag-c">CRÍTICO</span>
+    <span class="gap-text"><strong>Cero User Stories.</strong> No existe un solo enunciado "Como [rol] quiero [acción] para [valor]". El documento describe la solución de IA, no el comportamiento esperado del usuario del producto.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-c">CRÍTICO</span>
+    <span class="gap-text"><strong>Sin Criterios de Aceptación.</strong> No hay una definición de "cuándo está bien hecho". Sin esto, el AF no puede generar casos de prueba, y QA no puede validar nada.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-c">CRÍTICO</span>
+    <span class="gap-text"><strong>Marco regulatorio argentino ausente.</strong> Ley 25.326 (Datos Personales), disposiciones ANMAT vigentes sobre software médico/IA, y normativas contractuales con Obras Sociales son bloqueadores legales reales para cualquier go-live.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-h">ALTO</span>
+    <span class="gap-text"><strong>Sin diagramas de arquitectura ni flujos.</strong> El stack está listado en prosa, pero no hay C4 (ni siquiera Level 1), BPMN de flujo de auditoría, ni diagrama de secuencia IDP → LangGraph → Resultado. El AF no puede levantar requerimientos sobre algo que no está diagramado.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-h">ALTO</span>
+    <span class="gap-text"><strong>NFRs (Non-Functional Requirements) completamente ausentes.</strong> No hay SLAs, tiempos de respuesta objetivo (ej: P95 ≤ 3s), volumen de recetas/día esperado, política de retención de datos sensibles, ni niveles de disponibilidad requeridos.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-m">MEDIO</span>
+    <span class="gap-text"><strong>Stakeholders y Personas sin definir.</strong> "Obras Sociales medianas" es ambiguo. No está definido quién es el usuario primario (¿el auditor interno?, ¿el farmacéutico?), ni el ICP (Ideal Customer Profile) formalizado.</span>
+  </div>
+  <div class="gap-item">
+    <span class="tag tag-m">MEDIO</span>
+    <span class="gap-text"><strong>Modelo SaaS sin estructura.</strong> No se especifican tiers de servicio, pricing por receta auditada vs. por usuario vs. por organización, ni condiciones contractuales mínimas con el cliente.</span>
+  </div>
+</div>
+
+<!-- READINESS CHECK -->
+<div class="section-title t-blue" style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px;">✅ ¿Está listo para el Analista Funcional?</div>
+<div class="pills">
+  <div class="pill pill-ok"><div class="pill-icon">✅</div><div class="pill-lbl">Contexto Negocio</div><div class="pill-st">Listo</div></div>
+  <div class="pill pill-ok"><div class="pill-icon">✅</div><div class="pill-lbl">Pain Cuantificado</div><div class="pill-st">Listo</div></div>
+  <div class="pill pill-warn"><div class="pill-icon">⚠️</div><div class="pill-lbl">Stack Técnico</div><div class="pill-st">Parcial</div></div>
+  <div class="pill pill-warn"><div class="pill-icon">⚠️</div><div class="pill-lbl">Análisis ROI</div><div class="pill-st">Parcial</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">User Stories</div><div class="pill-st">Falta</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Criterios Acept.</div><div class="pill-st">Falta</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Compliance Legal</div><div class="pill-st">Falta</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Diagramas</div><div class="pill-st">Falta</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">NFRs</div><div class="pill-st">Falta</div></div>
+  <div class="pill pill-no"><div class="pill-icon">❌</div><div class="pill-lbl">Roadmap</div><div class="pill-st">Falta</div></div>
+</div>
+
+<!-- LO QUE NECESITA EL AF -->
+<div class="section">
+  <div class="section-title t-blue">🧭 Qué debe producirse para que el AF pueda trabajar</div>
+  <div class="af-grid">
+    <div class="af-card">
+      <div class="af-card-title">1. Épicas & User Stories (INVEST)</div>
+      <div class="af-card-text">Mínimo 3 épicas: Captura IDP, Validación Normativa, Dashboard Auditor. Cada una con historias en formato INVEST y criterios Gherkin (Given/When/Then).</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">2. Diagrama de Contexto C4 (Level 1)</div>
+      <div class="af-card-text">Límites del sistema, actores externos (PAMI API, Vademécum, EHR), canales de entrada (imagen receta) y salida (reporte auditoría con score de confianza).</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">3. Matriz de Reglas de Negocio</div>
+      <div class="af-card-text">Las validaciones cruzadas deben estar tabuladas: condición → acción → excepción → responsable. No puede quedar solo en prosa narrativa.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">4. NFRs con Valores Concretos</div>
+      <div class="af-card-text">Ej: "Procesar receta en ≤ 3s P95", "Disponibilidad 99.5%/mes", "Retención de imagen cifrada máx. 90 días según Ley 25.326". Sin números, es incompleto.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">5. Marco Legal Explícito</div>
+      <div class="af-card-text">Artículos específicos Ley 25.326, disposiciones ANMAT vigentes 2025-2026 sobre IA en salud, cláusulas tipo de contratos con Obras Sociales.</div>
+    </div>
+    <div class="af-card">
+      <div class="af-card-title">6. Personas & Journey Map AS-IS / TO-BE</div>
+      <div class="af-card-text">Al menos 2 personas (Auditor Interno, Farmacéutico) con su flujo actual de trabajo vs. flujo con el producto implementado.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
