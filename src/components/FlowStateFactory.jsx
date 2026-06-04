@@ -180,7 +180,7 @@ const FlowStateFactory = () => {
                                 <div className="absolute -inset-3 bg-gradient-to-r from-flow-tech/20 to-flow-cyan/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700" />
                                 <div className="relative flex items-center gap-5 bg-white/[0.03] border border-flow-cyan/20 rounded-2xl px-6 py-4 backdrop-blur-sm shadow-[0_0_30px_rgba(0,180,216,0.08)]">
                                     <img
-                                        src="/img/Logo1.png"
+                                        src="/img/Logo1.webp"
                                         alt="FlowState AI Logo"
                                         className="h-14 md:h-16 w-auto object-contain drop-shadow-[0_0_14px_rgba(0,180,216,0.5)] group-hover:drop-shadow-[0_0_24px_rgba(0,180,216,0.75)] transition-all duration-500"
                                     />

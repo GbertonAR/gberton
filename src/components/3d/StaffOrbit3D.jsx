@@ -20,19 +20,19 @@ class CanvasErrorBoundary extends Component {
 }
 
 const STAFF_MEMBERS = [
-    { name: 'KAI', url: '/img/Staff/KAI.png' },
-    { name: 'ADA L', url: '/img/Staff/Avatar ADA L 1.png' },
-    { name: 'LEX', url: '/img/Staff/LEX.png' },
-    { name: 'CYRA', url: '/img/Staff/CYRA.png' },
-    { name: 'LUMEN', url: '/img/Staff/LUMEN.png' },
-    { name: 'Murphy', url: '/img/Staff/Murphy.png' },
-    { name: 'Nexa', url: '/img/Staff/Nexa.png' },
-    { name: 'VANT', url: '/img/Staff/VANT.png' },
-    { name: 'VERA', url: '/img/Staff/VERA.png' },
-    { name: 'Arko', url: '/img/Staff/Arko.png' },
-    { name: 'FINA', url: '/img/Staff/FINA.png' },
-    { name: 'Klaus', url: '/img/Staff/Klaus.png' },
-    { name: 'Charles', url: '/img/Staff/Charles.png' }
+    { name: 'KAI', url: '/img/Staff/KAI.webp' },
+    { name: 'ADA L', url: '/img/Staff/Avatar ADA L 1.webp' },
+    { name: 'LEX', url: '/img/Staff/LEX.webp' },
+    { name: 'CYRA', url: '/img/Staff/CYRA.webp' },
+    { name: 'LUMEN', url: '/img/Staff/LUMEN.webp' },
+    { name: 'Murphy', url: '/img/Staff/Murphy.webp' },
+    { name: 'Nexa', url: '/img/Staff/Nexa.webp' },
+    { name: 'VANT', url: '/img/Staff/VANT.webp' },
+    { name: 'VERA', url: '/img/Staff/VERA.webp' },
+    { name: 'Arko', url: '/img/Staff/Arko.webp' },
+    { name: 'FINA', url: '/img/Staff/FINA.webp' },
+    { name: 'Klaus', url: '/img/Staff/Klaus.webp' },
+    { name: 'Charles', url: '/img/Staff/Charles.webp' }
 ];
 
 // Componente para un miembro del staff en la órbita
@@ -113,7 +113,7 @@ const CoreLogo = () => {
                 <CanvasErrorBoundary>
                     <Suspense fallback={null}>
                         <Image
-                            url="/img/Logo1.png"
+                            url="/img/Logo1.webp"
                             transparent
                             scale={5}
                             renderOrder={2}
