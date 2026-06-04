@@ -41,7 +41,7 @@ module.exports = async function (context, req) {
     try {
         await transporter.sendMail({
             from:    `"Formulario Web" <${process.env.EMAIL_USERNAME}>`,
-            to:      process.env.EMAIL_NOTIFICATIONS_TO,
+            to:      process.env.EMAIL_NOTIFICATIONS_TO || 'gberton1967@gmail.com',
             replyTo: email,
             subject: `[Web] Contacto de ${nombre} — ${motivoLabel}`,
             html: `
