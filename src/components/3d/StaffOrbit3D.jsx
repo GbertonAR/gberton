@@ -8,10 +8,16 @@
  * @summary    Hero interactivo 3D con el ecosistema de agentes orbitando el núcleo (Logo FlowState).
  */
 
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, Suspense, Component } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Image, Sparkles, Float, Billboard } from '@react-three/drei';
 import * as THREE from 'three';
+
+class CanvasErrorBoundary extends Component {
+    constructor(props) { super(props); this.state = { error: false }; }
+    static getDerivedStateFromError() { return { error: true }; }
+    render() { return this.state.error ? null : this.props.children; }
+}
 
 const STAFF_MEMBERS = [
     { name: 'KAI', url: '/img/Staff/KAI.png' },
@@ -44,13 +50,17 @@ const StaffNode = ({ url, angle, radius, index }) => {
         <group position={[x, yOffset, z]}>
             <Float speed={2} rotationIntensity={0.2} floatIntensity={1}>
                 <Billboard follow={true}>
-                    <Image 
-                        url={url} 
-                        transparent 
-                        opacity={0.9}
-                        scale={1.5} 
-                        renderOrder={1}
-                    />
+                    <CanvasErrorBoundary>
+                        <Suspense fallback={null}>
+                            <Image
+                                url={url}
+                                transparent
+                                opacity={0.9}
+                                scale={1.5}
+                                renderOrder={1}
+                            />
+                        </Suspense>
+                    </CanvasErrorBoundary>
                 </Billboard>
             </Float>
         </group>
@@ -100,12 +110,16 @@ const CoreLogo = () => {
                     <circleGeometry args={[2.5, 32]} />
                     <meshBasicMaterial color="#1A6EF5" transparent opacity={0.2} />
                 </mesh>
-                <Image 
-                    url="/img/Logo1.png" 
-                    transparent 
-                    scale={5} 
-                    renderOrder={2}
-                />
+                <CanvasErrorBoundary>
+                    <Suspense fallback={null}>
+                        <Image
+                            url="/img/Logo1.png"
+                            transparent
+                            scale={5}
+                            renderOrder={2}
+                        />
+                    </Suspense>
+                </CanvasErrorBoundary>
             </Billboard>
         </Float>
     );
