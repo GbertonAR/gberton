@@ -66,7 +66,8 @@ const ContactForm = () => {
                 body: JSON.stringify(formData),
             });
 
-            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
 
             setFormStatus({
                 submitted: true,
@@ -85,7 +86,7 @@ const ContactForm = () => {
                 submitted: false,
                 error: true,
                 loading: false,
-                message: 'No se pudo enviar el mensaje. Escribime directo a gberton1967@gmail.com',
+                message: `Error: ${err.message}`,
             });
         }
     };
