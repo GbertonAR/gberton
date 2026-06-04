@@ -1,8 +1,18 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { FiMail, FiUser, FiPhone, FiMessageSquare, FiSend } from 'react-icons/fi';
+/**
+ * @system     FlowState AI
+ * @module     ContactForm.jsx
+ * @copyright  © 2026 Gustavo Berton
+ * @author     Gustavo Berton
+ * @summary    Formulario de contacto con envío real vía EmailJS → Gmail.
+ */
+import { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import emailjs from '@emailjs/browser';
+import { FiMail, FiUser, FiPhone, FiMessageSquare, FiSend, FiLoader } from 'react-icons/fi';
+
+const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const ContactForm = () => {
     const ref = useRef(null);
@@ -19,6 +29,7 @@ const ContactForm = () => {
     const [formStatus, setFormStatus] = useState({
         submitted: false,
         error: false,
+        loading: false,
         message: '',
     });
 
@@ -51,35 +62,40 @@ const ContactForm = () => {
             return;
         }
 
+        setFormStatus({ submitted: false, error: false, loading: true, message: '' });
+
         try {
-            // TODO: Implement backend integration or third-party service (Formspree, EmailJS)
-            // For now, we'll simulate a successful submission
-            console.log('Form submitted:', formData);
+            await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                {
+                    nombre:    formData.nombre,
+                    email:     formData.email,
+                    telefono:  formData.telefono || '—',
+                    motivo:    formData.motivo,
+                    tema:      formData.tema || '—',
+                },
+                { publicKey: EMAILJS_PUBLIC_KEY }
+            );
 
             setFormStatus({
                 submitted: true,
                 error: false,
-                message: '¡Gracias por tu mensaje! Te contactaré pronto.',
+                loading: false,
+                message: '¡Gracias por tu mensaje! Te contactaré en menos de 24 hs.',
             });
 
-            // Reset form
-            setFormData({
-                nombre: '',
-                email: '',
-                motivo: '',
-                tema: '',
-                telefono: '',
-            });
+            setFormData({ nombre: '', email: '', motivo: '', tema: '', telefono: '' });
 
-            // Clear success message after 5 seconds
             setTimeout(() => {
-                setFormStatus({ submitted: false, error: false, message: '' });
-            }, 5000);
-        } catch (error) {
+                setFormStatus({ submitted: false, error: false, loading: false, message: '' });
+            }, 6000);
+        } catch (err) {
             setFormStatus({
                 submitted: false,
                 error: true,
-                message: 'Hubo un error al enviar el mensaje. Intenta nuevamente.',
+                loading: false,
+                message: 'No se pudo enviar el mensaje. Escribime directo a gberton1967@gmail.com',
             });
         }
     };
@@ -232,10 +248,20 @@ const ContactForm = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full btn-primary-gb flex items-center justify-center space-x-2 text-lg"
+                            disabled={formStatus.loading}
+                            className="w-full btn-primary-gb flex items-center justify-center space-x-2 text-lg disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                            <span>Enviar Mensaje</span>
-                            <FiSend className="w-5 h-5" />
+                            {formStatus.loading ? (
+                                <>
+                                    <FiLoader className="w-5 h-5 animate-spin" />
+                                    <span>Enviando...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span>Enviar Mensaje</span>
+                                    <FiSend className="w-5 h-5" />
+                                </>
+                            )}
                         </button>
 
                         {/* Status Messages */}

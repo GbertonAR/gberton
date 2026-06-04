@@ -1,3 +1,8 @@
+# Env — nunca commitear valores reales
+.env
+.env.local
+.env.production
+
 # Logs
 logs
 *.log
