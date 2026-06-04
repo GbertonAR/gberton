@@ -7,12 +7,7 @@
  */
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import emailjs from '@emailjs/browser';
 import { FiMail, FiUser, FiPhone, FiMessageSquare, FiSend, FiLoader } from 'react-icons/fi';
-
-const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const ContactForm = () => {
     const ref = useRef(null);
@@ -65,18 +60,13 @@ const ContactForm = () => {
         setFormStatus({ submitted: false, error: false, loading: true, message: '' });
 
         try {
-            await emailjs.send(
-                EMAILJS_SERVICE_ID,
-                EMAILJS_TEMPLATE_ID,
-                {
-                    nombre:    formData.nombre,
-                    email:     formData.email,
-                    telefono:  formData.telefono || '—',
-                    motivo:    formData.motivo,
-                    tema:      formData.tema || '—',
-                },
-                { publicKey: EMAILJS_PUBLIC_KEY }
-            );
+            const res = await fetch('/api/send-contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (!res.ok) throw new Error('HTTP ' + res.status);
 
             setFormStatus({
                 submitted: true,
