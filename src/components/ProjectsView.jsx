@@ -34,7 +34,7 @@ const ProjectsView = () => {
             docUrl: "/docs/LexIA_MVP.html"
         },
         {
-            title: "OSEMOC 2026",
+            title: "DataGym AI 2026",
             category: "Observabilidad",
             date: "2026",
             status: "Production",
@@ -79,7 +79,7 @@ const ProjectsView = () => {
         { title: "Modelo C4 - Nivel 1", filename: "FlowState_AI_C4_Level1.html", type: "Arquitectura" },
         { title: "Journey Maps del Cliente", filename: "FlowState_AI_JourneyMaps.html", type: "Estrategia" },
         { title: "Borrador de Desarrollo", filename: "Nuevo.html", type: "Borrador" },
-        { title: "OSEMOC 2026 Dashboard v1", filename: "OSEMOC2026.html", type: "Observabilidad" },
+        { title: "DataGym AI Dashboard v1", filename: "OSEMOC2026.html", type: "Observabilidad" },
         { title: "Propuestas de Sector Tecnológico", filename: "PropuestasSectorTecnologico.html", type: "Propuestas" },
         { title: "Propuestas de Sector Tecnológico II", filename: "PropuestasSectorTecnologicoII.html", type: "Propuestas" },
         { title: "Email de Lanzamiento General", filename: "email_lanzamiento_general_FlowStateAI.html", type: "Estrategia" },

@@ -58,7 +58,7 @@ const FlowStateFactory = () => {
 
     const agents = [
         {
-            name: 'OSAMOC Core',
+            name: 'DataGym AI Core',
             tag: 'HEALTHTECH / AGENTIC',
             vertical: 'HEALTHTECH',
             status: 'PRODUCTION',
@@ -121,7 +121,7 @@ const FlowStateFactory = () => {
 
     const diagrams = [
         { id: 'ecosystem', label: 'Ecosistema Factory', path: '/docs/images/Ecosistema032026.png', caption: 'Mapa de relaciones funcionales entre sistemas y agencias.' },
-        { id: 'org_chart', label: 'Staff Digital', path: '/docs/images/flowstate_ai_org_chart.svg', caption: 'Organigrama y jerarquía operativa de los 21 colaboradores digitales.' },
+        { id: 'org_chart', label: 'Staff Digital', path: '/docs/images/FlowState Organigrama.png', caption: 'Organigrama y jerarquía operativa de los 21 colaboradores digitales.' },
         { id: 'mesa_chica', label: 'Mesa Chica', path: '/docs/images/mesa_chica_especialistas.svg', caption: 'Célula de Orquestación y Especialistas Principales de la marca.' },
         { id: 'kai_router', label: 'KAI Router', path: '/docs/images/kai_router_architecture.svg', caption: 'Arquitectura de enrutamiento y delegación inteligente de KAI.' }
     ];
