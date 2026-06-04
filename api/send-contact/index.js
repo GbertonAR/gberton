@@ -14,14 +14,22 @@ module.exports = async function (context, req) {
         return;
     }
 
+    // Verificar que las env vars están cargadas
+    if (!process.env.EMAIL_USERNAME || !process.env.EMAIL_PASSWORD) {
+        context.log.error('[FAULT] Variables de entorno EMAIL_* no configuradas');
+        context.res = { status: 500, body: { error: 'Configuración de email incompleta en el servidor.' } };
+        return;
+    }
+
     const transporter = nodemailer.createTransport({
-        host:   process.env.EMAIL_SMTP_HOST,
+        host:   process.env.EMAIL_SMTP_HOST || 'smtp.gmail.com',
         port:   parseInt(process.env.EMAIL_PORT || '587'),
         secure: false,
         auth: {
             user: process.env.EMAIL_USERNAME,
             pass: process.env.EMAIL_PASSWORD,
         },
+        tls: { rejectUnauthorized: false },
     });
 
     const motivoLabel = {
@@ -52,7 +60,7 @@ module.exports = async function (context, req) {
 
         context.res = { status: 200, body: { ok: true } };
     } catch (err) {
-        context.log.error('[FAULT] send-contact SMTP:', err.message);
-        context.res = { status: 500, body: { error: 'Error al enviar. Intentá de nuevo.' } };
+        context.log.error('[FAULT] send-contact SMTP:', err.message, err.code);
+        context.res = { status: 500, body: { error: err.message } };
     }
 };
