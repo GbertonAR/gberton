@@ -1,6 +1,14 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/img/*", "/logos/*", "/cv/*", "/docs/*", "*.{css,js,png,jpg,jpeg,svg,ico,webp,woff,woff2,ttf}"]
+    "exclude": ["/assets/*", "/img/*", "/logos/*", "/cv/*", "/docs/*"]
+  },
+  "mimeTypes": {
+    ".js": "text/javascript",
+    ".mjs": "text/javascript",
+    ".css": "text/css",
+    ".json": "application/json",
+    ".woff": "font/woff",
+    ".woff2": "font/woff2"
   }
 }
