@@ -10,6 +10,7 @@
 
 import { motion } from 'framer-motion';
 import { WorldCupBattle } from './WorldCupBattle';
+import { WorldCupGlobe } from './3d/WorldCupGlobe';
 import { FiStar, FiShield, FiZap, FiUser, FiClock } from 'react-icons/fi';
 import { useCountdown } from '../hooks/useCountdown';
 
@@ -211,8 +212,13 @@ const WorldCupPage = () => {
                 <div className="h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
             </div>
 
+            {/* ── Globo 3D ── */}
+            <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #020805 0%, #030e06 100%)' }}>
+                <WorldCupGlobe />
+            </section>
+
             {/* Hero */}
-            <section className="pt-16 pb-16 relative overflow-hidden">
+            <section className="pt-4 pb-16 relative overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,#16a34a18_0%,transparent_60%)] pointer-events-none" />
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent" />
 
