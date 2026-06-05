@@ -9,6 +9,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMail, FiX, FiAward, FiBarChart2, FiTarget, FiClock } from 'react-icons/fi';
 
@@ -56,6 +57,7 @@ const VoteModal = ({ ai, matchId, onClose, onVoted }) => {
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState('idle');
     const cfg = AI_CONFIG[ai];
+    const navigate = useNavigate();
 
     const submit = async (e) => {
         e.preventDefault();
@@ -70,7 +72,7 @@ const VoteModal = ({ ai, matchId, onClose, onVoted }) => {
             const data = await res.json();
             if (!res.ok) throw new Error(data.error);
             setStatus('success');
-            setTimeout(() => { onVoted(ai); onClose(); }, 1800);
+            setTimeout(() => { onVoted(ai); onClose(); navigate('/factory'); }, 1800);
         } catch {
             setStatus('error');
         }
@@ -103,6 +105,7 @@ const VoteModal = ({ ai, matchId, onClose, onVoted }) => {
                     <div className="text-center py-4">
                         <div className="text-4xl mb-2">✅</div>
                         <p className="text-emerald-400 font-bold">¡Voto registrado!</p>
+                        <p className="text-slate-500 text-xs mt-1">Llevándote al ecosistema FlowState AI...</p>
                     </div>
                 ) : (
                     <form onSubmit={submit} className="space-y-3">
