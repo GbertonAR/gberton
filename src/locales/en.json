@@ -78,6 +78,64 @@
       "pdfNote": "The PDF will open in a new tab."
     }
   },
+  "cv": {
+    "title": "My Professional Experience",
+    "subtitle": "Over two decades transforming businesses through technology",
+    "skillsTitle": "Key Technical Skills",
+    "timelineTitle": "Professional Journey",
+    "categories": {
+      "functional": "Functional Analysis"
+    },
+    "achievements": [
+      { "label": "Automated Emails",      "description": "Automated response in 5 days" },
+      { "label": "Years of Experience",   "description": "Leading digital transformation" },
+      { "label": "Completed Projects",    "description": "Scalable AI/Cloud solutions" }
+    ]
+  },
+  "projects": {
+    "title": "Reports & Technical Documentation",
+    "subtitle": "Integrated access to engineering blueprints, product readiness analyses and regulatory compliance reports.",
+    "mainTitle": "Key Systems & Readme Docs",
+    "viewReport": "View Report",
+    "historyTitle": "Engineering Reports Archive",
+    "historySubtitle": "Browse and filter the database of 23 indexed technical documents from the architecture manual.",
+    "searchPlaceholder": "Search document...",
+    "allTypes": "All types",
+    "colTitle": "Document Title",
+    "colType": "Type",
+    "colAction": "Action",
+    "viewDoc": "View",
+    "noResults": "No documents found matching your search.",
+    "footerAudit": "HUMAN SUPPORT & AUDIT CONTROL",
+    "footerSystem": "FLOWSTATE SYSTEM OPERATIVE v3.0"
+  },
+  "factory": {
+    "commandCenter": "Command Center · FlowState AI Software Factory",
+    "heroTitle": "Ecosystem of",
+    "heroHighlight": "Connected Intelligence",
+    "heroDesc": "We don't build isolated pieces. We design an integrated agent engine and industrial automation on Azure and GCP, aligned with governance and high-availability methodologies.",
+    "kpiLabels": ["Target Market", "Business Model", "Infrastructure", "Active Collaborators"],
+    "portfolioTag": "Active Portfolio",
+    "portfolioTitle": "Systems Explorer",
+    "verticals": {
+      "ALL": "All",
+      "INTEGRATION": "Legacy Integrations"
+    },
+    "viewDetails": "View Details",
+    "diagrams": {
+      "title": "Ecosystem Diagrams",
+      "ecosystem": "Factory Ecosystem",
+      "org_chart": "Digital Staff",
+      "mesa_chica": "Core Team",
+      "kai_router": "KAI Router"
+    },
+    "logsTitle": "Terminal · Real-Time Logs",
+    "statusBadge": {
+      "PRODUCTION": "PRODUCTION",
+      "READY": "READY",
+      "SCALING": "SCALING"
+    }
+  },
   "footer": {
     "role": "Digital Transformation & AI Expert",
     "description": "AI/Cloud Solutions Architect with 25+ years of experience",

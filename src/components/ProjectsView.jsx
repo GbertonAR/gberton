@@ -11,12 +11,14 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { 
     FiFileText, FiExternalLink, FiBarChart, FiShield, FiLayers, 
     FiActivity, FiSearch, FiX, FiFilter, FiFolder
 } from 'react-icons/fi';
 
 const ProjectsView = () => {
+    const { t } = useTranslation();
     const [selectedDocUrl, setSelectedDocUrl] = useState(null);
     const [selectedDocTitle, setSelectedDocTitle] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
@@ -117,15 +119,15 @@ const ProjectsView = () => {
 
             <div className="max-w-7xl mx-auto px-6">
                 <div className="mb-16">
-                    <h1 className="text-4xl md:text-5xl font-heading font-extrabold mb-4">Reportes & Documentación Técnica</h1>
+                    <h1 className="text-4xl md:text-5xl font-heading font-extrabold mb-4">{t('projects.title')}</h1>
                     <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-                        Acceso integrado a los blueprints de ingeniería, análisis de readiness de producto e informes de cumplimiento regulatorio.
+                        {t('projects.subtitle')}
                     </p>
                 </div>
 
                 {/* Grid de Proyectos Principales */}
                 <h2 className="text-2xl font-heading font-bold mb-8 flex items-center gap-2">
-                    <FiFolder className="text-flow-cyan" /> Sistemas Clave & Readme Docs
+                    <FiFolder className="text-flow-cyan" /> {t('projects.mainTitle')}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
                     {projectsData.map((project, index) => (
@@ -155,7 +157,7 @@ const ProjectsView = () => {
                                     onClick={() => openDocument(project.title, project.docUrl)}
                                     className="text-flow-cyan font-bold text-xs flex items-center gap-1.5 hover:gap-2.5 transition-all cursor-pointer"
                                 >
-                                    Ver Reporte <FiExternalLink />
+                                    {t('projects.viewReport')} <FiExternalLink />
                                 </button>
                             </div>
                         </motion.div>
@@ -168,9 +170,9 @@ const ProjectsView = () => {
                     
                     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-12 relative z-10">
                         <div>
-                            <h2 className="text-3xl font-heading font-extrabold mb-3">Historial de Reportes de Ingeniería</h2>
+                            <h2 className="text-3xl font-heading font-extrabold mb-3">{t('projects.historyTitle')}</h2>
                             <p className="text-slate-400 max-w-xl text-sm leading-relaxed">
-                                Explorá y filtrá la base de datos de 23 documentos técnicos indexados desde el manual de arquitectura.
+                                {t('projects.historySubtitle')}
                             </p>
                         </div>
 
@@ -180,7 +182,7 @@ const ProjectsView = () => {
                                 <FiSearch className="absolute left-3.5 top-3.5 text-slate-500 text-base" />
                                 <input
                                     type="text"
-                                    placeholder="Buscar documento..."
+                                    placeholder={t('projects.searchPlaceholder')}
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm font-medium focus:outline-none focus:border-flow-cyan/40 transition-colors"
@@ -195,7 +197,7 @@ const ProjectsView = () => {
                                 >
                                     {categories.map((cat, i) => (
                                         <option key={i} value={cat} className="bg-[#090d16] text-white">
-                                            {cat === 'ALL' ? 'Todos los tipos' : cat}
+                                            {cat === 'ALL' ? t('projects.allTypes') : cat}
                                         </option>
                                     ))}
                                 </select>
@@ -209,9 +211,9 @@ const ProjectsView = () => {
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr className="border-b border-white/5 text-slate-500 text-xs uppercase tracking-widest font-bold">
-                                    <th className="py-4 font-semibold">Título del Documento</th>
-                                    <th className="py-4 font-semibold">Tipo</th>
-                                    <th className="py-4 font-semibold text-right">Acción</th>
+                                    <th className="py-4 font-semibold">{t('projects.colTitle')}</th>
+                                    <th className="py-4 font-semibold">{t('projects.colType')}</th>
+                                    <th className="py-4 font-semibold text-right">{t('projects.colAction')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -239,7 +241,7 @@ const ProjectsView = () => {
                                                     onClick={() => openDocument(doc.title, `/docs/${doc.filename}`)}
                                                     className="inline-flex items-center gap-1 text-flow-cyan text-xs font-bold hover:underline cursor-pointer"
                                                 >
-                                                    Visualizar <FiExternalLink />
+                                                    {t('projects.viewDoc')} <FiExternalLink />
                                                 </button>
                                             </td>
                                         </motion.tr>
@@ -249,7 +251,7 @@ const ProjectsView = () => {
                                 {filteredDocs.length === 0 && (
                                     <tr>
                                         <td colSpan="3" className="py-12 text-center text-slate-500 text-sm">
-                                            No se encontraron documentos que coincidan con la búsqueda.
+                                            {t('projects.noResults')}
                                         </td>
                                     </tr>
                                 )}
@@ -294,8 +296,8 @@ const ProjectsView = () => {
 
                         {/* Modal Footer */}
                         <div className="h-12 px-6 flex items-center justify-between bg-[#050811] text-[10px] text-slate-500 font-mono border-t border-white/10">
-                            <span>SOPORTE HUMANO & CONTROL DE AUDITORÍA</span>
-                            <span>FLOWSTATE SYSTEM OPERATIVE v3.0</span>
+                            <span>{t('projects.footerAudit')}</span>
+                            <span>{t('projects.footerSystem')}</span>
                         </div>
                     </motion.div>
                 )}

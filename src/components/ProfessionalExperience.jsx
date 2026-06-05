@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   FiCloud,
   FiCpu,
@@ -21,6 +21,7 @@ import {
 import { VscAzure } from 'react-icons/vsc';
 
 const ProfessionalExperience = () => {
+  const { t } = useTranslation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -47,7 +48,7 @@ const ProfessionalExperience = () => {
       ],
     },
     {
-      category: 'Análisis Funcional',
+      category: t('cv.categories.functional'),
       icon: <FiBriefcase className="w-8 h-8" />,
       items: [
         { name: 'Migración ERP', icon: <FiDatabase />, level: 'Expert' },
@@ -58,27 +59,9 @@ const ProfessionalExperience = () => {
   ];
 
   const achievements = [
-    {
-      metric: '46,000',
-      label: 'Emails Automatizados',
-      description: 'Respuesta automatizada en 5 días',
-      icon: <FiZap className="w-12 h-12" />,
-      color: 'from-gb-cyan to-gb-navy',
-    },
-    {
-      metric: '25+',
-      label: 'Años de Experiencia',
-      description: 'Liderando transformación digital',
-      icon: <FiTrendingUp className="w-12 h-12" />,
-      color: 'from-gb-navy to-purple-600',
-    },
-    {
-      metric: '100+',
-      label: 'Proyectos Completados',
-      description: 'Soluciones AI/Cloud escalables',
-      icon: <FiCloud className="w-12 h-12" />,
-      color: 'from-purple-600 to-gb-cyan',
-    },
+    { metric: '46,000', icon: <FiZap className="w-12 h-12" />,      color: 'from-gb-cyan to-gb-navy' },
+    { metric: '25+',    icon: <FiTrendingUp className="w-12 h-12" />, color: 'from-gb-navy to-purple-600' },
+    { metric: '100+',   icon: <FiCloud className="w-12 h-12" />,     color: 'from-purple-600 to-gb-cyan' },
   ];
 
   const timeline = [
@@ -151,10 +134,10 @@ const ProfessionalExperience = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-heading font-bold gradient-text-gb mb-4">
-            Mi Experiencia Profesional
+            {t('cv.title')}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Más de dos décadas transformando empresas a través de la tecnología
+            {t('cv.subtitle')}
           </p>
         </motion.div>
 
@@ -177,9 +160,9 @@ const ProfessionalExperience = () => {
                 {achievement.metric}
               </div>
               <div className="text-xl font-semibold text-gray-800 mb-2">
-                {achievement.label}
+                {t(`cv.achievements.${index}.label`)}
               </div>
-              <div className="text-gray-600">{achievement.description}</div>
+              <div className="text-gray-600">{t(`cv.achievements.${index}.description`)}</div>
             </motion.div>
           ))}
         </div>
@@ -192,7 +175,7 @@ const ProfessionalExperience = () => {
           className="mb-20"
         >
           <h3 className="text-3xl font-heading font-bold text-gb-navy mb-8 text-center">
-            Habilidades Técnicas Clave
+            {t('cv.skillsTitle')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {skills.map((skillCategory, categoryIndex) => (
@@ -239,7 +222,7 @@ const ProfessionalExperience = () => {
           transition={{ delay: 0.8, duration: 0.6 }}
         >
           <h3 className="text-3xl font-heading font-bold text-gb-navy mb-8 text-center">
-            Trayectoria Profesional
+            {t('cv.timelineTitle')}
           </h3>
           <div className="space-y-6">
             {timeline.map((item, index) => (

@@ -11,6 +11,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StaffOrbit3D } from './3d/StaffOrbit3D';
 import { 
@@ -35,25 +36,25 @@ const mockLogsTemplates = [
 ];
 
 const FlowStateFactory = () => {
+    const { t } = useTranslation();
     const [selectedVertical, setSelectedVertical] = useState('ALL');
     const [selectedDiagram, setSelectedDiagram] = useState('ecosystem');
     const [logs, setLogs] = useState([]);
     const [activeLogIndex, setActiveLogIndex] = useState(0);
 
-    const kpis = [
-        { label: 'Mercado Objetivo', val: 'LATAM Enterprise', icon: <FiGlobe /> },
-        { label: 'Modelo de Negocio', val: 'SaaS / Agentic', icon: <FiLayers /> },
-        { label: 'Infraestructura', val: 'Azure Native (High Av.)', icon: <FiZap /> },
-        { label: 'Colaboradores Activos', val: '21 Digital GEMS', icon: <FiCpu /> }
-    ];
+    const kpiValues = ['LATAM Enterprise', 'SaaS / Agentic', 'Azure Native (High Av.)', '21 Digital GEMS'];
+    const kpiIcons  = [<FiGlobe />, <FiLayers />, <FiZap />, <FiCpu />];
+    const kpis = kpiValues.map((val, i) => ({
+        label: t(`factory.kpiLabels.${i}`), val, icon: kpiIcons[i]
+    }));
 
     const verticals = [
-        { id: 'ALL', label: 'Todos' },
-        { id: 'HEALTHTECH', label: 'HealthTech' },
-        { id: 'LEGALTECH', label: 'LegalTech' },
-        { id: 'GOVTECH', label: 'GovTech' },
-        { id: 'FINTECH', label: 'FinTech' },
-        { id: 'INTEGRATION', label: 'Integraciones Legacy' }
+        { id: 'ALL',         label: t('factory.verticals.ALL') },
+        { id: 'HEALTHTECH',  label: 'HealthTech' },
+        { id: 'LEGALTECH',   label: 'LegalTech' },
+        { id: 'GOVTECH',     label: 'GovTech' },
+        { id: 'FINTECH',     label: 'FinTech' },
+        { id: 'INTEGRATION', label: t('factory.verticals.INTEGRATION') },
     ];
 
     const agents = [
@@ -194,15 +195,14 @@ const FlowStateFactory = () => {
 
                         <div className="flex items-center gap-2 text-flow-cyan font-heading font-semibold tracking-widest uppercase text-xs mb-6">
                             <FiTarget className="animate-spin-slow text-lg" />
-                            Command Center · FlowState AI Software Factory
+                            {t('factory.commandCenter')}
                         </div>
                         <h1 className="text-5xl md:text-7xl font-heading font-extrabold tracking-tight mb-8 leading-[1.1]">
-                            Ecosistema de <br />
-                            <span className="bg-gradient-to-r from-flow-tech to-flow-cyan bg-clip-text text-transparent">Inteligencia Conectada</span>
+                            {t('factory.heroTitle')} <br />
+                            <span className="bg-gradient-to-r from-flow-tech to-flow-cyan bg-clip-text text-transparent">{t('factory.heroHighlight')}</span>
                         </h1>
                         <p className="text-lg md:text-xl text-slate-400 leading-relaxed max-w-xl mb-12">
-                            No desarrollamos piezas aisladas. Diseñamos un engranaje de agentes integrados y 
-                            automatización industrial sobre Azure y GCP, alineados con la gobernanza y metodologías de alta disponibilidad.
+                            {t('factory.heroDesc')}
                         </p>
                     </motion.div>
 
@@ -241,9 +241,9 @@ const FlowStateFactory = () => {
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
                     <div>
                         <div className="flex items-center gap-2 text-innovation-magenta font-semibold uppercase text-xs tracking-wider mb-2">
-                            <FiGrid /> Portfolio Activo
+                            <FiGrid /> {t('factory.portfolioTag')}
                         </div>
-                        <h2 className="text-4xl font-heading font-extrabold">Explorador de Sistemas</h2>
+                        <h2 className="text-4xl font-heading font-extrabold">{t('factory.portfolioTitle')}</h2>
                     </div>
 
                     {/* Filter tabs */}

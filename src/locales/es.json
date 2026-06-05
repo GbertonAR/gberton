@@ -78,6 +78,64 @@
       "pdfNote": "El PDF se abrirá en una nueva pestaña."
     }
   },
+  "cv": {
+    "title": "Mi Experiencia Profesional",
+    "subtitle": "Más de dos décadas transformando empresas a través de la tecnología",
+    "skillsTitle": "Habilidades Técnicas Clave",
+    "timelineTitle": "Trayectoria Profesional",
+    "categories": {
+      "functional": "Análisis Funcional"
+    },
+    "achievements": [
+      { "label": "Emails Automatizados",   "description": "Respuesta automatizada en 5 días" },
+      { "label": "Años de Experiencia",    "description": "Liderando transformación digital" },
+      { "label": "Proyectos Completados",  "description": "Soluciones AI/Cloud escalables" }
+    ]
+  },
+  "projects": {
+    "title": "Reportes & Documentación Técnica",
+    "subtitle": "Acceso integrado a los blueprints de ingeniería, análisis de readiness de producto e informes de cumplimiento regulatorio.",
+    "mainTitle": "Sistemas Clave & Readme Docs",
+    "viewReport": "Ver Reporte",
+    "historyTitle": "Historial de Reportes de Ingeniería",
+    "historySubtitle": "Explorá y filtrá la base de datos de 23 documentos técnicos indexados desde el manual de arquitectura.",
+    "searchPlaceholder": "Buscar documento...",
+    "allTypes": "Todos los tipos",
+    "colTitle": "Título del Documento",
+    "colType": "Tipo",
+    "colAction": "Acción",
+    "viewDoc": "Visualizar",
+    "noResults": "No se encontraron documentos que coincidan con la búsqueda.",
+    "footerAudit": "SOPORTE HUMANO & CONTROL DE AUDITORÍA",
+    "footerSystem": "FLOWSTATE SYSTEM OPERATIVE v3.0"
+  },
+  "factory": {
+    "commandCenter": "Command Center · FlowState AI Software Factory",
+    "heroTitle": "Ecosistema de",
+    "heroHighlight": "Inteligencia Conectada",
+    "heroDesc": "No desarrollamos piezas aisladas. Diseñamos un engranaje de agentes integrados y automatización industrial sobre Azure y GCP, alineados con la gobernanza y metodologías de alta disponibilidad.",
+    "kpiLabels": ["Mercado Objetivo", "Modelo de Negocio", "Infraestructura", "Colaboradores Activos"],
+    "portfolioTag": "Portfolio Activo",
+    "portfolioTitle": "Explorador de Sistemas",
+    "verticals": {
+      "ALL": "Todos",
+      "INTEGRATION": "Integraciones Legacy"
+    },
+    "viewDetails": "Ver Detalles",
+    "diagrams": {
+      "title": "Diagramas del Ecosistema",
+      "ecosystem": "Ecosistema Factory",
+      "org_chart": "Staff Digital",
+      "mesa_chica": "Mesa Chica",
+      "kai_router": "KAI Router"
+    },
+    "logsTitle": "Terminal · Logs en Tiempo Real",
+    "statusBadge": {
+      "PRODUCTION": "PRODUCCIÓN",
+      "READY": "LISTO",
+      "SCALING": "ESCALANDO"
+    }
+  },
   "footer": {
     "role": "Digital Transformation & AI Expert",
     "description": "Arquitecto de Soluciones AI/Cloud con 25+ años de experiencia",
