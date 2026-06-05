@@ -25,33 +25,48 @@ Respondé SOLO con JSON válido, sin texto extra, con este formato exacto:
   "reasoning": "Máximo 2 oraciones explicando la predicción."
 }`;
 
-// ── GPT-4o ─────────────────────────────────────────────────────────────────────
+// ── GPT-4o via Azure OpenAI ────────────────────────────────────────────────────
 async function predictGPT(home, away) {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    const endpoint    = process.env.AZURE_OPENAI_ENDPOINT;   // https://xxxx.openai.azure.com
+    const deployment  = process.env.AZURE_OPENAI_DEPLOYMENT; // nombre del deployment, ej: gpt-4o
+    const apiVersion  = process.env.AZURE_OPENAI_API_VERSION || '2024-02-01';
+    const apiKey      = process.env.AZURE_OPENAI_API_KEY;
+
+    const url = `${endpoint}/openai/deployments/${deployment}/chat/completions?api-version=${apiVersion}`;
+
+    const res = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}` },
+        headers: { 'Content-Type': 'application/json', 'api-key': apiKey },
         body: JSON.stringify({
-            model: 'gpt-4o',
             messages: [{ role: 'user', content: buildPrompt(home, away) }],
             temperature: 0.3,
-            max_tokens: 200,
+            max_tokens: 300,
         }),
     });
     const data = await res.json();
-    return JSON.parse(data.choices[0].message.content);
+    if (!res.ok || !data.choices) {
+        console.error('  GPT raw error:', JSON.stringify(data));
+        throw new Error(data.error?.message || `HTTP ${res.status}`);
+    }
+    const text = data.choices[0].message.content.replace(/```json|```/g, '').trim();
+    return JSON.parse(text);
 }
 
-// ── Gemini 1.5 Pro ─────────────────────────────────────────────────────────────
+// ── Gemini 2.0 Flash ───────────────────────────────────────────────────────────
 async function predictGemini(home, away) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${process.env.GEMINI_API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
     const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contents: [{ parts: [{ text: buildPrompt(home, away) }] }] }),
     });
     const data = await res.json();
-    const text = data.candidates[0].content.parts[0].text;
-    return JSON.parse(text.replace(/```json|```/g, '').trim());
+    if (!res.ok || !data.candidates) {
+        console.error('  Gemini raw error:', JSON.stringify(data));
+        throw new Error(data.error?.message || `HTTP ${res.status}`);
+    }
+    const text = data.candidates[0].content.parts[0].text.replace(/```json|```/g, '').trim();
+    return JSON.parse(text);
 }
 
 // ── Claude Sonnet ──────────────────────────────────────────────────────────────
@@ -64,13 +79,18 @@ async function predictClaude(home, away) {
             'anthropic-version': '2023-06-01',
         },
         body: JSON.stringify({
-            model: 'claude-sonnet-4-6',
-            max_tokens: 200,
+            model: 'claude-sonnet-4-5',
+            max_tokens: 300,
             messages: [{ role: 'user', content: buildPrompt(home, away) }],
         }),
     });
     const data = await res.json();
-    return JSON.parse(data.content[0].text);
+    if (!res.ok || !data.content) {
+        console.error('  Claude raw error:', JSON.stringify(data));
+        throw new Error(data.error?.message || `HTTP ${res.status}`);
+    }
+    const text = data.content[0].text.replace(/```json|```/g, '').trim();
+    return JSON.parse(text);
 }
 
 // ── Main ───────────────────────────────────────────────────────────────────────
