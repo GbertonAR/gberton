@@ -66,7 +66,7 @@ const Footer = () => {
                         <h4 className="text-lg font-semibold mb-4">{t('footer.connect')}</h4>
                         <div className="flex space-x-4">
                             <a
-                                href="https://linkedin.com/in/gustavoberton"
+                                href="https://www.linkedin.com/in/gustavo-berton/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-10 h-10 bg-white/10 hover:bg-gb-cyan rounded-full flex items-center justify-center transition-all hover:scale-110"
