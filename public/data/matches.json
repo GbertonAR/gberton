@@ -1,20 +1,47 @@
 {
   "_meta": {
     "tournament": "FIFA World Cup 2026",
-    "host_nations": ["USA", "Canada", "Mexico"],
+    "host_nations": [
+      "USA",
+      "Canada",
+      "Mexico"
+    ],
     "opening_date": "2026-06-11",
     "final_date": "2026-07-19",
     "predictions_generated": "2026-06-05",
     "note": "Predicciones generadas por los 3 modelos de IA para el AI Battle"
   },
   "ais": {
-    "claude":  { "name": "Claude Sonnet",  "logo": "🟠", "color": "#D97706", "maker": "Anthropic" },
-    "gpt":     { "name": "GPT-4o",         "logo": "🟢", "color": "#10A37F", "maker": "OpenAI"    },
-    "gemini":  { "name": "Gemini 1.5 Pro", "logo": "🔵", "color": "#4285F4", "maker": "Google"    }
+    "claude": {
+      "name": "Claude Sonnet",
+      "logo": "🟠",
+      "color": "#D97706",
+      "maker": "Anthropic"
+    },
+    "gpt": {
+      "name": "GPT-4o",
+      "logo": "🟢",
+      "color": "#10A37F",
+      "maker": "OpenAI"
+    },
+    "gemini": {
+      "name": "Gemini 1.5 Pro",
+      "logo": "🔵",
+      "color": "#4285F4",
+      "maker": "Google"
+    }
   },
   "scoreboard": {
-    "votes":    { "claude": 0, "gpt": 0, "gemini": 0 },
-    "accuracy": { "claude": 0, "gpt": 0, "gemini": 0 },
+    "votes": {
+      "claude": 0,
+      "gpt": 0,
+      "gemini": 0
+    },
+    "accuracy": {
+      "claude": 0,
+      "gpt": 0,
+      "gemini": 0
+    },
     "total_predicted": 0
   },
   "matches": [
@@ -23,8 +50,16 @@
       "phase": "Grupo A",
       "date": "2026-06-11T21:00:00Z",
       "venue": "Estadio Azteca, Ciudad de México",
-      "home": { "name": "México",  "flag": "🇲🇽", "code": "MEX" },
-      "away": { "name": "Ecuador", "flag": "🇪🇨", "code": "ECU" },
+      "home": {
+        "name": "México",
+        "flag": "🇲🇽",
+        "code": "MEX"
+      },
+      "away": {
+        "name": "Ecuador",
+        "flag": "🇪🇨",
+        "code": "ECU"
+      },
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
@@ -51,8 +86,16 @@
       "phase": "Grupo B",
       "date": "2026-06-12T18:00:00Z",
       "venue": "MetLife Stadium, New York",
-      "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
-      "away": { "name": "Chile",     "flag": "🇨🇱", "code": "CHI" },
+      "home": {
+        "name": "Argentina",
+        "flag": "🇦🇷",
+        "code": "ARG"
+      },
+      "away": {
+        "name": "Chile",
+        "flag": "🇨🇱",
+        "code": "CHI"
+      },
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
@@ -79,8 +122,16 @@
       "phase": "Grupo B",
       "date": "2026-06-16T21:00:00Z",
       "venue": "AT&T Stadium, Dallas",
-      "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
-      "away": { "name": "Perú",      "flag": "🇵🇪", "code": "PER" },
+      "home": {
+        "name": "Argentina",
+        "flag": "🇦🇷",
+        "code": "ARG"
+      },
+      "away": {
+        "name": "Perú",
+        "flag": "🇵🇪",
+        "code": "PER"
+      },
       "status": "upcoming",
       "is_featured": false,
       "predictions": {
@@ -107,8 +158,16 @@
       "phase": "Grupo C",
       "date": "2026-06-12T21:00:00Z",
       "venue": "SoFi Stadium, Los Angeles",
-      "home": { "name": "Brasil",   "flag": "🇧🇷", "code": "BRA" },
-      "away": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
+      "home": {
+        "name": "Brasil",
+        "flag": "🇧🇷",
+        "code": "BRA"
+      },
+      "away": {
+        "name": "Paraguay",
+        "flag": "🇵🇾",
+        "code": "PAR"
+      },
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
@@ -135,8 +194,16 @@
       "phase": "Grupo A",
       "date": "2026-06-13T18:00:00Z",
       "venue": "Estadio BBVA, Monterrey",
-      "home": { "name": "USA",      "flag": "🇺🇸", "code": "USA" },
-      "away": { "name": "Colombia", "flag": "🇨🇴", "code": "COL" },
+      "home": {
+        "name": "USA",
+        "flag": "🇺🇸",
+        "code": "USA"
+      },
+      "away": {
+        "name": "Colombia",
+        "flag": "🇨🇴",
+        "code": "COL"
+      },
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
