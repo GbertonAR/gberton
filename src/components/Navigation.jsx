@@ -10,9 +10,10 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FiMenu, FiX, FiDownload, FiHome, FiGlobe } from 'react-icons/fi';
+import { Link, useLocation } from 'react-router-dom';
+import { FiMenu, FiX, FiDownload, FiGlobe } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const CV_PDF = {
     es: '/cv/GBerton2026v2Spa--3.pdf',
@@ -20,26 +21,27 @@ const CV_PDF = {
 };
 
 const Navigation = () => {
+    const { t, i18n } = useTranslation();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showCvModal, setShowCvModal] = useState(false);
     const location = useLocation();
-    const navigate = useNavigate();
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
+        const handleScroll = () => setIsScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const toggleLang = () => i18n.changeLanguage(i18n.language.startsWith('es') ? 'en' : 'es');
+    const currentLang = i18n.language.startsWith('es') ? 'ES' : 'EN';
+
     const navLinks = [
-        { name: 'Dashboard', path: '/', icon: <FiHome /> },
-        { name: 'Experiencia', path: '/cv' },
-        { name: 'AI Factory', path: '/factory' },
-        { name: 'Proyectos', path: '/projects' },
-        { name: 'Contacto', path: '/contact' },
+        { name: t('nav.dashboard'), path: '/' },
+        { name: t('nav.experience'), path: '/cv' },
+        { name: t('nav.factory'),    path: '/factory' },
+        { name: t('nav.projects'),   path: '/projects' },
+        { name: t('nav.contact'),    path: '/contact' },
     ];
 
     const handleDownloadCV = () => {
@@ -88,11 +90,18 @@ const Navigation = () => {
                             </Link>
                         ))}
                         <button
+                            onClick={toggleLang}
+                            className="flex items-center gap-1.5 text-xs font-bold tracking-widest text-slate-400 hover:text-flow-cyan border border-white/10 hover:border-flow-cyan/40 rounded-lg px-3 py-2 transition-all duration-200"
+                        >
+                            <FiGlobe className="w-3.5 h-3.5" />
+                            {currentLang}
+                        </button>
+                        <button
                             onClick={handleDownloadCV}
                             className="btn-primary-gb flex items-center space-x-2"
                         >
                             <FiDownload className="w-4 h-4" />
-                            <span>CV</span>
+                            <span>{t('nav.cv')}</span>
                         </button>
                     </div>
 
@@ -133,11 +142,18 @@ const Navigation = () => {
                                 </Link>
                             ))}
                             <button
+                                onClick={toggleLang}
+                                className="flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-flow-cyan py-2 transition-colors"
+                            >
+                                <FiGlobe className="w-4 h-4" />
+                                {currentLang === 'ES' ? 'Switch to English' : 'Cambiar a Español'}
+                            </button>
+                            <button
                                 onClick={handleDownloadCV}
                                 className="btn-primary-gb w-full flex items-center justify-center space-x-2"
                             >
                                 <FiDownload className="w-4 h-4" />
-                                <span>Descargar CV</span>
+                                <span>{t('nav.downloadCv')}</span>
                             </button>
                         </div>
                     </motion.div>
@@ -177,9 +193,9 @@ const Navigation = () => {
                             <div className="bg-gradient-to-br from-flow-tech to-flow-cyan w-14 h-14 rounded-2xl flex items-center justify-center text-white mb-4 shadow-lg shadow-flow-tech/30">
                                 <FiGlobe className="w-7 h-7" />
                             </div>
-                            <h2 className="text-2xl font-bold text-white font-heading">Descargar Curriculum</h2>
+                            <h2 className="text-2xl font-bold text-white font-heading">{t('nav.cvModal.title')}</h2>
                             <p className="text-slate-400 text-sm mt-2 leading-relaxed">
-                                Seleccioná el idioma para ver o descargar el CV.
+                                {t('nav.cvModal.subtitle')}
                             </p>
                         </div>
 
@@ -209,7 +225,7 @@ const Navigation = () => {
                         </div>
 
                         <p className="text-center text-xs text-slate-500 mt-6">
-                            El PDF se abrirá en una nueva pestaña.
+                            {t('nav.cvModal.pdfNote')}
                         </p>
                     </motion.div>
                 </motion.div>

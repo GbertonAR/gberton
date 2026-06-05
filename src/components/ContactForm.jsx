@@ -7,9 +7,11 @@
  */
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { FiMail, FiUser, FiPhone, FiMessageSquare, FiSend, FiLoader } from 'react-icons/fi';
 
 const ContactForm = () => {
+    const { t } = useTranslation();
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -38,22 +40,12 @@ const ContactForm = () => {
 
         // Basic validation
         if (!formData.nombre || !formData.email || !formData.motivo) {
-            setFormStatus({
-                submitted: false,
-                error: true,
-                message: 'Por favor completa todos los campos obligatorios.',
-            });
+            setFormStatus({ submitted: false, error: true, loading: false, message: t('contact.form.required') });
             return;
         }
-
-        // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.email)) {
-            setFormStatus({
-                submitted: false,
-                error: true,
-                message: 'Por favor ingresa un email válido.',
-            });
+            setFormStatus({ submitted: false, error: true, loading: false, message: t('contact.form.invalidEmail') });
             return;
         }
 
@@ -73,7 +65,7 @@ const ContactForm = () => {
                 submitted: true,
                 error: false,
                 loading: false,
-                message: '¡Gracias por tu mensaje! Te contactaré en menos de 24 hs.',
+                message: t('contact.form.success'),
             });
 
             setFormData({ nombre: '', email: '', motivo: '', tema: '', telefono: '' });
@@ -86,7 +78,7 @@ const ContactForm = () => {
                 submitted: false,
                 error: true,
                 loading: false,
-                message: `Error: ${err.message}`,
+                message: t('contact.form.errorFallback'),
             });
         }
     };
@@ -102,9 +94,9 @@ const ContactForm = () => {
                     className="text-center mb-12"
                 >
                     <h2 className="text-4xl md:text-5xl font-heading font-bold gradient-text-gb mb-4">
-                        Conecta con un Arquitecto de Soluciones AI/Cloud
+                        {t('contact.title')}
                     </h2>
-                    <p className="text-xl text-gray-600">Define tu Próximo Paso</p>
+                    <p className="text-xl text-gray-600">{t('contact.subtitle')}</p>
                 </motion.div>
 
                 {/* Contact Form */}
@@ -121,7 +113,7 @@ const ContactForm = () => {
                                 htmlFor="nombre"
                                 className="block text-sm font-semibold text-gray-700 mb-2"
                             >
-                                Nombre Completo <span className="text-red-500">*</span>
+                                {t('contact.form.name')} <span className="text-red-500">*</span>
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -135,7 +127,7 @@ const ContactForm = () => {
                                     onChange={handleChange}
                                     required
                                     className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gb-cyan focus:border-transparent transition-all"
-                                    placeholder="Tu nombre completo"
+                                    placeholder={t('contact.form.namePlaceholder')}
                                 />
                             </div>
                         </div>
@@ -160,7 +152,7 @@ const ContactForm = () => {
                                     onChange={handleChange}
                                     required
                                     className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gb-cyan focus:border-transparent transition-all"
-                                    placeholder="tu@email.com"
+                                    placeholder={t('contact.form.emailPlaceholder')}
                                 />
                             </div>
                         </div>
@@ -171,7 +163,7 @@ const ContactForm = () => {
                                 htmlFor="motivo"
                                 className="block text-sm font-semibold text-gray-700 mb-2"
                             >
-                                Motivo de Contacto <span className="text-red-500">*</span>
+                                {t('contact.form.reason')} <span className="text-red-500">*</span>
                             </label>
                             <select
                                 id="motivo"
@@ -181,10 +173,10 @@ const ContactForm = () => {
                                 required
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gb-cyan focus:border-transparent transition-all"
                             >
-                                <option value="">Selecciona una opción</option>
-                                <option value="laboral">Oportunidad Laboral / Postulación</option>
-                                <option value="b2b">Consultoría B2B / Servicios FlowState AI</option>
-                                <option value="networking">Networking / Prensa</option>
+                                <option value="">{t('contact.form.reasonPlaceholder')}</option>
+                                <option value="laboral">{t('contact.form.reasons.job')}</option>
+                                <option value="b2b">{t('contact.form.reasons.b2b')}</option>
+                                <option value="networking">{t('contact.form.reasons.networking')}</option>
                             </select>
                         </div>
 
@@ -194,7 +186,7 @@ const ContactForm = () => {
                                 htmlFor="tema"
                                 className="block text-sm font-semibold text-gray-700 mb-2"
                             >
-                                Tema de Interés
+                                {t('contact.form.topic')}
                             </label>
                             <div className="relative">
                                 <div className="absolute top-3 left-0 pl-4 flex items-start pointer-events-none">
@@ -207,7 +199,7 @@ const ContactForm = () => {
                                     onChange={handleChange}
                                     rows="4"
                                     className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gb-cyan focus:border-transparent transition-all resize-none"
-                                    placeholder="Cuéntame más sobre tu proyecto o consulta..."
+                                    placeholder={t('contact.form.topicPlaceholder')}
                                 />
                             </div>
                         </div>
@@ -218,7 +210,7 @@ const ContactForm = () => {
                                 htmlFor="telefono"
                                 className="block text-sm font-semibold text-gray-700 mb-2"
                             >
-                                Número de Celular
+                                {t('contact.form.phone')}
                             </label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -231,7 +223,7 @@ const ContactForm = () => {
                                     value={formData.telefono}
                                     onChange={handleChange}
                                     className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gb-cyan focus:border-transparent transition-all"
-                                    placeholder="+54 9 11 1234-5678"
+                                    placeholder={t('contact.form.phonePlaceholder')}
                                 />
                             </div>
                         </div>
@@ -245,11 +237,11 @@ const ContactForm = () => {
                             {formStatus.loading ? (
                                 <>
                                     <FiLoader className="w-5 h-5 animate-spin" />
-                                    <span>Enviando...</span>
+                                    <span>{t('contact.form.sending')}</span>
                                 </>
                             ) : (
                                 <>
-                                    <span>Enviar Mensaje</span>
+                                    <span>{t('contact.form.submit')}</span>
                                     <FiSend className="w-5 h-5" />
                                 </>
                             )}
@@ -279,7 +271,7 @@ const ContactForm = () => {
                     className="mt-12 text-center"
                 >
                     <p className="text-gray-600 mb-4">
-                        También puedes contactarme directamente:
+                        {t('contact.directContact')}
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <a

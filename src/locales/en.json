@@ -1,110 +1,109 @@
 {
-    "navigation": {
-        "home": "Home",
-        "experience": "Experience",
-        "flowstate": "FlowState AI",
-        "contact": "Contact",
-        "downloadCV": "Download CV"
-    },
-    "hero": {
-        "title": "GUSTAVO BUONGIORNO BERTON",
-        "role": "Digital Transformation & AI Expert",
-        "subtitle": "25+ years leading Digital Transformation and Scalable AI/Cloud Solution Architecture",
-        "ctaPrimary": "Explore AI/Cloud Solutions Portfolio",
-        "ctaSecondary": "Download CV - October 2025"
-    },
-    "experience": {
-        "title": "My Professional Experience",
-        "subtitle": "Over two decades transforming businesses through technology",
-        "achievements": {
-            "emails": {
-                "label": "Automated Emails",
-                "description": "Automated response in 5 days"
-            },
-            "years": {
-                "label": "Years of Experience",
-                "description": "Leading digital transformation"
-            },
-            "projects": {
-                "label": "Completed Projects",
-                "description": "Scalable AI/Cloud solutions"
-            }
-        },
-        "skillsTitle": "Key Technical Skills",
-        "timelineTitle": "Professional Trajectory",
-        "roles": {
-            "flowstate": {
-                "role": "AI/Cloud Solutions Architect",
-                "description": "Leading the development of intelligent agent ecosystem for business automation."
-            },
-            "hutton": {
-                "role": "Head of Systems",
-                "description": "Comprehensive management of technological infrastructure and migration to cloud solutions."
-            },
-            "ibm": {
-                "role": "Systems Analyst",
-                "description": "Development of enterprise solutions and complex systems architecture."
-            }
-        }
-    },
-    "flowstate": {
-        "title": "FlowState AI: Intelligent Agent Ecosystem",
-        "subtitle": "Transforming business challenges into automated solutions with Artificial Intelligence",
-        "problemTitle": "The B2B Problem",
-        "problemDesc": "Companies lack internal AI expertise and need fast, scalable, and proven solutions. FlowState AI offers an ecosystem of specialized intelligent agents, ready for deployment on Azure, with robust architecture and continuous support.",
-        "projects": {
-            "lnc": {
-                "tagline": "Specialized Legal Bot",
-                "problem": "Companies need fast and contextualized legal answers without relying on manual consultations."
-            },
-            "adgenie": {
-                "tagline": "B2B Advertising Response Automation",
-                "problem": "Manual management of 46,000+ advertising emails consumes valuable team time."
-            },
-            "vortext": {
-                "tagline": "Real-time Simultaneous Interpretation",
-                "problem": "Multilingual conferences require expensive interpreters and complex logistics."
-            },
-            "opifood": {
-                "tagline": "Gastronomic Opinion Analysis",
-                "problem": "Restaurants need to understand customer sentiment from reviews."
-            },
-            "auditxt": {
-                "tagline": "Automated Document Auditing",
-                "problem": "Manual document auditing is slow, error-prone, and expensive."
-            }
-        },
-        "valueTitle": "Connected Intelligence",
-        "valueDesc": "Each FlowState AI agent is designed to integrate perfectly into your business ecosystem, deployed on Azure with scalable architecture and continuous support.",
-        "ctaConsulting": "Request Consulting"
-    },
-    "contact": {
-        "title": "Connect with an AI/Cloud Solutions Architect",
-        "subtitle": "Define Your Next Step",
-        "form": {
-            "name": "Full Name",
-            "email": "Email",
-            "reason": "Reason for Contact",
-            "reasonPlaceholder": "Select an option",
-            "reasons": {
-                "job": "Job Opportunity / Application",
-                "b2b": "B2B Consulting / FlowState AI Services",
-                "networking": "Networking / Press"
-            },
-            "topic": "Topic of Interest",
-            "phone": "Phone Number",
-            "submit": "Send Message",
-            "success": "Thanks for your message! I'll contact you soon.",
-            "error": "There was an error sending the message. Please try again."
-        },
-        "directContact": "You can also contact me directly:"
-    },
-    "footer": {
-        "role": "Digital Transformation & AI Expert",
-        "description": "AI/Cloud Solutions Architect with 25+ years of experience",
-        "quickLinks": "Quick Links",
-        "connect": "Connect With Me",
-        "rights": "All rights reserved.",
-        "madeWith": "Made with"
+  "nav": {
+    "dashboard": "Dashboard",
+    "experience": "Experience",
+    "factory": "AI Factory",
+    "projects": "Projects",
+    "contact": "Contact",
+    "cv": "CV",
+    "downloadCv": "Download CV",
+    "cvModal": {
+      "title": "Download Resume",
+      "subtitle": "Select the language to view or download the CV.",
+      "pdfNote": "The PDF will open in a new tab."
     }
+  },
+  "home": {
+    "badge": "Available · Enterprise Projects",
+    "roles": [
+      "AI Solutions Architect",
+      "Digital Transformation Leader",
+      "Founder · FlowState AI",
+      "Azure & GCP Expert"
+    ],
+    "description": "I design agentic AI ecosystems on Azure and GCP that solve real problems in HealthTech, LegalTech and GovTech. From prototype to production system, in weeks.",
+    "cta": {
+      "factory": "See AI Factory",
+      "contact": "Let's Talk"
+    },
+    "badges": {
+      "azure": "AZURE NATIVE",
+      "langgraph": "LANGGRAPH",
+      "status": "System Active v3.0"
+    },
+    "scroll": "Explore",
+    "marquee": {
+      "label": "Organizations that have trusted the ecosystem"
+    },
+    "stats": [
+      { "label": "Years of Experience" },
+      { "label": "Systems in Production" },
+      { "label": "AI Collaborators" },
+      { "label": "Enterprise Verticals" }
+    ],
+    "explore": {
+      "tag": "Quick Access",
+      "title": "Explore the Ecosystem",
+      "subtitle": "Three independent modules. Each with real technical depth.",
+      "action": "Explore"
+    },
+    "modules": [
+      {
+        "title": "FlowState AI Factory",
+        "description": "Ecosystem of 6 intelligent agents in HealthTech, LegalTech, GovTech and FinTech on Azure Native.",
+        "badge": "6 Agents · READY"
+      },
+      {
+        "title": "Professional Profile",
+        "description": "25+ years of experience in digital transformation, Cloud/AI architecture and enterprise leadership in LATAM.",
+        "badge": "25+ Years · LATAM"
+      },
+      {
+        "title": "Projects & Data",
+        "description": "Real cases: AI medical billing, electoral audit, legal compliance and predictive analytics.",
+        "badge": "30+ Reports"
+      }
+    ],
+    "ctaFinal": {
+      "tag": "Got an enterprise challenge?",
+      "title": "Let's transform your idea",
+      "titleHighlight": "into a real system.",
+      "description": "From prototype to production system in weeks. Azure architecture, AI agents and industrial automation without friction.",
+      "cta": "Start a Conversation",
+      "cv": "Download CV"
+    },
+    "cvModal": {
+      "title": "Download Resume",
+      "subtitle": "Select the language to view or download the CV.",
+      "pdfNote": "The PDF will open in a new tab."
+    }
+  },
+  "contact": {
+    "title": "Connect with an AI/Cloud Solutions Architect",
+    "subtitle": "Define Your Next Step",
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "you@email.com",
+      "reason": "Reason for Contact",
+      "reasonPlaceholder": "Select an option",
+      "reasons": {
+        "job": "Job Opportunity / Application",
+        "b2b": "B2B Consulting / FlowState AI Services",
+        "networking": "Networking / Press"
+      },
+      "topic": "Topic of Interest",
+      "topicPlaceholder": "Tell me more about your project or inquiry...",
+      "phone": "Phone Number",
+      "phonePlaceholder": "+1 555 123 4567",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Thank you for your message! I'll contact you within 24 hours.",
+      "errorFallback": "Could not send. Write me directly at gberton1967@gmail.com",
+      "required": "Please complete all required fields.",
+      "invalidEmail": "Please enter a valid email address."
+    },
+    "directContact": "You can also contact me directly:"
+  }
 }

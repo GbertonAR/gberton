@@ -12,6 +12,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
     FiCpu, FiUser, FiCode, FiArrowRight, FiGlobe,
     FiX, FiDownload, FiMessageSquare, FiZap, FiShield,
@@ -37,47 +38,19 @@ const clients = [
     'FlowState AI Factory',
 ];
 
-/* ── Stats config ── */
-const statsConfig = [
-    { value: 25, suffix: '+', label: 'Años de Experiencia',      icon: <FiShield />      },
-    { value: 6,  suffix: '',  label: 'Sistemas en Producción',   icon: <FiCpu />         },
-    { value: 21, suffix: '',  label: 'Colaboradores IA',         icon: <FiZap />         },
-    { value: 3,  suffix: '',  label: 'Verticales Enterprise',    icon: <FiCheckCircle /> },
+/* ── Stats config — labels vienen de i18n ── */
+const STATS_BASE = [
+    { value: 25, suffix: '+', icon: <FiShield />      },
+    { value: 6,  suffix: '',  icon: <FiCpu />         },
+    { value: 21, suffix: '',  icon: <FiZap />         },
+    { value: 3,  suffix: '',  icon: <FiCheckCircle /> },
 ];
 
-/* ── Modules ── */
-const modules = [
-    {
-        id: 'factory',
-        title: 'FlowState AI Factory',
-        description: 'Ecosistema de 6 agentes inteligentes en HealthTech, LegalTech, GovTech y FinTech sobre Azure Native.',
-        icon: <FiCpu className="w-7 h-7" />,
-        gradient: 'from-flow-tech to-flow-cyan',
-        path: '/factory',
-        badge: '6 Agentes · READY',
-        badgeColor: 'text-emerald-400 bg-emerald-400/10',
-    },
-    {
-        id: 'cv',
-        title: 'Perfil Profesional',
-        description: 'Trayectoria de 25+ años en transformación digital, arquitectura Cloud/AI y liderazgo enterprise en LATAM.',
-        icon: <FiUser className="w-7 h-7" />,
-        gradient: 'from-innovation-purple to-innovation-magenta',
-        path: '/cv',
-        badge: '25+ Años · LATAM',
-        badgeColor: 'text-purple-400 bg-purple-400/10',
-        isCv: true,
-    },
-    {
-        id: 'projects',
-        title: 'Proyectos & Datos',
-        description: 'Casos reales: facturación médica IA, auditoría electoral, compliance legal y analytics predictivo.',
-        icon: <FiCode className="w-7 h-7" />,
-        gradient: 'from-amber-500 to-orange-400',
-        path: '/projects',
-        badge: '30+ Reportes',
-        badgeColor: 'text-amber-400 bg-amber-400/10',
-    },
+/* ── Modules — metadata estática, labels vienen de i18n ── */
+const MODULES_META = [
+    { id: 'factory', icon: <FiCpu className="w-7 h-7" />,  gradient: 'from-flow-tech to-flow-cyan',            path: '/factory', badgeColor: 'text-emerald-400 bg-emerald-400/10' },
+    { id: 'cv',      icon: <FiUser className="w-7 h-7" />, gradient: 'from-innovation-purple to-innovation-magenta', path: '/cv',  badgeColor: 'text-purple-400 bg-purple-400/10', isCv: true },
+    { id: 'projects',icon: <FiCode className="w-7 h-7" />, gradient: 'from-amber-500 to-orange-400',           path: '/projects',badgeColor: 'text-amber-400 bg-amber-400/10' },
 ];
 
 /* ══════════════════════════════════════════════
@@ -128,6 +101,7 @@ const StatCard = ({ stat, index, parentInView }) => {
    HomeDashboard — componente principal
 ══════════════════════════════════════════════ */
 const HomeDashboard = () => {
+    const { t } = useTranslation();
     const navigate       = useNavigate();
     const [showCvModal, setShowCvModal] = useState(false);
 
@@ -136,12 +110,7 @@ const HomeDashboard = () => {
     const statsView = useInView(statsRef, { once: true, margin: '-80px' });
 
     /* Typewriter de roles */
-    const roles = [
-        'Arquitecto de Soluciones AI',
-        'Líder de Transformación Digital',
-        'Founder · FlowState AI',
-        'Experto en Azure & GCP',
-    ];
+    const roles = t('home.roles', { returnObjects: true });
     const [roleIndex, setRoleIndex] = useState(0);
     const [displayed,  setDisplayed]  = useState('');
     const [deleting,   setDeleting]   = useState(false);
@@ -197,7 +166,7 @@ const HomeDashboard = () => {
                                            px-4 py-2 rounded-full mb-8"
                             >
                                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                                Disponible · Proyectos Enterprise
+                                {t('home.badge')}
                             </motion.div>
 
                             {/* Nombre */}
@@ -233,9 +202,7 @@ const HomeDashboard = () => {
                                 transition={{ delay: 0.6 }}
                                 className="text-slate-400 text-lg leading-relaxed max-w-xl mb-10"
                             >
-                                Diseño ecosistemas de IA agéntica sobre Azure y GCP que resuelven
-                                problemas reales en HealthTech, LegalTech y GovTech.
-                                Del prototipo al sistema productivo, en semanas.
+                                {t('home.description')}
                             </motion.p>
 
                             {/* CTAs primarios */}
@@ -252,7 +219,7 @@ const HomeDashboard = () => {
                                                hover:shadow-flow-tech/45 hover:-translate-y-1 transition-all duration-300"
                                 >
                                     <FiCpu className="w-5 h-5" />
-                                    Ver AI Factory
+                                    {t('home.cta.factory')}
                                     <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                 </button>
                                 <button
@@ -262,7 +229,7 @@ const HomeDashboard = () => {
                                                hover:bg-white/[0.08] hover:border-white/30 hover:-translate-y-1 transition-all duration-300"
                                 >
                                     <FiMessageSquare className="w-5 h-5" />
-                                    Hablemos
+                                    {t('home.cta.contact')}
                                 </button>
                             </motion.div>
                         </motion.div>
@@ -341,7 +308,7 @@ const HomeDashboard = () => {
                     transition={{ delay: 1.4 }}
                     className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
                 >
-                    <span className="text-slate-600 text-[10px] tracking-widest uppercase">Explorar</span>
+                    <span className="text-slate-600 text-[10px] tracking-widest uppercase">{t('home.scroll')}</span>
                     <motion.div
                         animate={{ y: [0, 8, 0] }}
                         transition={{ repeat: Infinity, duration: 1.5 }}
@@ -355,7 +322,7 @@ const HomeDashboard = () => {
             {/* ══ SOCIAL PROOF MARQUEE ══ */}
             <section className="py-5 border-y border-white/5 bg-white/[0.01] overflow-hidden">
                 <p className="text-center text-[10px] text-slate-600 uppercase tracking-widest mb-3 font-semibold">
-                    Organizaciones que han confiado en el ecosistema
+                    {t('home.marquee.label')}
                 </p>
                 <div className="relative overflow-hidden">
                     <div
@@ -375,8 +342,8 @@ const HomeDashboard = () => {
             {/* ══ CONTADORES ANIMADOS ══ */}
             <section ref={statsRef} className="py-20 max-w-7xl mx-auto px-6">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    {statsConfig.map((s, i) => (
-                        <StatCard key={i} stat={s} index={i} parentInView={statsView} />
+                    {STATS_BASE.map((s, i) => (
+                        <StatCard key={i} stat={{ ...s, label: t(`home.stats.${i}.label`) }} index={i} parentInView={statsView} />
                     ))}
                 </div>
             </section>
@@ -390,16 +357,18 @@ const HomeDashboard = () => {
                     className="mb-14 text-center"
                 >
                     <div className="inline-flex items-center gap-2 text-flow-cyan font-semibold uppercase text-xs tracking-wider mb-3">
-                        <FiZap /> Acceso Directo
+                        <FiZap /> {t('home.explore.tag')}
                     </div>
-                    <h2 className="text-4xl font-heading font-extrabold">Explora el Ecosistema</h2>
+                    <h2 className="text-4xl font-heading font-extrabold">{t('home.explore.title')}</h2>
                     <p className="text-slate-400 mt-3 max-w-xl mx-auto">
-                        Tres módulos independientes. Cada uno con profundidad técnica real.
+                        {t('home.explore.subtitle')}
                     </p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {modules.map((mod, i) => (
+                    {MODULES_META.map((mod, i) => {
+                        const label = t(`home.modules.${i}`, { returnObjects: true });
+                        return (
                         <motion.div
                             key={mod.id}
                             initial={{ opacity: 0, y: 30 }}
@@ -414,40 +383,34 @@ const HomeDashboard = () => {
                             className="group cursor-pointer bg-[#0D0F26] border border-white/5 rounded-3xl overflow-hidden
                                        shadow-2xl hover:border-white/15 transition-all duration-300 flex flex-col"
                         >
-                            {/* Borde superior gradiente */}
                             <div className={`h-[4px] bg-gradient-to-r ${mod.gradient}`} />
-
                             <div className="p-8 flex-1 flex flex-col justify-between">
                                 <div>
-                                    {/* Ícono */}
                                     <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${mod.gradient}
                                                      flex items-center justify-center text-white mb-6 shadow-lg
                                                      group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
                                         {mod.icon}
                                     </div>
-                                    {/* Badge de estado */}
                                     <div className={`inline-flex items-center gap-1.5 text-[10px] font-extrabold
                                                      tracking-widest px-2.5 py-1 rounded-lg mb-4 ${mod.badgeColor}`}>
                                         <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
-                                        {mod.badge}
+                                        {label.badge}
                                     </div>
                                     <h3 className="text-xl font-heading font-extrabold text-white mb-3
                                                    group-hover:text-flow-cyan transition-colors duration-300">
-                                        {mod.title}
+                                        {label.title}
                                     </h3>
-                                    <p className="text-slate-400 text-sm leading-relaxed">
-                                        {mod.description}
-                                    </p>
+                                    <p className="text-slate-400 text-sm leading-relaxed">{label.description}</p>
                                 </div>
-
                                 <div className="flex items-center gap-2 mt-8 pt-6 border-t border-white/5
                                                 text-slate-500 group-hover:text-flow-cyan transition-colors font-bold text-sm">
-                                    <span>Explorar</span>
+                                    <span>{t('home.explore.action')}</span>
                                     <FiChevronRight className="group-hover:translate-x-2 transition-transform" />
                                 </div>
                             </div>
                         </motion.div>
-                    ))}
+                        );
+                    })}
                 </div>
             </section>
 
@@ -463,17 +426,16 @@ const HomeDashboard = () => {
                         transition={{ duration: 0.6 }}
                     >
                         <div className="inline-flex items-center gap-2 text-innovation-magenta font-semibold uppercase text-xs tracking-wider mb-6">
-                            <FiMessageSquare /> ¿Tenés un desafío enterprise?
+                            <FiMessageSquare /> {t('home.ctaFinal.tag')}
                         </div>
                         <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6 leading-tight">
-                            Transformemos tu idea<br />
+                            {t('home.ctaFinal.title')}<br />
                             <span className="bg-gradient-to-r from-flow-tech to-flow-cyan bg-clip-text text-transparent">
-                                en un sistema real.
+                                {t('home.ctaFinal.titleHighlight')}
                             </span>
                         </h2>
                         <p className="text-slate-400 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
-                            Del prototipo al sistema productivo en semanas. Arquitectura Azure,
-                            agentes IA y automatización industrial sin fricción.
+                            {t('home.ctaFinal.description')}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <button
@@ -483,7 +445,7 @@ const HomeDashboard = () => {
                                            hover:shadow-flow-tech/45 hover:-translate-y-1 transition-all duration-300"
                             >
                                 <FiMessageSquare className="w-5 h-5" />
-                                Iniciar Conversación
+                                {t('home.ctaFinal.cta')}
                                 <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
                             </button>
                             <button
@@ -493,7 +455,7 @@ const HomeDashboard = () => {
                                            hover:bg-white/[0.08] hover:border-white/25 hover:-translate-y-1 transition-all duration-300"
                             >
                                 <FiDownload className="w-5 h-5" />
-                                Descargar CV
+                                {t('home.ctaFinal.cv')}
                             </button>
                         </div>
                     </motion.div>
@@ -530,9 +492,9 @@ const HomeDashboard = () => {
                                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-flow-tech to-flow-cyan flex items-center justify-center text-white mb-4 shadow-lg shadow-flow-tech/30">
                                     <FiGlobe className="w-7 h-7" />
                                 </div>
-                                <h2 className="text-2xl font-bold text-white font-heading">Descargar Curriculum</h2>
+                                <h2 className="text-2xl font-bold text-white font-heading">{t('home.cvModal.title')}</h2>
                                 <p className="text-slate-400 text-sm mt-2 leading-relaxed">
-                                    Seleccioná el idioma para ver o descargar el CV.
+                                    {t('home.cvModal.subtitle')}
                                 </p>
                             </div>
 
@@ -564,7 +526,7 @@ const HomeDashboard = () => {
                             </div>
 
                             <p className="text-center text-xs text-slate-600 mt-6">
-                                El PDF se abrirá en una nueva pestaña.
+                                {t('home.cvModal.pdfNote')}
                             </p>
                         </motion.div>
                     </motion.div>
