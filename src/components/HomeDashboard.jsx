@@ -19,6 +19,7 @@ import {
     FiCheckCircle, FiChevronRight,
 } from 'react-icons/fi';
 import { NeuralNetwork3D } from './3d/NeuralNetwork3D';
+import { WorldCupBattle } from './WorldCupBattle';
 
 /* ── CV PDFs ── */
 const CV_PDF = {
@@ -413,6 +414,9 @@ const HomeDashboard = () => {
                     })}
                 </div>
             </section>
+
+            {/* ══ WORLD CUP AI BATTLE ══ */}
+            <WorldCupBattle />
 
             {/* ══ CTA FINAL ══ */}
             <section className="py-28 relative overflow-hidden border-t border-white/5">

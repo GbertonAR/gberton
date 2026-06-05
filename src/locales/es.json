@@ -78,6 +78,14 @@
       "pdfNote": "El PDF se abrirá en una nueva pestaña."
     }
   },
+  "footer": {
+    "role": "Digital Transformation & AI Expert",
+    "description": "Arquitecto de Soluciones AI/Cloud con 25+ años de experiencia",
+    "quickLinks": "Enlaces Rápidos",
+    "connect": "Conecta Conmigo",
+    "rights": "Todos los derechos reservados.",
+    "madeWith": "Hecho con"
+  },
   "contact": {
     "title": "Conecta con un Arquitecto de Soluciones AI/Cloud",
     "subtitle": "Define tu Próximo Paso",

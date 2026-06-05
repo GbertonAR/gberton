@@ -93,7 +93,7 @@ const Navigation = () => {
                             onClick={toggleLang}
                             className="flex items-center gap-1.5 text-xs font-bold tracking-widest text-slate-400 hover:text-flow-cyan border border-white/10 hover:border-flow-cyan/40 rounded-lg px-3 py-2 transition-all duration-200"
                         >
-                            <FiGlobe className="w-3.5 h-3.5" />
+                            <span>{currentLang === 'ES' ? '🇦🇷' : '🇺🇸'}</span>
                             {currentLang}
                         </button>
                         <button
@@ -145,7 +145,7 @@ const Navigation = () => {
                                 onClick={toggleLang}
                                 className="flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-flow-cyan py-2 transition-colors"
                             >
-                                <FiGlobe className="w-4 h-4" />
+                                <span>{currentLang === 'ES' ? '🇺🇸' : '🇦🇷'}</span>
                                 {currentLang === 'ES' ? 'Switch to English' : 'Cambiar a Español'}
                             </button>
                             <button

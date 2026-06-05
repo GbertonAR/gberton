@@ -1,13 +1,15 @@
 import { FiLinkedin, FiGithub, FiMail, FiHeart } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+    const { t } = useTranslation();
     const currentYear = new Date().getFullYear();
 
     const quickLinks = [
-        { name: 'Inicio', href: '#hero' },
-        { name: 'Experiencia', href: '#experience' },
-        { name: 'FlowState AI', href: '#flowstate' },
-        { name: 'Contacto', href: '#contact' },
+        { name: t('nav.dashboard'),   href: '/' },
+        { name: t('nav.experience'),  href: '/cv' },
+        { name: t('nav.factory'),     href: '/factory' },
+        { name: t('nav.contact'),     href: '/contact' },
     ];
 
     const scrollToSection = (href) => {
@@ -38,17 +40,13 @@ const Footer = () => {
                         <h3 className="text-xl font-heading font-bold">
                             Gustavo Buongiorno Berton
                         </h3>
-                        <p className="text-gray-300 text-sm">
-                            Digital Transformation & AI Expert
-                        </p>
-                        <p className="text-gray-400 text-sm">
-                            Arquitecto de Soluciones AI/Cloud con 25+ años de experiencia
-                        </p>
+                        <p className="text-gray-300 text-sm">{t('footer.role')}</p>
+                        <p className="text-gray-400 text-sm">{t('footer.description')}</p>
                     </div>
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                        <h4 className="text-lg font-semibold mb-4">{t('footer.quickLinks')}</h4>
                         <ul className="space-y-2">
                             {quickLinks.map((link) => (
                                 <li key={link.name}>
@@ -65,7 +63,7 @@ const Footer = () => {
 
                     {/* Social Links */}
                     <div>
-                        <h4 className="text-lg font-semibold mb-4">Conecta Conmigo</h4>
+                        <h4 className="text-lg font-semibold mb-4">{t('footer.connect')}</h4>
                         <div className="flex space-x-4">
                             <a
                                 href="https://linkedin.com/in/gustavoberton"
@@ -99,13 +97,12 @@ const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
                     <p className="text-gray-400 text-sm">
-                        © {currentYear} Gustavo Berton & FlowState AI. Todos los derechos
-                        reservados.
+                        © {currentYear} Gustavo Berton & FlowState AI. {t('footer.rights')}
                     </p>
                     <p className="text-gray-400 text-sm flex items-center space-x-1">
-                        <span>Hecho con</span>
+                        <span>{t('footer.madeWith')}</span>
                         <FiHeart className="w-4 h-4 text-red-400" />
-                        <span>usando React + Vite + Tailwind CSS</span>
+                        <span>React + Vite + Tailwind CSS</span>
                     </p>
                 </div>
             </div>

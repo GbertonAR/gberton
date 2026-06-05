@@ -78,6 +78,14 @@
       "pdfNote": "The PDF will open in a new tab."
     }
   },
+  "footer": {
+    "role": "Digital Transformation & AI Expert",
+    "description": "AI/Cloud Solutions Architect with 25+ years of experience",
+    "quickLinks": "Quick Links",
+    "connect": "Connect With Me",
+    "rights": "All rights reserved.",
+    "madeWith": "Made with"
+  },
   "contact": {
     "title": "Connect with an AI/Cloud Solutions Architect",
     "subtitle": "Define Your Next Step",
