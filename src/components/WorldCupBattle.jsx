@@ -221,15 +221,15 @@ export const WorldCupBattle = () => {
     const countdown = useCountdown(OPENING);
 
     useEffect(() => {
-        fetch('/data/matches.json')
-            .then(r => r.json())
-            .then(data => {
-                setMatchesData(data);
-                setLocalVotes(data.scoreboard.votes);
-                const next = data.matches.find(m => m.status === 'upcoming' && m.is_featured) || data.matches[0];
-                setFeatured(next);
-            })
-            .catch(() => {});
+        Promise.all([
+            fetch('/data/matches.json').then(r => r.json()),
+            fetch('/api/get-votes').then(r => r.json()).catch(() => null),
+        ]).then(([data, liveVotes]) => {
+            setMatchesData(data);
+            setLocalVotes(liveVotes || data.scoreboard.votes);
+            const next = data.matches.find(m => m.status === 'upcoming' && m.is_featured) || data.matches[0];
+            setFeatured(next);
+        }).catch(() => {});
     }, []);
 
     const handleVoted = (ai) => {
