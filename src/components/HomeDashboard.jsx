@@ -19,6 +19,7 @@ import {
     FiCheckCircle, FiChevronRight,
 } from 'react-icons/fi';
 import { NeuralNetwork3D } from './3d/NeuralNetwork3D';
+import { useCountdown } from '../hooks/useCountdown';
 
 /* ── CV PDFs ── */
 const CV_PDF = {
@@ -102,7 +103,8 @@ const StatCard = ({ stat, index, parentInView }) => {
 ══════════════════════════════════════════════ */
 const HomeDashboard = () => {
     const { t } = useTranslation();
-    const navigate       = useNavigate();
+    const navigate = useNavigate();
+    const wc = useCountdown('2026-06-11T21:00:00Z');
     const [showCvModal, setShowCvModal] = useState(false);
 
     /* inView para los contadores */
@@ -430,11 +432,31 @@ const HomeDashboard = () => {
 
                     {/* Texto */}
                     <div className="flex items-center gap-5">
-                        <div className="text-5xl animate-bounce">⚽</div>
+                        <div className="text-5xl animate-bounce flex-shrink-0">⚽</div>
                         <div>
                             <div className="text-emerald-400 text-xs font-bold uppercase tracking-widest mb-1">FIFA World Cup 2026 · AI Battle</div>
                             <h3 className="text-2xl font-heading font-extrabold text-white">¿Qué IA predice mejor el Mundial?</h3>
-                            <p className="text-slate-400 text-sm mt-1">GPT-4o, Gemini y Claude compiten. Votá y seguí quién acierta más.</p>
+                            <p className="text-slate-400 text-sm mt-1 mb-3">GPT-4o, Gemini y Claude compiten. Votá y seguí quién acierta más.</p>
+                            {/* Countdown compacto */}
+                            {!wc.over && (
+                                <div className="flex items-center gap-3">
+                                    <span className="text-slate-500 text-xs">Arranca en</span>
+                                    {[
+                                        { v: wc.days,    l: 'd' },
+                                        { v: wc.hours,   l: 'h' },
+                                        { v: wc.minutes, l: 'm' },
+                                        { v: wc.seconds, l: 's' },
+                                    ].map(({ v, l }, i) => (
+                                        <span key={l} className="flex items-baseline gap-0.5">
+                                            {i > 0 && <span className="text-emerald-600 font-bold text-sm">:</span>}
+                                            <span className="font-heading font-extrabold text-emerald-400 text-lg tabular-nums">
+                                                {String(v).padStart(2, '0')}
+                                            </span>
+                                            <span className="text-slate-600 text-[10px]">{l}</span>
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
 

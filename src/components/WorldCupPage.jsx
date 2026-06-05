@@ -10,7 +10,8 @@
 
 import { motion } from 'framer-motion';
 import { WorldCupBattle } from './WorldCupBattle';
-import { FiStar, FiShield, FiZap, FiUser } from 'react-icons/fi';
+import { FiStar, FiShield, FiZap, FiUser, FiClock } from 'react-icons/fi';
+import { useCountdown } from '../hooks/useCountdown';
 
 // ── Data histórica de los equipos ─────────────────────────────────────────────
 const TEAMS = [
@@ -166,12 +167,52 @@ const TeamCard = ({ team, index }) => (
 );
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
+const CountUnit = ({ value, label }) => (
+    <div className="flex flex-col items-center">
+        <div className="bg-black/40 border border-emerald-500/30 rounded-2xl px-5 py-4 min-w-[88px] text-center backdrop-blur-sm">
+            <span className="text-5xl md:text-6xl font-heading font-extrabold text-white tabular-nums">
+                {String(value).padStart(2, '0')}
+            </span>
+        </div>
+        <span className="text-[11px] text-emerald-500/70 uppercase tracking-widest mt-2 font-semibold">{label}</span>
+    </div>
+);
+
 const WorldCupPage = () => {
+    const wc = useCountdown('2026-06-11T21:00:00Z');
+
     return (
         <div className="min-h-screen text-white font-sans" style={{ background: 'linear-gradient(180deg, #020805 0%, #050f05 30%, #060814 70%, #050810 100%)' }}>
 
+            {/* ── COUNTDOWN BANNER — Primera línea de la página ── */}
+            <div className="pt-24 pb-0 relative" style={{ background: 'linear-gradient(180deg, #010d03 0%, #020805 100%)' }}>
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,#16a34a12_0%,transparent_70%)] pointer-events-none" />
+                <div className="max-w-4xl mx-auto px-6 pt-8 pb-12 text-center relative z-10">
+                    <div className="flex items-center justify-center gap-2 text-emerald-500 text-xs font-bold uppercase tracking-widest mb-6">
+                        <FiClock className="w-3.5 h-3.5" />
+                        {wc.over ? '¡El torneo ya comenzó!' : 'Cuenta regresiva al partido inaugural'}
+                    </div>
+                    {!wc.over && (
+                        <div className="flex items-end justify-center gap-4">
+                            <CountUnit value={wc.days}    label="Días" />
+                            <span className="text-4xl text-emerald-700 font-bold mb-5">:</span>
+                            <CountUnit value={wc.hours}   label="Horas" />
+                            <span className="text-4xl text-emerald-700 font-bold mb-5">:</span>
+                            <CountUnit value={wc.minutes} label="Minutos" />
+                            <span className="text-4xl text-emerald-700 font-bold mb-5">:</span>
+                            <CountUnit value={wc.seconds} label="Segundos" />
+                        </div>
+                    )}
+                    <p className="text-slate-500 text-xs mt-6">
+                        🇲🇽 México vs Ecuador · Estadio Azteca · 11 de junio 2026
+                    </p>
+                </div>
+                {/* Divisor verde */}
+                <div className="h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent" />
+            </div>
+
             {/* Hero */}
-            <section className="pt-32 pb-16 relative overflow-hidden">
+            <section className="pt-16 pb-16 relative overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,#16a34a18_0%,transparent_60%)] pointer-events-none" />
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent" />
 
