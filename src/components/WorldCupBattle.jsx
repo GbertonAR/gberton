@@ -240,10 +240,15 @@ export const WorldCupBattle = () => {
     const alreadyVoted = votedMatch === featured.id;
 
     return (
-        <section className="py-20 relative overflow-hidden border-t border-white/5">
-            {/* Fondo campo de fútbol */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,#0a2a0a_0%,transparent_60%)] pointer-events-none" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0003_1px,transparent_1px),linear-gradient(to_bottom,#00ff0003_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none" />
+        <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #050f05 0%, #0a1a0a 40%, #0d1f0d 100%)' }}>
+            {/* Borde superior luminoso verde */}
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent" />
+            {/* Borde inferior */}
+            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
+            {/* Glow central */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,#16a34a22_0%,transparent_65%)] pointer-events-none" />
+            {/* Grid campo */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#22c55e06_1px,transparent_1px),linear-gradient(to_bottom,#22c55e06_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none" />
 
             <div className="max-w-5xl mx-auto px-6 relative z-10">
 
