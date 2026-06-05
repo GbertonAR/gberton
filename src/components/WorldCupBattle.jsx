@@ -245,10 +245,50 @@ export const WorldCupBattle = () => {
             <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent" />
             {/* Borde inferior */}
             <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
+
+            {/* ── Cancha de fútbol SVG ── */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-[0.07]">
+                <svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg"
+                    className="w-full h-full max-w-5xl"
+                    fill="none" stroke="#4ade80" strokeWidth="2.5">
+                    {/* Contorno del campo */}
+                    <rect x="20" y="20" width="760" height="480" />
+                    {/* Línea del medio */}
+                    <line x1="400" y1="20" x2="400" y2="500" />
+                    {/* Círculo central */}
+                    <circle cx="400" cy="260" r="73" />
+                    {/* Punto central */}
+                    <circle cx="400" cy="260" r="3" fill="#4ade80" />
+                    {/* Área grande izquierda */}
+                    <rect x="20" y="130" width="132" height="260" />
+                    {/* Área chica izquierda */}
+                    <rect x="20" y="195" width="44" height="130" />
+                    {/* Punto penal izquierdo */}
+                    <circle cx="109" cy="260" r="3" fill="#4ade80" />
+                    {/* Arco penal izquierdo */}
+                    <path d="M 152 195 A 73 73 0 0 1 152 325" />
+                    {/* Área grande derecha */}
+                    <rect x="648" y="130" width="132" height="260" />
+                    {/* Área chica derecha */}
+                    <rect x="736" y="195" width="44" height="130" />
+                    {/* Punto penal derecho */}
+                    <circle cx="691" cy="260" r="3" fill="#4ade80" />
+                    {/* Arco penal derecho */}
+                    <path d="M 648 195 A 73 73 0 0 0 648 325" />
+                    {/* Arcos de esquina */}
+                    <path d="M 20 40 A 14 14 0 0 1 34 20" />
+                    <path d="M 766 20 A 14 14 0 0 1 780 40" />
+                    <path d="M 20 480 A 14 14 0 0 0 34 500" />
+                    <path d="M 766 500 A 14 14 0 0 0 780 480" />
+                    {/* Arco de medio campo superior */}
+                    <path d="M 370 20 A 30 20 0 0 1 430 20" />
+                    {/* Arco de medio campo inferior */}
+                    <path d="M 370 500 A 30 20 0 0 0 430 500" />
+                </svg>
+            </div>
+
             {/* Glow central */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,#16a34a22_0%,transparent_65%)] pointer-events-none" />
-            {/* Grid campo */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#22c55e06_1px,transparent_1px),linear-gradient(to_bottom,#22c55e06_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,#16a34a15_0%,transparent_70%)] pointer-events-none" />
 
             <div className="max-w-5xl mx-auto px-6 relative z-10">
 
