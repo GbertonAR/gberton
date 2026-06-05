@@ -4,7 +4,8 @@
     "host_nations": ["USA", "Canada", "Mexico"],
     "opening_date": "2026-06-11",
     "final_date": "2026-07-19",
-    "note": "Verificar fixture completo en FIFA.com — predicciones generadas por generate-predictions.mjs"
+    "predictions_generated": "2026-06-05",
+    "note": "Predicciones generadas por los 3 modelos de IA para el AI Battle"
   },
   "ais": {
     "claude":  { "name": "Claude Sonnet",  "logo": "🟠", "color": "#D97706", "maker": "Anthropic" },
@@ -22,14 +23,26 @@
       "phase": "Grupo A",
       "date": "2026-06-11T21:00:00Z",
       "venue": "Estadio Azteca, Ciudad de México",
-      "home": { "name": "México",    "flag": "🇲🇽", "code": "MEX" },
-      "away": { "name": "Ecuador",   "flag": "🇪🇨", "code": "ECU" },
+      "home": { "name": "México",  "flag": "🇲🇽", "code": "MEX" },
+      "away": { "name": "Ecuador", "flag": "🇪🇨", "code": "ECU" },
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
-        "claude":  { "winner": null, "score": null, "reasoning": null },
-        "gpt":     { "winner": null, "score": null, "reasoning": null },
-        "gemini":  { "winner": null, "score": null, "reasoning": null }
+        "claude": {
+          "winner": "México",
+          "score": "2-1",
+          "reasoning": "México como local en el Azteca tiene ventaja histórica aplastante. Ecuador llega sin sus mejores atacantes y el factor altitud en CDMX penaliza al visitante."
+        },
+        "gpt": {
+          "winner": "México",
+          "score": "2-0",
+          "reasoning": "La presión de jugar en casa en el partido inaugural del torneo impulsa a México. Ecuador mostró irregularidad en las Eliminatorias y no tiene chances claras de gol fuera de casa."
+        },
+        "gemini": {
+          "winner": "Empate",
+          "score": "1-1",
+          "reasoning": "Ecuador sorprende históricamente en Mundiales (2002, 2014, 2022). México necesita ganar pero la presión puede jugarle en contra. Predigo un arranque cauto de ambos."
+        }
       },
       "actual_result": null
     },
@@ -43,9 +56,21 @@
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
-        "claude":  { "winner": null, "score": null, "reasoning": null },
-        "gpt":     { "winner": null, "score": null, "reasoning": null },
-        "gemini":  { "winner": null, "score": null, "reasoning": null }
+        "claude": {
+          "winner": "Argentina",
+          "score": "3-0",
+          "reasoning": "Argentina llega como campeona vigente con Messi liderando. Chile no clasificó por méritos propios y llega sin la generación dorada de Alexis y Vidal."
+        },
+        "gpt": {
+          "winner": "Argentina",
+          "score": "2-1",
+          "reasoning": "El clásico sudamericano siempre da batalla. Argentina gana pero Chile puede anotar en transición. Messi marca al menos una vez."
+        },
+        "gemini": {
+          "winner": "Argentina",
+          "score": "2-0",
+          "reasoning": "Argentina en su mejor momento con profundidad táctica bajo Scaloni. Chile en reconstrucción generacional no tiene los recursos para competir de igual a igual."
+        }
       },
       "actual_result": null
     },
@@ -59,9 +84,21 @@
       "status": "upcoming",
       "is_featured": false,
       "predictions": {
-        "claude":  { "winner": null, "score": null, "reasoning": null },
-        "gpt":     { "winner": null, "score": null, "reasoning": null },
-        "gemini":  { "winner": null, "score": null, "reasoning": null }
+        "claude": {
+          "winner": "Argentina",
+          "score": "4-0",
+          "reasoning": "Perú llega sin forma internacional consistente. Argentina en la segunda fecha del grupo puede rotar sin perder nivel. Goleada esperada."
+        },
+        "gpt": {
+          "winner": "Argentina",
+          "score": "3-1",
+          "reasoning": "Perú puede sorprender con contraataques veloces pero Argentina tiene demasiada calidad. Alvarez y Di María suman al partido."
+        },
+        "gemini": {
+          "winner": "Argentina",
+          "score": "2-0",
+          "reasoning": "Argentina administra el partido pensando en el resto del torneo. Gana cómodamente sin necesitar exponer su plan de juego completo."
+        }
       },
       "actual_result": null
     },
@@ -70,14 +107,26 @@
       "phase": "Grupo C",
       "date": "2026-06-12T21:00:00Z",
       "venue": "SoFi Stadium, Los Angeles",
-      "home": { "name": "Brasil",    "flag": "🇧🇷", "code": "BRA" },
-      "away": { "name": "Paraguay",  "flag": "🇵🇾", "code": "PAR" },
+      "home": { "name": "Brasil",   "flag": "🇧🇷", "code": "BRA" },
+      "away": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
-        "claude":  { "winner": null, "score": null, "reasoning": null },
-        "gpt":     { "winner": null, "score": null, "reasoning": null },
-        "gemini":  { "winner": null, "score": null, "reasoning": null }
+        "claude": {
+          "winner": "Brasil",
+          "score": "3-1",
+          "reasoning": "Brasil llega hambriento del título. Vinicius Jr. y Rodrygo hacen la diferencia en la banda. Paraguay puede resistir pero no evitar la derrota."
+        },
+        "gpt": {
+          "winner": "Brasil",
+          "score": "2-0",
+          "reasoning": "Brasil tiene jerarquía diferencial. Nuevo técnico con sistema más equilibrado. Paraguay sin recursos ofensivos para perforar la zaga Canarinha."
+        },
+        "gemini": {
+          "winner": "Brasil",
+          "score": "3-0",
+          "reasoning": "Brasil necesita demostrar que superó la crisis post-Qatar. El ataque de Vinicius más Raphinha es demasiado para Paraguay. Goleada y mensaje."
+        }
       },
       "actual_result": null
     },
@@ -86,14 +135,26 @@
       "phase": "Grupo A",
       "date": "2026-06-13T18:00:00Z",
       "venue": "Estadio BBVA, Monterrey",
-      "home": { "name": "USA",       "flag": "🇺🇸", "code": "USA" },
-      "away": { "name": "Colombia",  "flag": "🇨🇴", "code": "COL" },
+      "home": { "name": "USA",      "flag": "🇺🇸", "code": "USA" },
+      "away": { "name": "Colombia", "flag": "🇨🇴", "code": "COL" },
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
-        "claude":  { "winner": null, "score": null, "reasoning": null },
-        "gpt":     { "winner": null, "score": null, "reasoning": null },
-        "gemini":  { "winner": null, "score": null, "reasoning": null }
+        "claude": {
+          "winner": "Colombia",
+          "score": "1-2",
+          "reasoning": "Colombia con James Rodríguez y Díaz en forma llega como favorita. USA tiene un equipo joven prometedor pero le falta experiencia para ganar partidos de presión."
+        },
+        "gpt": {
+          "winner": "Empate",
+          "score": "1-1",
+          "reasoning": "USA en casa tiene motivación extra. Pulisic puede marcar la diferencia pero Colombia tiene calidad colectiva para neutralizarlo. Partido parejo."
+        },
+        "gemini": {
+          "winner": "Colombia",
+          "score": "0-2",
+          "reasoning": "Colombia viene de finalista de Copa América 2024. USA todavía no demostró poder ganar partidos de alta exigencia. Colombia gana con autoridad."
+        }
       },
       "actual_result": null
     }
