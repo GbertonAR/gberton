@@ -42,6 +42,7 @@ const Navigation = () => {
         { name: t('nav.factory'),    path: '/factory' },
         { name: t('nav.projects'),   path: '/projects' },
         { name: t('nav.contact'),    path: '/contact' },
+        { name: '⚽ AI Battle',      path: '/worldcup', highlight: true },
     ];
 
     const handleDownloadCV = () => {
@@ -81,8 +82,10 @@ const Navigation = () => {
                                 key={link.name}
                                 to={link.path}
                                 className={`font-medium transition-colors duration-200 ${
-                                    location.pathname === link.path 
-                                    ? 'text-flow-cyan font-bold border-b-2 border-flow-cyan' 
+                                    link.highlight
+                                    ? 'text-emerald-400 hover:text-emerald-300 font-bold animate-pulse'
+                                    : location.pathname === link.path
+                                    ? 'text-flow-cyan font-bold border-b-2 border-flow-cyan'
                                     : 'text-slate-300 hover:text-white'
                                 }`}
                             >

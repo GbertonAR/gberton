@@ -5,6 +5,7 @@ import ProfessionalExperience from './components/ProfessionalExperience';
 import FlowStateFactory from './components/FlowStateFactory';
 import ProjectsView from './components/ProjectsView';
 import ContactForm from './components/ContactForm';
+import WorldCupPage from './components/WorldCupPage';
 import './index.css';
 
 function App() {
@@ -15,8 +16,9 @@ function App() {
           <Route index element={<HomeDashboard />} />
           <Route path="cv" element={<ProfessionalExperience />} />
           <Route path="factory" element={<FlowStateFactory />} />
-          <Route path="contact" element={<ContactForm />} />
-          <Route path="projects" element={<ProjectsView />} />
+          <Route path="contact"   element={<ContactForm />} />
+          <Route path="projects"  element={<ProjectsView />} />
+          <Route path="worldcup"  element={<WorldCupPage />} />
         </Route>
       </Routes>
     </Router>

@@ -19,7 +19,6 @@ import {
     FiCheckCircle, FiChevronRight,
 } from 'react-icons/fi';
 import { NeuralNetwork3D } from './3d/NeuralNetwork3D';
-import { WorldCupBattle } from './WorldCupBattle';
 
 /* ── CV PDFs ── */
 const CV_PDF = {
@@ -415,8 +414,39 @@ const HomeDashboard = () => {
                 </div>
             </section>
 
-            {/* ══ WORLD CUP AI BATTLE ══ */}
-            <WorldCupBattle />
+            {/* ══ WORLD CUP TEASER ══ */}
+            <section className="py-6 px-6 max-w-7xl mx-auto">
+                <motion.a
+                    href="/worldcup"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.01 }}
+                    className="relative flex flex-col md:flex-row items-center justify-between gap-6 rounded-3xl overflow-hidden p-8 cursor-pointer block"
+                    style={{ background: 'linear-gradient(135deg, #052010 0%, #0a1f0a 50%, #060d1a 100%)', border: '1px solid rgba(74,222,128,0.25)' }}
+                >
+                    {/* Línea superior verde */}
+                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent" />
+
+                    {/* Texto */}
+                    <div className="flex items-center gap-5">
+                        <div className="text-5xl animate-bounce">⚽</div>
+                        <div>
+                            <div className="text-emerald-400 text-xs font-bold uppercase tracking-widest mb-1">FIFA World Cup 2026 · AI Battle</div>
+                            <h3 className="text-2xl font-heading font-extrabold text-white">¿Qué IA predice mejor el Mundial?</h3>
+                            <p className="text-slate-400 text-sm mt-1">GPT-4o, Gemini y Claude compiten. Votá y seguí quién acierta más.</p>
+                        </div>
+                    </div>
+
+                    {/* Flags + CTA */}
+                    <div className="flex items-center gap-4 flex-shrink-0">
+                        <div className="hidden md:flex gap-2 text-3xl">🇦🇷🇧🇷🇲🇽🇨🇴</div>
+                        <div className="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors whitespace-nowrap">
+                            Ir al AI Battle →
+                        </div>
+                    </div>
+                </motion.a>
+            </section>
 
             {/* ══ CTA FINAL ══ */}
             <section className="py-28 relative overflow-hidden border-t border-white/5">
