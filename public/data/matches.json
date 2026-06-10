@@ -1,15 +1,11 @@
 {
   "_meta": {
     "tournament": "FIFA World Cup 2026",
-    "host_nations": [
-      "USA",
-      "Canada",
-      "Mexico"
-    ],
+    "host_nations": ["USA", "Canada", "Mexico"],
     "opening_date": "2026-06-11",
     "final_date": "2026-07-19",
-    "predictions_generated": "2026-06-05",
-    "note": "Predicciones generadas por los 3 modelos de IA para el AI Battle"
+    "predictions_generated": "2026-06-10",
+    "note": "Predicciones generadas por KAI — Fixture real FIFA 2026. Grupos A (México), C (Brasil), D (USA), J (Argentina), K (Colombia). 30 partidos, 3 fechas."
   },
   "ais": {
     "claude": {
@@ -32,198 +28,551 @@
     }
   },
   "scoreboard": {
-    "votes": {
-      "claude": 0,
-      "gpt": 0,
-      "gemini": 0
-    },
-    "accuracy": {
-      "claude": 0,
-      "gpt": 0,
-      "gemini": 0
-    },
+    "votes": { "claude": 0, "gpt": 0, "gemini": 0 },
+    "accuracy": { "claude": 0, "gpt": 0, "gemini": 0 },
     "total_predicted": 0
   },
   "matches": [
+
     {
-      "id": "WC2026-001",
+      "id": "WC2026-A01",
       "phase": "Grupo A",
-      "date": "2026-06-11T21:00:00Z",
+      "matchday": 1,
+      "date": "2026-06-11T19:00:00Z",
       "venue": "Estadio Azteca, Ciudad de México",
-      "home": {
-        "name": "México",
-        "flag": "🇲🇽",
-        "code": "MEX"
-      },
-      "away": {
-        "name": "Ecuador",
-        "flag": "🇪🇨",
-        "code": "ECU"
-      },
+      "home": { "name": "México",    "flag": "🇲🇽", "code": "MEX" },
+      "away": { "name": "Sudáfrica", "flag": "🇿🇦", "code": "RSA" },
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
-        "claude": {
-          "winner": "México",
-          "score": "2-1",
-          "reasoning": "México como local en el Azteca tiene ventaja histórica aplastante. Ecuador llega sin sus mejores atacantes y el factor altitud en CDMX penaliza al visitante."
-        },
-        "gpt": {
-          "winner": "México",
-          "score": "2-0",
-          "reasoning": "La presión de jugar en casa en el partido inaugural del torneo impulsa a México. Ecuador mostró irregularidad en las Eliminatorias y no tiene chances claras de gol fuera de casa."
-        },
-        "gemini": {
-          "winner": "Empate",
-          "score": "1-1",
-          "reasoning": "Ecuador sorprende históricamente en Mundiales (2002, 2014, 2022). México necesita ganar pero la presión puede jugarle en contra. Predigo un arranque cauto de ambos."
-        }
+        "claude":  { "winner": "México",    "score": "2-0", "reasoning": "México local en el Azteca inaugura el torneo con ventaja histórica. La altitud de CDMX y el desgaste del viaje castigan a Sudáfrica en el partido más esperado." },
+        "gpt":     { "winner": "México",    "score": "2-1", "reasoning": "México abre con presión de local y motivación extra por ser el partido inaugural. Sudáfrica puede crear peligro en contragolpe pero la calidad del anfitrión define." },
+        "gemini":  { "winner": "México",    "score": "1-0", "reasoning": "La presión del partido inaugural puede generar ansiedad en el local pero la calidad individual prevalece. Victoria sufrida pero sólida en el marcador final." }
       },
       "actual_result": null
     },
+
     {
-      "id": "WC2026-002",
-      "phase": "Grupo B",
-      "date": "2026-06-12T18:00:00Z",
-      "venue": "MetLife Stadium, New York",
-      "home": {
-        "name": "Argentina",
-        "flag": "🇦🇷",
-        "code": "ARG"
-      },
-      "away": {
-        "name": "Chile",
-        "flag": "🇨🇱",
-        "code": "CHI"
-      },
-      "status": "upcoming",
-      "is_featured": true,
-      "predictions": {
-        "claude": {
-          "winner": "Argentina",
-          "score": "3-0",
-          "reasoning": "Argentina llega como campeona vigente con Messi liderando. Chile no clasificó por méritos propios y llega sin la generación dorada de Alexis y Vidal."
-        },
-        "gpt": {
-          "winner": "Argentina",
-          "score": "2-1",
-          "reasoning": "El clásico sudamericano siempre da batalla. Argentina gana pero Chile puede anotar en transición. Messi marca al menos una vez."
-        },
-        "gemini": {
-          "winner": "Argentina",
-          "score": "2-0",
-          "reasoning": "Argentina en su mejor momento con profundidad táctica bajo Scaloni. Chile en reconstrucción generacional no tiene los recursos para competir de igual a igual."
-        }
-      },
-      "actual_result": null
-    },
-    {
-      "id": "WC2026-003",
-      "phase": "Grupo B",
-      "date": "2026-06-16T21:00:00Z",
-      "venue": "AT&T Stadium, Dallas",
-      "home": {
-        "name": "Argentina",
-        "flag": "🇦🇷",
-        "code": "ARG"
-      },
-      "away": {
-        "name": "Perú",
-        "flag": "🇵🇪",
-        "code": "PER"
-      },
+      "id": "WC2026-A02",
+      "phase": "Grupo A",
+      "matchday": 1,
+      "date": "2026-06-12T02:00:00Z",
+      "venue": "Estadio Akron, Zapopan",
+      "home": { "name": "Corea del Sur", "flag": "🇰🇷", "code": "KOR" },
+      "away": { "name": "Rep. Checa",    "flag": "🇨🇿", "code": "CZE" },
       "status": "upcoming",
       "is_featured": false,
       "predictions": {
-        "claude": {
-          "winner": "Argentina",
-          "score": "4-0",
-          "reasoning": "Perú llega sin forma internacional consistente. Argentina en la segunda fecha del grupo puede rotar sin perder nivel. Goleada esperada."
-        },
-        "gpt": {
-          "winner": "Argentina",
-          "score": "3-1",
-          "reasoning": "Perú puede sorprender con contraataques veloces pero Argentina tiene demasiada calidad. Alvarez y Di María suman al partido."
-        },
-        "gemini": {
-          "winner": "Argentina",
-          "score": "2-0",
-          "reasoning": "Argentina administra el partido pensando en el resto del torneo. Gana cómodamente sin necesitar exponer su plan de juego completo."
-        }
+        "claude":  { "winner": "Rep. Checa",    "score": "1-0", "reasoning": "Rep. Checa tiene mayor experiencia y jerarquía europea. Schick puede resolver con una acción individual en un partido muy disputado." },
+        "gpt":     { "winner": "Empate",        "score": "1-1", "reasoning": "Corea del Sur tiene velocidad y organización táctica para neutralizar a Rep. Checa. Partido equilibrado entre dos selecciones de nivel similar." },
+        "gemini":  { "winner": "Corea del Sur", "score": "2-1", "reasoning": "Corea del Sur tiene talento joven explosivo que puede sorprender al europeo. La velocidad de los extremos coreanos hace la diferencia en Zapopan." }
       },
       "actual_result": null
     },
+
     {
-      "id": "WC2026-004",
-      "phase": "Grupo C",
-      "date": "2026-06-12T21:00:00Z",
-      "venue": "SoFi Stadium, Los Angeles",
-      "home": {
-        "name": "Brasil",
-        "flag": "🇧🇷",
-        "code": "BRA"
-      },
-      "away": {
-        "name": "Paraguay",
-        "flag": "🇵🇾",
-        "code": "PAR"
-      },
-      "status": "upcoming",
-      "is_featured": true,
-      "predictions": {
-        "claude": {
-          "winner": "Brasil",
-          "score": "3-1",
-          "reasoning": "Brasil llega hambriento del título. Vinicius Jr. y Rodrygo hacen la diferencia en la banda. Paraguay puede resistir pero no evitar la derrota."
-        },
-        "gpt": {
-          "winner": "Brasil",
-          "score": "2-0",
-          "reasoning": "Brasil tiene jerarquía diferencial. Nuevo técnico con sistema más equilibrado. Paraguay sin recursos ofensivos para perforar la zaga Canarinha."
-        },
-        "gemini": {
-          "winner": "Brasil",
-          "score": "3-0",
-          "reasoning": "Brasil necesita demostrar que superó la crisis post-Qatar. El ataque de Vinicius más Raphinha es demasiado para Paraguay. Goleada y mensaje."
-        }
-      },
-      "actual_result": null
-    },
-    {
-      "id": "WC2026-005",
+      "id": "WC2026-A03",
       "phase": "Grupo A",
-      "date": "2026-06-13T18:00:00Z",
+      "matchday": 2,
+      "date": "2026-06-18T16:00:00Z",
       "venue": "Estadio BBVA, Monterrey",
-      "home": {
-        "name": "USA",
-        "flag": "🇺🇸",
-        "code": "USA"
+      "home": { "name": "Rep. Checa",  "flag": "🇨🇿", "code": "CZE" },
+      "away": { "name": "Sudáfrica",   "flag": "🇿🇦", "code": "RSA" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Rep. Checa", "score": "2-0", "reasoning": "Sudáfrica tiene recursos físicos pero Rep. Checa tiene claramente más calidad técnica. El europeo debería resolver sin mayores complicaciones." },
+        "gpt":     { "winner": "Rep. Checa", "score": "2-1", "reasoning": "Rep. Checa tiene experiencia en competencias europeas que le da ventaja. Sudáfrica puede crear peligro en contragolpe pero no alcanza para ganar." },
+        "gemini":  { "winner": "Empate",     "score": "1-1", "reasoning": "Sudáfrica puede dar batalla con su intensidad física. Rep. Checa tiene calidad pero puede verse afectada por el desgaste acumulado." }
       },
-      "away": {
-        "name": "Colombia",
-        "flag": "🇨🇴",
-        "code": "COL"
-      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-A04",
+      "phase": "Grupo A",
+      "matchday": 2,
+      "date": "2026-06-19T01:00:00Z",
+      "venue": "Estadio Akron, Zapopan",
+      "home": { "name": "México",        "flag": "🇲🇽", "code": "MEX" },
+      "away": { "name": "Corea del Sur", "flag": "🇰🇷", "code": "KOR" },
       "status": "upcoming",
       "is_featured": true,
       "predictions": {
-        "claude": {
-          "winner": "Colombia",
-          "score": "1-2",
-          "reasoning": "Colombia con James Rodríguez y Díaz en forma llega como favorita. USA tiene un equipo joven prometedor pero le falta experiencia para ganar partidos de presión."
-        },
-        "gpt": {
-          "winner": "Empate",
-          "score": "1-1",
-          "reasoning": "USA en casa tiene motivación extra. Pulisic puede marcar la diferencia pero Colombia tiene calidad colectiva para neutralizarlo. Partido parejo."
-        },
-        "gemini": {
-          "winner": "Colombia",
-          "score": "0-2",
-          "reasoning": "Colombia viene de finalista de Copa América 2024. USA todavía no demostró poder ganar partidos de alta exigencia. Colombia gana con autoridad."
-        }
+        "claude":  { "winner": "México",        "score": "2-1", "reasoning": "México necesita los puntos para asegurar la clasificación anticipada. Corea del Sur tiene velocidad explosiva por las bandas pero el local impone condiciones en Guadalajara." },
+        "gpt":     { "winner": "México",        "score": "2-0", "reasoning": "México en ascenso tras la primera fecha. Corea del Sur mostró vulnerabilidades defensivas y el talento de Lozano y Antuna es determinante." },
+        "gemini":  { "winner": "Empate",        "score": "1-1", "reasoning": "Corea del Sur tiene un sistema táctico muy compacto. Puede neutralizar las virtudes de México y sacar un punto de gran valor en Guadalajara." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-A05",
+      "phase": "Grupo A",
+      "matchday": 3,
+      "date": "2026-06-25T01:00:00Z",
+      "venue": "Estadio Azteca, Ciudad de México",
+      "home": { "name": "Rep. Checa", "flag": "🇨🇿", "code": "CZE" },
+      "away": { "name": "México",     "flag": "🇲🇽", "code": "MEX" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "México",     "score": "1-0", "reasoning": "México tiene todos los incentivos para cerrar el grupo como primero. Rep. Checa tiene calidad pero México en territorio mexicano mantiene la ventaja." },
+        "gpt":     { "winner": "Empate",     "score": "1-1", "reasoning": "Rep. Checa llega con todo por jugar. México puede administrar el resultado si ya tiene el pase asegurado. Partido trabado con punto compartido." },
+        "gemini":  { "winner": "Rep. Checa", "score": "2-1", "reasoning": "Con México posiblemente rotando pensando en octavos, Rep. Checa presiona con todo. La calidad de Schick y Souček puede sorprender al anfitrión." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-A06",
+      "phase": "Grupo A",
+      "matchday": 3,
+      "date": "2026-06-25T01:00:00Z",
+      "venue": "Estadio BBVA, Monterrey",
+      "home": { "name": "Sudáfrica",   "flag": "🇿🇦", "code": "RSA" },
+      "away": { "name": "Corea del Sur","flag": "🇰🇷", "code": "KOR" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Corea del Sur", "score": "2-1", "reasoning": "Corea del Sur tiene más calidad técnica y rodaje internacional. Sudáfrica puede complicar con su intensidad física pero el nivel coreano prevalece." },
+        "gpt":     { "winner": "Corea del Sur", "score": "2-0", "reasoning": "Corea del Sur tiene jugadores de K-League y ligas europeas con más jerarquía. Sudáfrica no tiene los recursos para resistir el ataque coreano." },
+        "gemini":  { "winner": "Empate",        "score": "1-1", "reasoning": "Ambos equipos necesitan puntos en esta última fecha. Partido muy abierto que puede terminar sin ganador con ambos buscando el resultado." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-C01",
+      "phase": "Grupo C",
+      "matchday": 1,
+      "date": "2026-06-13T22:00:00Z",
+      "venue": "Gillette Stadium, Foxborough",
+      "home": { "name": "Escocia",    "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "code": "SCO" },
+      "away": { "name": "Marruecos",  "flag": "🇲🇦", "code": "MAR" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Marruecos", "score": "2-0", "reasoning": "Marruecos viene de ser semifinalista en Qatar 2022 con un equipo casi intacto. Escocia es debut en un Mundial en décadas y le falta rodaje a este nivel." },
+        "gpt":     { "winner": "Marruecos", "score": "1-0", "reasoning": "Marruecos tiene la experiencia reciente en competencias mundiales. Escocia tiene corazón pero le falta el nivel técnico para ganar ante un rival africano tan sólido." },
+        "gemini":  { "winner": "Empate",    "score": "1-1", "reasoning": "Escocia puede sorprender con su intensidad física en el partido inaugural. Marruecos puede desestabilizarse ante el pressing escocés en Foxborough." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-C02",
+      "phase": "Grupo C",
+      "matchday": 1,
+      "date": "2026-06-14T01:00:00Z",
+      "venue": "Lincoln Financial Field, Filadelfia",
+      "home": { "name": "Brasil", "flag": "🇧🇷", "code": "BRA" },
+      "away": { "name": "Haití",  "flag": "🇭🇹", "code": "HAI" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Brasil", "score": "4-0", "reasoning": "La diferencia de jerarquía es abismal. Brasil necesita demostrar que superó la crisis post-Qatar. Vinicius y Rodrygo hacen el show en Filadelfia." },
+        "gpt":     { "winner": "Brasil", "score": "3-0", "reasoning": "Brasil administra el partido sin riesgos desde el arranque. Haití no tiene los recursos ofensivos para inquietar a la Canarinha en ningún momento." },
+        "gemini":  { "winner": "Brasil", "score": "3-1", "reasoning": "Brasil gana con comodidad pero Haití puede marcar en algún rebote o penal. El resultado importa menos que la puesta a punto táctica del equipo de Dorival." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-C03",
+      "phase": "Grupo C",
+      "matchday": 2,
+      "date": "2026-06-19T22:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford",
+      "home": { "name": "Brasil",    "flag": "🇧🇷", "code": "BRA" },
+      "away": { "name": "Marruecos", "flag": "🇲🇦", "code": "MAR" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Brasil",    "score": "2-1", "reasoning": "Marruecos demostró en Qatar 2022 que puede incomodar a cualquier rival. Brasil gana pero con esfuerzo en el partido más difícil del grupo." },
+        "gpt":     { "winner": "Empate",    "score": "1-1", "reasoning": "Marruecos tiene un sistema defensivo muy sólido bajo Regragui. Brasil puede frustrarse ante la organización marroquí. Punto compartido en NY." },
+        "gemini":  { "winner": "Brasil",    "score": "2-0", "reasoning": "Brasil tiene demasiada calidad individual. Vinicius desequilibra por la banda y el resultado se define antes del cierre en MetLife." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-C04",
+      "phase": "Grupo C",
+      "matchday": 2,
+      "date": "2026-06-20T01:00:00Z",
+      "venue": "Gillette Stadium, Foxborough",
+      "home": { "name": "Haití",   "flag": "🇭🇹", "code": "HAI" },
+      "away": { "name": "Escocia", "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "code": "SCO" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Escocia", "score": "2-0", "reasoning": "Escocia tiene claramente más calidad que Haití. El nivel técnico y físico de la selección escocesa debería ser suficiente para una victoria cómoda." },
+        "gpt":     { "winner": "Escocia", "score": "2-1", "reasoning": "Escocia tiene más jerarquía en todos los sectores. Haití puede crear alguna situación de gol pero no alcanza para competir con el europeo." },
+        "gemini":  { "winner": "Escocia", "score": "1-0", "reasoning": "Victoria sufrida pero justa para Escocia. Haití puede hacer un partido digno pero no tiene los recursos ofensivos para ganar en Foxborough." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-C05",
+      "phase": "Grupo C",
+      "matchday": 3,
+      "date": "2026-06-24T23:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "home": { "name": "Marruecos", "flag": "🇲🇦", "code": "MAR" },
+      "away": { "name": "Haití",     "flag": "🇭🇹", "code": "HAI" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Marruecos", "score": "3-0", "reasoning": "Marruecos tiene demasiada calidad para Haití. El ataque de Ziyech y En-Nesyri debería resolver sin complicaciones en Atlanta." },
+        "gpt":     { "winner": "Marruecos", "score": "3-0", "reasoning": "Marruecos necesita sumar goles para mejorar diferencia de goles. Haití no puede resistir la presión ofensiva del equipo marroquí." },
+        "gemini":  { "winner": "Marruecos", "score": "2-0", "reasoning": "Victoria cómoda de Marruecos para intentar alcanzar a Brasil en lo alto del grupo. Haití despide su primera Copa del Mundo sin pena ni gloria." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-C06",
+      "phase": "Grupo C",
+      "matchday": 3,
+      "date": "2026-06-24T23:00:00Z",
+      "venue": "Hard Rock Stadium, Miami",
+      "home": { "name": "Brasil",  "flag": "🇧🇷", "code": "BRA" },
+      "away": { "name": "Escocia", "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "code": "SCO" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Brasil", "score": "2-0", "reasoning": "Escocia no es favorita ante Brasil en ningún escenario. Brasil puede rotar pensando en la siguiente fase y aun así ganar con autoridad en Miami." },
+        "gpt":     { "winner": "Brasil", "score": "3-1", "reasoning": "Brasil sale a marcar diferencia de goles si la necesita. Escocia tiene corazón pero no tiene el nivel para resistir a la Canarinha en Miami." },
+        "gemini":  { "winner": "Brasil", "score": "2-0", "reasoning": "Brasil clasifica como primero del grupo con tranquilidad. Escocia puede crear alguna situación pero no tiene suficiente para sorprender a la Canarinha." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-D01",
+      "phase": "Grupo D",
+      "matchday": 1,
+      "date": "2026-06-13T01:00:00Z",
+      "venue": "SoFi Stadium, Inglewood",
+      "home": { "name": "USA",      "flag": "🇺🇸", "code": "USA" },
+      "away": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "USA",     "score": "2-1", "reasoning": "USA en casa tiene presión y motivación enormes. Paraguay es un rival accesible. Pulisic lidera y USA arranca con victoria para impulsar la campaña mundialista." },
+        "gpt":     { "winner": "USA",     "score": "2-0", "reasoning": "USA en SoFi ante su público tiene todo para ganar. Paraguay llegó por el repechaje y le falta nivel para competir ante la presión del local en Los Ángeles." },
+        "gemini":  { "winner": "Empate",  "score": "1-1", "reasoning": "Paraguay es más difícil de lo que parece. USA tiene presión local que puede costarle. El partido se decide en los últimos minutos con punto compartido." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-D02",
+      "phase": "Grupo D",
+      "matchday": 1,
+      "date": "2026-06-13T04:00:00Z",
+      "venue": "BC Place, Vancouver",
+      "home": { "name": "Australia", "flag": "🇦🇺", "code": "AUS" },
+      "away": { "name": "Turquía",   "flag": "🇹🇷", "code": "TUR" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Turquía",  "score": "2-1", "reasoning": "Turquía tiene jugadores de alta jerarquía en ligas europeas. Australia en reconstrucción no puede seguir el ritmo del equipo turco en Vancouver." },
+        "gpt":     { "winner": "Turquía",  "score": "2-0", "reasoning": "Turquía tiene más profundidad de plantel y experiencia en competencias internacionales que una Australia post-Socceroos en transición." },
+        "gemini":  { "winner": "Empate",   "score": "1-1", "reasoning": "Australia puede sorprender con su organización defensiva. Partido igualado que puede terminar sin ganador en el inicio del grupo D." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-D03",
+      "phase": "Grupo D",
+      "matchday": 2,
+      "date": "2026-06-19T19:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "home": { "name": "USA",       "flag": "🇺🇸", "code": "USA" },
+      "away": { "name": "Australia", "flag": "🇦🇺", "code": "AUS" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "USA",       "score": "2-0", "reasoning": "Australia en reconstrucción post-Arnold no tiene el nivel para frenar a USA en casa. El equipo americano consolida el liderazgo del grupo en Seattle." },
+        "gpt":     { "winner": "USA",       "score": "1-0", "reasoning": "Partido más trabado de lo esperado. Australia tiene organización defensiva pero Pulisic y Reyna tienen la clase para marcar la diferencia en Lumen Field." },
+        "gemini":  { "winner": "USA",       "score": "2-1", "reasoning": "Australia sorprende con alguna llegada peligrosa pero USA tiene ventaja local en Seattle. La afición de Lumen Field es el décimo segundo jugador." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-D04",
+      "phase": "Grupo D",
+      "matchday": 2,
+      "date": "2026-06-20T03:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara",
+      "home": { "name": "Turquía",  "flag": "🇹🇷", "code": "TUR" },
+      "away": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Turquía",  "score": "2-0", "reasoning": "Turquía tiene demasiada calidad para Paraguay. La falta de experiencia mundialista de Paraguay se nota ante un rival europeo con jugadores de primer nivel." },
+        "gpt":     { "winner": "Turquía",  "score": "2-1", "reasoning": "Turquía maneja el partido pero Paraguay puede complicar con su intensidad física. Los turcos ganan pero con más esfuerzo del esperado." },
+        "gemini":  { "winner": "Empate",   "score": "1-1", "reasoning": "Paraguay puede aguantar con su organización defensiva. No tiene las herramientas para ganar pero puede evitar la derrota en Santa Clara." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-D05",
+      "phase": "Grupo D",
+      "matchday": 3,
+      "date": "2026-06-26T02:00:00Z",
+      "venue": "SoFi Stadium, Inglewood",
+      "home": { "name": "Turquía", "flag": "🇹🇷", "code": "TUR" },
+      "away": { "name": "USA",     "flag": "🇺🇸", "code": "USA" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "USA",     "score": "1-0", "reasoning": "Turquía es el rival más peligroso del grupo pero USA puede aguantar con disciplina táctica y resolver en un contragolpe en el cierre del grupo." },
+        "gpt":     { "winner": "Turquía", "score": "2-1", "reasoning": "Turquía llega con jugadores top de Premier League y Bundesliga. Si USA ya clasificó y rota, Turquía puede dar la sorpresa en Los Ángeles." },
+        "gemini":  { "winner": "Empate",  "score": "1-1", "reasoning": "Último partido del grupo, ambos posiblemente con el pase resuelto. Turquía expone con los extremos pero USA aguanta y acepta el punto." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-D06",
+      "phase": "Grupo D",
+      "matchday": 3,
+      "date": "2026-06-26T02:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara",
+      "home": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
+      "away": { "name": "Australia", "flag": "🇦🇺", "code": "AUS" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Empate",    "score": "1-1", "reasoning": "Ambos equipos necesitarán puntos desesperadamente en la última fecha. Partido equilibrado entre dos selecciones que luchan por mantenerse con vida." },
+        "gpt":     { "winner": "Australia", "score": "2-1", "reasoning": "Australia tiene más calidad técnica que Paraguay. Si quiere cerrar el Mundial con algo positivo, este partido es la oportunidad." },
+        "gemini":  { "winner": "Paraguay",  "score": "1-0", "reasoning": "Paraguay tiene el físico y la garra para superar a Australia. En un partido de necesidad, la determinación sudamericana prevalece en Santa Clara." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-J01",
+      "phase": "Grupo J",
+      "matchday": 1,
+      "date": "2026-06-17T01:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City",
+      "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
+      "away": { "name": "Argelia",   "flag": "🇩🇿", "code": "ALG" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Argentina", "score": "3-0", "reasoning": "Argelia está muy por debajo del nivel de la campeona vigente. Messi lidera y la Scaloneta tiene demasiada clase para el conjunto africano en Kansas City." },
+        "gpt":     { "winner": "Argentina", "score": "2-0", "reasoning": "Argentina entra con precaución táctica pero la diferencia de jerarquía es clara. Messi y Álvarez marcan en un partido controlado de principio a fin." },
+        "gemini":  { "winner": "Argentina", "score": "3-1", "reasoning": "Argentina golpea rápido pero puede relajarse y sufrir algún gol de penal o transición. Sigue siendo dominante pero no tan prolija en el cierre." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-J02",
+      "phase": "Grupo J",
+      "matchday": 1,
+      "date": "2026-06-16T22:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "home": { "name": "Austria",  "flag": "🇦🇹", "code": "AUT" },
+      "away": { "name": "Jordania", "flag": "🇯🇴", "code": "JOR" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Austria",  "score": "3-0", "reasoning": "Jordania es debutante en Mundiales y la diferencia con Austria es enorme. El europeo bajo Rangnick debería resolver sin problemas en Houston." },
+        "gpt":     { "winner": "Austria",  "score": "3-0", "reasoning": "Austria tiene jugadores de primera línea europea muy por encima del nivel de Jordania. Goleada esperada para el debut histórico de los jordanos." },
+        "gemini":  { "winner": "Austria",  "score": "2-1", "reasoning": "Austria gana con comodidad pero Jordania puede hacer un partido digno en su debut mundialista. Los jordanos pueden marcar de penal o en alguna llegada." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-J03",
+      "phase": "Grupo J",
+      "matchday": 2,
+      "date": "2026-06-22T18:00:00Z",
+      "venue": "AT&T Stadium, Arlington",
+      "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
+      "away": { "name": "Austria",   "flag": "🇦🇹", "code": "AUT" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Argentina", "score": "2-0", "reasoning": "Austria tiene un equipo sólido en Europa pero no tiene el nivel para competir con la campeona vigente. Argentina controla sin exponer el juego en Dallas." },
+        "gpt":     { "winner": "Argentina", "score": "2-1", "reasoning": "Austria tiene jugadores de Bayern Munich y RB Leipzig con experiencia Champions. Pueden complicar pero no alcanzan para frenar a la Scaloneta." },
+        "gemini":  { "winner": "Empate",    "score": "1-1", "reasoning": "Austria bajo Rangnick tiene un pressing muy agresivo que puede neutralizar a Messi. Sorpresa posible en el AT&T Stadium de Dallas." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-J04",
+      "phase": "Grupo J",
+      "matchday": 2,
+      "date": "2026-06-22T21:00:00Z",
+      "venue": "Empower Field, Denver",
+      "home": { "name": "Argelia",  "flag": "🇩🇿", "code": "ALG" },
+      "away": { "name": "Jordania", "flag": "🇯🇴", "code": "JOR" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Argelia",  "score": "2-0", "reasoning": "Argelia tiene experiencia mundialista y calidad muy superior. Jordania puede hacer su participación con dignidad pero no tiene el ataque para puntuar." },
+        "gpt":     { "winner": "Argelia",  "score": "2-0", "reasoning": "Argelia tiene la calidad forjada en el AFCON y las eliminatorias africanas. Jordania debería ser el rival más accesible del grupo para los argelinos." },
+        "gemini":  { "winner": "Argelia",  "score": "1-0", "reasoning": "Victoria trabajada de Argelia. Jordania puede complicar con su organización defensiva pero no tiene suficiente ataque para ganar en Denver." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-J05",
+      "phase": "Grupo J",
+      "matchday": 3,
+      "date": "2026-06-27T23:00:00Z",
+      "venue": "AT&T Stadium, Arlington",
+      "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
+      "away": { "name": "Jordania",  "flag": "🇯🇴", "code": "JOR" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Argentina", "score": "4-0", "reasoning": "Goleada esperada para cerrar el grupo con el mejor diferencial posible. Jordania no tiene los recursos para competir a este nivel en la última fecha." },
+        "gpt":     { "winner": "Argentina", "score": "3-0", "reasoning": "Argentina envía un mensaje a los rivales del siguiente round con rotaciones pero aun así consigue una goleada cómoda en Dallas." },
+        "gemini":  { "winner": "Argentina", "score": "3-1", "reasoning": "Argentina rotará pensando en los octavos de final. Jordania puede hacer un partido digno pero la diferencia de calidad es insalvable en esta instancia." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-J06",
+      "phase": "Grupo J",
+      "matchday": 3,
+      "date": "2026-06-27T23:00:00Z",
+      "venue": "Empower Field, Denver",
+      "home": { "name": "Argelia", "flag": "🇩🇿", "code": "ALG" },
+      "away": { "name": "Austria", "flag": "🇦🇹", "code": "AUT" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Austria",  "score": "2-1", "reasoning": "Austria tiene más calidad técnica. Argelia puede competir con su intensidad física pero el europeo debería imponerse en el cierre del grupo." },
+        "gpt":     { "winner": "Austria",  "score": "2-0", "reasoning": "Austria tiene jugadores en top ligas europeas. Argelia llega al tercer partido con el desgaste acumulado de la fase de grupos y puede resentirlo." },
+        "gemini":  { "winner": "Empate",   "score": "1-1", "reasoning": "Argelia puede plantear un partido muy físico que complique a Austria. Punto compartido como resultado justo entre dos selecciones que se lo juegan todo." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-K01",
+      "phase": "Grupo K",
+      "matchday": 1,
+      "date": "2026-06-17T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "home": { "name": "Portugal", "flag": "🇵🇹", "code": "POR" },
+      "away": { "name": "RD Congo", "flag": "🇨🇩", "code": "COD" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Portugal", "score": "3-0", "reasoning": "Portugal tiene demasiada calidad para RD Congo. Ronaldo lidera en su último Mundial y el equipo luso debería resolver sin complicaciones en Houston." },
+        "gpt":     { "winner": "Portugal", "score": "2-0", "reasoning": "Portugal tiene la jerarquía para controlar el partido desde el arranque. RD Congo es físico pero no tiene el nivel técnico para competir con el europeo." },
+        "gemini":  { "winner": "Portugal", "score": "2-1", "reasoning": "Portugal gana pero RD Congo puede hacer daño con su velocidad y físico. El africano puede marcar en alguna transición rápida ante la defensa lusa." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-K02",
+      "phase": "Grupo K",
+      "matchday": 1,
+      "date": "2026-06-18T02:00:00Z",
+      "venue": "Estadio Azteca, Ciudad de México",
+      "home": { "name": "Uzbekistán", "flag": "🇺🇿", "code": "UZB" },
+      "away": { "name": "Colombia",   "flag": "🇨🇴", "code": "COL" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Colombia",   "score": "2-0", "reasoning": "Colombia tiene demasiada calidad para Uzbekistán. James Rodríguez y Luis Díaz son determinantes. Primera victoria sin mayores complicaciones en el Azteca." },
+        "gpt":     { "winner": "Colombia",   "score": "2-1", "reasoning": "Colombia tiene el favoritismo claro. Uzbekistán puede generar alguna situación de peligro pero Colombia tiene la jerarquía y el temperamento para ganar." },
+        "gemini":  { "winner": "Colombia",   "score": "1-0", "reasoning": "Colombia fue finalista de Copa América 2024. Victoria trabajada pero segura gracias a la experiencia y el orden táctico del equipo de Néstor Lorenzo." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-K03",
+      "phase": "Grupo K",
+      "matchday": 2,
+      "date": "2026-06-23T17:00:00Z",
+      "venue": "NRG Stadium, Houston",
+      "home": { "name": "Portugal",   "flag": "🇵🇹", "code": "POR" },
+      "away": { "name": "Uzbekistán", "flag": "🇺🇿", "code": "UZB" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Portugal",   "score": "2-0", "reasoning": "Portugal debería ganar con facilidad ante Uzbekistán. El nivel de los jugadores lusos en las grandes ligas europeas es determinante en este duelo." },
+        "gpt":     { "winner": "Portugal",   "score": "3-0", "reasoning": "Portugal en plena forma necesita sumar para asegurar el liderazgo del grupo. Uzbekistán no tiene recursos para resistir ante la calidad lusa." },
+        "gemini":  { "winner": "Portugal",   "score": "2-1", "reasoning": "Portugal gana pero Uzbekistán tiene jugadores con experiencia en ligas rusas que pueden crear algún problema. Los centroasiáticos pueden marcar." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-K04",
+      "phase": "Grupo K",
+      "matchday": 2,
+      "date": "2026-06-24T02:00:00Z",
+      "venue": "Estadio Akron, Guadalajara",
+      "home": { "name": "Colombia", "flag": "🇨🇴", "code": "COL" },
+      "away": { "name": "RD Congo", "flag": "🇨🇩", "code": "COD" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Colombia", "score": "2-0", "reasoning": "RD Congo es un equipo físico pero Colombia tiene superioridad técnica clara. James dirige el juego y Colombia sentencia antes del descanso en Guadalajara." },
+        "gpt":     { "winner": "Colombia", "score": "3-1", "reasoning": "Colombia ya clasificada puede soltar el juego. Díaz y James hacen brillar al equipo. RD Congo acompaña el trámite pero no puede evitar la derrota." },
+        "gemini":  { "winner": "Colombia", "score": "2-1", "reasoning": "RD Congo tiene jugadores físicos y rápidos que pueden incomodar. Colombia gana pero no con la comodidad que esperan los analistas ante un rival africano intenso." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-K05",
+      "phase": "Grupo K",
+      "matchday": 3,
+      "date": "2026-06-27T23:30:00Z",
+      "venue": "Hard Rock Stadium, Miami",
+      "home": { "name": "Colombia", "flag": "🇨🇴", "code": "COL" },
+      "away": { "name": "Portugal", "flag": "🇵🇹", "code": "POR" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Portugal",  "score": "2-1", "reasoning": "Portugal tiene más profundidad táctica y experiencia internacional. Colombia puede marcar pero Ronaldo en su último Mundial motiva al equipo luso para ganar en Miami." },
+        "gpt":     { "winner": "Empate",    "score": "1-1", "reasoning": "Partido de enorme cartel en Miami. Ambos pueden tener el pase asegurado y el partido queda en tablas con un duelo de figuras sin definición final." },
+        "gemini":  { "winner": "Colombia",  "score": "2-1", "reasoning": "Colombia en su mejor versión puede superar a Portugal. James Rodríguez vs Ronaldo en Miami. Colombia se impone con una actuación memorable del grupo." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-K06",
+      "phase": "Grupo K",
+      "matchday": 3,
+      "date": "2026-06-27T23:30:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "home": { "name": "RD Congo",   "flag": "🇨🇩", "code": "COD" },
+      "away": { "name": "Uzbekistán", "flag": "🇺🇿", "code": "UZB" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "RD Congo",   "score": "2-1", "reasoning": "RD Congo tiene ventaja física sobre Uzbekistán. Los africanos necesitan ganar para aspirar a una plaza de mejor tercero en Atlanta." },
+        "gpt":     { "winner": "Empate",     "score": "1-1", "reasoning": "Partido equilibrado entre dos equipos de nivel similar. Ambos necesitan puntos y el resultado final puede ser justo para ambas selecciones." },
+        "gemini":  { "winner": "RD Congo",   "score": "1-0", "reasoning": "RD Congo tiene más rodaje internacional reciente. Victoria ajustada que puede ser suficiente para la clasificación como mejor tercero del grupo." }
       },
       "actual_result": null
     }
+
   ]
 }
