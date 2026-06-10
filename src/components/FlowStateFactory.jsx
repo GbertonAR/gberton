@@ -14,11 +14,23 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { StaffOrbit3D } from './3d/StaffOrbit3D';
-import { 
-    FiShield, FiTrendingUp, FiGlobe, FiMessageSquare, FiZap, 
-    FiTarget, FiEye, FiBarChart2, FiLayers, FiCpu, FiFileText, 
-    FiTerminal, FiCheckCircle, FiAlertTriangle, FiMaximize2, FiGrid, FiMap
+import {
+    FiShield, FiTrendingUp, FiGlobe, FiMessageSquare, FiZap,
+    FiTarget, FiEye, FiBarChart2, FiLayers, FiCpu, FiFileText,
+    FiTerminal, FiCheckCircle, FiAlertTriangle, FiMaximize2, FiGrid, FiMap,
+    FiExternalLink
 } from 'react-icons/fi';
+
+const STATUS_STYLE = {
+    PRODUCTION: 'text-emerald-400 bg-emerald-400/10',
+    READY:      'text-sky-400 bg-sky-400/10',
+    SCALING:    'text-amber-400 bg-amber-400/10',
+};
+const STATUS_DOT = {
+    PRODUCTION: 'bg-emerald-400',
+    READY:      'bg-sky-400',
+    SCALING:    'bg-amber-400',
+};
 
 const mockLogsTemplates = [
     { type: 'REQ', text: 'Inicio de petición externa - GET /api/v3/factory/status', reqId: 'FS-98E1' },
@@ -76,7 +88,8 @@ const FlowStateFactory = () => {
             desc: 'Análisis inteligente de normativas, leyes y regulaciones con auditoría de SLAs y contratos.',
             tech: ['Azure OpenAI', 'FastAPI', 'PostgreSQL', 'Python'],
             color: 'from-blue-600 to-cyan-400',
-            details: 'Desplegado para auditoría de reformas laborales y guías de parlamento de WFD, integrando RAG avanzado sobre normativas locales.'
+            details: 'Desplegado para auditoría de reformas laborales y guías de parlamento de WFD, integrando RAG avanzado sobre normativas locales.',
+            url: 'https://jolly-sand-0d5b5221e.7.azurestaticapps.net/',
         },
         {
             name: 'FlowVote / ControlEleccionario',
@@ -89,14 +102,37 @@ const FlowStateFactory = () => {
             details: 'Plataforma para auditoría electoral que procesa y preserva datos estadísticos con detección temprana de anomalías en telegramas de votación.'
         },
         {
-            name: 'GastroFlow / FinApp',
+            name: 'GastroFlow',
             tag: 'FINTECH / RETAIL',
             vertical: 'FINTECH',
             status: 'SCALING',
-            desc: 'Modelado predictivo de rentabilidad y alertas de movimiento financiero dudoso.',
-            tech: ['FastAPI', 'SQLModel', 'Azure Native', 'Terraform'],
+            desc: 'Optimización de flujos gastronómicos, stock predictivo e inteligencia de costos para food service.',
+            tech: ['FastAPI', 'SQLModel', 'GCP Cloud Run', 'React'],
             color: 'from-amber-600 to-orange-400',
-            details: 'Dashboard unificado de inteligencia de costos para Unilever/Arcor con control de stock y auditoría de transacciones multisucursal.'
+            details: 'Dashboard de rentabilidad por producto y sucursal con alertas de movimiento financiero anómalo. Desplegado en GCP Cloud Run.',
+            url: 'https://gastroflow-frontend-813615563568.us-central1.run.app/login',
+        },
+        {
+            name: 'FinAPP',
+            tag: 'FINTECH / ANALYTICS',
+            vertical: 'FINTECH',
+            status: 'PRODUCTION',
+            desc: 'Dashboard de inteligencia financiera, auditoría de transacciones y conciliaciones multisucursal.',
+            tech: ['FastAPI', 'SQLModel', 'Azure SWA', 'React'],
+            color: 'from-violet-600 to-purple-400',
+            details: 'Analytics predictivo con auditoría de transacciones para Unilever/Arcor context. Integra control de stock y alerta de anomalías en tiempo real.',
+            url: 'https://jolly-ocean-0b502ff1e.1.azurestaticapps.net/',
+        },
+        {
+            name: 'FlowTrade',
+            tag: 'FINTECH / TRADING',
+            vertical: 'FINTECH',
+            status: 'PRODUCTION',
+            desc: 'Clasificación inteligente de instrumentos financieros y análisis predictivo de operaciones de trading.',
+            tech: ['FastAPI', 'ML Classifier', 'GCP Cloud Run', 'React'],
+            color: 'from-cyan-600 to-sky-400',
+            details: 'Motor de clasificación full-stack para análisis de operaciones financieras con modelos de ML sobre datos de mercado en tiempo real.',
+            url: 'https://flowtrade-frontend-1022518085278.us-central1.run.app/api/v1/classify/full',
         },
         {
             name: 'G-Bridge',
@@ -285,8 +321,8 @@ const FlowStateFactory = () => {
                                             <span className="bg-white/5 text-slate-400 text-[10px] font-bold px-2.5 py-1.5 rounded-lg border border-white/5 tracking-wider">
                                                 {agent.tag}
                                             </span>
-                                            <div className="flex items-center gap-1.5 text-[10px] font-extrabold text-emerald-400 tracking-widest bg-emerald-400/10 px-2.5 py-1.5 rounded-lg">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                            <div className={`flex items-center gap-1.5 text-[10px] font-extrabold tracking-widest px-2.5 py-1.5 rounded-lg ${STATUS_STYLE[agent.status] ?? STATUS_STYLE.READY}`}>
+                                                <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${STATUS_DOT[agent.status] ?? STATUS_DOT.READY}`}></span>
                                                 {agent.status}
                                             </div>
                                         </div>
@@ -302,12 +338,23 @@ const FlowStateFactory = () => {
 
                                     <div>
                                         <div className="flex flex-wrap gap-1.5 pt-6 border-t border-white/5">
-                                            {agent.tech.map((t, idx) => (
+                                            {agent.tech.map((tech, idx) => (
                                                 <span key={idx} className="text-[10px] font-bold text-slate-500 bg-white/[0.02] border border-white/5 px-2.5 py-1 rounded-md">
-                                                    {t}
+                                                    {tech}
                                                 </span>
                                             ))}
                                         </div>
+                                        {agent.url && (
+                                            <a
+                                                href={agent.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="mt-4 flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-gradient-to-r from-flow-tech/10 to-flow-cyan/10 border border-flow-cyan/20 text-flow-cyan text-[11px] font-bold uppercase tracking-widest hover:from-flow-tech/20 hover:border-flow-cyan/40 transition-all group"
+                                            >
+                                                <FiExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                                                Acceder al Sistema
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </motion.div>
