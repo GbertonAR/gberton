@@ -84,8 +84,24 @@
     "skillsTitle": "Habilidades Técnicas Clave",
     "timelineTitle": "Trayectoria Profesional",
     "categories": {
+      "cloud": "Cloud & AI",
+      "fullstack": "Full Stack Development",
       "functional": "Análisis Funcional"
     },
+    "level": {
+      "expert": "Experto",
+      "advanced": "Avanzado"
+    },
+    "timeline": [
+      { "role": "Arquitecto de Soluciones AI/Cloud",         "description": "Liderando el desarrollo de ecosistema de agentes inteligentes para automatización empresarial." },
+      { "role": "Sr. Lan Manager",                            "description": "Gestión integral de infraestructura tecnológica y migración a soluciones cloud." },
+      { "role": "Sr. Lan Manager - System Developer",         "description": "Gestión integral de infraestructura tecnológica y migración a soluciones cloud." },
+      { "role": "Encargado de Sistemas",                      "description": "Desarrollo de soluciones empresariales y arquitectura de sistemas complejos." },
+      { "role": "Administrativo y Encargado de Operaciones",  "description": "Operador de computadora/Facturador - Responsable de la gestión de 7 locales" },
+      { "role": "Administrativo",                             "description": "Operador de computadora/Facturador" },
+      { "role": "Auxiliar Administrativo",                    "description": "Operador de computadora/Facturador" },
+      { "role": "Auxiliar Administrativo",                    "description": "Tareas administrativas y tramites generales" }
+    ],
     "achievements": [
       { "label": "Emails Automatizados",   "description": "Respuesta automatizada en 5 días" },
       { "label": "Años de Experiencia",    "description": "Liderando transformación digital" },

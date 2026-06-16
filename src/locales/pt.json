@@ -1,110 +1,191 @@
 {
-    "navigation": {
-        "home": "Início",
-        "experience": "Experiência",
-        "flowstate": "FlowState AI",
-        "contact": "Contato",
-        "downloadCV": "Baixar CV"
-    },
-    "hero": {
-        "title": "GUSTAVO BUONGIORNO BERTON",
-        "role": "Especialista em Transformação Digital e IA",
-        "subtitle": "Mais de 25 anos liderando a Transformação Digital e a Arquitetura de Soluções de IA/Cloud escaláveis",
-        "ctaPrimary": "Explorar Portfólio de Soluções de IA/Cloud",
-        "ctaSecondary": "Baixar CV - Outubro 2025"
-    },
-    "experience": {
-        "title": "Minha Experiência Profissional",
-        "subtitle": "Mais de duas décadas transformando empresas através da tecnologia",
-        "achievements": {
-            "emails": {
-                "label": "E-mails Automatizados",
-                "description": "Resposta automatizada em 5 dias"
-            },
-            "years": {
-                "label": "Anos de Experiência",
-                "description": "Liderando transformação digital"
-            },
-            "projects": {
-                "label": "Projetos Concluídos",
-                "description": "Soluções de IA/Cloud escaláveis"
-            }
-        },
-        "skillsTitle": "Habilidades Técnicas Chave",
-        "timelineTitle": "Trajetória Profissional",
-        "roles": {
-            "flowstate": {
-                "role": "Arquiteto de Soluções de IA/Cloud",
-                "description": "Liderando o desenvolvimento de ecossistema de agentes inteligentes para automação empresarial."
-            },
-            "hutton": {
-                "role": "Chefe de Sistemas",
-                "description": "Gestão integral de infraestrutura tecnológica e migração para soluções em nuvem."
-            },
-            "ibm": {
-                "role": "Analista de Sistemas",
-                "description": "Desenvolvimento de soluções empresariais e arquitetura de sistemas complexos."
-            }
-        }
-    },
-    "flowstate": {
-        "title": "FlowState AI: Ecossistema de Agentes Inteligentes",
-        "subtitle": "Transformando desafios empresariais em soluções automatizadas com Inteligência Artificial",
-        "problemTitle": "O Problema B2B",
-        "problemDesc": "As empresas carecem de experiência interna em IA e precisam de soluções rápidas, escaláveis e comprovadas. FlowState AI oferece um ecossistema de agentes inteligentes especializados, prontos para implantação no Azure, com arquitetura robusta e suporte contínuo.",
-        "projects": {
-            "lnc": {
-                "tagline": "Bot Jurídico Especializado",
-                "problem": "As empresas precisam de respostas jurídicas rápidas e contextualizadas sem depender de consultas manuais."
-            },
-            "adgenie": {
-                "tagline": "Automação de Resposta Publicitária B2B",
-                "problem": "A gestão manual de mais de 46.000 e-mails publicitários consome tempo valioso da equipe."
-            },
-            "vortext": {
-                "tagline": "Interpretação Simultânea em Tempo Real",
-                "problem": "Conferências multilíngues exigem intérpretes caros e logística complexa."
-            },
-            "opifood": {
-                "tagline": "Análise de Opiniões Gastronômicas",
-                "problem": "Restaurantes precisam entender o sentimento de seus clientes a partir de avaliações."
-            },
-            "auditxt": {
-                "tagline": "Auditoria Automatizada de Documentos",
-                "problem": "A auditoria manual de documentos é lenta, propensa a erros e cara."
-            }
-        },
-        "valueTitle": "Inteligência Conectada",
-        "valueDesc": "Cada agente da FlowState AI é projetado para se integrar perfeitamente ao seu ecossistema empresarial, implantado no Azure com arquitetura escalável e suporte contínuo.",
-        "ctaConsulting": "Solicitar Consultoria"
-    },
-    "contact": {
-        "title": "Conecte-se com um Arquiteto de Soluções de IA/Cloud",
-        "subtitle": "Defina Seu Próximo Passo",
-        "form": {
-            "name": "Nome Completo",
-            "email": "E-mail",
-            "reason": "Motivo do Contato",
-            "reasonPlaceholder": "Selecione uma opção",
-            "reasons": {
-                "job": "Oportunidade de Trabalho / Candidatura",
-                "b2b": "Consultoria B2B / Serviços FlowState AI",
-                "networking": "Networking / Imprensa"
-            },
-            "topic": "Tópico de Interesse",
-            "phone": "Número de Celular",
-            "submit": "Enviar Mensagem",
-            "success": "Obrigado pela sua mensagem! Entrarei em contato em breve.",
-            "error": "Houve um erro ao enviar a mensagem. Por favor, tente novamente."
-        },
-        "directContact": "Você também pode me contatar diretamente:"
-    },
-    "footer": {
-        "role": "Especialista em Transformação Digital e IA",
-        "description": "Arquiteto de Soluções de IA/Cloud com mais de 25 anos de experiência",
-        "quickLinks": "Links Rápidos",
-        "connect": "Conecte-se Comigo",
-        "rights": "Todos os direitos reservados.",
-        "madeWith": "Feito com"
+  "nav": {
+    "dashboard": "Painel",
+    "experience": "Experiência",
+    "factory": "AI Factory",
+    "projects": "Projetos",
+    "contact": "Contato",
+    "cv": "CV",
+    "downloadCv": "Baixar CV",
+    "cvModal": {
+      "title": "Baixar Currículo",
+      "subtitle": "Selecione o idioma para visualizar ou baixar o CV.",
+      "pdfNote": "O PDF será aberto em uma nova aba."
     }
+  },
+  "home": {
+    "badge": "Disponível · Projetos Enterprise",
+    "roles": [
+      "Arquiteto de Soluções IA",
+      "Líder em Transformação Digital",
+      "Fundador · FlowState AI",
+      "Especialista Azure & GCP"
+    ],
+    "description": "Projeto ecossistemas de IA agêntica no Azure e GCP que resolvem problemas reais em HealthTech, LegalTech e GovTech. Do protótipo ao sistema produtivo, em semanas.",
+    "cta": {
+      "factory": "Ver AI Factory",
+      "contact": "Vamos Conversar"
+    },
+    "badges": {
+      "azure": "AZURE NATIVE",
+      "langgraph": "LANGGRAPH",
+      "status": "Sistema Ativo v3.0"
+    },
+    "scroll": "Explorar",
+    "marquee": {
+      "label": "Organizações que confiaram no ecossistema"
+    },
+    "stats": [
+      { "label": "Anos de Experiência" },
+      { "label": "Sistemas em Produção" },
+      { "label": "Colaboradores IA" },
+      { "label": "Verticais Enterprise" }
+    ],
+    "explore": {
+      "tag": "Acesso Rápido",
+      "title": "Explore o Ecossistema",
+      "subtitle": "Três módulos independentes. Cada um com profundidade técnica real.",
+      "action": "Explorar"
+    },
+    "modules": [
+      {
+        "title": "FlowState AI Factory",
+        "description": "Ecossistema de 6 agentes inteligentes em HealthTech, LegalTech, GovTech e FinTech no Azure Native.",
+        "badge": "6 Agentes · READY"
+      },
+      {
+        "title": "Perfil Profissional",
+        "description": "Trajetória de 25+ anos em transformação digital, arquitetura Cloud/IA e liderança enterprise na LATAM.",
+        "badge": "25+ Anos · LATAM"
+      },
+      {
+        "title": "Projetos & Dados",
+        "description": "Casos reais: faturamento médico IA, auditoria eleitoral, conformidade legal e analytics preditivo.",
+        "badge": "30+ Relatórios"
+      }
+    ],
+    "ctaFinal": {
+      "tag": "Tem um desafio enterprise?",
+      "title": "Vamos transformar sua ideia",
+      "titleHighlight": "em um sistema real.",
+      "description": "Do protótipo ao sistema produtivo em semanas. Arquitetura Azure, agentes IA e automação industrial sem fricção.",
+      "cta": "Iniciar Conversa",
+      "cv": "Baixar CV"
+    },
+    "cvModal": {
+      "title": "Baixar Currículo",
+      "subtitle": "Selecione o idioma para visualizar ou baixar o CV.",
+      "pdfNote": "O PDF será aberto em uma nova aba."
+    }
+  },
+  "cv": {
+    "title": "Minha Experiência Profissional",
+    "subtitle": "Mais de duas décadas transformando empresas através da tecnologia",
+    "skillsTitle": "Habilidades Técnicas Chave",
+    "timelineTitle": "Trajetória Profissional",
+    "categories": {
+      "cloud": "Cloud & IA",
+      "fullstack": "Desenvolvimento Full Stack",
+      "functional": "Análise Funcional"
+    },
+    "level": {
+      "expert": "Especialista",
+      "advanced": "Avançado"
+    },
+    "achievements": [
+      { "label": "E-mails Automatizados",  "description": "Resposta automatizada em 5 dias" },
+      { "label": "Anos de Experiência",    "description": "Liderando transformação digital" },
+      { "label": "Projetos Concluídos",    "description": "Soluções IA/Cloud escaláveis" }
+    ],
+    "timeline": [
+      { "role": "Arquiteto de Soluções IA/Cloud",             "description": "Liderando o desenvolvimento de ecossistema de agentes inteligentes para automação empresarial." },
+      { "role": "Sr. Gerente de Redes",                       "description": "Gestão integral de infraestrutura tecnológica e migração para soluções em nuvem." },
+      { "role": "Sr. Gerente de Redes - Desenvolvedor de Sistemas", "description": "Gestão integral de infraestrutura tecnológica e migração para soluções em nuvem." },
+      { "role": "Gerente de Sistemas",                        "description": "Desenvolvimento de soluções empresariais e arquitetura de sistemas complexos." },
+      { "role": "Administrativo e Gerente de Operações",      "description": "Operador de computador/Faturista - Responsável pela gestão de 7 lojas" },
+      { "role": "Administrativo",                             "description": "Operador de computador/Faturista" },
+      { "role": "Auxiliar Administrativo",                    "description": "Operador de computador/Faturista" },
+      { "role": "Auxiliar Administrativo",                    "description": "Tarefas administrativas e procedimentos gerais" }
+    ]
+  },
+  "projects": {
+    "title": "Relatórios & Documentação Técnica",
+    "subtitle": "Acesso integrado aos blueprints de engenharia, análises de readiness de produto e relatórios de conformidade regulatória.",
+    "mainTitle": "Sistemas Chave & Readme Docs",
+    "viewReport": "Ver Relatório",
+    "historyTitle": "Histórico de Relatórios de Engenharia",
+    "historySubtitle": "Explore e filtre o banco de dados de 23 documentos técnicos indexados do manual de arquitetura.",
+    "searchPlaceholder": "Pesquisar documento...",
+    "allTypes": "Todos os tipos",
+    "colTitle": "Título do Documento",
+    "colType": "Tipo",
+    "colAction": "Ação",
+    "viewDoc": "Visualizar",
+    "noResults": "Nenhum documento encontrado correspondente à pesquisa.",
+    "footerAudit": "SUPORTE HUMANO & CONTROLE DE AUDITORIA",
+    "footerSystem": "FLOWSTATE SYSTEM OPERATIVE v3.0"
+  },
+  "factory": {
+    "commandCenter": "Command Center · FlowState AI Software Factory",
+    "heroTitle": "Ecossistema de",
+    "heroHighlight": "Inteligência Conectada",
+    "heroDesc": "Não desenvolvemos peças isoladas. Projetamos uma engrenagem de agentes integrados e automação industrial no Azure e GCP, alinhada com a governança e metodologias de alta disponibilidade.",
+    "kpiLabels": ["Mercado Alvo", "Modelo de Negócio", "Infraestrutura", "Colaboradores Ativos"],
+    "portfolioTag": "Portfolio Ativo",
+    "portfolioTitle": "Explorador de Sistemas",
+    "verticals": {
+      "ALL": "Todos",
+      "INTEGRATION": "Integrações Legacy"
+    },
+    "viewDetails": "Ver Detalhes",
+    "diagrams": {
+      "title": "Diagramas do Ecossistema",
+      "ecosystem": "Ecossistema Factory",
+      "org_chart": "Staff Digital",
+      "mesa_chica": "Equipe Principal",
+      "kai_router": "KAI Router"
+    },
+    "logsTitle": "Terminal · Logs em Tempo Real",
+    "statusBadge": {
+      "PRODUCTION": "PRODUÇÃO",
+      "READY": "PRONTO",
+      "SCALING": "ESCALANDO"
+    }
+  },
+  "footer": {
+    "role": "Especialista em Transformação Digital & IA",
+    "description": "Arquiteto de Soluções IA/Cloud com 25+ anos de experiência",
+    "quickLinks": "Links Rápidos",
+    "connect": "Conecte-se Comigo",
+    "rights": "Todos os direitos reservados.",
+    "madeWith": "Feito com"
+  },
+  "contact": {
+    "title": "Conecte-se com um Arquiteto de Soluções IA/Cloud",
+    "subtitle": "Defina Seu Próximo Passo",
+    "form": {
+      "name": "Nome Completo",
+      "namePlaceholder": "Seu nome completo",
+      "email": "E-mail",
+      "emailPlaceholder": "voce@email.com",
+      "reason": "Motivo do Contato",
+      "reasonPlaceholder": "Selecione uma opção",
+      "reasons": {
+        "job": "Oportunidade de Trabalho / Candidatura",
+        "b2b": "Consultoria B2B / Serviços FlowState AI",
+        "networking": "Networking / Imprensa"
+      },
+      "topic": "Tópico de Interesse",
+      "topicPlaceholder": "Conte-me mais sobre seu projeto ou consulta...",
+      "phone": "Número de Celular",
+      "phonePlaceholder": "+55 11 91234-5678",
+      "submit": "Enviar Mensagem",
+      "sending": "Enviando...",
+      "success": "Obrigado pela sua mensagem! Entrarei em contato em menos de 24h.",
+      "errorFallback": "Não foi possível enviar. Escreva-me diretamente para gberton1967@gmail.com",
+      "required": "Por favor, preencha todos os campos obrigatórios.",
+      "invalidEmail": "Por favor, insira um endereço de e-mail válido."
+    },
+    "directContact": "Você também pode me contatar diretamente:"
+  }
 }

@@ -20,6 +20,17 @@ import {
 } from 'react-icons/si';
 import { VscAzure } from 'react-icons/vsc';
 
+const TIMELINE_META = [
+  { company: 'FlowState AI',                           period: '2016 - Presente' },
+  { company: 'Sistemas Tecnologicos Integrales (STI)', period: '2001 - 2007'    },
+  { company: 'Imagin Automation Argentina',            period: '1999 - 2001'    },
+  { company: 'Casa Hutton',                            period: '1994 - 1999'    },
+  { company: 'Rey Foto',                               period: '1990 - 1993'    },
+  { company: 'Telefax SA',                             period: '1990 - 1991'    },
+  { company: 'Distribuidora Dos Santos Pereira',       period: '1988 - 1990'    },
+  { company: 'Laboratorio Organon Argentina',          period: '1987 - 1988'    },
+];
+
 const ProfessionalExperience = () => {
   const { t } = useTranslation();
   const ref = useRef(null);
@@ -27,101 +38,45 @@ const ProfessionalExperience = () => {
 
   const skills = [
     {
-      category: 'Cloud & AI',
+      category: t('cv.categories.cloud'),
       icon: <FiCloud className="w-8 h-8" />,
       items: [
-        { name: 'Microsoft Azure', icon: <VscAzure />, level: 'Expert' },
-        { name: 'Microservicios', icon: <FiLayers />, level: 'Expert' },
-        { name: 'Python/FastAPI', icon: <SiFastapi />, level: 'Expert' },
-        { name: 'OCR & NLP', icon: <FiCpu />, level: 'Advanced' },
-        { name: 'Chatbots & AI Agents', icon: <FiZap />, level: 'Expert' },
+        { name: 'Microsoft Azure',      icon: <VscAzure />,  level: t('cv.level.expert')   },
+        { name: 'Microservicios',        icon: <FiLayers />,  level: t('cv.level.expert')   },
+        { name: 'Python/FastAPI',        icon: <SiFastapi />, level: t('cv.level.expert')   },
+        { name: 'OCR & NLP',             icon: <FiCpu />,     level: t('cv.level.advanced') },
+        { name: 'Chatbots & AI Agents',  icon: <FiZap />,     level: t('cv.level.expert')   },
       ],
     },
     {
-      category: 'Full Stack Development',
+      category: t('cv.categories.fullstack'),
       icon: <FiCode className="w-8 h-8" />,
       items: [
-        { name: 'Python (Django)', icon: <SiDjango />, level: 'Expert' },
-        { name: 'PostgreSQL', icon: <SiPostgresql />, level: 'Expert' },
-        { name: 'ReactJS', icon: <SiReact />, level: 'Advanced' },
-        { name: 'Vite & Tailwind CSS', icon: <FiCode />, level: 'Advanced' },
+        { name: 'Python (Django)',       icon: <SiDjango />,    level: t('cv.level.expert')   },
+        { name: 'PostgreSQL',            icon: <SiPostgresql />, level: t('cv.level.expert')  },
+        { name: 'ReactJS',               icon: <SiReact />,     level: t('cv.level.advanced') },
+        { name: 'Vite & Tailwind CSS',   icon: <FiCode />,      level: t('cv.level.advanced') },
       ],
     },
     {
       category: t('cv.categories.functional'),
       icon: <FiBriefcase className="w-8 h-8" />,
       items: [
-        { name: 'Migración ERP', icon: <FiDatabase />, level: 'Expert' },
-        { name: 'Módulos BackOffice', icon: <FiLayers />, level: 'Expert' },
-        { name: 'Arquitectura de Soluciones', icon: <FiCpu />, level: 'Expert' },
+        { name: 'Migración ERP',                icon: <FiDatabase />, level: t('cv.level.expert') },
+        { name: 'Módulos BackOffice',            icon: <FiLayers />,   level: t('cv.level.expert') },
+        { name: 'Arquitectura de Soluciones',    icon: <FiCpu />,      level: t('cv.level.expert') },
       ],
     },
   ];
 
   const achievements = [
-    { metric: '46,000', icon: <FiZap className="w-12 h-12" />,      color: 'from-gb-cyan to-gb-navy' },
+    { metric: '46,000', icon: <FiZap className="w-12 h-12" />,       color: 'from-gb-cyan to-gb-navy'    },
     { metric: '25+',    icon: <FiTrendingUp className="w-12 h-12" />, color: 'from-gb-navy to-purple-600' },
-    { metric: '100+',   icon: <FiCloud className="w-12 h-12" />,     color: 'from-purple-600 to-gb-cyan' },
+    { metric: '100+',   icon: <FiCloud className="w-12 h-12" />,      color: 'from-purple-600 to-gb-cyan' },
   ];
 
-  const timeline = [
-    {
-      role: 'Arquitecto de Soluciones AI/Cloud',
-      company: 'FlowState AI',
-      period: '2016 - Presente',
-      description:
-        'Liderando el desarrollo de ecosistema de agentes inteligentes para automatización empresarial.',
-    },
-    {
-      role: 'Sr. Lan Manager',
-      company: 'Sistemas Tecnologicos Integrales (STI)',
-      period: '2001 - 2007',
-      description:
-        'Gestión integral de infraestructura tecnológica y migración a soluciones cloud.',
-    },
-    {
-      role: 'Sr. Lan Manager - System Developer',
-      company: 'Imagin Automation Argentina',
-      period: '1999 - 2001',
-      description:
-        'Gestión integral de infraestructura tecnológica y migración a soluciones cloud.',
-    },
-    {
-      role: 'Encargado de Sistemas',
-      company: 'Casa Hutton',
-      period: '1994 - 1999',
-      description:
-        'Desarrollo de soluciones empresariales y arquitectura de sistemas complejos.',
-    },
-    {
-      role: 'Administrativo y Encargado de Operaciones',
-      company: 'Rey Foto',
-      period: '1990 - 1993',
-      description:
-        'Operador de computadora/Facturador - Responsable de la gestión de 7 locales',
-    },
-    {
-      role: 'Administrativo',
-      company: 'Telefax SA',
-      period: '1990 - 1991',
-      description:
-        'Operador de computadora/Facturador',
-    },
-    {
-      role: 'Auxiliar Administrativo',
-      company: 'Distribuidora Dos Santos Pereira',
-      period: '1988 - 1990',
-      description:
-        'Operador de computadora/Facturador',
-    },
-    {
-      role: 'Auxiliar Administrativo',
-      company: 'Laboratorio Organon Argentina',
-      period: '1987 - 1988',
-      description:
-        'Tareas administrativas y tramites generales',
-    },
-  ];
+  const timelineI18n = t('cv.timeline', { returnObjects: true });
+  const timeline = TIMELINE_META.map((meta, i) => ({ ...meta, ...timelineI18n[i] }));
 
   return (
     <section id="experience" className="section-gb" ref={ref}>

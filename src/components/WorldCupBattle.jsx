@@ -130,7 +130,7 @@ const VoteModal = ({ ai, matchId, onClose, onVoted }) => {
 };
 
 // ── Scoreboard ─────────────────────────────────────────────────────────────────
-const Scoreboard = ({ votes, accuracy, totalPredicted }) => {
+const Scoreboard = ({ votes, accuracy, totalPredicted, finishedMatches = [] }) => {
     const totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
     const keys = ['gpt', 'gemini', 'claude'];
 
@@ -180,29 +180,62 @@ const Scoreboard = ({ votes, accuracy, totalPredicted }) => {
                         <br />Torneo inicia el 11/06/2026 🏆
                     </p>
                 ) : (
-                    <div className="space-y-3">
-                        {keys.sort((a, b) => accuracy[b] - accuracy[a]).map((key, idx) => {
-                            const pct = totalPredicted ? Math.round((accuracy[key] / totalPredicted) * 100) : 0;
-                            const cfg = AI_CONFIG[key];
-                            const medals = ['🥇', '🥈', '🥉'];
-                            return (
-                                <div key={key}>
-                                    <div className="flex justify-between text-sm mb-1">
-                                        <span className="text-slate-300">{medals[idx]} {cfg.name}</span>
-                                        <span className="font-bold text-white">{accuracy[key]}/{totalPredicted} ({pct}%)</span>
+                    <>
+                        <div className="space-y-3">
+                            {keys.sort((a, b) => accuracy[b] - accuracy[a]).map((key, idx) => {
+                                const pct = totalPredicted ? Math.round((accuracy[key] / totalPredicted) * 100) : 0;
+                                const cfg = AI_CONFIG[key];
+                                const medals = ['🥇', '🥈', '🥉'];
+                                return (
+                                    <div key={key}>
+                                        <div className="flex justify-between text-sm mb-1">
+                                            <span className="text-slate-300">{medals[idx]} {cfg.name}</span>
+                                            <span className="font-bold text-white">{accuracy[key]}/{totalPredicted} ({pct}%)</span>
+                                        </div>
+                                        <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }} animate={{ width: `${pct}%` }}
+                                                transition={{ duration: 0.8, ease: 'easeOut' }}
+                                                className="h-full rounded-full"
+                                                style={{ background: cfg.color }}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                                        <motion.div
-                                            initial={{ width: 0 }} animate={{ width: `${pct}%` }}
-                                            transition={{ duration: 0.8, ease: 'easeOut' }}
-                                            className="h-full rounded-full"
-                                            style={{ background: cfg.color }}
-                                        />
-                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {finishedMatches.length > 0 && (
+                            <div className="mt-4 pt-4 border-t border-white/10">
+                                <div className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">Partido a partido</div>
+                                <div className="space-y-2">
+                                    {finishedMatches.map(match => {
+                                        const act = match.actual_result;
+                                        return (
+                                            <div key={match.id} className="bg-white/[0.03] rounded-lg px-3 py-2">
+                                                <div className="flex items-center justify-between text-xs mb-1.5">
+                                                    <span className="text-slate-300 truncate">{match.home.flag} {match.home.name}</span>
+                                                    <span className="font-bold text-white shrink-0 mx-2">{act.score}</span>
+                                                    <span className="text-slate-300 truncate text-right">{match.away.name} {match.away.flag}</span>
+                                                </div>
+                                                <div className="flex justify-center gap-4">
+                                                    {['gpt', 'gemini', 'claude'].map(key => {
+                                                        const hit = match.predictions[key]?.winner === act.winner;
+                                                        const cfg = AI_CONFIG[key];
+                                                        return (
+                                                            <span key={key} title={cfg.name} className="text-[11px]">
+                                                                {cfg.emoji}{hit ? '✅' : '❌'}
+                                                            </span>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            );
-                        })}
-                    </div>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
         </div>
@@ -227,7 +260,11 @@ export const WorldCupBattle = () => {
         ]).then(([data, liveVotes]) => {
             setMatchesData(data);
             setLocalVotes(liveVotes || data.scoreboard.votes);
-            const next = data.matches.find(m => m.status === 'upcoming' && m.is_featured) || data.matches[0];
+            const next = data.matches
+                .filter(m => m.status === 'upcoming' && m.is_featured)
+                .sort((a, b) => new Date(a.date) - new Date(b.date))[0]
+                ?? data.matches.find(m => m.status === 'upcoming')
+                ?? data.matches[data.matches.length - 1];
             setFeatured(next);
         }).catch(() => {});
     }, []);
@@ -410,6 +447,7 @@ export const WorldCupBattle = () => {
                     votes={localVotes}
                     accuracy={scoreboard.accuracy}
                     totalPredicted={scoreboard.total_predicted}
+                    finishedMatches={matchesData.matches.filter(m => m.status === 'finished' && m.actual_result)}
                 />
 
                 {/* CTA */}

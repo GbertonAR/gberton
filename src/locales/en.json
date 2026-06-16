@@ -84,8 +84,24 @@
     "skillsTitle": "Key Technical Skills",
     "timelineTitle": "Professional Journey",
     "categories": {
+      "cloud": "Cloud & AI",
+      "fullstack": "Full Stack Development",
       "functional": "Functional Analysis"
     },
+    "level": {
+      "expert": "Expert",
+      "advanced": "Advanced"
+    },
+    "timeline": [
+      { "role": "AI/Cloud Solutions Architect",               "description": "Leading the development of an intelligent agents ecosystem for enterprise automation." },
+      { "role": "Sr. LAN Manager",                            "description": "Comprehensive IT infrastructure management and migration to cloud solutions." },
+      { "role": "Sr. LAN Manager - System Developer",         "description": "Comprehensive IT infrastructure management and migration to cloud solutions." },
+      { "role": "Systems Manager",                            "description": "Development of enterprise solutions and complex systems architecture." },
+      { "role": "Administrative & Operations Manager",        "description": "Computer Operator/Billing Clerk - Responsible for managing 7 stores" },
+      { "role": "Administrative",                             "description": "Computer Operator/Billing Clerk" },
+      { "role": "Administrative Assistant",                   "description": "Computer Operator/Billing Clerk" },
+      { "role": "Administrative Assistant",                   "description": "Administrative tasks and general procedures" }
+    ],
     "achievements": [
       { "label": "Automated Emails",      "description": "Automated response in 5 days" },
       { "label": "Years of Experience",   "description": "Leading digital transformation" },

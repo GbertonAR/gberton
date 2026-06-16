@@ -29,8 +29,8 @@
   },
   "scoreboard": {
     "votes": { "claude": 0, "gpt": 0, "gemini": 0 },
-    "accuracy": { "claude": 0, "gpt": 0, "gemini": 0 },
-    "total_predicted": 0
+    "accuracy": { "claude": 2, "gpt": 2, "gemini": 2 },
+    "total_predicted": 6
   },
   "matches": [
 
@@ -42,14 +42,14 @@
       "venue": "Estadio Azteca, Ciudad de México",
       "home": { "name": "México",    "flag": "🇲🇽", "code": "MEX" },
       "away": { "name": "Sudáfrica", "flag": "🇿🇦", "code": "RSA" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "México",    "score": "2-0", "reasoning": "México local en el Azteca inaugura el torneo con ventaja histórica. La altitud de CDMX y el desgaste del viaje castigan a Sudáfrica en el partido más esperado." },
         "gpt":     { "winner": "México",    "score": "2-1", "reasoning": "México abre con presión de local y motivación extra por ser el partido inaugural. Sudáfrica puede crear peligro en contragolpe pero la calidad del anfitrión define." },
         "gemini":  { "winner": "México",    "score": "1-0", "reasoning": "La presión del partido inaugural puede generar ansiedad en el local pero la calidad individual prevalece. Victoria sufrida pero sólida en el marcador final." }
       },
-      "actual_result": null
+      "actual_result": { "score": "2-0", "winner": "México" }
     },
 
     {
@@ -60,14 +60,14 @@
       "venue": "Estadio Akron, Zapopan",
       "home": { "name": "Corea del Sur", "flag": "🇰🇷", "code": "KOR" },
       "away": { "name": "Rep. Checa",    "flag": "🇨🇿", "code": "CZE" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Rep. Checa",    "score": "1-0", "reasoning": "Rep. Checa tiene mayor experiencia y jerarquía europea. Schick puede resolver con una acción individual en un partido muy disputado." },
         "gpt":     { "winner": "Empate",        "score": "1-1", "reasoning": "Corea del Sur tiene velocidad y organización táctica para neutralizar a Rep. Checa. Partido equilibrado entre dos selecciones de nivel similar." },
         "gemini":  { "winner": "Corea del Sur", "score": "2-1", "reasoning": "Corea del Sur tiene talento joven explosivo que puede sorprender al europeo. La velocidad de los extremos coreanos hace la diferencia en Zapopan." }
       },
-      "actual_result": null
+      "actual_result": { "score": "2-1", "winner": "Corea del Sur" }
     },
 
     {
@@ -148,16 +148,16 @@
       "matchday": 1,
       "date": "2026-06-13T22:00:00Z",
       "venue": "Gillette Stadium, Foxborough",
-      "home": { "name": "Escocia",    "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "code": "SCO" },
-      "away": { "name": "Marruecos",  "flag": "🇲🇦", "code": "MAR" },
-      "status": "upcoming",
+      "home": { "name": "Escocia", "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "code": "SCO" },
+      "away": { "name": "Haití",   "flag": "🇭🇹", "code": "HAI" },
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Marruecos", "score": "2-0", "reasoning": "Marruecos viene de ser semifinalista en Qatar 2022 con un equipo casi intacto. Escocia es debut en un Mundial en décadas y le falta rodaje a este nivel." },
         "gpt":     { "winner": "Marruecos", "score": "1-0", "reasoning": "Marruecos tiene la experiencia reciente en competencias mundiales. Escocia tiene corazón pero le falta el nivel técnico para ganar ante un rival africano tan sólido." },
         "gemini":  { "winner": "Empate",    "score": "1-1", "reasoning": "Escocia puede sorprender con su intensidad física en el partido inaugural. Marruecos puede desestabilizarse ante el pressing escocés en Foxborough." }
       },
-      "actual_result": null
+      "actual_result": { "score": "1-0", "winner": "Escocia" }
     },
 
     {
@@ -166,16 +166,16 @@
       "matchday": 1,
       "date": "2026-06-14T01:00:00Z",
       "venue": "Lincoln Financial Field, Filadelfia",
-      "home": { "name": "Brasil", "flag": "🇧🇷", "code": "BRA" },
-      "away": { "name": "Haití",  "flag": "🇭🇹", "code": "HAI" },
-      "status": "upcoming",
+      "home": { "name": "Brasil",    "flag": "🇧🇷", "code": "BRA" },
+      "away": { "name": "Marruecos", "flag": "🇲🇦", "code": "MAR" },
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Brasil", "score": "4-0", "reasoning": "La diferencia de jerarquía es abismal. Brasil necesita demostrar que superó la crisis post-Qatar. Vinicius y Rodrygo hacen el show en Filadelfia." },
         "gpt":     { "winner": "Brasil", "score": "3-0", "reasoning": "Brasil administra el partido sin riesgos desde el arranque. Haití no tiene los recursos ofensivos para inquietar a la Canarinha en ningún momento." },
         "gemini":  { "winner": "Brasil", "score": "3-1", "reasoning": "Brasil gana con comodidad pero Haití puede marcar en algún rebote o penal. El resultado importa menos que la puesta a punto táctica del equipo de Dorival." }
       },
-      "actual_result": null
+      "actual_result": { "score": "1-1", "winner": "Empate" }
     },
 
     {
@@ -258,14 +258,14 @@
       "venue": "SoFi Stadium, Inglewood",
       "home": { "name": "USA",      "flag": "🇺🇸", "code": "USA" },
       "away": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "USA",     "score": "2-1", "reasoning": "USA en casa tiene presión y motivación enormes. Paraguay es un rival accesible. Pulisic lidera y USA arranca con victoria para impulsar la campaña mundialista." },
         "gpt":     { "winner": "USA",     "score": "2-0", "reasoning": "USA en SoFi ante su público tiene todo para ganar. Paraguay llegó por el repechaje y le falta nivel para competir ante la presión del local en Los Ángeles." },
         "gemini":  { "winner": "Empate",  "score": "1-1", "reasoning": "Paraguay es más difícil de lo que parece. USA tiene presión local que puede costarle. El partido se decide en los últimos minutos con punto compartido." }
       },
-      "actual_result": null
+      "actual_result": { "score": "4-1", "winner": "USA" }
     },
 
     {
@@ -276,14 +276,14 @@
       "venue": "BC Place, Vancouver",
       "home": { "name": "Australia", "flag": "🇦🇺", "code": "AUS" },
       "away": { "name": "Turquía",   "flag": "🇹🇷", "code": "TUR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Turquía",  "score": "2-1", "reasoning": "Turquía tiene jugadores de alta jerarquía en ligas europeas. Australia en reconstrucción no puede seguir el ritmo del equipo turco en Vancouver." },
         "gpt":     { "winner": "Turquía",  "score": "2-0", "reasoning": "Turquía tiene más profundidad de plantel y experiencia en competencias internacionales que una Australia post-Socceroos en transición." },
         "gemini":  { "winner": "Empate",   "score": "1-1", "reasoning": "Australia puede sorprender con su organización defensiva. Partido igualado que puede terminar sin ganador en el inicio del grupo D." }
       },
-      "actual_result": null
+      "actual_result": { "score": "2-0", "winner": "Australia" }
     },
 
     {

@@ -274,7 +274,7 @@ const HomeDashboard = () => {
                                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2
                                                     bg-[#0D0F26] border border-flow-cyan/30 rounded-xl
                                                     px-3 py-1.5 text-[10px] font-bold text-flow-cyan tracking-widest shadow-lg">
-                                        AZURE NATIVE
+                                        {t('home.badges.azure')}
                                     </div>
                                 </motion.div>
 
@@ -287,7 +287,7 @@ const HomeDashboard = () => {
                                     <div className="absolute bottom-4 right-0
                                                     bg-[#0D0F26] border border-innovation-magenta/30 rounded-xl
                                                     px-3 py-1.5 text-[10px] font-bold text-innovation-magenta tracking-widest shadow-lg">
-                                        LANGGRAPH
+                                        {t('home.badges.langgraph')}
                                     </div>
                                 </motion.div>
 
@@ -296,7 +296,7 @@ const HomeDashboard = () => {
                                                 bg-[#0D0F26] border border-white/10 rounded-2xl
                                                 px-5 py-2.5 flex items-center gap-2 shadow-xl whitespace-nowrap">
                                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                                    <span className="text-xs font-bold text-slate-300 tracking-wider">Sistema Activo v3.0</span>
+                                    <span className="text-xs font-bold text-slate-300 tracking-wider">{t('home.badges.status')}</span>
                                 </div>
                             </div>
                         </motion.div>

@@ -205,7 +205,9 @@ const WorldCupPage = () => {
                         </div>
                     )}
                     <p className="text-slate-500 text-xs mt-6">
-                        🇲🇽 México vs Ecuador · Estadio Azteca · 11 de junio 2026
+                        {wc.over
+                            ? '⚽ Fase de Grupos en curso · 5 grupos · 30 partidos'
+                            : '🇲🇽 México vs Sudáfrica · Estadio Azteca · 11 de junio 2026'}
                     </p>
                 </div>
                 {/* Divisor verde */}
@@ -267,7 +269,7 @@ const WorldCupPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {TEAMS.map((team, i) => (
-                        <TeamCard key={team.code} team={team} index={i} />
+                        <TeamCard key={team.name} team={team} index={i} />
                     ))}
                 </div>
             </section>
