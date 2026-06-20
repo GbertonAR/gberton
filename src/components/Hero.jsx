@@ -1,7 +1,19 @@
+/**
+ * @system     FlowState AI
+ * @brand      Dinamismo y Flujo
+ * @module     Hero.jsx
+ * @copyright  © 2026 Gustavo Berton
+ * @author     Gustavo Berton
+ * @created    2026-06-20
+ * @summary    Hero section del portfolio — título, subtítulo y CTAs principales con i18n.
+ */
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { FiArrowRight, FiDownload } from 'react-icons/fi';
 
 const Hero = () => {
+    const { t } = useTranslation();
+
     const handleDownloadCV = () => {
         window.open('/cv/CV_Gustavo_Berton_Oct2025.pdf', '_blank');
     };
@@ -66,7 +78,7 @@ const Hero = () => {
                         className="inline-block"
                     >
                         <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-white/90 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-lg">
-                            Digital Transformation & AI Expert
+                            {t('hero.role')}
                         </h2>
                     </motion.div>
 
@@ -77,8 +89,7 @@ const Hero = () => {
                         transition={{ delay: 0.7, duration: 0.8 }}
                         className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed"
                     >
-                        25+ años liderando la Transformación Digital y la Arquitectura de
-                        Soluciones AI/Cloud escalables
+                        {t('hero.subtitle')}
                     </motion.p>
 
                     {/* CTAs */}
@@ -92,7 +103,7 @@ const Hero = () => {
                             onClick={() => scrollToSection('#flowstate')}
                             className="group px-8 py-4 bg-white text-gb-navy font-bold text-lg rounded-lg shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 flex items-center space-x-2"
                         >
-                            <span>Explorar Portafolio de Soluciones AI/Cloud</span>
+                            <span>{t('hero.cta.portfolio')}</span>
                             <FiArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </button>
 
@@ -101,7 +112,7 @@ const Hero = () => {
                             className="px-8 py-4 bg-transparent border-2 border-white text-white font-bold text-lg rounded-lg hover:bg-white hover:text-gb-navy transition-all duration-300 flex items-center space-x-2"
                         >
                             <FiDownload className="w-5 h-5" />
-                            <span>Descargar CV - Octubre 2025</span>
+                            <span>{t('hero.cta.downloadCv')}</span>
                         </button>
                     </motion.div>
                 </motion.div>

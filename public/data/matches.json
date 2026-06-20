@@ -29,8 +29,8 @@
   },
   "scoreboard": {
     "votes": { "claude": 0, "gpt": 0, "gemini": 0 },
-    "accuracy": { "claude": 2, "gpt": 2, "gemini": 2 },
-    "total_predicted": 6
+    "accuracy": { "claude": 9, "gpt": 8, "gemini": 9 },
+    "total_predicted": 14
   },
   "matches": [
 
@@ -78,14 +78,14 @@
       "venue": "Estadio BBVA, Monterrey",
       "home": { "name": "Rep. Checa",  "flag": "🇨🇿", "code": "CZE" },
       "away": { "name": "Sudáfrica",   "flag": "🇿🇦", "code": "RSA" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Rep. Checa", "score": "2-0", "reasoning": "Sudáfrica tiene recursos físicos pero Rep. Checa tiene claramente más calidad técnica. El europeo debería resolver sin mayores complicaciones." },
         "gpt":     { "winner": "Rep. Checa", "score": "2-1", "reasoning": "Rep. Checa tiene experiencia en competencias europeas que le da ventaja. Sudáfrica puede crear peligro en contragolpe pero no alcanza para ganar." },
         "gemini":  { "winner": "Empate",     "score": "1-1", "reasoning": "Sudáfrica puede dar batalla con su intensidad física. Rep. Checa tiene calidad pero puede verse afectada por el desgaste acumulado." }
       },
-      "actual_result": null
+      "actual_result": { "score": "1-1", "winner": "Empate" }
     },
 
     {
@@ -96,14 +96,14 @@
       "venue": "Estadio Akron, Zapopan",
       "home": { "name": "México",        "flag": "🇲🇽", "code": "MEX" },
       "away": { "name": "Corea del Sur", "flag": "🇰🇷", "code": "KOR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "México",        "score": "2-1", "reasoning": "México necesita los puntos para asegurar la clasificación anticipada. Corea del Sur tiene velocidad explosiva por las bandas pero el local impone condiciones en Guadalajara." },
         "gpt":     { "winner": "México",        "score": "2-0", "reasoning": "México en ascenso tras la primera fecha. Corea del Sur mostró vulnerabilidades defensivas y el talento de Lozano y Antuna es determinante." },
         "gemini":  { "winner": "Empate",        "score": "1-1", "reasoning": "Corea del Sur tiene un sistema táctico muy compacto. Puede neutralizar las virtudes de México y sacar un punto de gran valor en Guadalajara." }
       },
-      "actual_result": null
+      "actual_result": { "score": "1-0", "winner": "México" }
     },
 
     {
@@ -153,9 +153,9 @@
       "status": "finished",
       "is_featured": false,
       "predictions": {
-        "claude":  { "winner": "Marruecos", "score": "2-0", "reasoning": "Marruecos viene de ser semifinalista en Qatar 2022 con un equipo casi intacto. Escocia es debut en un Mundial en décadas y le falta rodaje a este nivel." },
-        "gpt":     { "winner": "Marruecos", "score": "1-0", "reasoning": "Marruecos tiene la experiencia reciente en competencias mundiales. Escocia tiene corazón pero le falta el nivel técnico para ganar ante un rival africano tan sólido." },
-        "gemini":  { "winner": "Empate",    "score": "1-1", "reasoning": "Escocia puede sorprender con su intensidad física en el partido inaugural. Marruecos puede desestabilizarse ante el pressing escocés en Foxborough." }
+        "claude":  { "winner": "Escocia", "score": "2-0", "reasoning": "Escocia tiene claramente más jerarquía técnica e internacional. Haití llega a su primera Copa del Mundo sin rodaje a este nivel y no tiene los recursos para competir en Foxborough." },
+        "gpt":     { "winner": "Escocia", "score": "2-1", "reasoning": "Escocia tiene la jerarquía para controlar el partido pero Haití puede generar algún peligro en contragolpe. Victoria justa del europeo en Gillette Stadium." },
+        "gemini":  { "winner": "Escocia", "score": "1-0", "reasoning": "Victoria sufrida pero justa para Escocia. Haití puede hacer un partido digno en su debut mundialista pero no tiene los recursos ofensivos para puntuar." }
       },
       "actual_result": { "score": "1-0", "winner": "Escocia" }
     },
@@ -186,14 +186,14 @@
       "venue": "MetLife Stadium, East Rutherford",
       "home": { "name": "Brasil",    "flag": "🇧🇷", "code": "BRA" },
       "away": { "name": "Marruecos", "flag": "🇲🇦", "code": "MAR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Brasil",    "score": "2-1", "reasoning": "Marruecos demostró en Qatar 2022 que puede incomodar a cualquier rival. Brasil gana pero con esfuerzo en el partido más difícil del grupo." },
         "gpt":     { "winner": "Empate",    "score": "1-1", "reasoning": "Marruecos tiene un sistema defensivo muy sólido bajo Regragui. Brasil puede frustrarse ante la organización marroquí. Punto compartido en NY." },
         "gemini":  { "winner": "Brasil",    "score": "2-0", "reasoning": "Brasil tiene demasiada calidad individual. Vinicius desequilibra por la banda y el resultado se define antes del cierre en MetLife." }
       },
-      "actual_result": null
+      "actual_result": { "score": "3-0", "winner": "Brasil" }
     },
 
     {
@@ -294,14 +294,14 @@
       "venue": "Lumen Field, Seattle",
       "home": { "name": "USA",       "flag": "🇺🇸", "code": "USA" },
       "away": { "name": "Australia", "flag": "🇦🇺", "code": "AUS" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "USA",       "score": "2-0", "reasoning": "Australia en reconstrucción post-Arnold no tiene el nivel para frenar a USA en casa. El equipo americano consolida el liderazgo del grupo en Seattle." },
         "gpt":     { "winner": "USA",       "score": "1-0", "reasoning": "Partido más trabado de lo esperado. Australia tiene organización defensiva pero Pulisic y Reyna tienen la clase para marcar la diferencia en Lumen Field." },
         "gemini":  { "winner": "USA",       "score": "2-1", "reasoning": "Australia sorprende con alguna llegada peligrosa pero USA tiene ventaja local en Seattle. La afición de Lumen Field es el décimo segundo jugador." }
       },
-      "actual_result": null
+      "actual_result": { "score": "2-0", "winner": "USA" }
     },
 
     {
@@ -366,14 +366,14 @@
       "venue": "Arrowhead Stadium, Kansas City",
       "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
       "away": { "name": "Argelia",   "flag": "🇩🇿", "code": "ALG" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Argentina", "score": "3-0", "reasoning": "Argelia está muy por debajo del nivel de la campeona vigente. Messi lidera y la Scaloneta tiene demasiada clase para el conjunto africano en Kansas City." },
         "gpt":     { "winner": "Argentina", "score": "2-0", "reasoning": "Argentina entra con precaución táctica pero la diferencia de jerarquía es clara. Messi y Álvarez marcan en un partido controlado de principio a fin." },
         "gemini":  { "winner": "Argentina", "score": "3-1", "reasoning": "Argentina golpea rápido pero puede relajarse y sufrir algún gol de penal o transición. Sigue siendo dominante pero no tan prolija en el cierre." }
       },
-      "actual_result": null
+      "actual_result": { "score": "3-0", "winner": "Argentina" }
     },
 
     {
@@ -384,14 +384,14 @@
       "venue": "NRG Stadium, Houston",
       "home": { "name": "Austria",  "flag": "🇦🇹", "code": "AUT" },
       "away": { "name": "Jordania", "flag": "🇯🇴", "code": "JOR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Austria",  "score": "3-0", "reasoning": "Jordania es debutante en Mundiales y la diferencia con Austria es enorme. El europeo bajo Rangnick debería resolver sin problemas en Houston." },
         "gpt":     { "winner": "Austria",  "score": "3-0", "reasoning": "Austria tiene jugadores de primera línea europea muy por encima del nivel de Jordania. Goleada esperada para el debut histórico de los jordanos." },
         "gemini":  { "winner": "Austria",  "score": "2-1", "reasoning": "Austria gana con comodidad pero Jordania puede hacer un partido digno en su debut mundialista. Los jordanos pueden marcar de penal o en alguna llegada." }
       },
-      "actual_result": null
+      "actual_result": { "score": "3-1", "winner": "Austria" }
     },
 
     {
@@ -474,14 +474,14 @@
       "venue": "NRG Stadium, Houston",
       "home": { "name": "Portugal", "flag": "🇵🇹", "code": "POR" },
       "away": { "name": "RD Congo", "flag": "🇨🇩", "code": "COD" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Portugal", "score": "3-0", "reasoning": "Portugal tiene demasiada calidad para RD Congo. Ronaldo lidera en su último Mundial y el equipo luso debería resolver sin complicaciones en Houston." },
         "gpt":     { "winner": "Portugal", "score": "2-0", "reasoning": "Portugal tiene la jerarquía para controlar el partido desde el arranque. RD Congo es físico pero no tiene el nivel técnico para competir con el europeo." },
         "gemini":  { "winner": "Portugal", "score": "2-1", "reasoning": "Portugal gana pero RD Congo puede hacer daño con su velocidad y físico. El africano puede marcar en alguna transición rápida ante la defensa lusa." }
       },
-      "actual_result": null
+      "actual_result": { "score": "1-1", "winner": "Empate" }
     },
 
     {
@@ -492,14 +492,14 @@
       "venue": "Estadio Azteca, Ciudad de México",
       "home": { "name": "Uzbekistán", "flag": "🇺🇿", "code": "UZB" },
       "away": { "name": "Colombia",   "flag": "🇨🇴", "code": "COL" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Colombia",   "score": "2-0", "reasoning": "Colombia tiene demasiada calidad para Uzbekistán. James Rodríguez y Luis Díaz son determinantes. Primera victoria sin mayores complicaciones en el Azteca." },
         "gpt":     { "winner": "Colombia",   "score": "2-1", "reasoning": "Colombia tiene el favoritismo claro. Uzbekistán puede generar alguna situación de peligro pero Colombia tiene la jerarquía y el temperamento para ganar." },
         "gemini":  { "winner": "Colombia",   "score": "1-0", "reasoning": "Colombia fue finalista de Copa América 2024. Victoria trabajada pero segura gracias a la experiencia y el orden táctico del equipo de Néstor Lorenzo." }
       },
-      "actual_result": null
+      "actual_result": { "score": "1-3", "winner": "Colombia" }
     },
 
     {

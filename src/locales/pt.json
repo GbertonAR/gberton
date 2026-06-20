@@ -187,5 +187,13 @@
       "invalidEmail": "Por favor, insira um endereço de e-mail válido."
     },
     "directContact": "Você também pode me contatar diretamente:"
+  },
+  "hero": {
+    "role": "Especialista em Transformação Digital & IA",
+    "subtitle": "25+ anos liderando a Transformação Digital e a Arquitetura de Soluções IA/Cloud escaláveis",
+    "cta": {
+      "portfolio": "Explorar Portfólio de Soluções IA/Cloud",
+      "downloadCv": "Baixar CV - Outubro 2025"
+    }
   }
 }

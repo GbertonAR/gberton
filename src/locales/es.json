@@ -187,5 +187,13 @@
       "invalidEmail": "Por favor ingresa un email válido."
     },
     "directContact": "También puedes contactarme directamente:"
+  },
+  "hero": {
+    "role": "Digital Transformation & AI Expert",
+    "subtitle": "25+ años liderando la Transformación Digital y la Arquitectura de Soluciones AI/Cloud escalables",
+    "cta": {
+      "portfolio": "Explorar Portafolio de Soluciones AI/Cloud",
+      "downloadCv": "Descargar CV - Octubre 2025"
+    }
   }
 }

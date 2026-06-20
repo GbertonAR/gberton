@@ -187,5 +187,13 @@
       "invalidEmail": "Please enter a valid email address."
     },
     "directContact": "You can also contact me directly:"
+  },
+  "hero": {
+    "role": "Digital Transformation & AI Expert",
+    "subtitle": "25+ years leading Digital Transformation and scalable AI/Cloud Solutions Architecture",
+    "cta": {
+      "portfolio": "Explore AI/Cloud Solutions Portfolio",
+      "downloadCv": "Download CV - October 2025"
+    }
   }
 }
