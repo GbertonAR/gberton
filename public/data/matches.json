@@ -5,7 +5,7 @@
     "opening_date": "2026-06-11",
     "final_date": "2026-07-19",
     "predictions_generated": "2026-06-10",
-    "note": "Predicciones generadas por KAI — Fixture real FIFA 2026. Grupos A (México), C (Brasil), D (USA), J (Argentina), K (Colombia). 30 partidos, 3 fechas."
+    "note": "Predicciones generadas por KAI — Fixture real FIFA 2026. Grupos A (México), C (Brasil), D (USA), J (Argentina), K (Colombia) + bracket completo desde Dieciseisavos hasta Semifinales. Actualizado al 13/07/2026: 58 partidos con resultado real, semifinales (Francia-España 14/07, Inglaterra-Argentina 15/07) y Final (19/07) pendientes."
   },
   "ais": {
     "claude": {
@@ -29,8 +29,8 @@
   },
   "scoreboard": {
     "votes": { "claude": 0, "gpt": 0, "gemini": 0 },
-    "accuracy": { "claude": 9, "gpt": 8, "gemini": 9 },
-    "total_predicted": 14
+    "accuracy": { "claude": 44, "gpt": 35, "gemini": 31 },
+    "total_predicted": 58
   },
   "matches": [
 
@@ -114,14 +114,14 @@
       "venue": "Estadio Azteca, Ciudad de México",
       "home": { "name": "Rep. Checa", "flag": "🇨🇿", "code": "CZE" },
       "away": { "name": "México",     "flag": "🇲🇽", "code": "MEX" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "México",     "score": "1-0", "reasoning": "México tiene todos los incentivos para cerrar el grupo como primero. Rep. Checa tiene calidad pero México en territorio mexicano mantiene la ventaja." },
         "gpt":     { "winner": "Empate",     "score": "1-1", "reasoning": "Rep. Checa llega con todo por jugar. México puede administrar el resultado si ya tiene el pase asegurado. Partido trabado con punto compartido." },
         "gemini":  { "winner": "Rep. Checa", "score": "2-1", "reasoning": "Con México posiblemente rotando pensando en octavos, Rep. Checa presiona con todo. La calidad de Schick y Souček puede sorprender al anfitrión." }
       },
-      "actual_result": null
+      "actual_result": { "score": "0-3", "winner": "México" }
     },
 
     {
@@ -132,14 +132,14 @@
       "venue": "Estadio BBVA, Monterrey",
       "home": { "name": "Sudáfrica",   "flag": "🇿🇦", "code": "RSA" },
       "away": { "name": "Corea del Sur","flag": "🇰🇷", "code": "KOR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Corea del Sur", "score": "2-1", "reasoning": "Corea del Sur tiene más calidad técnica y rodaje internacional. Sudáfrica puede complicar con su intensidad física pero el nivel coreano prevalece." },
         "gpt":     { "winner": "Corea del Sur", "score": "2-0", "reasoning": "Corea del Sur tiene jugadores de K-League y ligas europeas con más jerarquía. Sudáfrica no tiene los recursos para resistir el ataque coreano." },
         "gemini":  { "winner": "Empate",        "score": "1-1", "reasoning": "Ambos equipos necesitan puntos en esta última fecha. Partido muy abierto que puede terminar sin ganador con ambos buscando el resultado." }
       },
-      "actual_result": null
+      "actual_result": { "score": "1-0", "winner": "Sudáfrica" }
     },
 
     {
@@ -184,16 +184,16 @@
       "matchday": 2,
       "date": "2026-06-19T22:00:00Z",
       "venue": "MetLife Stadium, East Rutherford",
-      "home": { "name": "Brasil",    "flag": "🇧🇷", "code": "BRA" },
+      "home": { "name": "Escocia",   "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "code": "SCO" },
       "away": { "name": "Marruecos", "flag": "🇲🇦", "code": "MAR" },
       "status": "finished",
-      "is_featured": true,
+      "is_featured": false,
       "predictions": {
-        "claude":  { "winner": "Brasil",    "score": "2-1", "reasoning": "Marruecos demostró en Qatar 2022 que puede incomodar a cualquier rival. Brasil gana pero con esfuerzo en el partido más difícil del grupo." },
-        "gpt":     { "winner": "Empate",    "score": "1-1", "reasoning": "Marruecos tiene un sistema defensivo muy sólido bajo Regragui. Brasil puede frustrarse ante la organización marroquí. Punto compartido en NY." },
-        "gemini":  { "winner": "Brasil",    "score": "2-0", "reasoning": "Brasil tiene demasiada calidad individual. Vinicius desequilibra por la banda y el resultado se define antes del cierre en MetLife." }
+        "claude":  { "winner": "Marruecos", "score": "2-1", "reasoning": "Marruecos tiene más jerarquía internacional tras su histórico Qatar 2022. Escocia puede complicar con intensidad física pero no alcanza para sostener el resultado." },
+        "gpt":     { "winner": "Empate",    "score": "1-1", "reasoning": "Escocia juega de local anímico ante su público. Marruecos tiene mejor plantel pero puede no imponer condiciones en un partido cerrado." },
+        "gemini":  { "winner": "Marruecos", "score": "1-0", "reasoning": "Marruecos administra el balón mejor y tiene individualidades desequilibrantes. Victoria ajustada que lo deja con vida en la pelea por el primer puesto." }
       },
-      "actual_result": { "score": "3-0", "winner": "Brasil" }
+      "actual_result": { "score": "0-1", "winner": "Marruecos" }
     },
 
     {
@@ -202,16 +202,16 @@
       "matchday": 2,
       "date": "2026-06-20T01:00:00Z",
       "venue": "Gillette Stadium, Foxborough",
-      "home": { "name": "Haití",   "flag": "🇭🇹", "code": "HAI" },
-      "away": { "name": "Escocia", "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "code": "SCO" },
-      "status": "upcoming",
-      "is_featured": false,
+      "home": { "name": "Brasil", "flag": "🇧🇷", "code": "BRA" },
+      "away": { "name": "Haití",  "flag": "🇭🇹", "code": "HAI" },
+      "status": "finished",
+      "is_featured": true,
       "predictions": {
-        "claude":  { "winner": "Escocia", "score": "2-0", "reasoning": "Escocia tiene claramente más calidad que Haití. El nivel técnico y físico de la selección escocesa debería ser suficiente para una victoria cómoda." },
-        "gpt":     { "winner": "Escocia", "score": "2-1", "reasoning": "Escocia tiene más jerarquía en todos los sectores. Haití puede crear alguna situación de gol pero no alcanza para competir con el europeo." },
-        "gemini":  { "winner": "Escocia", "score": "1-0", "reasoning": "Victoria sufrida pero justa para Escocia. Haití puede hacer un partido digno pero no tiene los recursos ofensivos para ganar en Foxborough." }
+        "claude":  { "winner": "Brasil", "score": "3-0", "reasoning": "Haití no tiene los recursos para competir con la Canarinha. Brasil necesita reafirmar su candidatura tras el empate debut y debería resolver con comodidad." },
+        "gpt":     { "winner": "Brasil", "score": "3-0", "reasoning": "Brasil sale a corregir la imagen del primer partido. Haití no tiene el nivel para inquietar a un equipo con este plantel en Foxborough." },
+        "gemini":  { "winner": "Brasil", "score": "2-0", "reasoning": "Brasil impone jerarquía desde el arranque. Haití puede plantarse con orden pero la diferencia de calidad individual termina siendo decisiva." }
       },
-      "actual_result": null
+      "actual_result": { "score": "3-0", "winner": "Brasil" }
     },
 
     {
@@ -222,14 +222,14 @@
       "venue": "Mercedes-Benz Stadium, Atlanta",
       "home": { "name": "Marruecos", "flag": "🇲🇦", "code": "MAR" },
       "away": { "name": "Haití",     "flag": "🇭🇹", "code": "HAI" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Marruecos", "score": "3-0", "reasoning": "Marruecos tiene demasiada calidad para Haití. El ataque de Ziyech y En-Nesyri debería resolver sin complicaciones en Atlanta." },
         "gpt":     { "winner": "Marruecos", "score": "3-0", "reasoning": "Marruecos necesita sumar goles para mejorar diferencia de goles. Haití no puede resistir la presión ofensiva del equipo marroquí." },
         "gemini":  { "winner": "Marruecos", "score": "2-0", "reasoning": "Victoria cómoda de Marruecos para intentar alcanzar a Brasil en lo alto del grupo. Haití despide su primera Copa del Mundo sin pena ni gloria." }
       },
-      "actual_result": null
+      "actual_result": { "score": "4-2", "winner": "Marruecos" }
     },
 
     {
@@ -240,14 +240,14 @@
       "venue": "Hard Rock Stadium, Miami",
       "home": { "name": "Brasil",  "flag": "🇧🇷", "code": "BRA" },
       "away": { "name": "Escocia", "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "code": "SCO" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Brasil", "score": "2-0", "reasoning": "Escocia no es favorita ante Brasil en ningún escenario. Brasil puede rotar pensando en la siguiente fase y aun así ganar con autoridad en Miami." },
         "gpt":     { "winner": "Brasil", "score": "3-1", "reasoning": "Brasil sale a marcar diferencia de goles si la necesita. Escocia tiene corazón pero no tiene el nivel para resistir a la Canarinha en Miami." },
         "gemini":  { "winner": "Brasil", "score": "2-0", "reasoning": "Brasil clasifica como primero del grupo con tranquilidad. Escocia puede crear alguna situación pero no tiene suficiente para sorprender a la Canarinha." }
       },
-      "actual_result": null
+      "actual_result": { "score": "3-0", "winner": "Brasil" }
     },
 
     {
@@ -312,14 +312,14 @@
       "venue": "Levi's Stadium, Santa Clara",
       "home": { "name": "Turquía",  "flag": "🇹🇷", "code": "TUR" },
       "away": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Turquía",  "score": "2-0", "reasoning": "Turquía tiene demasiada calidad para Paraguay. La falta de experiencia mundialista de Paraguay se nota ante un rival europeo con jugadores de primer nivel." },
         "gpt":     { "winner": "Turquía",  "score": "2-1", "reasoning": "Turquía maneja el partido pero Paraguay puede complicar con su intensidad física. Los turcos ganan pero con más esfuerzo del esperado." },
         "gemini":  { "winner": "Empate",   "score": "1-1", "reasoning": "Paraguay puede aguantar con su organización defensiva. No tiene las herramientas para ganar pero puede evitar la derrota en Santa Clara." }
       },
-      "actual_result": null
+      "actual_result": { "score": "0-1", "winner": "Paraguay" }
     },
 
     {
@@ -330,14 +330,14 @@
       "venue": "SoFi Stadium, Inglewood",
       "home": { "name": "Turquía", "flag": "🇹🇷", "code": "TUR" },
       "away": { "name": "USA",     "flag": "🇺🇸", "code": "USA" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "USA",     "score": "1-0", "reasoning": "Turquía es el rival más peligroso del grupo pero USA puede aguantar con disciplina táctica y resolver en un contragolpe en el cierre del grupo." },
         "gpt":     { "winner": "Turquía", "score": "2-1", "reasoning": "Turquía llega con jugadores top de Premier League y Bundesliga. Si USA ya clasificó y rota, Turquía puede dar la sorpresa en Los Ángeles." },
         "gemini":  { "winner": "Empate",  "score": "1-1", "reasoning": "Último partido del grupo, ambos posiblemente con el pase resuelto. Turquía expone con los extremos pero USA aguanta y acepta el punto." }
       },
-      "actual_result": null
+      "actual_result": { "score": "3-2", "winner": "Turquía" }
     },
 
     {
@@ -348,14 +348,14 @@
       "venue": "Levi's Stadium, Santa Clara",
       "home": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
       "away": { "name": "Australia", "flag": "🇦🇺", "code": "AUS" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Empate",    "score": "1-1", "reasoning": "Ambos equipos necesitarán puntos desesperadamente en la última fecha. Partido equilibrado entre dos selecciones que luchan por mantenerse con vida." },
         "gpt":     { "winner": "Australia", "score": "2-1", "reasoning": "Australia tiene más calidad técnica que Paraguay. Si quiere cerrar el Mundial con algo positivo, este partido es la oportunidad." },
         "gemini":  { "winner": "Paraguay",  "score": "1-0", "reasoning": "Paraguay tiene el físico y la garra para superar a Australia. En un partido de necesidad, la determinación sudamericana prevalece en Santa Clara." }
       },
-      "actual_result": null
+      "actual_result": { "score": "0-0", "winner": "Empate" }
     },
 
     {
@@ -402,14 +402,14 @@
       "venue": "AT&T Stadium, Arlington",
       "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
       "away": { "name": "Austria",   "flag": "🇦🇹", "code": "AUT" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Argentina", "score": "2-0", "reasoning": "Austria tiene un equipo sólido en Europa pero no tiene el nivel para competir con la campeona vigente. Argentina controla sin exponer el juego en Dallas." },
         "gpt":     { "winner": "Argentina", "score": "2-1", "reasoning": "Austria tiene jugadores de Bayern Munich y RB Leipzig con experiencia Champions. Pueden complicar pero no alcanzan para frenar a la Scaloneta." },
         "gemini":  { "winner": "Empate",    "score": "1-1", "reasoning": "Austria bajo Rangnick tiene un pressing muy agresivo que puede neutralizar a Messi. Sorpresa posible en el AT&T Stadium de Dallas." }
       },
-      "actual_result": null
+      "actual_result": { "score": "2-0", "winner": "Argentina" }
     },
 
     {
@@ -420,14 +420,14 @@
       "venue": "Empower Field, Denver",
       "home": { "name": "Argelia",  "flag": "🇩🇿", "code": "ALG" },
       "away": { "name": "Jordania", "flag": "🇯🇴", "code": "JOR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Argelia",  "score": "2-0", "reasoning": "Argelia tiene experiencia mundialista y calidad muy superior. Jordania puede hacer su participación con dignidad pero no tiene el ataque para puntuar." },
         "gpt":     { "winner": "Argelia",  "score": "2-0", "reasoning": "Argelia tiene la calidad forjada en el AFCON y las eliminatorias africanas. Jordania debería ser el rival más accesible del grupo para los argelinos." },
         "gemini":  { "winner": "Argelia",  "score": "1-0", "reasoning": "Victoria trabajada de Argelia. Jordania puede complicar con su organización defensiva pero no tiene suficiente ataque para ganar en Denver." }
       },
-      "actual_result": null
+      "actual_result": { "score": "2-1", "winner": "Argelia" }
     },
 
     {
@@ -438,14 +438,14 @@
       "venue": "AT&T Stadium, Arlington",
       "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
       "away": { "name": "Jordania",  "flag": "🇯🇴", "code": "JOR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Argentina", "score": "4-0", "reasoning": "Goleada esperada para cerrar el grupo con el mejor diferencial posible. Jordania no tiene los recursos para competir a este nivel en la última fecha." },
         "gpt":     { "winner": "Argentina", "score": "3-0", "reasoning": "Argentina envía un mensaje a los rivales del siguiente round con rotaciones pero aun así consigue una goleada cómoda en Dallas." },
         "gemini":  { "winner": "Argentina", "score": "3-1", "reasoning": "Argentina rotará pensando en los octavos de final. Jordania puede hacer un partido digno pero la diferencia de calidad es insalvable en esta instancia." }
       },
-      "actual_result": null
+      "actual_result": { "score": "3-1", "winner": "Argentina" }
     },
 
     {
@@ -456,14 +456,14 @@
       "venue": "Empower Field, Denver",
       "home": { "name": "Argelia", "flag": "🇩🇿", "code": "ALG" },
       "away": { "name": "Austria", "flag": "🇦🇹", "code": "AUT" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Austria",  "score": "2-1", "reasoning": "Austria tiene más calidad técnica. Argelia puede competir con su intensidad física pero el europeo debería imponerse en el cierre del grupo." },
         "gpt":     { "winner": "Austria",  "score": "2-0", "reasoning": "Austria tiene jugadores en top ligas europeas. Argelia llega al tercer partido con el desgaste acumulado de la fase de grupos y puede resentirlo." },
         "gemini":  { "winner": "Empate",   "score": "1-1", "reasoning": "Argelia puede plantear un partido muy físico que complique a Austria. Punto compartido como resultado justo entre dos selecciones que se lo juegan todo." }
       },
-      "actual_result": null
+      "actual_result": { "score": "3-3", "winner": "Empate" }
     },
 
     {
@@ -510,14 +510,14 @@
       "venue": "NRG Stadium, Houston",
       "home": { "name": "Portugal",   "flag": "🇵🇹", "code": "POR" },
       "away": { "name": "Uzbekistán", "flag": "🇺🇿", "code": "UZB" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "Portugal",   "score": "2-0", "reasoning": "Portugal debería ganar con facilidad ante Uzbekistán. El nivel de los jugadores lusos en las grandes ligas europeas es determinante en este duelo." },
         "gpt":     { "winner": "Portugal",   "score": "3-0", "reasoning": "Portugal en plena forma necesita sumar para asegurar el liderazgo del grupo. Uzbekistán no tiene recursos para resistir ante la calidad lusa." },
         "gemini":  { "winner": "Portugal",   "score": "2-1", "reasoning": "Portugal gana pero Uzbekistán tiene jugadores con experiencia en ligas rusas que pueden crear algún problema. Los centroasiáticos pueden marcar." }
       },
-      "actual_result": null
+      "actual_result": { "score": "5-0", "winner": "Portugal" }
     },
 
     {
@@ -528,14 +528,14 @@
       "venue": "Estadio Akron, Guadalajara",
       "home": { "name": "Colombia", "flag": "🇨🇴", "code": "COL" },
       "away": { "name": "RD Congo", "flag": "🇨🇩", "code": "COD" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Colombia", "score": "2-0", "reasoning": "RD Congo es un equipo físico pero Colombia tiene superioridad técnica clara. James dirige el juego y Colombia sentencia antes del descanso en Guadalajara." },
         "gpt":     { "winner": "Colombia", "score": "3-1", "reasoning": "Colombia ya clasificada puede soltar el juego. Díaz y James hacen brillar al equipo. RD Congo acompaña el trámite pero no puede evitar la derrota." },
         "gemini":  { "winner": "Colombia", "score": "2-1", "reasoning": "RD Congo tiene jugadores físicos y rápidos que pueden incomodar. Colombia gana pero no con la comodidad que esperan los analistas ante un rival africano intenso." }
       },
-      "actual_result": null
+      "actual_result": { "score": "1-0", "winner": "Colombia" }
     },
 
     {
@@ -546,14 +546,14 @@
       "venue": "Hard Rock Stadium, Miami",
       "home": { "name": "Colombia", "flag": "🇨🇴", "code": "COL" },
       "away": { "name": "Portugal", "flag": "🇵🇹", "code": "POR" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Portugal",  "score": "2-1", "reasoning": "Portugal tiene más profundidad táctica y experiencia internacional. Colombia puede marcar pero Ronaldo en su último Mundial motiva al equipo luso para ganar en Miami." },
         "gpt":     { "winner": "Empate",    "score": "1-1", "reasoning": "Partido de enorme cartel en Miami. Ambos pueden tener el pase asegurado y el partido queda en tablas con un duelo de figuras sin definición final." },
         "gemini":  { "winner": "Colombia",  "score": "2-1", "reasoning": "Colombia en su mejor versión puede superar a Portugal. James Rodríguez vs Ronaldo en Miami. Colombia se impone con una actuación memorable del grupo." }
       },
-      "actual_result": null
+      "actual_result": { "score": "0-0", "winner": "Empate" }
     },
 
     {
@@ -564,12 +564,552 @@
       "venue": "Mercedes-Benz Stadium, Atlanta",
       "home": { "name": "RD Congo",   "flag": "🇨🇩", "code": "COD" },
       "away": { "name": "Uzbekistán", "flag": "🇺🇿", "code": "UZB" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": false,
       "predictions": {
         "claude":  { "winner": "RD Congo",   "score": "2-1", "reasoning": "RD Congo tiene ventaja física sobre Uzbekistán. Los africanos necesitan ganar para aspirar a una plaza de mejor tercero en Atlanta." },
         "gpt":     { "winner": "Empate",     "score": "1-1", "reasoning": "Partido equilibrado entre dos equipos de nivel similar. Ambos necesitan puntos y el resultado final puede ser justo para ambas selecciones." },
         "gemini":  { "winner": "RD Congo",   "score": "1-0", "reasoning": "RD Congo tiene más rodaje internacional reciente. Victoria ajustada que puede ser suficiente para la clasificación como mejor tercero del grupo." }
+      },
+      "actual_result": { "score": "3-1", "winner": "RD Congo" }
+    },
+
+    {
+      "id": "WC2026-R32-01",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-06-28T19:00:00Z",
+      "venue": "Los Angeles Stadium, Inglewood",
+      "home": { "name": "Sudáfrica", "flag": "🇿🇦", "code": "RSA" },
+      "away": { "name": "Canadá",    "flag": "🇨🇦", "code": "CAN" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Canadá",  "score": "2-1", "reasoning": "Canadá de local en Los Ángeles con Davies liderando el ataque debería imponer condiciones ante un Sudáfrica desgastado." },
+        "gpt":     { "winner": "Empate",  "score": "1-1", "reasoning": "Sudáfrica llega invicto de la fase de grupos y puede sostener el empate ante un anfitrión con nervios de octavos." },
+        "gemini":  { "winner": "Canadá",  "score": "1-0", "reasoning": "Canadá con el aliento local cierra un partido ajustado ante un Sudáfrica valiente pero sin gol." }
+      },
+      "actual_result": { "score": "0-1", "winner": "Canadá" }
+    },
+
+    {
+      "id": "WC2026-R32-02",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-06-29T20:00:00Z",
+      "venue": "Lincoln Financial Field, Filadelfia",
+      "home": { "name": "Brasil", "flag": "🇧🇷", "code": "BRA" },
+      "away": { "name": "Japón",  "flag": "🇯🇵", "code": "JPN" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Brasil", "score": "2-0", "reasoning": "Brasil necesita reivindicarse tras una fase de grupos irregular y Japón no alcanza el nivel de una eliminatoria directa." },
+        "gpt":     { "winner": "Brasil", "score": "2-1", "reasoning": "Japón puede incomodar con su intensidad pero la profundidad de plantel brasileña define en el cierre." },
+        "gemini":  { "winner": "Empate", "score": "1-1", "reasoning": "Japón tiene el orden táctico para neutralizar a un Brasil que no encontró su mejor versión en grupos." }
+      },
+      "actual_result": { "score": "2-1", "winner": "Brasil" }
+    },
+
+    {
+      "id": "WC2026-R32-03",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-06-29T23:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara",
+      "home": { "name": "Alemania", "flag": "🇩🇪", "code": "GER" },
+      "away": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Alemania", "score": "2-0", "reasoning": "La jerarquía alemana en instancias de eliminación directa debería ser suficiente ante Paraguay." },
+        "gpt":     { "winner": "Alemania", "score": "2-1", "reasoning": "Paraguay puede ser incómodo pero Alemania tiene más recursos individuales para resolver en 90 minutos." },
+        "gemini":  { "winner": "Empate",   "score": "1-1", "reasoning": "Partido cerrado que puede definirse en los penales, con Paraguay firme atrás." }
+      },
+      "actual_result": { "score": "3-3 (4-3 pen)", "winner": "Paraguay" }
+    },
+
+    {
+      "id": "WC2026-R32-04",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-06-30T19:00:00Z",
+      "venue": "Estadio BBVA, Monterrey",
+      "home": { "name": "Países Bajos", "flag": "🇳🇱", "code": "NED" },
+      "away": { "name": "Marruecos",    "flag": "🇲🇦", "code": "MAR" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Países Bajos", "score": "2-1", "reasoning": "La superioridad técnica neerlandesa debería imponerse en un cruce parejo." },
+        "gpt":     { "winner": "Marruecos",    "score": "1-0", "reasoning": "Marruecos repite la fórmula de Qatar 2022 con un bloque compacto que asfixia al rival." },
+        "gemini":  { "winner": "Empate",       "score": "1-1", "reasoning": "Duelo muy parejo que puede llegar a la definición desde los doce pasos." }
+      },
+      "actual_result": { "score": "2-2 (3-2 pen)", "winner": "Marruecos" }
+    },
+
+    {
+      "id": "WC2026-R32-05",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-06-30T22:00:00Z",
+      "venue": "AT&T Stadium, Arlington",
+      "home": { "name": "Costa de Marfil", "flag": "🇨🇮", "code": "CIV" },
+      "away": { "name": "Noruega",         "flag": "🇳🇴", "code": "NOR" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Noruega",         "score": "2-1", "reasoning": "Haaland es una individualidad que puede resolver un partido cerrado por sí solo." },
+        "gpt":     { "winner": "Costa de Marfil", "score": "2-1", "reasoning": "El folclore africano en el Mundial y la garra ivoriana pueden imponerse a una Noruega debutante en octavos." },
+        "gemini":  { "winner": "Noruega",         "score": "2-0", "reasoning": "Noruega con más rodaje colectivo europeo controla el partido de principio a fin." }
+      },
+      "actual_result": { "score": "1-2", "winner": "Noruega" }
+    },
+
+    {
+      "id": "WC2026-R32-06",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-06-30T23:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford",
+      "home": { "name": "Francia", "flag": "🇫🇷", "code": "FRA" },
+      "away": { "name": "Suecia",  "flag": "🇸🇪", "code": "SWE" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Francia", "score": "3-0", "reasoning": "Francia con Mbappé en su mejor versión no debería tener problemas ante Suecia." },
+        "gpt":     { "winner": "Francia", "score": "2-0", "reasoning": "La profundidad de plantel francesa es motivo suficiente para el pase a octavos sin sobresaltos." },
+        "gemini":  { "winner": "Francia", "score": "2-1", "reasoning": "Suecia puede generar algún peligro pero Francia tiene demasiada calidad ofensiva." }
+      },
+      "actual_result": { "score": "3-0", "winner": "Francia" }
+    },
+
+    {
+      "id": "WC2026-R32-07",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-01T19:00:00Z",
+      "venue": "Estadio Azteca, Ciudad de México",
+      "home": { "name": "México",  "flag": "🇲🇽", "code": "MEX" },
+      "away": { "name": "Ecuador", "flag": "🇪🇨", "code": "ECU" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "México",  "score": "2-0", "reasoning": "México de local en el Azteca vuelve a apoyarse en la fortaleza de jugar en casa." },
+        "gpt":     { "winner": "México",  "score": "2-1", "reasoning": "Ecuador puede complicar pero la presión del público mexicano define el resultado." },
+        "gemini":  { "winner": "Empate",  "score": "1-1", "reasoning": "Ecuador con un bloque defensivo sólido puede llevarse un empate valioso de México." }
+      },
+      "actual_result": { "score": "2-0", "winner": "México" }
+    },
+
+    {
+      "id": "WC2026-R32-08",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-01T22:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "home": { "name": "Inglaterra", "flag": "🇬🇧", "code": "ENG" },
+      "away": { "name": "RD Congo",   "flag": "🇨🇩", "code": "COD" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Inglaterra", "score": "3-0", "reasoning": "La diferencia de nivel entre Inglaterra y RD Congo debería notarse desde el inicio." },
+        "gpt":     { "winner": "Inglaterra", "score": "2-0", "reasoning": "RD Congo llega como sorpresa del torneo pero Inglaterra tiene demasiada calidad individual." },
+        "gemini":  { "winner": "Inglaterra", "score": "2-1", "reasoning": "RD Congo puede hacer un partido digno y hasta marcar, pero Inglaterra tiene con qué resolver." }
+      },
+      "actual_result": { "score": "2-1", "winner": "Inglaterra" }
+    },
+
+    {
+      "id": "WC2026-R32-09",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-01T23:00:00Z",
+      "venue": "Lumen Field, Seattle",
+      "home": { "name": "Bélgica", "flag": "🇧🇪", "code": "BEL" },
+      "away": { "name": "Senegal", "flag": "🇸🇳", "code": "SEN" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Bélgica", "score": "2-1", "reasoning": "Bélgica tiene más experiencia en instancias de eliminación directa que puede ser clave." },
+        "gpt":     { "winner": "Empate",  "score": "1-1", "reasoning": "Senegal con su intensidad física puede llevar el partido a la prórroga." },
+        "gemini":  { "winner": "Senegal", "score": "2-1", "reasoning": "Senegal en su mejor momento puede dar la sorpresa ante una Bélgica en transición generacional." }
+      },
+      "actual_result": { "score": "3-2 (ET)", "winner": "Bélgica" }
+    },
+
+    {
+      "id": "WC2026-R32-10",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-02T20:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara",
+      "home": { "name": "USA",                  "flag": "🇺🇸", "code": "USA" },
+      "away": { "name": "Bosnia y Herzegovina", "flag": "🇧🇦", "code": "BIH" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "USA", "score": "2-0", "reasoning": "USA de local con el impulso de la afición debería resolver sin mayores complicaciones." },
+        "gpt":     { "winner": "USA", "score": "2-1", "reasoning": "Bosnia puede generar algún susto pero el equipo americano tiene más recursos ofensivos." },
+        "gemini":  { "winner": "USA", "score": "1-0", "reasoning": "Partido cerrado que USA resuelve con una diferencia mínima pero efectiva." }
+      },
+      "actual_result": { "score": "2-0", "winner": "USA" }
+    },
+
+    {
+      "id": "WC2026-R32-11",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-02T23:00:00Z",
+      "venue": "SoFi Stadium, Inglewood",
+      "home": { "name": "España",  "flag": "🇪🇸", "code": "ESP" },
+      "away": { "name": "Austria", "flag": "🇦🇹", "code": "AUT" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "España", "score": "3-0", "reasoning": "España en su mejor nivel del torneo no debería tener problemas ante Austria." },
+        "gpt":     { "winner": "España", "score": "2-0", "reasoning": "El funcionamiento colectivo español es netamente superior al de una Austria más limitada." },
+        "gemini":  { "winner": "España", "score": "2-1", "reasoning": "Austria puede incomodar con su pressing pero España tiene calidad de sobra para resolver." }
+      },
+      "actual_result": { "score": "3-0", "winner": "España" }
+    },
+
+    {
+      "id": "WC2026-R32-12",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-02T19:00:00Z",
+      "venue": "BC Place, Vancouver",
+      "home": { "name": "Portugal", "flag": "🇵🇹", "code": "POR" },
+      "away": { "name": "Croacia",  "flag": "🇭🇷", "code": "CRO" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Portugal", "score": "2-1", "reasoning": "Ronaldo en su último Mundial motiva a un plantel portugués con mucha jerarquía." },
+        "gpt":     { "winner": "Empate",   "score": "1-1", "reasoning": "Croacia con su experiencia en Mundiales recientes puede complicar a Portugal en un partido cerrado." },
+        "gemini":  { "winner": "Portugal", "score": "2-0", "reasoning": "Portugal tiene más variantes ofensivas para quebrar el bloque croata." }
+      },
+      "actual_result": { "score": "2-1", "winner": "Portugal" }
+    },
+
+    {
+      "id": "WC2026-R32-13",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-02T22:00:00Z",
+      "venue": "BMO Field, Toronto",
+      "home": { "name": "Suiza",   "flag": "🇨🇭", "code": "SUI" },
+      "away": { "name": "Argelia", "flag": "🇩🇿", "code": "ALG" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Suiza",   "score": "2-0", "reasoning": "La organización táctica suiza debería ser suficiente ante una Argelia irregular." },
+        "gpt":     { "winner": "Suiza",   "score": "1-0", "reasoning": "Suiza es sólida defensivamente y no debería sufrir demasiado ante Argelia." },
+        "gemini":  { "winner": "Empate",  "score": "1-1", "reasoning": "Argelia puede sostener el resultado con su temperamento físico ante una Suiza cauta." }
+      },
+      "actual_result": { "score": "2-0", "winner": "Suiza" }
+    },
+
+    {
+      "id": "WC2026-R32-14",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-03T19:00:00Z",
+      "venue": "Hard Rock Stadium, Miami",
+      "home": { "name": "Egipto",    "flag": "🇪🇬", "code": "EGY" },
+      "away": { "name": "Australia", "flag": "🇦🇺", "code": "AUS" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Egipto",    "score": "2-1", "reasoning": "Salah puede ser la diferencia en un cruce parejo ante Australia." },
+        "gpt":     { "winner": "Empate",    "score": "1-1", "reasoning": "Partido cerrado que puede definirse en los penales." },
+        "gemini":  { "winner": "Australia", "score": "2-1", "reasoning": "Australia con su solidez física puede dar la sorpresa ante Egipto." }
+      },
+      "actual_result": { "score": "2-2 (4-2 pen)", "winner": "Egipto" }
+    },
+
+    {
+      "id": "WC2026-R32-15",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-03T22:00:00Z",
+      "venue": "Arrowhead Stadium, Kansas City",
+      "home": { "name": "Argentina",  "flag": "🇦🇷", "code": "ARG" },
+      "away": { "name": "Cabo Verde", "flag": "🇨🇻", "code": "CPV" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Argentina", "score": "3-0", "reasoning": "Cabo Verde hizo una fase de grupos histórica pero Argentina tiene demasiada clase para el debutante." },
+        "gpt":     { "winner": "Argentina", "score": "2-0", "reasoning": "La Scaloneta no debería tener grandes problemas ante la sorpresa del torneo." },
+        "gemini":  { "winner": "Argentina", "score": "2-1", "reasoning": "Cabo Verde puede vender cara su eliminación pero Argentina tiene con qué resolver." }
+      },
+      "actual_result": { "score": "3-2 (ET)", "winner": "Argentina" }
+    },
+
+    {
+      "id": "WC2026-R32-16",
+      "phase": "Dieciseisavos",
+      "matchday": 4,
+      "date": "2026-07-03T23:00:00Z",
+      "venue": "Gillette Stadium, Foxborough",
+      "home": { "name": "Colombia", "flag": "🇨🇴", "code": "COL" },
+      "away": { "name": "Ghana",    "flag": "🇬🇭", "code": "GHA" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Colombia", "score": "2-0", "reasoning": "Colombia con James Rodríguez en su mejor nivel debería controlar el partido." },
+        "gpt":     { "winner": "Colombia", "score": "1-0", "reasoning": "Colombia tiene más profundidad de plantel para un cruce parejo ante Ghana." },
+        "gemini":  { "winner": "Empate",   "score": "1-1", "reasoning": "Ghana con su tradición mundialista puede sostener un empate valioso." }
+      },
+      "actual_result": { "score": "1-0", "winner": "Colombia" }
+    },
+
+    {
+      "id": "WC2026-R16-01",
+      "phase": "Octavos",
+      "matchday": 5,
+      "date": "2026-07-04T19:00:00Z",
+      "venue": "Estadio BBVA, Monterrey",
+      "home": { "name": "Marruecos", "flag": "🇲🇦", "code": "MAR" },
+      "away": { "name": "Canadá",    "flag": "🇨🇦", "code": "CAN" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Marruecos", "score": "2-0", "reasoning": "Marruecos llega con más rodaje en fases eliminatorias tras Qatar 2022." },
+        "gpt":     { "winner": "Marruecos", "score": "2-1", "reasoning": "Canadá tiene el aliento del público pero Marruecos tiene más jerarquía en octavos." },
+        "gemini":  { "winner": "Empate",    "score": "1-1", "reasoning": "Canadá puede sorprender apoyado en el envión anímico de haber eliminado a Sudáfrica." }
+      },
+      "actual_result": { "score": "3-0", "winner": "Marruecos" }
+    },
+
+    {
+      "id": "WC2026-R16-02",
+      "phase": "Octavos",
+      "matchday": 5,
+      "date": "2026-07-04T22:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford",
+      "home": { "name": "Francia",  "flag": "🇫🇷", "code": "FRA" },
+      "away": { "name": "Paraguay", "flag": "🇵🇾", "code": "PAR" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Francia", "score": "2-0", "reasoning": "Francia tiene demasiada calidad individual para el sorprendente Paraguay." },
+        "gpt":     { "winner": "Francia", "score": "1-0", "reasoning": "Paraguay llega desgastado tras los penales y Francia aprovecha para definir con lo justo." },
+        "gemini":  { "winner": "Empate",  "score": "1-1", "reasoning": "Paraguay puede seguir dando la sorpresa con su fortaleza defensiva." }
+      },
+      "actual_result": { "score": "1-0", "winner": "Francia" }
+    },
+
+    {
+      "id": "WC2026-R16-03",
+      "phase": "Octavos",
+      "matchday": 5,
+      "date": "2026-07-05T19:00:00Z",
+      "venue": "AT&T Stadium, Arlington",
+      "home": { "name": "Noruega", "flag": "🇳🇴", "code": "NOR" },
+      "away": { "name": "Brasil",  "flag": "🇧🇷", "code": "BRA" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Brasil",  "score": "2-1", "reasoning": "Brasil sigue siendo favorito por jerarquía histórica ante una Noruega debutante en octavos." },
+        "gpt":     { "winner": "Brasil",  "score": "3-1", "reasoning": "La calidad individual brasileña debería marcar la diferencia ante el conjunto nórdico." },
+        "gemini":  { "winner": "Empate",  "score": "1-1", "reasoning": "Haaland puede sostener a Noruega en un partido parejo ante un Brasil irregular." }
+      },
+      "actual_result": { "score": "2-1", "winner": "Noruega" }
+    },
+
+    {
+      "id": "WC2026-R16-04",
+      "phase": "Octavos",
+      "matchday": 5,
+      "date": "2026-07-05T22:00:00Z",
+      "venue": "SoFi Stadium, Inglewood",
+      "home": { "name": "Inglaterra", "flag": "🇬🇧", "code": "ENG" },
+      "away": { "name": "México",     "flag": "🇲🇽", "code": "MEX" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Inglaterra", "score": "2-1", "reasoning": "Inglaterra tiene más profundidad de plantel para un cruce parejo." },
+        "gpt":     { "winner": "México",     "score": "2-1", "reasoning": "México de local en el Mundial que organiza puede dar la sorpresa ante Inglaterra." },
+        "gemini":  { "winner": "Inglaterra", "score": "2-0", "reasoning": "La superioridad individual inglesa debería notarse en instancias de eliminación directa." }
+      },
+      "actual_result": { "score": "3-2", "winner": "Inglaterra" }
+    },
+
+    {
+      "id": "WC2026-R16-05",
+      "phase": "Octavos",
+      "matchday": 5,
+      "date": "2026-07-06T19:00:00Z",
+      "venue": "Lincoln Financial Field, Filadelfia",
+      "home": { "name": "España",   "flag": "🇪🇸", "code": "ESP" },
+      "away": { "name": "Portugal", "flag": "🇵🇹", "code": "POR" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "España",   "score": "2-1", "reasoning": "El funcionamiento colectivo español debería ser la diferencia ante un Portugal más individual." },
+        "gpt":     { "winner": "Empate",   "score": "1-1", "reasoning": "Dos potencias ibéricas en un partido muy parejo que puede terminar en tablas." },
+        "gemini":  { "winner": "España",   "score": "1-0", "reasoning": "España controla el balón y encuentra el gol en un partido cerrado." }
+      },
+      "actual_result": { "score": "1-0", "winner": "España" }
+    },
+
+    {
+      "id": "WC2026-R16-06",
+      "phase": "Octavos",
+      "matchday": 5,
+      "date": "2026-07-06T22:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "home": { "name": "Bélgica", "flag": "🇧🇪", "code": "BEL" },
+      "away": { "name": "USA",     "flag": "🇺🇸", "code": "USA" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Bélgica", "score": "2-1", "reasoning": "Bélgica tiene más jerarquía individual para un cruce de octavos." },
+        "gpt":     { "winner": "Bélgica", "score": "2-0", "reasoning": "USA de visitante ante una Bélgica con más experiencia en instancias mundialistas." },
+        "gemini":  { "winner": "Empate",  "score": "1-1", "reasoning": "USA con el envión de eliminar a Bosnia puede complicar a Bélgica." }
+      },
+      "actual_result": { "score": "4-1", "winner": "Bélgica" }
+    },
+
+    {
+      "id": "WC2026-R16-07",
+      "phase": "Octavos",
+      "matchday": 5,
+      "date": "2026-07-07T19:00:00Z",
+      "venue": "Hard Rock Stadium, Miami",
+      "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
+      "away": { "name": "Egipto",    "flag": "🇪🇬", "code": "EGY" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Argentina", "score": "2-0", "reasoning": "La Scaloneta tiene más recursos colectivos para resolver ante Egipto." },
+        "gpt":     { "winner": "Argentina", "score": "2-1", "reasoning": "Salah puede inquietar pero Argentina tiene la jerarquía de campeona vigente." },
+        "gemini":  { "winner": "Argentina", "score": "3-1", "reasoning": "Argentina en modo candidata no debería tener grandes problemas ante Egipto." }
+      },
+      "actual_result": { "score": "3-2", "winner": "Argentina" }
+    },
+
+    {
+      "id": "WC2026-R16-08",
+      "phase": "Octavos",
+      "matchday": 5,
+      "date": "2026-07-07T22:00:00Z",
+      "venue": "Levi's Stadium, Santa Clara",
+      "home": { "name": "Suiza",    "flag": "🇨🇭", "code": "SUI" },
+      "away": { "name": "Colombia", "flag": "🇨🇴", "code": "COL" },
+      "status": "finished",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Colombia", "score": "2-1", "reasoning": "Colombia con más talento ofensivo individual debería imponerse a Suiza." },
+        "gpt":     { "winner": "Empate",   "score": "1-1", "reasoning": "Partido muy parejo que puede definirse en los penales." },
+        "gemini":  { "winner": "Suiza",    "score": "1-0", "reasoning": "La solidez táctica suiza puede ser la clave ante una Colombia más ofensiva que ordenada." }
+      },
+      "actual_result": { "score": "3-3 (4-3 pen)", "winner": "Suiza" }
+    },
+
+    {
+      "id": "WC2026-QF-01",
+      "phase": "Cuartos de Final",
+      "matchday": 6,
+      "date": "2026-07-09T22:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford",
+      "home": { "name": "Francia",   "flag": "🇫🇷", "code": "FRA" },
+      "away": { "name": "Marruecos", "flag": "🇲🇦", "code": "MAR" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Francia",   "score": "2-0", "reasoning": "Francia tiene más jerarquía individual para superar a la sorpresa africana del torneo." },
+        "gpt":     { "winner": "Francia",   "score": "2-1", "reasoning": "Marruecos llega con el envión de haber eliminado a Países Bajos y Canadá, pero Francia tiene más recursos." },
+        "gemini":  { "winner": "Empate",    "score": "1-1", "reasoning": "Marruecos puede seguir su cuento de hadas ante una Francia que no encuentra su mejor versión." }
+      },
+      "actual_result": { "score": "2-0", "winner": "Francia" }
+    },
+
+    {
+      "id": "WC2026-QF-02",
+      "phase": "Cuartos de Final",
+      "matchday": 6,
+      "date": "2026-07-10T22:00:00Z",
+      "venue": "SoFi Stadium, Inglewood",
+      "home": { "name": "España",  "flag": "🇪🇸", "code": "ESP" },
+      "away": { "name": "Bélgica", "flag": "🇧🇪", "code": "BEL" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "España",  "score": "2-1", "reasoning": "España mantiene el funcionamiento colectivo que la hace candidata al título." },
+        "gpt":     { "winner": "Empate",  "score": "1-1", "reasoning": "Bélgica puede complicar a una España que necesita más tiempo para desequilibrar." },
+        "gemini":  { "winner": "España",  "score": "2-0", "reasoning": "España con el mejor fútbol colectivo del torneo debería imponerse a Bélgica." }
+      },
+      "actual_result": { "score": "2-1", "winner": "España" }
+    },
+
+    {
+      "id": "WC2026-QF-03",
+      "phase": "Cuartos de Final",
+      "matchday": 6,
+      "date": "2026-07-11T19:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "home": { "name": "Inglaterra", "flag": "🇬🇧", "code": "ENG" },
+      "away": { "name": "Noruega",    "flag": "🇳🇴", "code": "NOR" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Inglaterra", "score": "2-0", "reasoning": "Inglaterra tiene más profundidad de plantel para frenar a la Noruega revelación." },
+        "gpt":     { "winner": "Inglaterra", "score": "2-1", "reasoning": "Haaland sigue siendo un problema pero Inglaterra tiene con qué resolver en Atlanta." },
+        "gemini":  { "winner": "Empate",     "score": "1-1", "reasoning": "Noruega puede seguir dando la sorpresa ante una Inglaterra que no despegó del todo." }
+      },
+      "actual_result": { "score": "2-1", "winner": "Inglaterra" }
+    },
+
+    {
+      "id": "WC2026-QF-04",
+      "phase": "Cuartos de Final",
+      "matchday": 6,
+      "date": "2026-07-11T22:00:00Z",
+      "venue": "AT&T Stadium, Arlington",
+      "home": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
+      "away": { "name": "Suiza",     "flag": "🇨🇭", "code": "SUI" },
+      "status": "finished",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Argentina", "score": "2-1", "reasoning": "La Scaloneta tiene más jerarquía individual para el cruce de cuartos." },
+        "gpt":     { "winner": "Argentina", "score": "2-0", "reasoning": "Suiza es sólida pero Argentina tiene con qué desequilibrar en instancias decisivas." },
+        "gemini":  { "winner": "Empate",    "score": "1-1", "reasoning": "Suiza puede llevar el partido a la prórroga con su fortaleza defensiva." }
+      },
+      "actual_result": { "score": "3-1 (ET)", "winner": "Argentina" }
+    },
+
+    {
+      "id": "WC2026-SF-01",
+      "phase": "Semifinal",
+      "matchday": 7,
+      "date": "2026-07-14T19:00:00Z",
+      "venue": "AT&T Stadium, Arlington",
+      "home": { "name": "Francia", "flag": "🇫🇷", "code": "FRA" },
+      "away": { "name": "España",  "flag": "🇪🇸", "code": "ESP" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "España",  "score": "1-2", "reasoning": "España tiene el mejor funcionamiento colectivo del torneo y debería imponerse a Francia en una semifinal de alto nivel." },
+        "gpt":     { "winner": "Francia", "score": "2-1", "reasoning": "Francia con Mbappé en modo determinante puede inclinar la balanza en un partido parejo." },
+        "gemini":  { "winner": "España",  "score": "1-0", "reasoning": "Partido cerrado entre dos candidatas al título que puede definirse por un detalle, con España con ligera ventaja." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-SF-02",
+      "phase": "Semifinal",
+      "matchday": 7,
+      "date": "2026-07-15T19:00:00Z",
+      "venue": "Mercedes-Benz Stadium, Atlanta",
+      "home": { "name": "Inglaterra", "flag": "🇬🇧", "code": "ENG" },
+      "away": { "name": "Argentina",  "flag": "🇦🇷", "code": "ARG" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "Argentina",  "score": "1-2", "reasoning": "La Scaloneta tiene más jerarquía en instancias decisivas y la ventaja de Messi liderando el vestuario." },
+        "gpt":     { "winner": "Inglaterra", "score": "2-1", "reasoning": "Inglaterra en mejor momento físico puede imponerse a una Argentina que arrastra la carga de partidos a prórroga." },
+        "gemini":  { "winner": "Argentina",  "score": "0-1", "reasoning": "Partido cerrado y trabado que se resuelve por un detalle individual de la Scaloneta." }
       },
       "actual_result": null
     }
