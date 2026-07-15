@@ -5,7 +5,7 @@
     "opening_date": "2026-06-11",
     "final_date": "2026-07-19",
     "predictions_generated": "2026-06-10",
-    "note": "Predicciones generadas por KAI — Fixture real FIFA 2026. Grupos A (México), C (Brasil), D (USA), J (Argentina), K (Colombia) + bracket completo desde Dieciseisavos hasta Semifinales. Actualizado al 13/07/2026: 58 partidos con resultado real, semifinales (Francia-España 14/07, Inglaterra-Argentina 15/07) y Final (19/07) pendientes."
+    "note": "Predicciones generadas por KAI — Fixture real FIFA 2026. Grupos A (México), C (Brasil), D (USA), J (Argentina), K (Colombia) + bracket completo desde Dieciseisavos hasta Semifinales. España finalista tras vencer a Francia. Inglaterra-Argentina (15/07) y Final (19/07) pendientes."
   },
   "ais": {
     "claude": {
@@ -29,8 +29,8 @@
   },
   "scoreboard": {
     "votes": { "claude": 0, "gpt": 0, "gemini": 0 },
-    "accuracy": { "claude": 44, "gpt": 35, "gemini": 31 },
-    "total_predicted": 58
+    "accuracy": { "claude": 45, "gpt": 35, "gemini": 32 },
+    "total_predicted": 59
   },
   "matches": [
 
@@ -1086,14 +1086,14 @@
       "venue": "AT&T Stadium, Arlington",
       "home": { "name": "Francia", "flag": "🇫🇷", "code": "FRA" },
       "away": { "name": "España",  "flag": "🇪🇸", "code": "ESP" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "España",  "score": "1-2", "reasoning": "España tiene el mejor funcionamiento colectivo del torneo y debería imponerse a Francia en una semifinal de alto nivel." },
         "gpt":     { "winner": "Francia", "score": "2-1", "reasoning": "Francia con Mbappé en modo determinante puede inclinar la balanza en un partido parejo." },
         "gemini":  { "winner": "España",  "score": "1-0", "reasoning": "Partido cerrado entre dos candidatas al título que puede definirse por un detalle, con España con ligera ventaja." }
       },
-      "actual_result": null
+      "actual_result": { "score": "0-2", "winner": "España" }
     },
 
     {
