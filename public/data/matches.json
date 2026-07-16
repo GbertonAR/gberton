@@ -5,7 +5,7 @@
     "opening_date": "2026-06-11",
     "final_date": "2026-07-19",
     "predictions_generated": "2026-06-10",
-    "note": "Predicciones generadas por KAI — Fixture real FIFA 2026. Grupos A (México), C (Brasil), D (USA), J (Argentina), K (Colombia) + bracket completo desde Dieciseisavos hasta Semifinales. España finalista tras vencer a Francia. Inglaterra-Argentina (15/07) y Final (19/07) pendientes."
+    "note": "Predicciones generadas por KAI — Fixture real FIFA 2026. Grupos A (México), C (Brasil), D (USA), J (Argentina), K (Colombia) + bracket completo. Final confirmada: España vs Argentina, 19/07 en MetLife Stadium. Tercer puesto: Francia vs Inglaterra, 18/07 en Miami."
   },
   "ais": {
     "claude": {
@@ -29,8 +29,8 @@
   },
   "scoreboard": {
     "votes": { "claude": 0, "gpt": 0, "gemini": 0 },
-    "accuracy": { "claude": 45, "gpt": 35, "gemini": 32 },
-    "total_predicted": 59
+    "accuracy": { "claude": 46, "gpt": 35, "gemini": 33 },
+    "total_predicted": 60
   },
   "matches": [
 
@@ -1104,12 +1104,48 @@
       "venue": "Mercedes-Benz Stadium, Atlanta",
       "home": { "name": "Inglaterra", "flag": "🇬🇧", "code": "ENG" },
       "away": { "name": "Argentina",  "flag": "🇦🇷", "code": "ARG" },
-      "status": "upcoming",
+      "status": "finished",
       "is_featured": true,
       "predictions": {
         "claude":  { "winner": "Argentina",  "score": "1-2", "reasoning": "La Scaloneta tiene más jerarquía en instancias decisivas y la ventaja de Messi liderando el vestuario." },
         "gpt":     { "winner": "Inglaterra", "score": "2-1", "reasoning": "Inglaterra en mejor momento físico puede imponerse a una Argentina que arrastra la carga de partidos a prórroga." },
         "gemini":  { "winner": "Argentina",  "score": "0-1", "reasoning": "Partido cerrado y trabado que se resuelve por un detalle individual de la Scaloneta." }
+      },
+      "actual_result": { "score": "1-2", "winner": "Argentina" }
+    },
+
+    {
+      "id": "WC2026-3RD",
+      "phase": "Tercer Puesto",
+      "matchday": 8,
+      "date": "2026-07-18T19:00:00Z",
+      "venue": "Hard Rock Stadium, Miami",
+      "home": { "name": "Francia",    "flag": "🇫🇷", "code": "FRA" },
+      "away": { "name": "Inglaterra", "flag": "🇬🇧", "code": "ENG" },
+      "status": "upcoming",
+      "is_featured": false,
+      "predictions": {
+        "claude":  { "winner": "Inglaterra", "score": "1-2", "reasoning": "Inglaterra llega más dolida por la remontada sufrida y puede salir con más hambre a buscar el podio ante una Francia sin motivación." },
+        "gpt":     { "winner": "Francia",    "score": "2-1", "reasoning": "Francia con Mbappé todavía tiene con qué ganar un partido de trámite ante una Inglaterra golpeada anímicamente." },
+        "gemini":  { "winner": "Empate",     "score": "1-1", "reasoning": "Partido de consuelo con pocas ganas de ambos lados, puede terminar parejo o resolverse por penales." }
+      },
+      "actual_result": null
+    },
+
+    {
+      "id": "WC2026-FINAL",
+      "phase": "Final",
+      "matchday": 8,
+      "date": "2026-07-19T19:00:00Z",
+      "venue": "MetLife Stadium, East Rutherford",
+      "home": { "name": "España",    "flag": "🇪🇸", "code": "ESP" },
+      "away": { "name": "Argentina", "flag": "🇦🇷", "code": "ARG" },
+      "status": "upcoming",
+      "is_featured": true,
+      "predictions": {
+        "claude":  { "winner": "España",    "score": "2-1", "reasoning": "España llega en el mejor nivel colectivo del torneo, con la defensa más sólida y un funcionamiento coral que puede desbordar a Argentina." },
+        "gpt":     { "winner": "Argentina", "score": "1-2", "reasoning": "Argentina viene de remontar a Inglaterra con Messi al mando y tiene la jerarquía de campeona vigente para un partido a todo o nada." },
+        "gemini":  { "winner": "España",    "score": "1-0", "reasoning": "Final cerrada entre el mejor colectivo del torneo y la mejor individualidad. España se impone por margen mínimo." }
       },
       "actual_result": null
     }
